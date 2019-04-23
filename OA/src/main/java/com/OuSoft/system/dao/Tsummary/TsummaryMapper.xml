@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tsummary.TsummaryDao">
+
+		<!-- 根据di,删除一条总结， -->
+		<delete id="deleteTsummaryDao" parameterType="java.lang.String">
+			delete from tsummary where id = #{id}
+		</delete>
+
+	<!-- 根据di,查询一条总结， -->
+	<select id="selectTsummaryDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary">
+		SELECT * from tsummary where id = #{id}
+	</select>
+		<!-- 插入总结数据 -->
+		<insert id="saveTsummaryDao" parameterType="com.OuSoft.system.entity.Tsummary" >
+			 insert into tsummary
+		    <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="userid != null">
+		        userid,
+		      </if>
+		      <if test="sutext != null">  
+		        sutext,
+		      </if>
+		      <if test="sucompany != null">
+		        sucompany,
+		      </if>
+		      <if test="sumanage != null">
+		        sumanage,
+		      </if>
+		      <if test="suwork != null">
+		        suwork,
+		      </if>
+		      <if test="suhygienism != null">
+		        suhygienism,
+		      </if>
+		      <if test="sucreatetime != null">
+		        sucreatetime,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="userid != null">
+		        #{userid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="sutext != null">
+		        #{sutext,jdbcType=VARCHAR},
+		      </if>
+		      <if test="sucompany != null">
+		        #{sucompany,jdbcType=VARCHAR},
+		      </if>
+		      <if test="sumanage != null">
+		        #{sumanage,jdbcType=VARCHAR},
+		      </if>
+		      <if test="suwork != null">
+		        #{suwork,jdbcType=VARCHAR},
+		      </if>
+		      <if test="suhygienism != null">
+		        #{suhygienism,jdbcType=VARCHAR},
+		      </if>
+		      <if test="sucreatetime != null">
+		        #{sucreatetime,jdbcType=VARCHAR},
+		      </if>
+		    </trim>
+		</insert>
+	
+	
+	
+	<!-- 查询总结列表 -->
+	<select id="queryListTsummaryDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary">
+					
+					SELECT
+						tsu.*,
+				SUBSTR(tsu.sucreatetime ,1,10) as rtime, SUBSTR(tsu.sucreatetime ,11,20) as mtime, 
+				CONCAT(SUBSTR(tsu.sutext,1,30),'...') as text,	
+						ta.filename AS txfilename, 
+						tu.username AS username,
+						tsu.sucompany+tsu.sumanage+tsu.suhygienism+tsu.suwork as counts,
+						IfNULL(tpra.num, 0) AS tpranum,
+					IfNULL(tmoo.tmonum, 0) AS comnum,
+					ip.ip as ip,
+					IFNULL(tp.id,0) as dz
+					FROM
+						tsummary tsu
+					LEFT JOIN (
+						SELECT
+							t.itemid AS itemid,
+							count(t.itemid) AS num
+						FROM
+							tpraise t
+						WHERE
+							t.itemtype = 'tsummary'
+						GROUP BY
+							t.itemid
+					) tpra ON tsu.id = tpra.itemid
+					LEFT JOIN 
+					(
+					SELECT  tmo.commentid as commentid, 
+					count(tmo.commentid) as tmonum 
+					from tcomment tmo 
+					WHERE tmo.itemtype = 'tsummary' GROUP BY tmo.commentid
+					) tmoo on tmoo.commentid = tsu.id
+					
+					LEFT JOIN tuser tu ON tu.id = tsu.userid
+					LEFT JOIN tatt ta ON ta.itemid = tsu.userid 
+					left join tattip ip on ip.id = '1'
+					left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tsu.id
+			<where>
+				1=1 AND tu.`status` != '02' AND tu.`status` != '03'
+				and tu.userpid=#{tcmid}
+				<if test="userid != null">
+					and  tsu.userid = #{userid}
+				</if>
+				<if test="begtime != null">
+					and  SUBSTR(tsu.sucreatetime, 1, 10) &gt;= #{begtime} 
+				</if>
+				<if test="endtime != null">
+					and SUBSTR(tsu.sucreatetime, 1, 10) &lt;= #{endtime}
+				</if>
+				<if test="loginname != null and loginname != '' ">
+					and tsu.userid = #{loginname}
+				</if>
+					ORDER BY
+					SUBSTRING(tsu.sucreatetime,1,10) DESC,counts desc
+			</where>
+			
+	</select>
+	
+	
+	<!-- 查询总结点赞详情 -->
+	<select id="queryListTsummaryTpraiseDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary">
+				SELECT 
+				  tpra.id as tpraid,
+					tsu.*,
+					tutsi.username as username,
+				  tutpra.username as tprausername,
+				  tpra.userid as tprauserid,
+				  ta.filename as txfilename , ip.ip as ip,
+				  	IFNULL(tp.id, 0) AS dz
+				FROM
+					tsummary tsu
+				LEFT JOIN tpraise tpra ON tpra.itemid = tsu.id
+				LEFT JOIN tuser tutpra on tutpra.id = tpra.userid
+				LEFT JOIN tuser tutsi ON tutsi.id = tsu.userid
+				left join tatt ta on ta.itemid = tsu.userid 
+				left JOIN tattip ip on ip.id = '1' 
+				LEFT JOIN tpraise tp ON tp.userid = #{dzuserid} AND tp.itemid = tsu.id
+				WHERE 1=1
+				and tsu.id = #{id}
+				order by tpra.praisetime
+	</select>
+	
+	
+	<!-- 总结geren -->
+	<select id="queryGNumListTsummaryDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary">
+			SELECT tsu.*,
+			SUBSTR(tsu.sucreatetime ,1,6) as rtime, SUBSTR(tsu.sucreatetime ,11,20) as mtime, 
+			CONCAT(SUBSTR(tsu.sutext,1,30),'...') as text,
+				SUM(tsu.sucompany)  +  SUM(tsu.sumanage) +	SUM(tsu.suwork) + SUM(tsu.suhygienism) as numsum
+			FROM
+				tsummary tsu
+			<where>
+				1=1
+				<if test="userid != null">
+					and  tsu.userid = #{userid}
+				</if>
+				<if test="begtime != null">
+					and  SUBSTR(tsu.sucreatetime, 1, 10) &gt;= #{begtime} 
+				</if>
+				<if test="endtime != null">
+					and SUBSTR(tsu.sucreatetime, 1, 10) &lt;= #{endtime}
+				</if>
+				<if test="loginname != null and loginname != '' ">
+					and tsu.userid = #{loginname}
+				</if>
+				GROUP BY SUBSTR(tsu.sucreatetime, 1, 10) ORDER BY tsu.sucreatetime DESC		
+			</where>
+	</select>
+	
+	<!-- 查询总结quanbu -->
+	<select id="queryNumListTsummaryDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary">
+			SELECT
+		  	tsu.*, tu.username as username ,
+		  	SUBSTR(tsu.sucreatetime ,1,6) as rtime, SUBSTR(tsu.sucreatetime ,11,20) as mtime, 
+			CONCAT(SUBSTR(tsu.sutext,1,30),'...') as text,	
+			SUM(tsu.sucompany)  +  SUM(tsu.sumanage) +	SUM(tsu.suwork) + SUM(tsu.suhygienism) as numsum
+			FROM
+				tsummary tsu
+			LEFT JOIN tuser tu on tu.id = tsu.userid
+			<where>
+				1=1
+				<if test="userid != null">
+					and  tsu.userid = #{userid}
+				</if>
+				<if test="begtime != null">
+					and  SUBSTR(tsu.sucreatetime, 1, 10) &gt;= #{begtime} 
+				</if>
+				<if test="endtime != null">
+					and SUBSTR(tsu.sucreatetime, 1, 10) &lt;= #{endtime}
+				</if>
+				<if test="loginname != null and loginname != '' ">
+					and tsu.userid = #{loginname}
+				</if>
+				GROUP BY tsu.userid ORDER BY numsum DESC	
+			</where>	
+	</select>
+	
+
+</mapper>

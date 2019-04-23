@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <title>登录信息</title>
+    <!-- 1、Jquery组件引用-->
+    <script src="/static/js/jquery.min.js"></script>
+    <!-- 2、bootstrap组件引用-->
+    <link href="/static/17com/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/dist/bootstrap-table.css" rel="stylesheet">
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- 3、bootstrap-table组件引用-->
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script><!--显示中文-->
+    <!-- 4、其他-->
+    <script src="/static/17com/js/echarts.js"></script>
+
+    <script>
+        $(function () {
+            a();
+            b();
+            TableInit();
+            $("#sign").click(function(){
+                $("#sign").addClass("active");
+                $("#paiming").removeClass("active");
+                $("#mess").removeClass("active");
+                $("#checkin1").show();
+                $("#paiming1").hide();
+                $("#mess1").hide();
+            });
+            $("#paiming").click(function(){
+                $("#paiming").addClass("active");
+                $("#sign").removeClass("active");
+                $("#mess").removeClass("active");
+                $("#checkin1").hide();
+                $("#paiming1").show();
+                $("#mess1").hide();
+            });
+            $("#mess").click(function(){
+                messClick();
+            })
+        })
+
+        function messClick() {
+            $("#mess").addClass("active");
+            $("#sign").removeClass("active");
+            $("#paiming").removeClass("active");
+            $("#checkin1").hide();
+            $("#mess1").show();
+            $("#paiming1").hide();
+        }
+        function a(){
+            var myChart = echarts.init(document.getElementById('checkin1'));
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        animation: false
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    splitLine: {
+                        show: false
+                    },
+                    data:[8.15,8.16,8.17,8.18,8.19],
+                    name:'签到日期（月、日）'
+                },
+                yAxis: {
+                    min: 7,
+                    max: 10,
+                    splitNumber : 3,
+                    type: 'value',
+                    name: '签到时间(h)',
+                    boundaryGap: [0, '100%'],
+                    splitLine: {
+                        show: false
+                    }
+                },
+                series: [{
+                    name: '签到时间',
+                    type: 'bar',
+                    showSymbol: false,
+                    hoverAnimation: false,
+                    barWidth: '20%',
+                    data: [8.27,8.20,7.55,9.30,8.15]
+
+                }]
+            };
+            myChart.setOption(option);
+            myChart.resize({width:500,height:400});
+        }
+        function b(){
+                var myChart = echarts.init(document.getElementById('paiming1'));
+                var option = {
+                    xAxis: {
+                        type: 'category',
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    },
+                    yAxis: {
+                        min:7,
+                        max:10,
+                        splitNumber:4,
+                        type: 'value'
+                    },
+                    series: [{
+                        data: [7.30, 7.59, 8.00, 8.20, 8.25, 7.30, 9.00],
+                        type: 'line',
+                        smooth: true
+                    }]
+                };
+                myChart.setOption(option);
+                myChart.resize({width:500,height:400});
+            }
+
+
+        //初始化bootstrap-table的内容
+        var TableInit = function () {
+                $('#grid').bootstrapTable({
+                    url: '/customer-data',         //请求后台的URL（*）
+                    method: 'get',                      //请求方式（*）
+                    toolbar: '#toolbar',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: false,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber:1,                       //初始化加载第一页，默认第一页
+                    pageSize: 5,                       //每页的记录行数（*）
+                    pageList: [5,10],        //可供选择的每页的行数（*）
+                    strictSearch: true,
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表onEditableSave
+                    columns: [{
+                        checkbox: true
+                    }, {
+                        field: 'name',
+                        title: '用户姓名'
+
+                    }, {
+                        field: 'time',
+                        title: '签到时间'
+
+                    }, {
+                        field: 'method',
+                        title: '签到方式'
+
+                    }, {
+                        field: 'location',
+                        title: 'IP地址'
+
+                    }
+                        , {
+                            field: 'statu',
+                            title: '状态'
+
+                        }
+                    ],
+                    /*data:[{name:常宗涛,time:2018-8-31,method:PC,location:'202.202.1.1',statu:迟到}],*/
+                });
+            }
+    </script>
+<style>
+    a{
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <div >
+            <div class="container-fluid" style="background-color: #e8e8e8">
+
+                <div class="row">
+                    <nav class="navbar navbar-light bg-light col-12">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </nav>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a id="sign" class="nav-link active" >签到</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="paiming" class="nav-link" >查看排名</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="mess" class="nav-link" >详情</a>
+                    </li>
+                </ul>
+                    <div id="checkin1" class="col-12"></div>
+                    <div id="paiming1" class="col-12"></div>
+                    <div id="mess1" class="col-12">
+                        <table id="grid"></table>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+</body>
+
+</html>

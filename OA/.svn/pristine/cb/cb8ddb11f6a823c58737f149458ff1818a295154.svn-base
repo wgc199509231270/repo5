@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Contract.ContractDao">
+	<select id="queryContract"  parameterType="com.OuSoft.system.entity.Contract" resultType="com.OuSoft.system.entity.Contract">
+		SELECT
+				poin.posiname as posiname,
+				tu.username AS username,
+				tdeinfo.deparname AS grzdeparname,
+				ts.username AS usname,
+				cn.*
+			FROM
+				contract cn
+			LEFT JOIN tuser tu ON tu.id = cn.user_Id
+			LEFT JOIN tuser ts ON ts.id = cn.nucleususerid
+			LEFT JOIN tposituser potu on potu.userid = cn.user_Id
+			LEFT JOIN tpositioninfo poin on poin.id = potu.posiid
+			LEFT JOIN tdepartuser tdetu ON tdetu.userid = cn.user_Id
+			LEFT JOIN tdepartmentinfo tdeinfo ON tdeinfo.id = tdetu.deparid
+			<where>
+				1=1
+				<if test="id != '' and id!=null">
+					and cn.id = #{id}
+				</if>
+				<if test=" astarttime != null and astarttime != '' ">
+					and cn.astarttime &gt;= #{astarttime}
+				</if>
+				<if test=" aendtime != null and aendtime != '' ">
+					and cn.aendtime >= #{aendtime}
+				</if>
+			</where>
+	</select>
+
+	<insert id="InsertContract" parameterType="com.OuSoft.system.entity.Contract">
+		insert into contract (id,contractid,user_Id,astarttime,aendtime,accessory,filetext,createtime,nucleususerid) value (#{id},#{contractId},#{userId},#{astarttime},#{aendtime},#{accessory},#{filetext},#{createtime},#{nucleususerid})
+	</insert>
+
+	<delete id="DelContract" parameterType="java.lang.String">
+        delete from contract  where id=#{id}
+    </delete>
+
+	<update id="UpdateContract" parameterType="com.OuSoft.system.entity.Contract">
+		update
+			contract
+		<set>
+			<if test="contractId != null and contractId != ''">
+				contractId=#{contractId},
+			</if>
+			<if test="user_Id != null and userId != ''">
+				userId=#{userId},
+			</if>
+			<if test="contractId != null and contractId != ''">
+				contractId=#{contractId},
+			</if>
+			<if test="astarttime != null and astarttime != ''">
+				astarttime=#{astarttime},
+			</if>
+			<if test="accessory != null and accessory != ''">
+				accessory=#{accessory},
+			</if>
+			<if test="filetext != null and filetext != ''">
+				filetext=#{filetext},
+			</if>
+		</set>
+		where 1=1 and id=#{id}
+
+	</update>
+</mapper>

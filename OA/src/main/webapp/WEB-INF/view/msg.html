@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>msg.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+   <script src="/static/js/jquery.min.js"></script>
+   
+   
+  </head>
+  <script type="text/javascript">
+  $(function () { 
+	  alert(11111111111);
+	  $("#remind").show();
+	  $("#message").html("");
+	  $.ajax({
+			url : "/achievements/Countstatenums",
+			dataType : "json",
+			async : false,
+			type : "post",
+			success : function(mm) {
+				var val ="<p>您有"+mm+"条"+"业绩未审核</p>";
+				 $("#message").append(val);
+			}
+			});
+	  
+  });
+  
+//关闭消息弹框
+	 function messageClose()
+		{
+		   $("#remind").hide();
+		}
+	  /* getMessage();
+	  function getMessage() {
+		 
+			  $.ajax({
+				url : "/achievements/Countstatenums",
+				dataType : "json",
+				async : false,
+				type : "post",
+				success : function(mm) {
+					//var listmodel = mm.listmodel;
+					log.console(mm);
+					alert(mm);
+					$("#message").html("");
+					
+					var val=mm;
+				    if(listmodel.length!="0"){
+				   		var val = "<div  onmouseover=\"this.style.cursor='pointer'\" onclick=\"messageqq()\">";
+						$.each(listmodel, function(i, v){
+	              		val +="<p>您有"+v.num+"条"+v.flowname+"消息要处理</p>";
+						});
+						val+="</div><br/>"; 
+				           window.focus();
+						   $("#remind").show();
+						   $("#message").append(val);
+				   }else{
+					   $("#remind").hide();
+				   }
+				}
+			});  
+			
+		}
+	 
+	  
+	  
+	  function messageqq()
+		{
+	     $("#remind").hide();
+		   var url = "flow/deployflow/flowDB.jsp";
+		   window.f_addTab("message","待办处理","<%=basePath%>"+url);
+		}   
+	  
+	  
+	  
+	   */
+  
+  </script>
+  
+  <body>
+   			aaaa This is my HTML page. <br>
+    <h1>消息通知</h1>
+    
+    <div id="remind"
+		style="clear:both;width:300px; line-height:32px; position:fixed; z-index:9999; right: 20px; bottom:30px;background-color: white; display: none;">
+		<div style="width: 100%; height:30px; line-height: 30px;background: url(/static/achievement/img/xxtxbj.jpg); border-radius:10px 10px 0px 0px;">
+			<div style="width: 160px;margin-left: 12px; color: white; font-size: 15px;float: left;">消息提醒：</div>
+			<div style="float: right; margin-right: 10px" onclick="messageClose()">
+				<img style="width: 28px; height: 28px" src="/static/achievement/img/deletered.png" />
+			</div>
+		</div>
+		<div style="margin-top: 10px;text-align:center;">
+			<div id = "message" style="font-size:15px" onmouseover="this.style.cursor='hand'"></div>
+		</div>
+	</div>
+  </body>
+</html>

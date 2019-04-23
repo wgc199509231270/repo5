@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc" xmlns="http://www.w3.org/1999/html">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:59 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title></title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/iconfont.css" rel="stylesheet">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet"  href="/static/js/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet"  href="/static/css/jquery.searchableSelect.css">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+    <script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <style>
+        td{
+            height:60px
+        }
+        .range{
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none;/*清除系统默认样式*/
+            width:80% !important;
+            background: #e7eaec;
+            height: 3px;/*横条的高度*/
+        }
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background:  #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+        input[type=range]::-ms-track {
+            height: 25px;
+            border-color: transparent; /*去除原有边框*/
+            color: transparent; /*去除轨道内的竖线*/
+        }
+
+        input[type=range]::-ms-thumb {
+            height: 20px;
+            width: 20px;
+            background: #000000;
+            border-radius: 50%;
+        }
+
+        input[type=range]::-ms-fill-lower {
+            /*进度条已填充的部分*/
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #059CFA, #E1E6EB 100%, #E1E6EB);
+        }
+
+        input[type=range]::-ms-fill-upper {
+            /*进度条未填充的部分*/
+            height: 22px;
+            border-radius: 50%;
+            background: #E1E6EB;
+        }
+
+        input[type=range]:focus::-ms-fill-lower {
+            background: linear-gradient(to right, #059CFA, #E1E6EB 100%, #E1E6EB);
+        }
+
+        input[type=range]:focus::-ms-fill-upper {
+            background: #E1E6EB;
+        }
+        .my-container {
+            float: left;
+            display: inline-block;
+        }
+
+        .myLabel-content ,.myText-content,.myBtn-content{
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+            margin-left: 10px;
+        }
+        .myLabel-content,.myText-content input[type='text'],.myBtn-content .btn {
+            height: 30px;
+            font-size: 12px;
+        }
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+    </style>
+    <script th:inline="javascript">
+        var myinfo;
+        $(function () {
+            jeDate("#Begtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            jeDate("#Endtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            $("#big").show();
+            $("#donghua").remove();
+            $("#leixing").selectpicker({width:85});
+            $("#stateselect").selectpicker({width:85});
+            now();
+            before();
+            list1();
+            table1();
+       //     list1();
+           // table1();
+            search();
+            //调用
+            // $('#testTable').bootstrapTable('refresh', { url: '/Home/GetPaginationData2' });
+        });
+
+        //格式化现在日期
+        function now() {
+            // 给input  date设置默认值
+            var now = new Date();
+            //格式化日，如果小于9，前面补0
+            var day = ("0" + now.getDate()).slice(-2);
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            //完成赋值
+            $('#Endtime').val(today);
+            $('#orderId').val(today);
+
+        }
+        //格式化15天前的日期
+        function before() {
+            //十五天毫秒值：1209600000
+            var date = new Date();
+            var time = date.getTime();
+            console.info("time-----"+time);
+            var times = time-1209600000;
+            console.info("times====="+times);
+            var now = new Date(times);
+
+            //格式化日，如果小于9，前面补0
+            var day = ("0" + now.getDate()).slice(-2);
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            //完成赋值
+            $('#Begtime').val(today);
+
+        }
+
+        //选项卡设置
+        function page(url, title) {
+            var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+            $(window.top.document).find('.J_mainContent').find("iframe").hide();
+            var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+                + '" seamless="" style="display: inline;"></iframe>';
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+                ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + '(计划) <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+            $(window.top.document).find('.J_mainContent').append(iframe);
+        }
+        //搜索、重置按钮
+        function search() {
+            $('#search1').click(function () {
+                list1();
+                $('#table1').bootstrapTable('load', datatable1);
+            });
+            $('#reset1').click(function() {
+                $("#stateselect").siblings().find(".filter-option-inner-inner").text('全部');
+                $("#leixing").siblings().find(".filter-option-inner-inner").text('全部');
+                list1();
+                $('#table1').bootstrapTable('load', datatable1);
+            });
+        }
+
+        /* 工作量排名和折线图*/
+        var datatable1;
+        //ajax 获取排序数据 传给datatable1
+        function list1(){
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var nitemtype = $("#stateselect").siblings().find(".filter-option-inner-inner").text();
+            if ( nitemtype== "全部") {
+                nitemtype='';
+            }else if(nitemtype== "工作圈"){
+                nitemtype='work';
+            }else{
+                nitemtype='tperformance';
+            }
+            var ntype = $("#leixing").siblings().find(".filter-option-inner-inner").text();
+            if ( ntype== "通知") {
+                ntype='01';
+            }else if(ntype== "审核"){
+                ntype='02';
+            }else if(ntype== '点赞'){
+                ntype='03';
+            }else if(ntype== '评论'){
+                ntype='04';
+            }else{
+                ntype='';
+            }
+            var data = {"nstarttime":Begtime,"nendtime":Endtime,"nitemtype":nitemtype,"ntype":ntype};
+            $.ajax({
+                url:"/tnews/queryTnews",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    console.log("-------------排名表格");
+                    console.log(data);
+                    datatable1=data;
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+
+        //初始化表格
+        function table1() {
+            $('#table1').bootstrapTable({
+                /*showToggle:!0,
+                showColumns:!0,*/
+                iconSize:"outline",
+                toolbar:"#exampleTableEventsToolbar",
+                /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                /*showRefresh:true,*/
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                pagination: true, // 在表格底部显示分页组件，默认false
+                pageList: [5,10, 15], // 设置页面可以显示的数据条数
+                pageSize: 5, // 页面数据条数
+                pageNumber: 1, // 首页页码
+                /*   onClickRow: function (row, $element) {
+                       //alert("业绩id"+field);
+                   }, */
+                columns: [
+                    {
+                        field: 'txfilename',
+                        title: '头像',
+                        width:'15%' ,
+                        align:'center',
+                        formatter: function (value,row,index){
+                            return  [
+                                "<a class='J_menuItem'  data-index='0' onclick=\"page('/sign/signMess?id="+row.id+"&number="+index+"&dz="+row.dz+"&temp=2','"+row.username+"')\"><img src="+row.ip+row.txfilename+" style='width:20%;border-radius:50%;'></a><span style='margin-left:15px'>"+row.username+"</span>"
+                            ].join('');
+                        }
+                    },
+                    {
+                        field: 'ntext',
+                        title: '提示内容',
+                        align:'center',
+                        width:'30%',
+                    }, {
+                        field: 'state',
+                        title: '状态',
+                        align:'center',
+                        width:'10%',
+                        formatter: function (value,row,index){
+                            var a =row.ntype
+                            if(a=='01'||a=='02'){
+                                return  [
+                                    "<span>"+row.state+"</span>"
+                                ].join('');
+                            }else if(a=="03"){
+                                return '<i class="iconfont icon-buoumaotubiao15" style="font-size: 15px;"></i>';
+                            }else{
+                                return '<i class="iconfont icon-pinglun4" style="font-size: 15px;"></i>';
+                            }
+                        }
+                    },{
+                        field: 'times',
+                        title: '时间',
+                        align:'center',
+                        width:'15%',
+                        formatter: function (value,row,index){
+                            return  [
+                                "<span>"+row.times+"</span>"
+                            ].join('');
+                        }
+                    }],
+                data:datatable1
+            });
+        };
+        $(".fht-cell").remove();
+    </script>
+</head>
+
+<body >
+<div class="gray-bg" >
+    <div id="donghua" class="col-sm-12" style="height:100%;">
+        <div class="ibox ">
+            <div class="ibox-content">
+                <div class="spiner-example" style="padding-top: 210px;">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="big" class="col-sm-12" style="display: none">
+
+        <!-- Example Events -->
+        <div class="example-wrap"  style="margin-top: 25px;">
+            <!-- 搜索框-->
+            <div id="toolbar1" style="width: 100%;overflow: hidden;margin-bottom: 14px;float:left;">
+                <div  class="my-container">
+                    <label class="myLabel-content">模块:</label>
+                    <div class="myText-content" style="width: 80px;">
+                        <select id="stateselect" data-placeholder="选择类型..." class="selectpicker" style="width:350px;" tabindex="2">
+                            <option value='01'>全部</option><option value='02'>工作圈</option><option value='03'>业绩圈</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">类型:</label>
+                    <div class="myText-content" style="width: 80px;">
+                        <select id="leixing" data-placeholder="选择类型..." class="selectpicker" tabindex="2">类型
+                            <option value='01'>全部</option><option value='02'>通知</option><option value='03'>审核</option><option value='04'>评论</option><option value='05'>点赞</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="my-container" style="margin-left: 15px;">
+                    <label class="myLabel-content">开始日期：</label>
+                    <div class="myText-content">
+                        <input id="Begtime" class="com laydate-icon form-control layer-date" placeholder="开始日期">
+                    </div>
+
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">至</label>
+                    <div class="myText-content">
+                        <input id="Endtime" class="com laydate-icon form-control layer-date" placeholder="结束日期">
+                    </div>
+                </div>
+                <div class="myBtn-content" style="margin-left: 1%;margin-top: 0.2%;">
+                    <button id="search1" type="button" class="btn btn-primary" style="background-color:#0099CC">查询
+                    </button>
+                    <button id="reset1" type="button" class="btn btn-default">重置</button>
+                </div>
+            </div>
+            <!-- 排名列表-->
+            <div class="example" id="paimingtable" >
+                <table id="table1" ></table>
+                <script>
+
+                </script>
+            </div>
+
+        </div>
+        <!-- End Example Events -->
+    </div>
+    <!-- 发布签到弹出框 -->
+
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+
+
+
+</script>
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:02 GMT -->
+</html>

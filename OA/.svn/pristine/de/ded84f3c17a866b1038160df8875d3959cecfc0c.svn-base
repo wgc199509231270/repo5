@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc" xmlns="http://www.w3.org/1999/html">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:59 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title></title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/iconfont.css" rel="stylesheet">
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="/static/js/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet"  href="/static/css/jquery.searchableSelectparse.css">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="/static/js/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <script src="/static/js/news.js"></script>
+    <style>
+        .range{
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none;/*清除系统默认样式*/
+            width:80% !important;
+            background: #e7eaec;
+            height: 3px;/*横条的高度*/
+        }
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background:  #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+        input[type=range]::-ms-track {
+            height: 25px;
+            border-color: transparent; /*去除原有边框*/
+            color: transparent; /*去除轨道内的竖线*/
+        }
+
+        input[type=range]::-ms-thumb {
+            height: 20px;
+            width: 20px;
+            background: #000000;
+            border-radius: 50%;
+        }
+
+        input[type=range]::-ms-fill-lower {
+            /*进度条已填充的部分*/
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #059CFA, #E1E6EB 100%, #E1E6EB);
+        }
+
+        input[type=range]::-ms-fill-upper {
+            /*进度条未填充的部分*/
+            height: 22px;
+            border-radius: 50%;
+            background: #E1E6EB;
+        }
+
+        input[type=range]:focus::-ms-fill-lower {
+            background: linear-gradient(to right, #059CFA, #E1E6EB 100%, #E1E6EB);
+        }
+
+        input[type=range]:focus::-ms-fill-upper {
+            background: #E1E6EB;
+        }
+        #text {
+            white-space: normal;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        .my-container {
+            float: left;
+            display: inline-block;
+        }
+
+        .myLabel-content, .myText-content, .myBtn-content {
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+            margin-left: 10px;
+        }
+
+        .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+    </style>
+    <!--刷新当前页面  -->
+
+    <script th:inline="javascript">
+        var bs = [[${bs}]]
+        var sign_id;
+        var zrnum = 0;
+        var zxnum = 0;
+        var zhnum = 0;
+        var a= 1;
+        var h=0;
+        var x=0;
+        var r=0;
+        window.onresize = function (){
+            dianzanLinePic();
+            pinglunLinePic();
+            fabiaoLinePic();
+            persondianzanLinePic();
+            personpinglunLinePic();
+            personfabiaoLinePic();
+        };
+        $(function () {
+            jeDate("#Begtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            jeDate("#Endtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            IEVersion();
+            $("a").tooltip();
+            $(":button").tooltip();
+            $("#top").click(function () {
+                var speed=200;//滑动的速度
+                $('body,html').animate({ scrollTop: 0 }, speed);
+                return false;
+            });
+            $(window).scroll(function() {
+                if ($(document).scrollTop() <= 0) {
+                    console.log("滚动条已经到达顶部为0");
+                }
+                /**
+                 *$(document).height():文档的高度
+                 *$(window).height()：可视域的高度：窗口的大小：根据浏览窗口的大小变化
+                 *判断底部:文档高度<=滚动条垂直高度+可视窗口的高度
+                 * */
+                if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                    if($("#paimingtable").is(":visible")){
+                        zhnum ++;
+                        list1();
+                        mess2();
+                    }
+                    if($("#example").is(":visible")){
+                        zrnum ++;
+                        list();
+                        mess();
+                    }
+                    if($("#new").is(":visible")){
+                        zxnum ++;
+                        list2();
+                        mess3();
+                    }
+                }
+            });
+            $("#top").hide();
+            $("#big").show();
+            $("#donghua").remove();
+            $("#example").hide();
+            $("#paimingtable").hide();
+            $("#tongji").hide();
+            $("#tongji2").hide();
+            $("#tongji3").hide();
+            $("#tongji4").show();
+            $("#tongji5").hide();
+            $("#tongji6").hide();
+            $("#tongjitable").show();
+            $("#sliders").show();
+            $("#new").hide();
+            $("#picControl").show();
+            if (bs==1){
+                $("#example").show();
+                $("#tongji").hide();
+                $("#picControl").hide();
+            };
+            personname();
+            $("#name1").searchableSelect({width:85});
+            $(".searchable-select").click(function () {
+                $("#personselect").modal('show');
+            });
+            $("#personselect").find(".row").height($(document).height()-100);
+            $('#table2').height($("#personselect").find(".row").height()-100);
+            tree();
+            $("#tree").height($(document).height()-110);
+            now();
+            before();
+            $('#type2').selectpicker({width:80});
+            pic();
+            pic1();
+            pic5();
+            pic6();
+            list2();
+            list1();
+            list();
+            mess3();
+            mess2();
+            mess();
+            dianzanLinePic();
+            pinglunLinePic();
+            fabiaoLinePic();
+            persondianzanLinePic();
+            personpinglunLinePic();
+            personfabiaoLinePic()
+            picturecontrol();
+            search();
+            //调用
+            //picUpload('#fileList',100,100,'#filePicker',10000);
+            // 初始化Web Uploader
+            uploader = WebUploader.create({
+
+                // 自动上传。
+                auto: false,
+
+                // swf文件路径
+                swf: '/static/js/plugins/webuploader/Uploader.swf',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#filePicker',
+
+                duplicate :true,//是否可以重复上传
+
+                fileSizeLimit: 10000*1024*1024, //限制图片大小，不可以超过
+
+                compress: null,
+
+                // 只允许选择文件，可选。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/jpg,image/jpeg,image/png'   //修改这行，加快上传文件框的打开速度
+                }
+            });
+            picUpload('#fileList',80,80,'#filePicker',10000);
+            $('input[type="text"]').on('input', function (e) {
+                var $that =  $(this);
+                var  limitLen = $that .attr("maxcodelength")                      //定义所需字节数
+                $that.attr('maxlength',limitLen);
+                setTimeout(function(){
+                    var value =  $that.val(),
+                        reg = /[\u4e00-\u9fa5]{1}/g,             //中文
+                        notReg = /\w{1}/g;                      //非中文
+                    var resultCn = value.match(reg);
+                    var resultEn = value.match(notReg);
+                    if(resultCn){
+                        limitLen = limitLen - (resultCn.length*2);
+                    }
+                    if(resultEn){
+
+                        limitLen = limitLen - resultEn.length;
+                    }
+                    if(limitLen<=0){
+                        var finalLen = value.length+limitLen+1;
+                        value = value.substring(0,finalLen);
+                        $that.attr('maxlength',limitLen);
+                        $that[0].value = value;
+                    }
+                },0);
+
+            });
+        });
+        function IEVersion() {
+            if (!!window.ActiveXObject || "ActiveXObject" in window) {
+                $("input[type=range]").removeClass("range");
+                $("input[type=range]").css("margin-top", "3px");
+                $("input[type=range]").css("padding", "0px");
+                $("input[type=range]").css("height", "11px");
+            }
+        }
+        function closePage(){
+            $("#modal-form").modal('hide');
+            $("#personselect").modal('hide');
+            $("#questitle").val("");
+            $("#quesmess").html("分享细节（选填）");
+            $("#kntype").val("01");
+        }
+        function questionPublish(){
+            $(".modal-dialog").show();
+            tsignid();
+            uploader.refresh();
+            uploader.reset();
+            num = 0;
+        }
+        function picturecontrol() {
+            $("#tongjitable").show();
+            $("#sliders").show();
+            $("#dianzan1").click(function () {
+                if(a==0){
+                    $("#tongji").show();
+                    $("#tongji2").hide();
+                    $("#tongji3").hide();
+                    $("#tongji4").hide();
+                    $("#tongji5").hide();
+                    $("#tongji6").hide();
+                    $("#new").hide();
+                    $(this).css("color", "#1e88e5");
+                    $(this).find("i").css("color", "#1e88e5");
+                    $(this).siblings().css("color", "#2A2A2A");
+                    $(this).siblings().find("i").css("color", "#CCCCCC");
+                }else{
+                    $("#tongji").hide();
+                    $("#tongji2").hide();
+                    $("#tongji3").hide();
+                    $("#tongji4").show();
+                    $("#tongji5").hide();
+                    $("#tongji6").hide();
+                    $("#new").hide();
+                    $(this).css("color", "#1e88e5");
+                    $(this).find("i").css("color", "#1e88e5");
+                    $(this).siblings().css("color", "#2A2A2A");
+                    $(this).siblings().find("i").css("color", "#CCCCCC");
+                }
+            });
+            $("#pinglun1").click(function () {
+                if(a==0){
+                    $("#tongji").hide();
+                    $("#tongji2").show();
+                    $("#tongji3").hide();
+                    $("#tongji4").hide();
+                    $("#tongji5").hide();
+                    $("#tongji6").hide();
+                    $("#new").hide();
+                    $(this).css("color", "#1e88e5");
+                    $(this).find("i").css("color", "#1e88e5");
+                    $(this).siblings().css("color", "#2A2A2A");
+                    $(this).siblings().find("i").css("color", "#CCCCCC");
+                }else{
+                    $("#tongji").hide();
+                    $("#tongji2").hide();
+                    $("#tongji3").hide();
+                    $("#tongji4").hide();
+                    $("#tongji5").show();
+                    $("#tongji6").hide();
+                    $("#new").hide();
+                    $(this).css("color", "#1e88e5");
+                    $(this).find("i").css("color", "#1e88e5");
+                    $(this).siblings().css("color", "#2A2A2A");
+                    $(this).siblings().find("i").css("color", "#CCCCCC");
+                }
+            });
+            $("#fabushu1").click(function () {
+                if(a==0){
+                    $("#tongji").hide();
+                    $("#tongji2").hide();
+                    $("#tongji3").show();
+                    $("#tongji4").hide();
+                    $("#tongji5").hide();
+                    $("#tongji6").hide();
+                    $("#new").hide();
+                    $(this).css("color", "#1e88e5");
+                    $(this).find("i").css("color", "#1e88e5");
+                    $(this).siblings().css("color", "#2A2A2A");
+                    $(this).siblings().find("i").css("color", "#CCCCCC");
+                }else{
+                    $("#tongji").hide();
+                    $("#tongji2").hide();
+                    $("#tongji3").hide();
+                    $("#tongji4").hide();
+                    $("#tongji5").hide();
+                    $("#tongji6").show();
+                    $("#new").hide();
+                    $(this).css("color", "#1e88e5");
+                    $(this).find("i").css("color", "#1e88e5");
+                    $(this).siblings().css("color", "#2A2A2A");
+                    $(this).siblings().find("i").css("color", "#CCCCCC");
+                }
+            })
+        }
+        //获取主键signid
+        function tsignid() {
+            $.ajax({
+                url: "/random/randomid",
+                data: {},
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    sign_id = data.randomid;
+                },
+                error: function (error) {
+                    alert("计划图片上传失败" + error.status);
+                }
+            });
+        }
+        //格式化现在日期
+        function now() {
+            // 给input  date设置默认值
+            var now = new Date();
+            //格式化日，如果小于9，前面补0
+            var day = ("0" + now.getDate()).slice(-2);
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            //完成赋值
+            $('#Endtime').val(today);
+            $('#Searchtime').val(today);
+            $('#orderId').val(today);
+
+        }
+        //格式化15天前的日期
+        function before() {
+            //十五天毫秒值：1209600000
+            var date = new Date();
+            var time = date.getTime();
+            var times = time - 1209600000;
+            var now = new Date(times);
+
+            //格式化日，如果小于9，前面补0
+            var day = ("0" + now.getDate()).slice(-2);
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            //完成赋值
+            $('#Begtime').val(today);
+
+        }
+
+        //用户名字下拉框
+        function personname() {
+            $.ajax({
+                url:"/tuser/queryIdTuser",
+                data:{},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    myinfo=data;
+                    var a = "<option part='' >全部</option>"
+                    $("#name1").append(a);
+                },
+                error:function (error) {
+                    alert("数据丢失了，刷新下试试吧" + error.status);
+                }
+            });
+        }
+
+        //签到接口
+        function sign() {
+            if ($("#questitle").val() != "") {
+                var latitle = $("#questitle").val();
+                console.log($("latext").html());
+                if ($("#quesmess").html() != "分享细节（选填）") {
+                    var latext = $("#quesmess").html();
+                    /*latext = latext.replace(/<div>/ig,"");
+                    latext = latext.replace(/<\/div>/ig,"<br>");*/
+                } else {
+                    var latext = '';
+                }
+                var latype = $("#kntype option:selected").attr("value");
+                var data = {"latitle": latitle, "latext": latext, "latype": latype, "id": sign_id};
+                $.ajax({
+                    url: "/tknowledge/savetknowledge",
+                    data: data,
+                    async: false,
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        if (data.code != 404) {
+                            $("#questitle").val("");
+                            $("#quesmess").html("分享细节（选填）");
+                            $("#kntype").val("01");
+                            $("#reset1").trigger("click");
+                            $("#modal-form").modal('hide');
+                            alert(data.msg);
+                        } else {
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+            } else {
+                alert("请输入必填项")
+            }
+        }
+        //选项卡设置
+        function page(url, title) {
+            var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+            $(window.top.document).find('.J_mainContent').find("iframe").hide();
+            var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+                + '" seamless="" style="display: inline;"></iframe>';
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+                ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + '(知识) <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+            $(window.top.document).find('.J_mainContent').append(iframe);
+        }
+        //搜索、重置按钮
+        function search() {
+            $('#search1').click(function () {
+                zrnum = 0;
+                zxnum = 0;
+                zhnum = 0;
+                pic();
+                pic1();
+                pic5();
+                pic6();
+                list1();
+                list2();
+                list();
+                $("#new").html("");
+                $("#paimingtable").html("");
+                $("#example").html("");
+                h=0;r=0;x=0;
+                mess2();
+                mess();
+                mess3();
+                dianzanLinePic();
+                pinglunLinePic();
+                fabiaoLinePic();
+                persondianzanLinePic();
+                personpinglunLinePic();
+                personfabiaoLinePic();
+            });
+            $('#reset1').click(function () {
+                $(".searchable-select-holder").html("全部");
+                $(".searchable-select-holderappend").html("");
+                $("#kntype").val("01");
+                $("#type2").siblings().find(".filter-option-inner-inner").html("所有");
+                $("#key").val("");
+                zrnum = 0;
+                zxnum = 0;
+                zhnum = 0;
+                now();
+                before();
+                pic();
+                pic1();
+                pic5();
+                pic6();
+                list1();
+                list2();
+                list();
+                $("#new").html("");
+                $("#paimingtable").html("");
+                $("#example").html("");
+                h=0;r=0;x=0;
+                mess2();
+                mess();
+                mess3();
+                dianzanLinePic();
+                pinglunLinePic();
+                fabiaoLinePic();
+                persondianzanLinePic();
+                personpinglunLinePic();
+                personfabiaoLinePic();
+            });
+
+
+        }
+        function reload() {
+            $("#example").hide();
+            $("#tongji").hide();
+            $("#tongji2").hide();
+            $("#tongji3").hide();
+            $("#tongji4").hide();
+            $("#tongji5").hide();
+            $("#tongji6").hide();
+            $("#tongjitable").hide();
+            $("#sliders").hide();
+            $("#picControl").hide();
+            $("#paimingtable").hide();
+            $("#new").show();
+            $("#top").show();
+            zxnum=0;
+            x=0;
+            list2();
+            $("#new").html("");
+            mess3();
+        }
+        //切换按钮
+        function tab() {
+            $("#tongjitable").hide();
+            $("#sliders").hide();
+            $("#example").show();
+            $("#top").show();
+            $("#new").hide();
+            $("#tongji").hide();
+            $("#tongji2").hide();
+            $("#tongji3").hide();
+            $("#tongji4").hide();
+            $("#tongji5").hide();
+            $("#tongji6").hide();
+            $("#picControl").hide();
+            $("#paimingtable").hide();
+        }
+        //切换至个人发布信息
+        function paiming() {
+            $("#tongjitable").hide();
+            $("#sliders").hide();
+            $("#example").hide();
+            $("#tongji").hide();
+            $("#tongji2").hide();
+            $("#tongji3").hide();
+            $("#tongji4").hide();
+            $("#tongji5").hide();
+            $("#tongji6").hide();
+            $("#new").hide();
+            $("#picControl").hide();
+            $("#paimingtable").show();
+            $("#top").show();
+        }
+        function pictab(){
+            $("#top").hide();
+            if(a==0){
+                a=1
+                $("#tongji4").show();
+                $("#tongji4").siblings().hide();
+                $("#sliders").show();
+                $("#tongjitable").show();
+                $("#btn").show();
+                $("#toolbar1").show();
+                $("#picControl").show();
+                $("#dianzan1").css("color", "#1e88e5");
+                $("#dianzan1").find("i").css("color", "#1e88e5");
+                $("#dianzan1").siblings().css("color", "#2A2A2A");
+                $("#dianzan1").siblings().find("i").css("color", "#CCCCCC");
+            }
+            else {
+                a=0;
+                $("#tongji").show();
+                $("#tongji").siblings().hide();
+                $("#sliders").show();
+                $("#tongjitable").show();
+                $("#btn").show();
+                $("#toolbar1").show();
+                $("#picControl").show();
+                $("#dianzan1").css("color", "#1e88e5");
+                $("#dianzan1").find("i").css("color", "#1e88e5");
+                $("#dianzan1").siblings().css("color", "#2A2A2A");
+                $("#dianzan1").siblings().find("i").css("color", "#CCCCCC");
+            }
+
+        }
+        var pic2;
+        /* 获取图形数据*/
+        function pic() {
+            if($(".searchable-select-holder").html()=="全部"){
+                var name ="";
+            }else {
+                var name = $(".searchable-select-holderappend").html();
+            }
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var data = {"Loginname": name, "Begtime": Begtime, "Endtime": Endtime, "sqtsgin": "tpranum"};
+            $.ajax({
+                url: "/tknowledge/queryFbNumListTknowledge",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    console.log("-------------个人计划表格");
+                    console.log(data);
+                    pic2 = data;
+                },
+                error: function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        var pic3;
+        /* 获取图形数据*/
+        function pic1() {
+            if($(".searchable-select-holder").html()=="全部"){
+                var name ="";
+            }else {
+                var name = $(".searchable-select-holderappend").html();
+            }
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var data = {"Loginname": name, "Begtime": Begtime, "Endtime": Endtime, "sqtsgin": "comnum"};
+            $.ajax({
+                url: "/tknowledge/queryFbNumListTknowledge",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    console.log("-------------个人计划表格");
+                    console.log(data);
+                    pic3 = data;
+                },
+                error: function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        var pic4;
+        /* 获取图形数据*/
+        function pic5() {
+            if($(".searchable-select-holder").html()=="全部"){
+                var name ="";
+            }else {
+                var name = $(".searchable-select-holderappend").html();
+            }
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var data = {"Loginname": name, "Begtime": Begtime, "Endtime": Endtime, "sqtsgin": "tsnum"};
+            $.ajax({
+                url: "/tknowledge/queryFbNumListTknowledge",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    console.log("-------------个人计划表格");
+                    console.log(data);
+                    pic4 = data;
+                },
+                error: function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        var pic9;
+        var data1=[];
+        var data2=[];
+        var data5=[];
+        var data6=[];
+        /* 获取图形数据*/
+        function pic6() {
+            data1=[];
+            data2=[];
+            data5=[];
+            data6=[];
+            if($(".searchable-select-holder").html()=="全部"){
+                var name ="";
+            }else {
+                var name = $(".searchable-select-holderappend").html();
+            }
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var data = {"Loginname": name, "Begtime": Begtime, "Endtime": Endtime};
+            $.ajax({
+                url: "/tknowledge/queryGListTknowledgeTpraise",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    console.log("-------------个人计划表格");
+                    console.log(data);
+                    pic9 = data;
+                },
+                error: function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+            var day ;
+            month = $("#Begtime").val().substr(5,5).split("-")[0];
+            day = $("#Begtime").val().substr(5,5).split("-")[1];
+            day = parseInt(day)-1;
+            for(var i=pic9.length-1;i>=0;i--){
+                var data4 = pic9[i].lacreatetime.substr(5, 5).split('/');
+                if(typeof(day)!='undefined'){
+                    if(parseInt(data4[1])<(parseInt(day)+1)){
+                        if(parseInt(data4[0])==(parseInt(month))){
+                            continue;
+                        }
+                    }
+                    while(parseInt(data4[1])!=(parseInt(day)+1)&&(parseInt(day)+1)<32) {
+                        if (parseInt(data4[0]) == (parseInt(month) + 1)) {
+                            console.log("--------月份补充");
+                            var month1 = ['1', '3', '5', '7', '8', '10', '12'];
+                            var year = new Date().getFullYear();
+                            if ($.inArray(month, month1)) {
+                                console.log("--------+135781012");
+                                while ((parseInt(day) + 1) <= 31) {
+                                    if ((parseInt(day) + 1) < 10) {
+                                        data1.push(month + "/0" + (parseInt(day) + 1));
+                                    } else {
+                                        data1.push(month + "/" + (parseInt(day) + 1));
+                                    }
+                                    data2.push(0);
+                                    data5.push(0);
+                                    data6.push(0);
+                                    day = (parseInt(day) + 1);
+                                    console.log(month + "/" + (day) + "-----加入");
+                                }
+                                month = parseInt(month) + 1;
+                                day = 0;
+                            } else if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)) {
+                                if (month == '2') {
+                                    console.log("二月+135781012");
+                                    while ((parseInt(day) + 1) <= 28) {
+                                        if ((parseInt(day) + 1) < 10) {
+                                            data1.push(month + "/0" + (parseInt(day) + 1));
+                                        } else {
+                                            data1.push(month + "/" + (parseInt(day) + 1));
+                                        }
+                                        data2.push(0);
+                                        data5.push(0);
+                                        data6.push(0);
+                                        day = (parseInt(day) + 1);
+                                    }
+                                    month = parseInt(month) + 1;
+                                    day = 0;
+                                } else {
+
+                                    while ((parseInt(day) + 1) <= 29) {
+                                        if ((parseInt(day) + 1) < 10) {
+                                            data1.push(month + "/0" + (parseInt(day) + 1));
+                                        } else {
+                                            data1.push(month + "/" + (parseInt(day) + 1));
+                                        }
+                                        data2.push(0);
+                                        data5.push(0);
+                                        data6.push(0);
+                                        day = (parseInt(day) + 1);
+                                    }
+                                    month = parseInt(month) + 1;
+                                    day = 0;
+                                }
+                            } else {
+                                console.log("其他月份");
+                                while ((parseInt(day) + 1) <= 30) {
+                                    if ((parseInt(day) + 1) < 10) {
+                                        data1.push(month + "/0" + (parseInt(day) + 1));
+                                    } else {
+                                        data1.push(month + "/" + (parseInt(day) + 1));
+                                    }
+                                    data2.push(0);
+                                    data5.push(0);
+                                    data6.push(0);
+                                    day = (parseInt(day) + 1);
+                                }
+                                month = parseInt(month) + 1;
+                                day = 0;
+                            }
+                        }
+                        if (parseInt(data4[1]) != (parseInt(day) + 1)) {
+                            if ((parseInt(day) + 1) < 10) {
+                                if (typeof(month) == 'number') {
+                                    data1.push("0" + month + "/0" + (parseInt(day) + 1));
+                                } else {
+                                    data1.push(month + "/0" + (parseInt(day) + 1));
+                                }
+                            } else {
+                                data1.push(month + "/" + (parseInt(day) + 1));
+                            }
+                            data2.push(0);
+                            data5.push(0);
+                            data6.push(0);
+                            day = (parseInt(day) + 1) + "";
+                            }
+                        }
+                }
+
+                data1.push(pic9[i].lacreatetime.substr(5, 5))
+                month = pic9[i].lacreatetime.substr(5,5).split("/")[0];
+                day = pic9[i].lacreatetime.substr(5,5).split("/")[1];
+                data2.push(parseInt(pic9[i].tpranum));
+                data5.push(parseInt(pic9[i].comnum));
+                data6.push(parseInt(pic9[i].tsnum));
+                if(i==0){
+                    if(day!=parseInt($("#Endtime").val().substr(5,5).split("-")[1])){
+                        var final=$("#Endtime").val().split('-');
+                        var a = {"lacreatetime":final[0]+"/"+final[1]+"/"+final[2]+" 07:00","tpranum":"0","comnum":"0","tsnum":"0"}
+                        pic9[0]=a;
+                        i++;
+                    }
+                }
+            }
+        }
+        /* 列表和折线图*/
+        var datatable;
+        //ajax获取最热数据 传给datatable
+        function list() {
+            if($(".searchable-select-holder").html()=="全部"){
+                var name ="";
+            }else {
+                var name = $(".searchable-select-holderappend").html();
+            }
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var key = $("#key").val();
+            var latype = $("#type2").siblings().find(".filter-option-inner-inner").html();
+            if(latype =='所有'){
+                latype="";
+            };
+            if(latype =='产品'){
+                latype="01";
+            };
+            if(latype =='技术'){
+                latype="02";
+            };
+            if(latype =='客户'){
+                latype="03";
+            };
+            if(latype =='组织'){
+                latype="04";
+            };
+            if(latype =='业务'){
+                latype="05";
+            };
+            if(latype =='其他'){
+                latype="06";
+            };
+            var data = {
+                "Loginname": name,
+                "Begtime": Begtime,
+                "Endtime": Endtime,
+                "sqtsgin": "sq",
+                "latype": latype,
+                "sqtsgins": "zr",
+                "pagenum": zrnum*8,
+                "sqgjz": key,
+            };
+            $.ajax({
+                url: "/tknowledge/queryListTknowledge",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    console.log("-------------个人表格");
+                    console.log(data);
+                    datatable = data;
+                },
+                error: function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        var datatable1;
+        //ajax 获取最火数据 传给datatable1
+        function list1() {
+            if($(".searchable-select-holder").html()=="全部"){
+                var name ="";
+            }else {
+                var name = $(".searchable-select-holderappend").html();
+            }
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var key = $("#key").val();
+            var latype = $("#type2").siblings().find(".filter-option-inner-inner").html();
+            if(latype =='所有'){
+                latype="";
+            };
+            if(latype =='产品'){
+                latype="01";
+            };
+            if(latype =='技术'){
+                latype="02";
+            };
+            if(latype =='客户'){
+                latype="03";
+            };
+            if(latype =='组织'){
+                latype="04";
+            };
+            if(latype =='业务'){
+                latype="05";
+            };
+            if(latype =='其他'){
+                latype="06";
+            };
+            var data = {
+                "Loginname": name,
+                "Begtime": Begtime,
+                "Endtime": Endtime,
+                "latype": latype,
+                "sqtsgin": "sq",
+                "sqtsgins": "zh",
+                "sqgjz": key,
+                "pagenum": zhnum*8,
+            };
+            $.ajax({
+                url: "/tknowledge/queryListTknowledge",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    console.log("-------------个人表格");
+                    console.log(data);
+                    datatable1 = data;
+                },
+                error: function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        /* 最新消息列表*/
+        var datatable2;
+        //ajax获取最新数据 传给datatable2
+        function list2() {
+            if($(".searchable-select-holder").html()=="全部"){
+                var name ="";
+            }else {
+                var name = $(".searchable-select-holderappend").html();
+            }
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var key = $("#key").val();
+            var latype = $("#type2").siblings().find(".filter-option-inner-inner").html();
+            if(latype =='所有'){
+                latype="";
+            };
+            if(latype =='产品'){
+                latype="01";
+            };
+            if(latype =='技术'){
+                latype="02";
+            };
+            if(latype =='客户'){
+                latype="03";
+            };
+            if(latype =='组织'){
+                latype="04";
+            };
+            if(latype =='业务'){
+                latype="05";
+            };
+            if(latype =='其他'){
+                latype="06";
+            };
+            var data = {
+                "Loginname": name,
+                "Begtime": Begtime,
+                "Endtime": Endtime,
+                "sqtsgin": "sq",
+                "latype": latype,
+                "sqtsgins": "zx",
+                "sqgjz": key,
+                "pagenum":zxnum*8,
+            };
+            $.ajax({
+                url: "/tknowledge/queryListTknowledge",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    console.log("-------------个人表格");
+                    console.log(data);
+                    datatable2 = data;
+                },
+                error: function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        //初始化点赞数图形
+        function dianzanLinePic() {
+            var data1 = [];
+            var data2 = [];
+            var month;
+            var day;
+            for (var i = pic2.length - 1; i >= 0; i--) {
+                data1.push(pic2[i].username)
+                data2.push(parseInt(pic2[i].tpranum));
+            }
+
+            $("#R0").val(10);
+            $("#R1").val(0);
+            var chart = new Highcharts.Chart({
+                chart: {
+//     		type:'column',
+                    //type:'spline',//曲线图
+                    type:'line',//折现图
+                    //type:'pie',//饼状图
+                    renderTo: 'tongji',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                    width : $(document).width()-70,
+                    height:$(document).height()*2/3,
+                    marginTop : 50,
+                    options3d: {
+                        enabled: true,//是否使用3D渲染图表功能
+                        alpha: 10,
+                        beta: 0,
+                        depth: 50,
+                        viewDistance: 25
+                    },
+                    plotBackgroundColor: null,    //绘图区的背景颜色
+                    plotBorderWidth: null,        //绘图区边框宽度
+                    plotShadow: false        //绘图区是否显示阴影
+                },
+
+                title: {
+                    text: '点赞数',
+                    align: 'left',
+                    y:20,
+                    x:10,
+                    style: {
+                        color: '#000',
+                        fontWeight: '100',
+                        fontSize: '12'
+                    }
+                },
+                xAxis: {
+                    categories: []
+                },
+                yAxis: {
+                    tickPositions: [0,20,40,60,80,100],
+                    min: 0,
+                    title : {
+                        text : ''
+                    },
+                },
+                legend: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false//去掉官网的超链接
+                },
+                exporting:{
+                    enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                lang:{
+                    printChart: "打印图片",
+                    downloadJPEG: "导出JPEG 图片",
+                    downloadPDF: "导出PDF 文档",
+                    downloadPNG: "导出PNG 图片",
+                    downloadSVG: "导出SVG 矢量图",
+                    contextButtonTitle: "导出"
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        return '<span style="color:{'+this.series.data+'}">被点赞数：'+this.y+'</span>'
+                    }
+                },
+
+                series:[{
+                    data:[]
+                }]
+            });
+
+            // Activate the sliders
+            $('#R0').on('change', function(){
+                $("#tongji").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji").highcharts().redraw(false);
+            });
+            $('#R1').on('change', function(){
+                $("#tongji").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html($("#tongji").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html($("#tongji").highcharts().options.chart.options3d.beta);
+            }
+            showValues();
+            chart.xAxis[0].setCategories(data1);
+            chart.series[0].setData(data2);
+
+        }
+        //初始化评论数图形
+        function pinglunLinePic() {
+            var data1 = [];
+            var data2 = [];
+            var month;
+            var day;
+            for (var i = pic3.length - 1; i >= 0; i--) {
+                data1.push(pic3[i].username)
+                data2.push(parseInt(pic3[i].comnum));
+            }
+
+            $("#R0").val(10);
+            $("#R1").val(0);
+
+            $("#R0").val(10);
+            $("#R1").val(0);
+            var chart = new Highcharts.Chart({
+                chart: {
+//     		type:'column',
+                    //type:'spline',//曲线图
+                    type:'line',//折现图
+                    //type:'pie',//饼状图
+                    renderTo: 'tongji2',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                    width : $(document).width()-70,
+                    height:$(document).height()*2/3,
+                    marginTop : 50,
+                    options3d: {
+                        enabled: true,//是否使用3D渲染图表功能
+                        alpha: 10,
+                        beta: 0,
+                        depth: 50,
+                        viewDistance: 25
+                    },
+                    plotBackgroundColor: null,    //绘图区的背景颜色
+                    plotBorderWidth: null,        //绘图区边框宽度
+                    plotShadow: false        //绘图区是否显示阴影
+                },
+
+                title: {
+                    text: '评论数',
+                    align: 'left',
+                    y:20,
+                    x:10,
+                    style: {
+                        color: '#000',
+                        fontWeight: '100',
+                        fontSize: '12'
+                    }
+                },
+                xAxis: {
+                    categories: []
+                },
+                yAxis: {
+                    tickPositions: [0,20,40,60,80,100],
+                    min: 0,
+                    title : {
+                        text : ''
+                    },
+                },
+                legend: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false//去掉官网的超链接
+                },
+                exporting:{
+                    enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                lang:{
+                    printChart: "打印图片",
+                    downloadJPEG: "导出JPEG 图片",
+                    downloadPDF: "导出PDF 文档",
+                    downloadPNG: "导出PNG 图片",
+                    downloadSVG: "导出SVG 矢量图",
+                    contextButtonTitle: "导出"
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        return '<span style="color:{'+this.series.data+'}">被评论数：'+this.y+'</span>'
+                    }
+                },
+
+                series:[{
+                    data:[]
+                }]
+            });
+
+            // Activate the sliders
+            $('#R0').on('change', function(){
+                $("#tongji2").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji2").highcharts().redraw(false);
+            });
+            $('#R1').on('change', function(){
+                $("#tongji2").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji2").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html($("#tongji2").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html($("#tongji2").highcharts().options.chart.options3d.beta);
+            }
+            showValues();
+            chart.xAxis[0].setCategories(data1);
+            chart.series[0].setData(data2);
+
+        }
+        //初始化发表数图形
+        function fabiaoLinePic() {
+            var data1 = [];
+            var data2 = [];
+            var month;
+            var day;
+            for (var i = pic4.length - 1; i >= 0; i--) {
+                data1.push(pic4[i].username)
+                data2.push(parseInt(pic4[i].tsnum));
+            }
+            $("#R0").val(10);
+            $("#R1").val(0);
+            var chart = new Highcharts.Chart({
+                chart: {
+//     		type:'column',
+                    //type:'spline',//曲线图
+                    type:'line',//折现图
+                    //type:'pie',//饼状图
+                    renderTo: 'tongji3',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                    width : $(document).width()-70,
+                    height:$(document).height()*2/3,
+                    marginTop : 50,
+                    options3d: {
+                        enabled: true,//是否使用3D渲染图表功能
+                        alpha: 10,
+                        beta: 0,
+                        depth: 50,
+                        viewDistance: 25
+                    },
+                    plotBackgroundColor: null,    //绘图区的背景颜色
+                    plotBorderWidth: null,        //绘图区边框宽度
+                    plotShadow: false        //绘图区是否显示阴影
+                },
+
+                title: {
+                    text: '发表量',
+                    align: 'left',
+                    y:20,
+                    x:10,
+                    style: {
+                        color: '#000',
+                        fontWeight: '100',
+                        fontSize: '12'
+                    }
+                },
+                xAxis: {
+                    categories: []
+                },
+                yAxis: {
+                    tickPositions: [0,20,40,60,80,100],
+                    min: 0,
+                    title : {
+                        text : ''
+                    },
+                },
+                legend: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false//去掉官网的超链接
+                },
+                exporting:{
+                    enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                lang:{
+                    printChart: "打印图片",
+                    downloadJPEG: "导出JPEG 图片",
+                    downloadPDF: "导出PDF 文档",
+                    downloadPNG: "导出PNG 图片",
+                    downloadSVG: "导出SVG 矢量图",
+                    contextButtonTitle: "导出"
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        return '<span style="color:{'+this.series.data+'}">发表数：'+this.y+'</span>'
+                    }
+                },
+
+                series:[{
+                    data:[]
+                }]
+            });
+
+            // Activate the sliders
+            $('#R0').on('change', function(){
+                $("#tongji3").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji3").highcharts().redraw(false);
+            });
+            $('#R1').on('change', function(){
+                $("#tongji3").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji3").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html($("#tongji3").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html($("#tongji3").highcharts().options.chart.options3d.beta);
+            }
+            showValues();
+            chart.xAxis[0].setCategories(data1);
+            chart.series[0].setData(data2);
+
+        }
+        //初始化个人点赞数图形
+        function persondianzanLinePic() {
+            if(datatable1.length==0){
+                var a = {"username":"暂无"};
+                datatable1.push(a);
+            }
+            $("#R0").val(10);
+            $("#R1").val(0);
+            $("#tongji4").highcharts(
+                {
+                    chart : {
+                        type : 'column',// 柱状图
+                        // type:'spline',//曲线图
+                        // type : 'line',// 折现图
+                        // type:'pie',//饼状图
+                        // renderTo : 'tongji4', // 在哪个区域呈现，对应HTML中的DIV元素ID
+                        width : $(document).width()-70,
+                        height:$(document).height()*2/3,
+                        marginTop : 50,
+                        options3d : {
+                            enabled : true,// 是否使用3D渲染图表功能
+                            alpha : 10,
+                            beta : 0,
+                            depth : 50,
+                            viewDistance : 25,
+                        },
+                        plotBackgroundColor : null, // 绘图区的背景颜色
+                        plotBorderWidth : null, // 绘图区边框宽度
+                        plotShadow : false
+                        // 绘图区是否显示阴影
+                    },
+
+                    title : {
+                        text : '点赞数',
+                        align: 'left',
+                        y:20,
+                        x:10,
+                        style: {
+                            color: '#000',
+                            fontWeight: '100',
+                            fontSize: '12'
+                        }
+                    },
+                    xAxis : {
+                        categories : []
+                    },
+                    yAxis : {
+                        tickPositions: [0,20,40,60,80,100],
+                        min : 0,
+                        title : {
+                            text : ''
+                        },
+                    },
+                    legend : {
+                        enabled : false
+                    },
+                    credits : {
+                        enabled : false
+                        // 去掉官网的超链接
+                    },
+                    exporting : {
+                        enabled : false
+                        // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                    },
+                    lang : {
+                        printChart : "打印图片",
+                        downloadJPEG : "导出JPEG 图片",
+                        downloadPDF : "导出PDF 文档",
+                        downloadPNG : "导出PNG 图片",
+                        downloadSVG : "导出SVG 矢量图",
+                        contextButtonTitle : "导出"
+                    },
+                    tooltip : {
+                        pointFormatter : function() {
+                            return '<span style="color:{' + this.series.data
+                                + '}">被点赞数：'+this.y+'</span>'
+                        }
+                    },
+
+                    series : [ {
+                        data : []
+                    } ]
+                });
+            console.log($("#tongji4").highcharts());
+            $('#R0').on('change', function() {
+                $("#tongji4").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji4").highcharts().redraw(false);
+            });
+
+            $('#R1').on('change', function() {
+                $("#tongji4").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji4").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html(
+                    $("#tongji4").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html(
+                    $("#tongji4").highcharts().options.chart.options3d.beta);
+            }
+
+            showValues();
+            $("#tongji4").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji4").highcharts().series[0].setData(data2);
+
+        }
+        //初始化个人评论数图形
+        function personpinglunLinePic() {
+            if(datatable1.length==0){
+                var a = {"username":"暂无"};
+                datatable1.push(a);
+            }
+
+            $("#R0").val(10);
+            $("#R1").val(0);
+
+            $("#tongji5").highcharts(
+                {
+                    chart : {
+                        type : 'column',// 柱状图
+                        // type:'spline',//曲线图
+                        // type : 'line',// 折现图
+                        // type:'pie',//饼状图
+                        // renderTo : 'tongji5', // 在哪个区域呈现，对应HTML中的DIV元素ID
+                        width : $(document).width()-70,
+                        height:$(document).height()*2/3,
+                        marginTop : 50,
+                        options3d : {
+                            enabled : true,// 是否使用3D渲染图表功能
+                            alpha : 10,
+                            beta : 0,
+                            depth : 50,
+                            viewDistance : 25,
+                        },
+                        plotBackgroundColor : null, // 绘图区的背景颜色
+                        plotBorderWidth : null, // 绘图区边框宽度
+                        plotShadow : false
+                        // 绘图区是否显示阴影
+                    },
+
+                    title : {
+                        text : '评论数统计图',
+                        align: 'left',
+                        y:20,
+                        x:10,
+                        style: {
+                            color: '#000',
+                            fontWeight: '100',
+                            fontSize: '12'
+                        }
+                    },
+                    xAxis : {
+                        categories : []
+                    },
+                    yAxis : {
+                        tickPositions: [0,20,40,60,80,100],
+                        min : 0,
+                        title : {
+                            text : ''
+                        },
+                    },
+                    legend : {
+                        enabled : false
+                    },
+                    credits : {
+                        enabled : false
+                        // 去掉官网的超链接
+                    },
+                    exporting : {
+                        enabled : false
+                        // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                    },
+                    lang : {
+                        printChart : "打印图片",
+                        downloadJPEG : "导出JPEG 图片",
+                        downloadPDF : "导出PDF 文档",
+                        downloadPNG : "导出PNG 图片",
+                        downloadSVG : "导出SVG 矢量图",
+                        contextButtonTitle : "导出"
+                    },
+                    tooltip : {
+                        pointFormatter : function() {
+                            return '<span style="color:{' + this.series.data
+                                + '}">被评论数：'+this.y+'</span>'
+                        }
+                    },
+
+                    series : [ {
+                        data : []
+                    } ]
+                });
+            console.log($("#tongji5").highcharts());
+            $('#R0').on('change', function() {
+                $("#tongji5").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji5").highcharts().redraw(false);
+            });
+
+            $('#R1').on('change', function() {
+                $("#tongji5").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji5").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html(
+                    $("#tongji5").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html(
+                    $("#tongji5").highcharts().options.chart.options3d.beta);
+            }
+
+            showValues();
+            $("#tongji5").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji5").highcharts().series[0].setData(data2);
+
+        }
+        //初始化个人发表数图形
+        function personfabiaoLinePic() {
+            if(datatable1.length==0){
+                var a = {"username":"暂无"};
+                datatable1.push(a);
+            }
+
+            $("#R0").val(10);
+            $("#R1").val(0);
+
+            $("#tongji6").highcharts(
+                {
+                    chart : {
+                        type : 'column',// 柱状图
+                        // type:'spline',//曲线图
+                        // type : 'line',// 折现图
+                        // type:'pie',//饼状图
+                        // renderTo : 'tongji6', // 在哪个区域呈现，对应HTML中的DIV元素ID
+                        width : $(document).width()-70,
+                        height:$(document).height()*2/3,
+                        marginTop : 50,
+                        options3d : {
+                            enabled : true,// 是否使用3D渲染图表功能
+                            alpha : 10,
+                            beta : 0,
+                            depth : 50,
+                            viewDistance : 25,
+                        },
+                        plotBackgroundColor : null, // 绘图区的背景颜色
+                        plotBorderWidth : null, // 绘图区边框宽度
+                        plotShadow : false
+                        // 绘图区是否显示阴影
+                    },
+
+                    title : {
+                        text : '发表数统计图',
+                        align: 'left',
+                        y:20,
+                        x:10,
+                        style: {
+                            color: '#000',
+                            fontWeight: '100',
+                            fontSize: '12'
+                        }
+                    },
+                    xAxis : {
+                        categories : []
+                    },
+                    yAxis : {
+                        tickPositions: [0,20,40,60,80,100],
+                        min : 0,
+                        title : {
+                            text : ''
+                        },
+                    },
+                    legend : {
+                        enabled : false
+                    },
+                    credits : {
+                        enabled : false
+                        // 去掉官网的超链接
+                    },
+                    exporting : {
+                        enabled : false
+                        // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                    },
+                    lang : {
+                        printChart : "打印图片",
+                        downloadJPEG : "导出JPEG 图片",
+                        downloadPDF : "导出PDF 文档",
+                        downloadPNG : "导出PNG 图片",
+                        downloadSVG : "导出SVG 矢量图",
+                        contextButtonTitle : "导出"
+                    },
+                    tooltip : {
+                        pointFormatter : function() {
+                            return '<span style="color:{' + this.series.data
+                                + '}">发表数：'+this.y+'</span>'
+                        }
+                    },
+
+                    series : [ {
+                        data : []
+                    } ]
+                });
+            console.log($("#tongji6").highcharts());
+            $('#R0').on('change', function() {
+                $("#tongji6").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji6").highcharts().redraw(false);
+            });
+
+            $('#R1').on('change', function() {
+                $("#tongji6").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji6").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html(
+                    $("#tongji6").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html(
+                    $("#tongji6").highcharts().options.chart.options3d.beta);
+            }
+
+            showValues();
+            $("#tongji6").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji6").highcharts().series[0].setData(data2);
+
+        }
+
+        /* jq写内容*/
+        function mess() {
+            if(datatable.length!=0){
+            for (var i = 0; i < datatable.length; i++) {
+                var picmess;
+                $.ajax({
+                    url: "/file/queryitemidtatt",
+                    data: {"itemid": datatable[i].id},
+                    async: false,
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        picmess = data;
+                    },
+                    error: function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+                if (datatable[i].latype == "01") {
+                    var latype = "产品"
+                }
+                if (datatable[i].latype == "02") {
+                    var latype = "技术"
+                }
+                if (datatable[i].latype == "03") {
+                    var latype = "客户"
+                }
+                if (datatable[i].latype == "04") {
+                    var latype = "组织"
+                }
+                if (datatable[i].latype == "05") {
+                    var latype = "业务"
+                }
+                if (datatable[i].latype == "06") {
+                    var latype = "其他"
+                }
+                    var latext = datatable[i].latext;
+                var time =datatable[i].lacreatetime.split("/");
+                time = time[0]+"-"+time[1]+"-"+time[2];
+                var message = "<div class=\"col-sm-12\" style=\"border: 1px solid #eaece7;padding: 10px 40px 10px;\">" +
+                    "<div id='info' style='line-height: 23px;padding: 6px 0;'> <img src=" + datatable[i].ip + datatable[i].txfilename + " style='border-radius: 50%;width: 50px;float: left;'>" +
+                    "<div id=\"person\" style=\"width: 15%;line-height: 22px;margin-left: 12px;float: left;margin-top: 17px;font-size: 15px;\">" +
+                    "<span id=\"name\" style=\"float:left;\">" + datatable[i].username + "</span>" +
+                    "<div id=\"type\" style=\"font-size:10px;color: #0084ff;float:left;background: #e5f2ff;border-radius: 20%;height:19px;margin-top:1px;width: 21%;margin-left: 10px;text-align: center\">" + latype + "</div>" +
+                    "</div>"+
+                    "<h3 id=\"title\" style='overflow: hidden;width: 100%;margin-top: 62px;margin-left: 62px;'><a onclick=\"page('/knowledge/knowledgeMess?id=" + datatable[i].id + "&dz=" + datatable[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable[i].userid + "&tem=r','" + datatable[i].latitle + "')\" style=\"color:black;font-size: 18px;font-family: MicrosoftYaHei;text-decoration:none;\">" + datatable[i].latitle + "</a></h3>";
+                if (picmess.length > 0) {
+                    message = message + "<div id=\"neirong\" style=\"padding-left: 62px;padding-top: 8px;padding-bottom: 10px;height:110px;overflow: hidden\">" + "<div id=\"img\" style=\"float: left;width: 15%;\"><img src=" + datatable[i].ip + picmess[0].filename +" style='width: 150px;height:95px;border-radius:5px'></div>" +
+                        "<div id=\"text\" style=\"color: black;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3; -webkit-box-orient: vertical;float:left;width: 85%;margin-top: 15px;padding-left: 2%;\">" +latext+ "</div></div>"+
+                        "<span style='padding-left: 65px;float: left;'>"+time+"</span>"
+                } else {
+                    message = message + "<div id=\"neirong\" style=\"padding-left: 62px;padding-top: 8px;padding-bottom: 10px;min-height:40px;overflow: hidden\">" + "<div id=\"text\" style=\"color: black;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3; -webkit-box-orient: vertical;padding:2px 0px 4px;float:left;width: 100%;\">"+latext+"</div></div>" +
+                        "<span style='padding-left: 65px;float: left;'>"+time+"</span>"
+                }
+
+                if(datatable[i].dz=='0'||typeof(datatable[i].dz)=='undefined') {
+                    message = message+  "<i id='zan" + datatable[i].id + "r' class='iconfont icon-zan' style='color:#adb7cb;cursor: pointer;margin-left: 74%;float: left' onclick=\"zan('" + datatable[i].id+"r','"+datatable[i].userid+ "')\"></i><span id='zan1" + datatable[i].id + "r' style='float: left;margin-left: 10px' > " + datatable[i].tpranum + "</span><i class='iconfont icon-pinglun3' style='color:#adb7cb;margin-left: 15px;float:left;cursor: pointer' onclick=\"page('/knowledge/knowledgeMess?id=" + datatable[i].id + "&dz=" + datatable[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable[i].userid + "','" + datatable[i].latitle + "')\"></i><span id='pinglun1" + datatable[i].id + "' style='float: left;margin-left: 8px'> " + datatable[i].comnum + "</span></div> </div>"
+                }else{
+                    message = message+  "<i id='zan" + datatable[i].id + "r' class='iconfont icon-zan' style='color:#586c95;cursor: pointer;margin-left: 74%;float: left' onclick=\"zan('" + datatable[i].id+"r','"+datatable[i].userid+ "')\"></i><span id='zan1" + datatable[i].id + "r' style='float: left;margin-left: 10px' > " + datatable[i].tpranum + "</span><i class='iconfont icon-pinglun3' style='color:#adb7cb;margin-left: 15px;float:left;cursor: pointer' onclick=\"page('/knowledge/knowledgeMess?id=" + datatable[i].id + "&dz=" + datatable[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable[i].userid + "','" + datatable[i].latitle + "')\"></i><span id='pinglun1" + datatable[i].id + " 'style='float: left;margin-left: 8px'> " + datatable[i].comnum + "</span></div> </div>"
+                }
+                $("#example").append(message);
+            }
+            }
+            if(datatable.length<8 &&datatable.length !=0 && r==0){
+                var nomore = '<div class="col-sm-12" style="text-align: center;font-size: 15px;cursor:pointer;height:65px" id="nomore" aria-hidden="true" ><span style="line-height: 68px">到底啦!</span></div>'
+                $("#example").append(nomore);
+                r=1;
+            }
+            if(datatable.length ==0 && r==0){
+                var nomore = '<div class="col-sm-12" style="text-align: center;font-size: 15px;cursor:pointer;height:65px" id="nomore" aria-hidden="true" ><span style="line-height: 68px">暂无数据!</span></div>'
+                $("#example").append(nomore);
+                r=1;
+            }
+        }
+
+        /* jq写内容*/
+        function mess2() {
+            if(datatable1.length!=0) {
+                for (var i = 0; i < datatable1.length; i++) {
+                    var picmess;
+                    $.ajax({
+                        url: "/file/queryitemidtatt",
+                        data: {"itemid": datatable1[i].id},
+                        async: false,
+                        dataType: "json",
+                        type: "post",
+                        success: function (data) {
+                            picmess = data;
+                        },
+                        error: function (error) {
+                            alert("网络状况不佳，用户登录失败！" + error.status);
+                        }
+                    });
+                    if (datatable1[i].latype == "01") {
+                        var latype = "产品";
+                    }
+                    if (datatable1[i].latype == "02") {
+                        var latype = "技术";
+                    }
+                    if (datatable1[i].latype == "03") {
+                        var latype = "客户";
+                    }
+                    if (datatable1[i].latype == "04") {
+                        var latype = "组织";
+                    }
+                    if (datatable1[i].latype == "05") {
+                        var latype = "业务";
+                    }
+                    if (datatable1[i].latype == "06") {
+                        var latype = "其他";
+                    }
+                    var latext = datatable1[i].latext;
+                    var time =datatable1[i].lacreatetime.split("/");
+                    time = time[0]+"-"+time[1]+"-"+time[2];
+                    var message = "<div class=\"col-sm-12\" style=\"border: 1px solid #eaece7;padding: 10px 40px 10px;\">" +
+                        "<div id='info' style='line-height: 23px;padding: 6px 0;'> <img src=" + datatable1[i].ip + datatable1[i].txfilename + " style='border-radius: 50%;width: 50px;float: left;'>" +
+                        "<div id=\"person\" style=\"width: 15%;line-height: 22px;margin-left: 12px;float: left;margin-top: 17px;font-size: 15px;\">" +
+                        "<span id=\"name\" style=\"float:left;\">" + datatable1[i].username + "</span>" +
+                        "<div id=\"type\" style=\"font-size:10px;color: #0084ff;float:left;background: #e5f2ff;border-radius: 20%;height:19px;margin-top:1px;width: 21%;margin-left: 10px;text-align: center\">" + latype + "</div>" +
+                        "</div>"+
+                        "<h3 id=\"title\" style='overflow: hidden;width: 100%;margin-top: 62px;margin-left: 62px;'><a onclick=\"page('/knowledge/knowledgeMess?id=" + datatable1[i].id + "&dz=" + datatable1[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable1[i].userid + "&tem=h','" + datatable1[i].latitle + "')\" style=\"color:black;font-size: 18px;font-family: MicrosoftYaHei;text-decoration:none;\">" + datatable1[i].latitle + "</a></h3>";
+                    if (picmess.length > 0) {
+                        message = message + "<div id=\"neirong\" style=\"padding-left: 62px;padding-top: 8px;padding-bottom: 10px;height:110px;overflow: hidden\">" + "<div id=\"img\" style=\"float: left;width: 15%;\"><img src=" + datatable1[i].ip + picmess[0].filename +" style='width: 150px;height:95px;border-radius:5px'></div>" +
+                            "<div id=\"text\" style=\"color: black;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3; -webkit-box-orient: vertical;float:left;width: 85%;margin-top: 15px;padding-left: 2%;\">" +latext+ "</div></div>"+
+                            "<span style='padding-left: 65px;float: left;'>"+time+"</span>"
+                    } else {
+                        message = message + "<div id=\"neirong\" style=\"padding-left: 62px;padding-top: 8px;padding-bottom: 10px;min-height:40px;overflow: hidden\">" + "<div id=\"text\" style=\"color: black;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3; -webkit-box-orient: vertical;padding:2px 0px 4px;float:left;width: 100%;\">"+latext+"</div></div>" +
+                            "<span style='padding-left: 65px;float: left;'>"+time+"</span>"
+                    }
+
+                    if(datatable1[i].dz=='0'||typeof(datatable1[i].dz)=='undefined') {
+                        message = message+  "<i id='zan" + datatable1[i].id + "h' class='iconfont icon-zan' style='color:#adb7cb;cursor: pointer;margin-left: 74%;float: left' onclick=\"zan('" + datatable1[i].id+"h','"+datatable1[i].userid+ "')\"></i><span id='zan1" + datatable1[i].id + "h' style='float: left;margin-left: 10px' > " + datatable1[i].tpranum + "</span><i class='iconfont icon-pinglun3' style='color:#adb7cb;margin-left: 15px;float:left;cursor: pointer' onclick=\"page('/knowledge/knowledgeMess?id=" + datatable1[i].id + "&dz=" + datatable1[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable1[i].userid + "','" + datatable1[i].latitle + "')\"></i><span id='pinglun" + datatable1[i].id + "' style='float: left;margin-left: 8px'> " + datatable1[i].comnum + "</span></div> </div>"
+                    }else{
+                        message = message+  "<i id='zan" + datatable1[i].id + "h' class='iconfont icon-zan' style='color:#586c95;cursor: pointer;margin-left: 74%;float: left' onclick=\"zan('" + datatable1[i].id+"h','"+datatable1[i].userid+ "')\"></i><span id='zan1" + datatable1[i].id + "h' style='float: left;margin-left: 10px' > " + datatable1[i].tpranum + "</span><i class='iconfont icon-pinglun3' style='color:#adb7cb;margin-left: 15px;float:left;cursor: pointer' onclick=\"page('/knowledge/knowledgeMess?id=" + datatable1[i].id + "&dz=" + datatable1[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable1[i].userid + "','" + datatable1[i].latitle + "')\"></i><span id='pinglun" + datatable1[i].id + "' style='float: left;margin-left: 8px'> " + datatable1[i].comnum + "</span></div> </div>"
+                    }
+                    $("#paimingtable").append(message);
+                }
+            }
+            if(datatable1.length<8 &&datatable1.length!=0 && h==0){
+                var nomore = '<div class="col-sm-12" style="text-align: center;font-size: 15px;cursor:pointer;height:65px" id="nomore" aria-hidden="true" ><span style="line-height: 68px">到底啦!</span></div>'
+                $("#paimingtable").append(nomore);
+                h=1;
+            }
+            if(datatable1.length ==0 && h==0){
+                var nomore = '<div class="col-sm-12" style="text-align: center;font-size: 15px;cursor:pointer;height:65px" id="nomore" aria-hidden="true" ><span style="line-height: 68px">暂无数据!</span></div>'
+                $("#paimingtable").append(nomore);
+                h=1;
+            }
+        }
+
+        /* jq写内容*/
+        function mess3() {
+            if(datatable2.length!=0) {
+                for (var i = 0; i < datatable2.length; i++) {
+                    var picmess;
+                    $.ajax({
+                        url: "/file/queryitemidtatt",
+                        data: {"itemid": datatable2[i].id},
+                        async: false,
+                        dataType: "json",
+                        type: "post",
+                        success: function (data) {
+                            picmess = data;
+                        },
+                        error: function (error) {
+                            alert("网络状况不佳，用户登录失败！" + error.status);
+                        }
+                    });
+                    if (datatable2[i].latype == "01") {
+                        var latype = "产品"
+                    }
+                    if (datatable2[i].latype == "02") {
+                        var latype = "技术"
+                    }
+                    if (datatable2[i].latype == "03") {
+                        var latype = "客户"
+                    }
+                    if (datatable2[i].latype == "04") {
+                        var latype = "组织"
+                    }
+                    if (datatable2[i].latype == "05") {
+                        var latype = "业务"
+                    }
+                    if (datatable2[i].latype == "06") {
+                        var latype = "其他"
+                    }
+                        var latext = datatable2[i].latext;
+                    var time =datatable2[i].lacreatetime.split("/");
+                    time = time[0]+"-"+time[1]+"-"+time[2];
+                    var message = "<div class=\"col-sm-12\" style=\"border: 1px solid #eaece7;padding: 10px 40px 10px;\">" +
+                        "<div id='info' style='line-height: 23px;padding: 6px 0;'> <img src=" + datatable2[i].ip + datatable2[i].txfilename + " style='border-radius: 50%;width: 50px;float: left;'>" +
+                        "<div id=\"person\" style=\"width: 15%;line-height: 22px;margin-left: 12px;float: left;margin-top: 17px;font-size: 15px;\">" +
+                        "<span id=\"name\" style=\"float:left;\">" + datatable2[i].username + "</span>" +
+                        "<div id=\"type\" style=\"font-size:10px;color: #0084ff;float:left;background: #e5f2ff;border-radius: 20%;height:19px;margin-top:1px;width: 21%;margin-left: 10px;text-align: center\">" + latype + "</div>" +
+                        "</div>"+
+                        "<h3 id=\"title\" style='overflow: hidden;width: 100%;margin-top: 62px;margin-left: 62px;'><a onclick=\"page('/knowledge/knowledgeMess?id=" + datatable2[i].id + "&dz=" + datatable2[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable2[i].userid + "&tem=x','" + datatable2[i].latitle + "')\" style=\"color:black;font-size: 18px;font-family: MicrosoftYaHei;text-decoration:none;\">" + datatable2[i].latitle + "</a></h3>";
+                    if (picmess.length > 0) {
+                        message = message + "<div id=\"neirong\" style=\"padding-left: 62px;padding-top: 8px;padding-bottom: 10px;height:110px;overflow: hidden\">" + "<div id=\"img\" style=\"float: left;width: 15%;\"><img src=" + datatable2[i].ip + picmess[0].filename +" style='width: 150px;height:95px;border-radius:5px'></div>" +
+                            "<div id=\"text\" style=\"color: black;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3; -webkit-box-orient: vertical;float:left;width: 85%;margin-top: 15px;padding-left: 2%;\">" +latext+ "</div></div>"+
+                            "<span style='padding-left: 65px;float: left;'>"+time+"</span>"
+                    } else {
+                        message = message + "<div id=\"neirong\" style=\"padding-left: 62px;padding-top: 8px;padding-bottom: 10px;min-height:40px;overflow: hidden\">" + "<div id=\"text\" style=\"color: black;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3; -webkit-box-orient: vertical;padding:2px 0px 4px;float:left;width: 100%;\">"+latext+"</div></div>" +
+                            "<span style='padding-left: 65px;float: left;'>"+time+"</span>"
+                    }
+
+                    if(datatable2[i].dz=='0'||typeof(datatable2[i].dz)=='undefined') {
+                        message = message+  "<i id='zan" + datatable2[i].id + "x' class='iconfont icon-zan' style='color:#adb7cb;cursor: pointer;margin-left: 74%;float: left' onclick=\"zan('" + datatable2[i].id+"x','"+datatable2[i].userid+ "')\"></i><span id='zan1" + datatable2[i].id + "x' style='float: left;margin-left: 10px' > " + datatable2[i].tpranum + "</span><i class='iconfont icon-pinglun3' style='color:#adb7cb;margin-left: 15px;float:left;cursor: pointer' onclick=\"page('/knowledge/knowledgeMess?id=" + datatable2[i].id + "&dz=" + datatable2[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable2[i].userid + "','" + datatable2[i].latitle + "')\"></i><span id='pinglun2" + datatable2[i].id + "' style='float: left;margin-left: 10px'> " + datatable2[i].comnum + "</span></div> </div>"
+                    }else{
+                        message = message+  "<i id='zan" + datatable2[i].id + "x' class='iconfont icon-zan' style='color:#586c95;cursor: pointer;margin-left: 74%;float: left' onclick=\"zan('" + datatable2[i].id+"x','"+datatable2[i].userid+ "')\"></i><span id='zan1" + datatable2[i].id + "x' style='float: left;margin-left: 10px' > " + datatable2[i].tpranum + "</span><i class='iconfont icon-pinglun3' style='color:#adb7cb;margin-left: 15px;float:left;cursor: pointer' onclick=\"page('/knowledge/knowledgeMess?id=" + datatable2[i].id + "&dz=" + datatable2[i].dz + "&myid=" + myinfo.id + "&messid=" + datatable2[i].userid + "','" + datatable2[i].latitle + "')\"></i><span id='pinglun2" + datatable2[i].id + "' style='float: left;margin-left: 10px'> " + datatable2[i].comnum + "</span></div> </div>"
+                    }
+                    $("#new").append(message);
+                }
+            }
+            if(datatable2.length<8 &&datatable2.length !=0 && x==0){
+                var nomore = '<div class="col-sm-12" style="text-align: center;font-size: 15px;cursor:pointer;height:65px" id="nomore" aria-hidden="true" ><span style="line-height: 68px">到底啦!</span></div>'
+                $("#new").append(nomore);
+                x=1;
+            }
+            if(datatable2.length ==0 && x==0){
+                var nomore = '<div class="col-sm-12" style="text-align: center;font-size: 15px;cursor:pointer;height:65px" id="nomore" aria-hidden="true" ><span style="line-height: 68px">暂无数据!</span></div>'
+                $("#new").append(nomore);
+                x=1;
+            }
+        }
+
+        /* 点赞*/
+        function zan(id,zanid) {
+            var realid= id.substr(0,id.length-1);
+            console.log($("#zan"+id).css("color"))
+            if($("#zan"+id).css("color")!="rgb(88, 108, 149)"){
+                saveNews(zanid,"03","工作圈","",realid);
+                var data = {"itemid":realid,"itemtype":"tknowledge"};
+                $.ajax({
+                    url:"/tpraise/savetpraise",
+                    data: data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.code!='404'){
+                            $("#zan"+id).css("color","#586c95");
+                            var a =$("#zan1"+id).text();
+                            var num = parseInt(a)+1;
+                            $("#zan1"+id).text(num);
+                        }else{
+                            alert(data.msg);
+                        }
+                    },
+                    error:function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+            }else {
+
+                var data = {"itemid":realid};
+                $.ajax({
+                    url:"/tpraise/deleteIdTpraise",
+                    data: data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.code!='404'){
+                            $("#zan"+id).css("color","#adb7cb");
+                            var a = $("#zan1"+id).text();
+                            var num = parseInt(a)-1;
+                            $("#zan1"+id).text(num);
+                        }else{
+                            alert(data.msg);
+                        }
+
+                    },
+                    error:function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+
+
+            }
+
+        }
+        
+        /* 签到排名和折线图*/
+        //id -> 存放图片  width，height  存放图片尺寸宽高  id2 按钮  allMaxSize图片大小
+        function picUpload(id,width,height,id2,allMaxSize){
+            var $ = jQuery;
+            $list = $(id);
+            // 优化retina, 在retina下这个值是2
+            ratio = window.devicePixelRatio || 1;
+            // 缩略图大小
+            thumbnailWidth = 80 * ratio;
+            thumbnailHeight = 80 * ratio;
+            allMaxSize = 8;//限制图片大小
+            // 当有文件添加进来的时候
+            uploader.on( 'fileQueued', function( file ) {
+                var $li = $(
+                    '<li id="' + file.id + '" class="file-item thumbnail" style="float:left;">' +
+                    '<div class="delete" style="overflow: hidden;height:0px;width: 80px;position: fixed;background-color: black;opacity: 0.6"><i class="iconfont icon-guanbi-copy" style="float: left;cursor: pointer;font-size: 53px;margin-top: -29px;margin-left: 32px;width: 39px;color:white">关闭</i></div>' +
+                    '<img>' +
+                    '<div class="info">' + file.name + '</div>' +
+                    '</li>'
+                    ),
+                    $img = $li.find('img');
+                $list.append( $li );
+                $(".uploader-list").css("border-top","1px solid #eaece7");
+                $(".uploader-list").css("padding","4px");
+                // 创建缩略图
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+
+                    //去掉默认的头像，清空图片名字的信息
+                    $('.webuploader-pick img').attr('src','')
+                    $('.file-item .info').empty();
+
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+
+                $li.on( 'mouseenter', function() {
+                    $(".delete").stop().animate({height: 15});
+                });
+
+                $li.on( 'mouseleave', function() {
+                    $(".delete").stop().animate({height: 0});
+                });
+
+                $li.on('click','.iconfont.icon-guanbi-copy' , function() {
+                    uploader.removeFile( file,true );
+                    num++;
+                    $li.remove();
+                    $(".delete").stop().animate({height: 0});
+                    if($(".fileList").size()<=0){
+                        $(".uploader-list").css("border-top","");
+                        $(".uploader-list").css("padding","");
+                    }
+                })
+            });
+
+
+            // 文件上传过程中创建进度条实时显示。
+            /* uploader.on( 'uploadProgress', function( file, percentage ) {
+                 var $li = $( '#'+file.id ),
+                     $percent = $li.find('.progress span');
+
+                 // 避免重复创建
+                 if ( !$percent.length ) {
+                     $percent = $('<p class="progress"><span></span></p>')
+                         .appendTo( $li )
+                         .find('span');
+                 }
+
+                 $percent.css( 'width', percentage * 100 + '%' );
+             });*/
+
+            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+            uploader.on( 'uploadSuccess', function( file ) {
+                $( '#'+file.id ).addClass('upload-state-done');
+                /*uploader.removeFile(uploader.getFiles(),true);*/
+
+            });
+
+            // 文件上传失败，现实上传出错。
+            uploader.on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+
+                // 避免重复创建
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+
+                //$error.text('上传失败');
+
+            });
+
+            // 完成上传完了，成功或者失败，先删除进度条。
+            uploader.on( 'uploadComplete', function( file ) {
+                num++;
+                if(num==uploader.getFiles().length){
+                    $("#reset1").trigger("click");
+                }
+                $( '#'+file.id ).find('.progress').remove();
+
+            });
+
+            //  验证大小
+            uploader.on("error",function (type){
+
+                if(type == "Q_EXCEED_SIZE_LIMIT"){
+                    window.alert("系统提示:所选图片总大小不可超过" + allMaxSize + "个哦！");
+                }
+
+                // 判断传入的是不是函数
+                /*  if( jQuery.isFunction(sideFun) ){
+                 sideFun(type,allMaxSize);
+                 }else {
+                 //不是函数
+                 console.log(2)
+                 return false;
+                 }*/
+                /*  if(sideFun === 'undefined'){
+                 return true;
+                 }else{
+                 sideFun(type,allMaxSize);
+                 }
+                 */
+            });
+
+            //绑定提交事件
+            $("#reset1").click(function() {
+                console.log($("#fileList").html());
+                if($("#fileList").html()!=""){
+                    console.log("上传...");
+                    uploader.option('server','/file/saveFileupload');
+                    uploader.option('formData',{'itemtype':'tknowledge','itemid':sign_id,'attfrom':"01"});
+                    uploader.upload();   //执行手动提交
+                    console.log("上传成功");
+
+                }
+                $("#fileList").html("");
+
+            });
+
+        }
+
+        function textInit(e) {
+            e.preventDefault();//阻止默认事件
+            var text;
+            var clp = (e.originalEvent || e).clipboardData;
+            if (clp === undefined || clp === null) {
+                text = window.clipboardData.getData("text") || "";
+                if (text !== "") {
+                    if (window.getSelection) {
+                        var newNode = document.createElement("span");
+                        newNode.innerHTML = text;
+                        window.getSelection().getRangeAt(0).insertNode(newNode);
+                    } else {
+                        document.selection.createRange().pasteHTML(text);
+                    }
+                }
+            } else {
+                text = clp.getData('text/plain') || "";
+                if (text !== "") {
+                    /*document.execCommand('insertText', false, text);*/
+                    var qutext = text
+                   /* var span=/<span\s*[^>]*>(.*?)<\/span>/ig;
+                    var div =/<div\s*[^>]*>(.*?)<\/div>/ig;
+                    var a = /<a\s*[^>]*>(.*?)<\/a>/ig;
+                    var p = /<p\s*[^>]*>(.*?)<\/p>/ig;
+                    qutext = qutext.replace(span,"$1");
+                    qutext = qutext.replace(a,"$1");
+                    qutext = qutext.replace(div,"$1");
+                    qutext = qutext.replace(p,"$1");*/
+                    document.execCommand('insertText', false, qutext);
+                }
+            }
+        }
+        $( document ).on( "paste", "#quesmess", function(e) {
+            //去除复制样式
+            textInit(e);
+        });
+        //人员选择
+        //初始化树形结构
+        function tree() {
+            $.ajax({
+                url:"/Tdepartmentinfo/querySXJGTdepartmentinfo",
+                data:{},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    data.splice(0,0,{'text':'全部','nodeid':'01'});
+                    $('#tree').treeview({
+                        data: data,         // 数据源
+                        collapseIcon:"iconfont icon-xiangshangjiantou",
+                        expandIcon:"iconfont icon-iconset0417",
+                        color:"#000000",
+                        backColor:"#FFFFFF",
+                        href:"#node-1",
+                        selectable:true,
+                        state: {
+                            checked:true,
+                            disabled:true,
+                            expanded:true,
+                            selected:true
+                        },
+                        tags: ['available'],
+                        onNodeChecked: function (event,data) {
+                            alert(data.nodeid);
+                        },
+                        onNodeSelected: function (event, data) {
+                            num2=data.nodeid;
+                            name2=data.text;
+                            $.ajax({
+                                url:"/Tdepartmentinfo/queryTdepartmentTuser",
+                                data:{"id":data.nodeid},
+                                async:false,
+                                dataType:"json",
+                                type:"post",
+                                success:function (data) {
+                                    table2();
+                                    $('#table2').bootstrapTable('load',data);
+                                    $("#tree").siblings().find(".pull-left.pagination-detail").css("left","19%");
+                                    $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                    /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                },
+                                error:function (error) {
+                                    alert("数据丢失了，刷新下试试吧" + error.status);
+                                }
+                            });
+                            $("#search").click(function () {
+                                $.ajax({
+                                    url:"/Tdepartmentinfo/queryTdepartmentTuser",
+                                    data:{"id":data.nodeid,"username":$("#key1").val()},
+                                    async:false,
+                                    dataType:"json",
+                                    type:"post",
+                                    success:function (data) {
+                                        table2();
+                                        $('#table2').bootstrapTable('load',data);
+                                        $("#tree").siblings().find(".pull-left.pagination-detail").css("left","19%");
+                                        $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                        /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                    },
+                                    error:function (error) {
+                                        alert("数据丢失了，刷新下试试吧" + error.status);
+                                    }
+                                });
+                            })
+                        }
+                    });
+                    $('#tree').treeview('collapseAll', { silent: true });
+                    $('#tree').find("ul li:first").click();
+                },
+                error:function (error) {
+                    alert("数据丢失了，刷新下试试吧" + error.status);
+                }
+            });
+
+
+        }
+        //初始化人员表格
+        function table2() {
+            $('#table2').bootstrapTable('destroy').bootstrapTable({
+                /*showToggle:!0,
+            showColumns:!0,*/
+                iconSize: "outline",
+                toolbar: "#exampleTableEventsToolbar",
+                /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                //url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                /*showRefresh:true,*/
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                checkboxHeader:0,
+                singleSelect : true, // 单选checkbox
+                columns: [
+                    {
+                        field: "state",
+                        checkbox: true,
+                        align: 'center',
+                    }, {
+                        field: 'usernumber',
+                        title: '姓名',
+                        align: 'center',
+                        width: '25%',
+                    },{
+                        field: 'username',
+                        title: '姓名',
+                        align: 'center',
+                        width: '25%',
+                    }, {
+                        field: 'sex',
+                        title: '性别',
+                        align: 'center',
+                        width: '10%',
+                    }, {
+                        field: 'age',
+                        title: '年龄',
+                        align: 'center',
+                        width: '28%',
+                    }, {
+                        field: 'phone1',
+                        title: '联系电话',
+                        align: 'center',
+                        width: '30%',
+                    }],
+                data: []
+            });
+        }
+        //人员选择确认
+        function chose() {
+            var selectContent = $('#table2').bootstrapTable('getSelections');
+            if(selectContent.length ==1){
+                var num1 = selectContent[0].id;
+                var name1 = selectContent[0].username;
+                $('.searchable-select-holder').html(name1);
+                $('.searchable-select-holderappend').html(num1);
+            }else{
+                if(name2=='全部'){
+                    $('.searchable-select-holder').html(name2);
+                    $('.searchable-select-holderappend').html('');
+                }else{ alert("请选择人员");
+                    return false;
+                }
+            }
+            $("#personselect").modal('hide');
+        }
+    </script>
+</head>
+
+<body>
+<div class="gray-bg">
+    <div id="donghua" class="col-sm-12" style="height:100%;">
+        <div class="ibox ">
+            <div class="ibox-content">
+                <div class="spiner-example" style="padding-top: 210px;">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="big" class="col-sm-12" style="display: none">
+
+        <!-- Example Events -->
+        <div class="example-wrap" style="margin-top: 25px;">
+            <!-- 个人统计图搜索框-->
+            <div id="toolbar1" style="width: 82%;overflow: hidden;margin-bottom: 14px;float:left;">
+                <div class="my-container">
+                    <label class="myLabel-content">姓名:</label>
+                    <div class="myText-content" style="width: 100px;">
+                        <select id="name1" data-placeholder="选择用户..." class="chosen-select" style="width:350px;" tabindex="2">
+                        </select>
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">开始日期：</label>
+                    <div class="myText-content">
+                        <input id="Begtime" class="com laydate-icon form-control layer-date" placeholder="开始日期">
+                    </div>
+
+                </div>
+                <div class="my-container" style="margin-left: 1%;"><label class="myLabel-content">至</label></div>
+                <div class="my-container">
+                    <label class="myLabel-content"></label>
+                    <div class="myText-content">
+                        <input id="Endtime" class="com laydate-icon form-control layer-date" placeholder="结束日期">
+                    </div>
+                </div>
+                <div class="myText-content" style="width: 19%;">
+                    <select name="select" id="type2" style="float:left;;height:33px;line-height: 35px;border: solid 1px #e5e6e7;">
+                        <option value="">所有</option>
+                        <option value="01">产品</option>
+                        <option value="02">技术</option>
+                        <option value="03">客户</option>
+                        <option value="04">组织</option>
+                        <option value="05">业务</option>
+                        <option value="06">其他</option>
+                    </select>
+                    <div class="myText-content" style="margin-left: 50%;width: 65%;">
+                        <input id="key" type="text" style="height:33px;" class="form-control" placeholder="关键字">
+                    </div>
+                </div>
+                <div class="myBtn-content" style="margin-left: 5%;margin-top: 0.2%;">
+                    <button id="search1" type="button" class="btn btn-primary" style="background-color:#0099CC">查询
+                    </button>
+                    <button id="reset1" type="button" class="btn btn-default">重置</button>
+                </div>
+            </div>
+            <!-- 个人表格搜索框-->
+
+            <div id="btn" class="btn-group hidden-xs" style="float: right">
+                <a  data-toggle="modal" style="border-right: 0px;" data-trigger="hover" data-placement="bottom" title="发布知识" class="btn btn-outline btn-default" href="#modal-form" onclick="questionPublish()"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                <!--<button type="button" class="btn btn-outline btn-default">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </button>-->
+                <button style="border-right: 0px;" type="button" data-trigger="hover" data-placement="bottom" title="图表界面" class="btn btn-outline btn-default" onclick="pictab();">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </button>
+                <button style="border-right: 0px;" type="button" data-trigger="hover" data-placement="bottom" title="最新知识" class="btn btn-outline btn-default" onclick="reload();">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                </button>
+                <button style="border-right: 0px;" type="button" data-trigger="hover" data-placement="bottom" title="最火知识" class="btn btn-outline btn-default" onclick="paiming();">
+                    <i class="glyphicon glyphicon-align-justify" aria-hidden="true"></i>
+                </button>
+                <button type="button" data-trigger="hover" data-placement="bottom" title="最热知识" class="btn btn-outline btn-default" onclick="tab();">
+                    <i class="glyphicon glyphicon-stats" aria-hidden="true"></i>
+                </button>
+            </div>
+            <!-- 个人表格-->
+            <div class="example" id="example">
+
+            </div>
+            <!-- 个人统计-->
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB; " id="tongji">
+            </div>
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB; " id="tongji2">
+            </div>
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB; " id="tongji3">
+            </div>
+
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB; " id="tongji4">
+            </div>
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB; " id="tongji5">
+            </div>
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB; " id="tongji6">
+            </div>
+
+            <div  style="" id="new">
+            </div>
+            <div class="col-sm-12" id="picControl" style="margin-top: 15px;">
+                <span id="dianzan1" style="margin-left: 37%;cursor: pointer;color: #1e88e5"><i class="fa fa-square"> </i> 点赞数</span>
+                <span id="pinglun1" style="margin-left: 5%;cursor: pointer;"><i class="fa fa-square" style="color:#CCCCCC"> </i> 评论数</span>
+                <span id="fabushu1" style="margin-left: 5%;cursor: pointer;"><i class="fa fa-square" style="color:#CCCCCC"> </i> 发布数</span>
+            </div>
+            <div id="sliders" align="center" style="width: 100%; height: 10px; margin: 5px; float: left; border: 0px solid">
+            </div>
+            <table id="tongjitable" align="center" style="clear: both;width: 30%">
+                <tbody><tr>
+                    <td style="width: 10%">α角</td>
+                    <td style="width: 40%;"><input class="range" id="R0" type="range" min="0" max="45" value="" style="float: left;"> <span id="R0-value" class="value">10</span></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="width: 10%">β角</td>
+                    <td style="width: 40%;"><input class="range" id="R1" type="range" min="0" max="45" value="" style="float:left;"> <span id="R1-value" class="value">5</span></td>
+                </tr>
+                </tbody></table>
+            <!-- 排名列表-->
+            <div class="example" id="paimingtable">
+            </div>
+            <i id="top" class="fa fa-angle-up" style="font-size: 30px;position: fixed;right: 5px;top: 350px;cursor: pointer"></i>
+        </div>
+        <!-- End Example Events -->
+    </div>
+    <!-- 发布签到弹出框 -->
+    <div id="modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: #FFFFFF">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <h3 class="m-t-none m-b" style="font-family: FangSong;font-weight: 800;font-size: 15px;">发布知识</h3>
+                            <div class="plan" style="background-color: #FBFBFB;position:relative;border: 1px solid #e7eaec;overflow: hidden;padding: 0 0 12px;">
+                                <input type="text" id="questitle" maxcodelength="100" contenteditable="plaintext-only" style="font-weight: bold;padding: 5px 8px 0;height: 33px;font-size: 15px;line-height: 26px;border:0;background-color: #FBFBFB;width: 100%;border-bottom: 1px solid #eaece7;padding: 4px" onfocus="if(this.placeholder=='一句话细节你的分享（必填）')this.placeholder=''" onblur="if(this.placeholder=='')this.placeholder='一句话细节你的分享（必填）'"  placeholder="一句话细节你的分享（必填）">  </input>
+                                <div id="quesmess" contenteditable="true" style="padding: 8px 8px 0;min-height: 220px;font-size: 14px;padding: 4px;" onfocus="if(this.innerText=='分享细节（选填）')this.innerText=''" onblur="if(this.innerText=='')this.innerText='分享细节（选填）'">分享细节（选填）</div>
+                                <div style="position:absolute;bottom: 0px;width: 100%">
+                                    <div class="picture" style="float: right;font-size: 20px;width: 100%;">
+                                        <select id="kntype" style="float: left;height:24px;font-size: 15px;border: 0; background: transparent;">
+                                            <option value="01">产品</option>
+                                            <option value="02">技术</option>
+                                            <option value="03">客户</option>
+                                            <option value="04">组织</option>
+                                            <option value="05">业务</option>
+                                            <option value="06">其他</option>
+                                        </select>
+                                        <div id="filePicker" style="font-size:14px;padding-bottom:5px;float: right;margin-right: 10px;"><span style="font-size: 13px;float: right;margin-top: 3px;">上传图片</span></div>
+                                    </div>
+                                </div>
+                                <div class="uploader-list">
+                                    <ul id="fileList" style="padding-left: 17px;list-style:none;overflow: hidden;margin-bottom: 15px;"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button id="closed" style="color:#73777A;margin-right: 15px;margin-top: 15px;width: 70px;float: right;background-color: #F5F5F6" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="closePage();" value="取消">取消</button>
+                            <button id="commit" style="margin-right:3px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="sign();" value="发布">发布</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="personselect" class="modal fade" aria-hidden="true" style="overflow-y: hidden" >
+        <div class="modal-dialog">
+            <div class="modal-content" style="margin-left: 220px;width:800px;background-color: #FFFFFF;">
+                <div class="modal-body">
+                    <div class="row" >
+                        <div id="tree" class="col-sm-4" style="overflow-y: scroll;overflow-x: hidden;width: 30%"></div>
+                        <div class="col-sm-8" style="width: 70%">
+                            <div class="myText-content" style="margin-left: 0;width:100%;margin-bottom: 10px">
+                                <input id="key1" type="text" style="outline: none;float: left;height:33px;width: 78%;" class="form-control" placeholder="请输入要搜索的姓名或员工编号">
+                                <button id="search" type="button" class="btn btn-primary" style="line-height: 19px;border-radius: 0;width: 20%;background-color:#0099CC">搜索</button>
+                            </div>
+                            <div id="table2"></div>
+                        </div>
+                        <div style="overflow: hidden;width: 200px;position: absolute;top: 85%;left: 70%;">
+                            <button  style="color:#73777A;background-color: #F5F5F6;margin-right: 15px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="closePage();" value="取消">取消</button>
+                            <button  style="margin-right:3px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose();" value="发布">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+
+
+</script>
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:02 GMT -->
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Remuneration.PayrecordDao">
+    <select id="QuerypayrecordDao"  resultType="com.OuSoft.system.entity.Payrecord">
+			select
+			poin.posiname as posiname,
+			tu.username AS username,
+			tdeinfo.deparname AS grzdeparname,
+			pa.user_id AS userID,
+			pa.pay AS queenPay,
+			pa.input_time As inputTime,
+			pa.describ AS 	describ,
+			pa.*
+ 			from payrecord pa
+			LEFT JOIN tuser tu ON tu.id = pa.user_id
+			LEFT JOIN tposituser potu on potu.userid = pa.user_id
+
+			LEFT JOIN tpositioninfo poin on poin.id = potu.posiid
+			LEFT JOIN tdepartuser tdetu ON tdetu.userid = pa.user_id
+			LEFT JOIN tdepartmentinfo tdeinfo ON tdeinfo.id = tdetu.deparid
+			where 1=1
+			<if test="id != null and id != ''">
+			and	pa.user_id=#{id}
+			</if>
+			<if test="begtime != null and begtime != ''">
+				and   input_time > #{begtime}
+			</if>
+			<if test="endtime != null and endtime != ''">
+				and   #{endtime} > input_time
+			</if>
+	</select>
+	<insert id="InsertpayrecordDao" parameterType="com.OuSoft.system.entity.Payrecord">
+		insert into payrecord (id,user_id,frontPay,pay,input_time,approver_id,describ) value (#{id},#{userId},#{frontPay},#{queenPay},#{inputTime},#{approverId},#{describ})
+	</insert>
+</mapper>

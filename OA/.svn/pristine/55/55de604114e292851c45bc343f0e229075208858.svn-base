@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.mobileCommerce.dao.Clock.MClockDao">
+  
+  
+  <!-- 查询签到签退图表列表 -->
+  <select id="queryClockDao" parameterType="com.OuSoft.system.entity.Clock" resultType="com.OuSoft.system.entity.Clock">
+	 		SELECT
+			ts.*, SUBSTR(ts.cltime, 11, 9) AS time,
+			SUBSTR(ts.cltime, 1, 10) AS times,
+			IFNULL(tpra.num, 0) AS tpranum,
+			tu.username AS username,
+			IFNULL(tp.id, 0) AS dz
+			FROM tsign ts
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tsign'
+				GROUP BY
+					t.itemid
+			) tpra ON ts.id = tpra.itemid
+			LEFT JOIN tuser tu ON tu.id = ts.userid
+			LEFT JOIN tpraise tp ON tp.userid = #{dzuserid} AND tp.itemid = ts.id
+			<where>
+				1=1
+				<if test="cltime != null and cltime != '' ">
+					AND SUBSTR(ts.cltime, 1, 10) = #{cltime}
+				</if>
+				<if test="cltype != null and cltype != '' ">
+					AND ts.cltype = #{cltype}
+				</if>
+				<if test="id != null and id != '' ">
+					AND ts.userid = ( SELECT id FROM tuser tus WHERE 1 = 1 AND tus.id = #{id} )
+				</if>
+					ORDER BY time  limit ${pagenum},${pagesize}
+				
+			</where>
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+ </mapper>

@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:59 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <title></title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/highcharts.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet"  href="/static/js/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet"  href="/static/css/jquery.searchableSelectparse.css">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/js/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <style>
+        #table1 thead>tr>th {
+            padding: 0;
+            margin: 0;
+            background-color:#66C5FF;
+            color:white;
+            border-right: 1px solid white;
+        }
+        #table2{
+            margin-top: 0px !important;
+        }
+        .checkbox-custom {
+            position: relative;
+            padding: 0 0 0 25px;
+            margin-bottom: 7px;
+            margin-top: 0;
+            display: inline-block;
+        }
+        /*
+        将初始的checkbox的样式改变
+        */
+        .checkbox-custom input[type="checkbox"] {
+            opacity: 0;/*将初始的checkbox隐藏起来*/
+            position: absolute;
+            cursor: pointer;
+            z-index: 2;
+            margin: -6px 0 0 0;
+            top: 50%;
+            left: 3px;
+        }
+        /*
+        设计新的checkbox，位置
+        */
+        .checkbox-custom label:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 2px;
+            margin-top: -7px;
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            border-radius: 2px;
+            border: 1px solid #bbb;
+            background: #fff;
+        }
+        /*
+        点击初始的checkbox，将新的checkbox关联起来
+        */
+        .checkbox-custom input[type="checkbox"]:checked +label:after {
+            position: absolute;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            content: "\e013";
+            top: 42%;
+            left: 3px;
+            margin-top: -5px;
+            font-size: 11px;
+            line-height: 1;
+            width: 16px;
+            height: 16px;
+            color: #0099CC;
+        }
+        .checkbox-custom label {
+            cursor: pointer;
+            line-height: 1.2;
+            font-weight: normal;/*改变了rememberme的字体*/
+            margin-bottom: 0;
+            text-align: left;
+        }
+        .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+            clear:both;
+        }
+        .open .dropdown-toggle.btn-default{
+            background-color: #FFF;
+            color:#555;
+        }
+        .my-container {
+            float: left;
+            display: inline-block;
+        }
+
+        .myLabel-content ,.myText-content,.myBtn-content{
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+            margin-left: 10px;
+        }
+        .myLabel-content,.myText-content input[type='text'],.myBtn-content .btn {
+            height: 30px;
+            font-size: 12px;
+        }
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+        .range{
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none;/*清除系统默认样式*/
+            width:80% !important;
+            background: #e7eaec;
+            height: 3px;/*横条的高度*/
+        }
+
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background:  #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+
+        input[type=range]::-ms-track {
+            height: 25px;
+            border-color: transparent; /*去除原有边框*/
+            color: transparent; /*去除轨道内的竖线*/
+        }
+
+        input[type=range]::-ms-thumb {
+            height: 20px;
+            width: 20px;
+            background: #000000;
+            border-radius: 50%;
+        }
+
+        input[type=range]::-ms-fill-lower {
+            /*进度条已填充的部分*/
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #059CFA, #E1E6EB 100%, #E1E6EB);
+        }
+
+        input[type=range]::-ms-fill-upper {
+            /*进度条未填充的部分*/
+            height: 22px;
+            border-radius: 50%;
+            background: #E1E6EB;
+        }
+
+        input[type=range]:focus::-ms-fill-lower {
+            background: linear-gradient(to right, #059CFA, #E1E6EB 100%, #E1E6EB);
+        }
+
+        input[type=range]:focus::-ms-fill-upper {
+            background: #E1E6EB;
+        }
+        .com {
+            cursor: pointer;
+            width: 120px;
+            background-repeat: no-repeat;
+            background-position: 95% center;
+            background-size: 18px;
+        }
+    </style>
+    <!--刷新当前页面  -->
+    <script>
+        var bs = null
+        var width;var ptype = 'column';
+        window.onresize = function (){
+            c();
+            // personLinePic()
+        };
+        function closePage(){
+            $("#modal-form").modal('hide');
+        }
+        var chart2;
+        var type;
+        var firsttype = 'column';
+        var secondtype = 'column';
+        var thridtype = 'column';
+        var fir;
+        var sec ;
+        var thr ;
+        var series;
+        var datatable2;
+        $(function () {
+            jeDate("#Begtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            jeDate("#Endtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            //提示字显示
+            $("a").tooltip();
+            $(":button").tooltip();
+            //动画效果
+            $("#big").show();
+            $("#donghua").remove();
+            $("#example").hide();
+            $("#paiming").show();
+            $("#paimingtable").hide();
+            $("#tongjitable").show();
+            $("#sliders").show();
+            IEVersion();
+            // 初始化下拉框
+            //名字选择框 copy开始  确保选择框名字正确
+            $("#name1").searchableSelect({width:85});
+            $(".searchable-select").click(function () {
+                $("#personselect").modal('show');
+            });
+            $("#personselect").find(".row").height($(document).height()-100);
+            $('#table2').height($("#personselect").find(".row").height()-100);
+            tree();
+            $("#tree").height($(document).height()-110);
+            //名字选择框 copy结束
+            now();
+            before();
+            $('#type').selectpicker();
+            $("#leixing").selectpicker();
+            $("#paimingtype").selectpicker({width : 130,noneSelectedText : '请选择',maxOptions:3});
+            var Request = new Object();
+            Request = GetRequest();
+            var paimingtype = Request["paimingtype"];
+            if(paimingtype == '05'){
+                $("#paimingtype").selectpicker('val','05');
+                $("#paimingtype").selectpicker('refresh');
+            }else if(paimingtype == '08'){
+                $("#paimingtype").selectpicker('val','08');
+                $("#paimingtype").selectpicker('refresh');
+            }else{
+                $("#paimingtype").selectpicker('val','01');
+                $("#paimingtype").selectpicker('refresh');
+            }
+            //twolevel();
+            pictab();
+            leixingselect();
+            // list1();p
+            c();
+            search();
+            //调用
+            //<span style="font-size: 13px;float: right;margin-top: 3px;">上传图片</span>
+            width=$(document).width();
+            // $('#testTable').bootstrapTable('refresh', { url: '/Home/GetPaginationData2' });
+
+        });
+        //解析url参数
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+
+        //IE 浏览器 滑块处理
+        function IEVersion() {
+            if (!!window.ActiveXObject || "ActiveXObject" in window) {
+                $("input[type=range]").removeClass("range");
+                $("input[type=range]").css("margin-top", "3px");
+                $("input[type=range]").css("padding", "0px");
+                $("input[type=range]").css("height", "11px");
+            }
+        }
+        //格式化现在日期
+        function now() {
+            var date=new Date();
+            var currentMonth=date.getMonth();
+            var nextMonth=++currentMonth;
+            var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
+            var oneDay=1000*60*60*24;
+            var now = new Date(nextMonthFirstDay-oneDay);
+            var day = ("0" + now.getDate()).slice(-2);
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var year =now.getFullYear();
+            //拼装完整日期格式
+            var today = year+"-"+(month)+"-"+(day) ;
+
+            //完成赋值
+            $('#Endtime').val(today);
+            $('#Searchtime').val(today);
+            $('#orderId').val(today);
+        }
+        //格式化15天前的日期
+        function before() {
+            //十五天毫秒值：1209600000
+            var date = new Date();
+            var times = date.getTime();
+            var now = new Date(times);
+            //格式化日，如果小于9，前面补0
+            var day = "01";
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            //完成赋值
+            $('#Begtime').val(today);
+
+        }
+        //二级联动菜单
+        function leixingselect() {
+            $('#type').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                $("#leixing").html("")
+                console.log($("#type").siblings().find(".filter-option-inner-inner").text());
+                if ($("#type").siblings().find(".filter-option-inner-inner").text() == "纵比") {
+                    var a = "<option value=01>周</option>" +
+                        "<option value=02>月</option>" +
+                        "<option value=03>季度</option>" +
+                        "<option value=04>年</option>"
+                    $("#leixing").append(a);
+                } else {
+                    var a = "<option value=01>人员</option>" +
+                        "<option value=02>小组</option>" +
+                        "<option value=03>部门</option>"
+                    $("#leixing").append(a);
+                }
+                $("#leixing").selectpicker("refresh");
+
+            });
+        }
+        //选项卡设置
+        function page(url, title) {
+            var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+            $(window.top.document).find('.J_mainContent').find("iframe").hide();
+            var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+                + '" seamless="" style="display: inline;"></iframe>';
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+                ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+            $(window.top.document).find('.J_mainContent').append(iframe);
+        }
+        //搜索、重置按钮
+        function search() {
+            $('#search1').click(function () {
+                getColumns();
+                c();
+                // personLinePic();
+            });
+            $('#reset1').click(function () {
+                $(".searchable-select-holder").html("全部");
+                $(".searchable-select-holderappend").html("01");
+                now();
+                before();
+                list();
+                $('#table1').bootstrapTable('load', datatable);
+                // personLinePic();
+            });
+
+            $('#search2').click(function () {
+                // list1();
+                $('#table1').bootstrapTable('load', datatable1);
+                c();
+            });
+            $('#reset2').click(function () {
+                now();
+                // list1();
+                $('#table1').bootstrapTable('load', datatable1);
+                c();
+            });
+        }
+
+        //初始化表格
+        function table1() {
+            var id;
+            var name;
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            window.operateEvents = {
+                'click .RoleOfdelete': function (e, value, row, index) {
+                    alert(row.dno);
+                },
+                'click .RoleOfedit': function (e, value, row, index) {
+                    $("#editModal").modal('show');
+
+                }
+            };
+            $('#table1').bootstrapTable('destroy').bootstrapTable({
+                /*showToggle:!0,
+            showColumns:!0,*/
+                iconSize: "outline",
+                toolbar: "#exampleTableEventsToolbar",
+                /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                /*showRefresh:true,*/
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                pagination: true, // 在表格底部显示分页组件，默认false
+                pageList: [10, 20], // 设置页面可以显示的数据条数
+                pageSize: 10, // 页面数据条数
+                pageNumber: 1, // 首页页码
+                columns: [
+                    {
+                        field: 'number',
+                        title: '序号',
+                        width: '5px',
+                        align: 'center',
+                        formatter: function (value, row, index) {
+                            return index + 1; //序号正序排序从1开始
+                        }
+                    },
+                    {
+                        field: 'username',
+                        title: '姓名',
+                        align: 'center',
+                        // formatter: aFormatter //添加超链接的方法
+                    }, {
+                        field: 'rtime',
+                        title: '签到日期',
+                        align: 'center',
+                    }, {
+                        field: 'mtime',
+                        title: '签到时间',
+                        align: 'center',
+                    }, {
+                        field: 'clplace',
+                        title: '签到地点',
+                        align: 'center',
+                        //formatter: place
+                    },
+                    {
+                        field: 'clform',
+                        title: '签到方式',
+                        align: 'center',
+                        //formatter: clfrom
+                    },
+                    {
+                        field: 'clstatus',
+                        title: '签到状态',
+                        align: 'center',
+                        //formatter: clstatus
+                    }, {
+                        field: 'price',
+                        title: '赞',
+                        align: 'center',
+                        width: '140px',
+                        //formatter: operateFormatter
+
+                    }],
+                data: datatable1
+            });
+        }
+
+
+        /* 排名点赞*/
+        function zan2(id) {
+            if ($("#zan2" + id).hasClass("glyphicon glyphicon-heart-empty")) {
+                var data = {"itemid": id, "itemtype": "tsign"};
+                $.ajax({
+                    url: "/tpraise/savetpraise",
+                    data: data,
+                    async: false,
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        if (data.code != '404') {
+                            $("#zan" + id).attr("class", "glyphicon glyphicon-heart");
+                            var a = $("#zan1" + id).text();
+                            var num = parseInt(a) + 1;
+                            $("#zan1" + id).text(num);
+                            $("#zan2" + id).attr("class", "glyphicon glyphicon-heart");
+                            var a = $("#zan3" + id).text();
+                            var num = parseInt(a) + 1;
+                            $("#zan3" + id).text(num);
+                        } else {
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+            } else {
+                var data = {"itemid": id};
+                $.ajax({
+                    url: "/tpraise/deleteIdTpraise",
+                    data: data,
+                    async: false,
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        if (data.code != '404') {
+                            $("#zan" + id).attr("class", "glyphicon glyphicon-heart-empty");
+                            var a = $("#zan1" + id).text();
+                            var num = parseInt(a) - 1;
+                            $("#zan1" + id).text(num);
+                            $("#zan2" + id).attr("class", "glyphicon glyphicon-heart-empty");
+                            var a = $("#zan3" + id).text();
+                            var num = parseInt(a) - 1;
+                            $("#zan3" + id).text(num);
+                        } else {
+                            alert(data.msg);
+                        }
+
+                    },
+                    error: function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+
+
+            }
+
+        }
+
+        //ajax 获取排序数据 传给datatable1 //表格动态获取columns
+        var  datatable1 ;
+        var columns=[];
+        function getColumns() {
+            var statu = $("#leixing").siblings().find(".filter-option-inner-inner").html();
+            if(statu == '人员' || statu == "周" ){
+                statu = '01';
+            }else if(statu == '小组' ||statu == "月" ){
+                statu = '02';
+            }else if(statu == '部门' ||statu == "季度" ){
+                statu = '03';
+            }else {
+                statu = '04';
+            }
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 = $("#Endtime").val();
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime = "";
+            var Endtime = "";
+            for (var i = 0; i < arr.length; i++) {
+                Begtime += arr[i] + "/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for (var i = 0; i < arr1.length; i++) {
+                Endtime += arr1[i] + "/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var Object = $(".searchable-select-holderappend").html();
+            var acrossendlong = $("#type").siblings().find(".filter-option-inner-inner").html();
+            if(acrossendlong=='横比'){
+                acrossendlong='01';
+            }else{
+                acrossendlong='02';
+            }
+            var data = {"Type":type,"state":statu,"starttime":Begtime,"endtime":Endtime,"Object":Object,"acrossendlong":acrossendlong};
+            $.ajax({
+                url: "/performance/analysis/queryAnalysis",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    datatable1 = data ;
+                    table1();
+                    columns = [];
+                    columns.push({
+                        "title": '序号',
+                        "field": 'number',
+                        width: '5px',
+                        align: 'center',
+                        formatter: function (value, row, index) {
+                            return index + 1; //序号正序排序从1开始
+                        }
+                    },{
+                        "title": '对象',
+                        "field": 'name',
+                        width: '80px',
+                        align: 'center',
+                        formatter: function (value, row, index) {
+                            index = index + 1;
+                            return [
+                                /*'<a href="/mail_detail?id='+row.id+'  "style="color: black" class="J_menuTabs">'+row.id+'</a>'*/
+                                "<a class='J_menuItem' data-index='0' onclick=\"page('/manage?useridfx=" + row.id + "&starttimefx="+Begtime+"&endtimefx="+Endtime+"&namefx="+row.name+"','业绩管理')\">" + row.name + "</a>"
+                            ].join("")
+                        }
+                    });
+                    var a = $("#paimingtype").siblings().find(".filter-option-inner-inner").text();
+                    if(a!='请选择'){
+                        var arr = a.split(", ");
+                        for(var i=0;i<arr.length;i++){
+                            var temp = arr[i];
+                            if(temp=='完成业绩'){
+                                temp='realynum';
+                            }if(temp=='计划业绩'){
+                                temp='planpernum';
+                            }if(temp=='业绩偏差'){
+                                temp='pernum';
+                            }if(temp=='计划用时'){
+                                temp='planhours';
+                            }if(temp=='实际用时'){
+                                temp='realyhours';
+                            }if(temp=='用时偏差'){
+                                temp='hoursbias';
+                            }if(temp=='计划效率'){
+                                temp='planefficiency';
+                            }if(temp=='实际效率'){
+                                temp='realycient';
+                            }if(temp=='效率偏差'){
+                                temp='efficiencybias';
+                            };
+                            for (var key in data[0]) {
+                                if(key == temp){
+                                    columns.push({
+                                        "title": arr[i],
+                                        "field": key,
+                                        width: '80px',
+                                        align: 'center',
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    /*columns.push({
+                        field: 'praisenum',
+                        title: '点赞',
+                        align:'center',
+                        width: '80px',
+                        formatter: function (value,row,index){
+                            return '<i class="iconfont icon-buoumaotubiao15" style="font-size: 15px;">&nbsp;'+row.praisenum+'</i>';
+                            //序号正序排序从1开始
+                        }
+                    },{
+                        field: 'commentnum',
+                        title: '评论',
+                        align: 'center',
+                        width: '80px',
+                        formatter: function (value,row,index){
+                            return '<i class="iconfont icon-pinglun4" style="font-size: 15px;">&nbsp;'+row.commentnum+'</i>';
+                            //序号正序排序从1开始
+                        }
+
+                    });*/
+
+
+                },
+                error: function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+            //重新初始化表格
+            $('#table1').bootstrapTable(
+                "refreshOptions",
+                {
+                    columns : columns,
+                }
+            );
+            $('#table1').bootstrapTable('load',datatable1);
+        }
+        /*  // 小组页面js
+          function twolevel(){
+              $("#name1").siblings(".searchable-select").find(".one").hover(function () {
+                  if(!$("#dropd").is(":hidden")){
+                  var a =$(this).find(".meta").html();
+                      $("#tlevel").remove();
+                      $("#threelevel").remove();
+                      if(a!="01"){
+                          data = {"state":"02","id":a}
+                          $.ajax({
+                              url:"/performance/manage/queryTsdepart",
+                              data:data,
+                              async:false,
+                              dataType:"json",
+                              type:"post",
+                              success:function (data) {
+                                  if(data.length>0) {
+                                      var div = '<div id="tlevel" class="searchable-select-dropdown" style="left:80px;top:69px">' +
+                                          '<div class="searchable-scroll">' +
+                                          '<div class="searchable-select-items">'
+                                      for (var i = 0; i < data.length; i++) {
+                                          div += "<div class='one'><div class='searchable-select-item' >" + data[i].deparname + "</div><div class='meta' style='display: none;'>" + data[i].deparepid + "</div></div>";
+                                      }
+                                      div += '</div></div></div>'
+                                      $(".searchable-select").append(div);
+                                  }
+                              },
+                              error:function (error) {
+                                  alert("数据丢失了，刷新下试试吧" + error.status);
+                              }
+                          });
+                      threelevel();
+                      }
+                  }
+              });
+          }
+          // 人员页面、小组选择js
+          function threelevel(){
+              $("#tlevel").find(".one").click(function (event) {
+                  var b =$(this).find(".searchable-select-item").html();
+                  var a =$(this).find(".meta").html();
+                  $(".searchable-select-holder").html(b);
+                  $(".searchable-select-holderappend").html(a);
+                  $("#tlevel").hide();
+                  $("#dropd").addClass("searchable-select-hide");
+                  $("#threelevel").hide();
+                  event.stopPropagation();
+              })
+              $("#tlevel").find(".one").hover(function () {
+                  if(!$("#tlevel").is(":hidden")){
+                  var a =$(this).find(".meta").html();
+                  $("#threelevel").remove();
+                      data = {"id":a}
+                      $.ajax({
+                          url:"/performance/manage/queryuserList",
+                          data:data,
+                          async:false,
+                          dataType:"json",
+                          type:"post",
+                          success:function (data) {
+                              if(data.length>0){
+                              var div = '<div id="threelevel" class="searchable-select-dropdown" style="left:160px;top:69px">' +
+                                  '<div class="searchable-scroll">' +
+                                  '<div class="searchable-select-items">'
+                              for(var i=0;i<data.length;i++){
+                                  div +="<div class='one'><div class='searchable-select-item' >"+data[i].username+"</div><div class='meta' style='display: none;'>"+data[i].deparepid+"</div></div>";
+                              }
+                              div += '</div></div></div>'
+                              $(".searchable-select").append(div);
+                              }
+                          },
+                          error:function (error) {
+                              alert("数据丢失了，刷新下试试吧" + error.status);
+                          }
+                      });
+                  finallevel();
+                  }
+              })
+          }
+          // 人员选择js
+          function finallevel() {
+              $("#threelevel").find(".one").click(function (event) {
+                  var b = $(this).find(".searchable-select-item").html();
+                  var a = $(this).find(".meta").html();
+                  $(".searchable-select-holder").html(b);
+                  $(".searchable-select-holderappend").html(a);
+                  $("#tlevel").hide();
+                  $("#dropd").addClass("searchable-select-hide");
+                  $("#threelevel").hide();
+                  event.stopPropagation();
+              })
+          }*/
+        //初始化图形#
+        function c() {
+            var data1=[];
+            var data2=[];
+            var data3=[];
+            var data4=[];
+            for(var i=0;i<datatable1.length;i++){
+                data1.push(datatable1[i].name);
+            }
+            var a = $("#paimingtype").siblings().find(".filter-option-inner-inner").text();
+            if(a!='请选择'){
+                var arr = a.split(", ");
+                for(var i=0;i<arr.length;i++){
+                    var temp = arr[i];
+                    if(temp=='完成业绩'){
+                        temp='realynum';
+                    }if(temp=='计划业绩'){
+                        temp='planpernum';
+                    }if(temp=='业绩偏差'){
+                        temp='pernum';
+                    }if(temp=='计划用时'){
+                        temp='planhours';
+                    }if(temp=='实际用时'){
+                        temp='realyhours';
+                    }if(temp=='用时偏差'){
+                        temp='hoursbias';
+                    }if(temp=='计划效率'){
+                        temp='planefficiency';
+                    }if(temp=='实际效率'){
+                        temp='realycient';
+                    }if(temp=='效率偏差'){
+                        temp='efficiencybias';
+                    }
+                    for(var k=0;k<datatable1.length;k++){
+                        var value = eval('datatable1'+"["+k+"]."+temp);
+                        if(i==0 && firsttype=='pie'){
+                            var value = eval('datatable1'+"["+k+"]."+temp);
+                            data2.push({"name":datatable1[k].name,"y":parseFloat(value)})
+                        }else if(i==1 && secondtype=='pie'){
+                            var value = eval('datatable1'+"["+k+"]."+temp);
+                            data3.push({"name":datatable1[k].name,"y":parseFloat(value)});
+                        }else if(i==2 && thridtype=='pie'){
+                            var value = eval('datatable1'+"["+k+"]."+temp);
+                            data4.push({"name":datatable1[k].name,"y":parseFloat(value)})
+                        }else{
+                            eval('data'+(i+2)).push(parseFloat(value));
+                        }
+                    }
+                    if(firsttype!='pie' && secondtype!='pie' && thridtype!="pie"){
+                        fir={type:firsttype, color: '#66c5ff', name: arr[0], data: []};
+                        sec={type:secondtype, color: '#ff8050', name: arr[1], data: []};
+                        thr={type:thridtype, color: '#67e152', name: arr[2], data: []};
+                    }
+                    series = [fir,sec,thr];
+                }
+            }
+            $("#R0").val(10);
+            $("#R1").val(0);
+            chart2 = new Highcharts.Chart({
+                chart: {
+                    //     		type:'column',
+                    //type:ptype,
+                    //曲线图
+                    // type: 'line',//折现图
+                    //type:'pie',//饼状图
+                    renderTo: 'paiming',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                    width: $("#paiming").width() - 20,
+                    height: $(document).height() * 2 / 3,
+                    marginTop: 50,
+                    options3d: {
+                        enabled: true,//是否使用3D渲染图表功能
+                        alpha: 10,
+                        beta: 0,
+                        depth: 45,
+                        viewDistance: 25
+                    },
+                    plotBackgroundColor: null,    //绘图区的背景颜色
+                    plotBorderWidth: null,        //绘图区边框宽度
+                    plotShadow: false        //绘图区是否显示阴影
+                },
+
+                title: {
+                    text: '业绩量(h)',
+                    align: 'left',
+                    y: 20,
+                    x: 10,
+                    style: {
+                        color: '#000',
+                        fontWeight: '100',
+                        fontSize: '12'
+                    }
+                },
+                xAxis: {
+                    categories: []
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    },
+                },
+                legend: {
+                    enabled: false,
+                },
+                credits: {
+                    enabled: false//去掉官网的超链接
+                },
+                exporting: {
+                    enabled: false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                lang: {
+                    printChart: "打印图片",
+                    downloadJPEG: "导出JPEG 图片",
+                    downloadPDF: "导出PDF 文档",
+                    downloadPNG: "导出PNG 图片",
+                    downloadSVG: "导出SVG 矢量图",
+                    contextButtonTitle: "导出"
+                },
+                tooltip: {
+                    /* pointFormatter: function () {
+                         return '<span style="color:{' + this.series.data + '}">业绩量：' + this.y + '</span>'
+                     }*/
+                },
+                series: series
+            });
+            // Activate the sliders
+            $('#R0').on('change', function () {
+                $("#paiming").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#paiming").highcharts().redraw(true);
+                console.log($("#paiming").highcharts());
+            });
+            $('#R1').on('change', function () {
+                $("#paiming").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#paiming").highcharts().redraw(false);
+            });
+
+
+
+            function showValues() {
+                $('#R0-value').html($("#paiming").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html($("#paiming").highcharts().options.chart.options3d.beta);
+            }
+            showValues();
+            chart2.xAxis[0].setCategories(data1);
+            chart2.series[0].setData(data2);
+            chart2.series[1].setData(data3);
+            chart2.series[2].setData(data4);
+
+
+        }
+
+        //显示列表
+        function liebiaotab() {
+            $("#example").show();
+            $("#paiming").hide();
+            $("#sliders").hide();
+            $("#tongjitable").hide();
+            $("#typeChange").hide();
+        }
+        //显示图表
+        function tubiaotab() {
+            $("#example").hide();
+            $("#paiming").show();
+            $("#sliders").show();
+            $("#tongjitable").show();
+            $("#typeChange").show();
+        }
+        //Jq写图表切换按钮
+        function pictab() {
+            $('#paimingtype').off("changed.bs.select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                var a = $("#paimingtype").siblings().find(".filter-option-inner-inner").text();
+                console.log(a)
+                $("#typeChange").html("");
+                if (a != "请选择") {
+                    var arr = a.split(", ");
+                    var str = "<div id='changeeee' style='float: left;'>"
+                    for (var i = 0; i < arr.length; i++) {
+                        str += "<div style='float:left;'><div class='checkbox-custom checkbox-default' style='float: left;margin-top: 6px;'><input type='checkbox'><label></label></div><span style=\"line-height: 31px;margin-right: 10px;float:left;\">按" + arr[i] + "</span>" +
+                            "<div id=\"" + arr[i] + "\" num='"+i+"' class=\"btn-group hidden-xs\" style=\"float: left;margin-right: 20px;\">" +
+                            "<button style=\"color: #0099CC;font-weight: 600;height:30px;line-height:18px;border-right: 0px;\" id=\"jump\" data-trigger=\"hover\" data-toggle=\"modal\" data-placement=\"bottom\" title=\"发布签到\"  class=\"btn btn-outline btn-default\" ><i class='iconfont icon-paiming1' aria-hidden='true' type='column'></i></button>" +
+                            "<button  style=\"color: #0099CC;font-weight: 600;height:30px;line-height:15px;border-right: 0px;\" type=\"button\" data-trigger=\"hover\" data-placement=\"bottom\" title=\"个人信息\" class=\"btn btn-outline btn-default\" >" +
+                            "<i class=\"iconfont icon-zhexian\" aria-hidden=\"true\" type='spline'></i>" +
+                            "</button>" +
+                            "<button style=\"color: #0099CC;font-weight: 600;height:30px;line-height:18px;\" type=\"button\" data-placement=\"bottom\" data-trigger=\"hover\" title=\"团队信息\" class=\"btn btn-outline btn-default\" >" +
+                            "<i class=\"iconfont icon-bingzhuangtu\" aria-hidden=\"true\" type='pie'></i>" +
+                            "</button>" +
+                            "</div></div>";
+                    }
+                    str += "</div>";
+                    $("#typeChange").append(str);
+                    $("#" + arr[0]).siblings(".checkbox-custom.checkbox-default").find(":input").click();
+                    $("#" + arr[0]).siblings(".checkbox-custom.checkbox-default").addClass("temp");
+                    var temp = $("#" + arr[0]).attr("id");
+                    if (temp == '完成业绩') {
+                        temp = 'realynum';
+                    }
+                    if (temp == '计划业绩') {
+                        temp = 'planpernum';
+                    }
+                    if (temp == '业绩偏差') {
+                        temp = 'pernum';
+                    }
+                    if (temp == '计划用时') {
+                        temp = 'planhours';
+                    }
+                    if (temp == '实际用时') {
+                        temp = 'realyhours';
+                    }
+                    if (temp == '用时偏差') {
+                        temp = 'hoursbias';
+                    }
+                    if (temp == '计划效率') {
+                        temp = 'planefficiency';
+                    }
+                    if (temp == '实际效率') {
+                        temp = 'realycient';
+                    }
+                    if (temp == '效率偏差') {
+                        temp = 'efficiencybias';
+                    }
+                    type = temp;
+                    firsttype = 'column';
+                    secondtype = 'column';
+                    thridtype = 'column';
+                }
+                getColumns();
+                c();
+
+                var k=true;
+                $("#changeeee").find(":button").click(function () {
+                    ptype=$(this).find("i").attr("type");
+                    var num = $(this).parent().attr("num");
+                    $("#changeeee").find(":button").find("i[type='column']").parent().css("color","white");
+                    $("#changeeee").find(":button").find("i[type='column']").parent().css("background","#0099CC");
+                    $("#changeeee").find(":button").find("i[type='column']").parent().siblings().css("color","#0099CC");
+                    $("#changeeee").find(":button").find("i[type='column']").parent().siblings().css("background","");
+                    $(this).css("color","white");
+                    $(this).css("background","#0099CC");
+                    $(this).siblings().css("color","#0099CC");
+                    $(this).siblings().css("background","");
+                    if((firsttype!='pie'||secondtype!='pie'||thridtype!='pie')){
+                        firsttype='column'
+                        secondtype='column'
+                        thridtype='column'
+                    }
+                    if(firsttype!='pie'&&secondtype!='pie'&&thridtype!='pie'){
+                        k=true;
+                    }
+                    if(num == '0'){
+                        firsttype = $(this).find("i").attr("type");
+                    }
+                    if(num == '1'){
+                        secondtype = $(this).find("i").attr("type");
+                    }
+                    if(num == '2'){
+                        thridtype = $(this).find("i").attr("type");
+                    }
+                    if($(this).find("i").attr("type")=='pie'){
+                        $("#changeeee").find(":button").find("i[type='pie']").parent().css("color","white");
+                        $("#changeeee").find(":button").find("i[type='pie']").parent().css("background","#0099CC");
+                        $("#changeeee").find(":button").find("i[type='pie']").parent().siblings().css("color","#0099CC");
+                        $("#changeeee").find(":button").find("i[type='pie']").parent().siblings().css("background","");
+                        fir={type:'pie', color: '#66c5ff', name: arr[0], data: [],center:[250,120],size:200};
+                        sec={type:'pie', color: '#ff8050', name: arr[1], data: [],center:[550,120],size:200};
+                        thr={type:'pie', color: '#67e152', name: arr[2], data: [],center:[850,120],size:200};
+                        k="temp";
+                    }else {
+                        fir={type:firsttype, color: '#66c5ff', name: arr[0], data: []};
+                        sec={type:secondtype, color: '#ff8050', name: arr[1], data: []};
+                        thr={type:thridtype, color: '#67e152', name: arr[2], data: []};
+                    }
+                    $("#paiming").highcharts().destroy();
+                    getColumns();
+                    c();
+                });
+                $("input[type='checkbox']").off("click").on('click',function () {
+                    if ($("input[type='checkbox']").is(':checked')) {
+                        var temp = $(this).parent().siblings("div").attr("id");
+                        if (temp == '完成业绩') {
+                            temp = 'realynum';
+                        }
+                        if (temp == '计划业绩') {
+                            temp = 'planpernum';
+                        }
+                        if (temp == '业绩偏差') {
+                            temp = 'pernum';
+                        }
+                        if (temp == '计划用时') {
+                            temp = 'planhours';
+                        }
+                        if (temp == '实际用时') {
+                            temp = 'realyhours';
+                        }
+                        if (temp == '用时偏差') {
+                            temp = 'hoursbias';
+                        }
+                        if (temp == '计划效率') {
+                            temp = 'planefficiency';
+                        }
+                        if (temp == '实际效率') {
+                            temp = 'realycient';
+                        }
+                        if (temp == '效率偏差') {
+                            temp = 'efficiencybias';
+                        }
+                        type = temp;
+                        if (!$(this).parent().hasClass("temp")) {
+                            $(this).parent().parents().find(".checkbox-custom.checkbox-default.temp").find("input[type='checkbox']").removeAttr("checked");
+                            $(this).parent().parents().find(".checkbox-custom.checkbox-default.temp").removeClass("temp");
+                            $(this).parent().addClass("temp");
+                            getColumns();
+                            c();
+                        }
+                    }else{
+                        $(this).prop("checked", true);
+                    }
+
+                })
+            });
+        }
+        //关闭模态框
+        function closePage(){
+            $("#personselect").modal('hide');
+        }
+        //人员选择
+        //初始化树形结构
+        function tree() {
+            $.ajax({
+                url:"/Tdepartmentinfo/querySXJGTdepartmentinfo",
+                data:{},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    data.splice(0,0,{'text':'全部','nodeid':'01'});
+                    $('#tree').treeview({
+                        data: data,         // 数据源
+                        collapseIcon:"iconfont icon-xiangshangjiantou",
+                        expandIcon:"iconfont icon-iconset0417",
+                        color:"#000000",
+                        backColor:"#FFFFFF",
+                        href:"#node-1",
+                        selectable:true,
+                        state: {
+                            checked:true,
+                            disabled:true,
+                            expanded:true,
+                            selected:true
+                        },
+                        tags: ['available'],
+                        onNodeChecked: function (event,data) {
+                            alert(data.nodeid);
+                        },
+                        onNodeSelected: function (event, data) {
+                            num2=data.nodeid;
+                            name2=data.text;
+                            $.ajax({
+                                url:"/Tdepartmentinfo/queryTdepartmentTuser",
+                                data:{"id":data.nodeid},
+                                async:false,
+                                dataType:"json",
+                                type:"post",
+                                success:function (data) {
+                                    table2();
+                                    $('#table2').bootstrapTable('load',data);
+                                    $("#tree").siblings().find(".pull-left.pagination-detail").css("left","19%");
+                                    $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                    /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                },
+                                error:function (error) {
+                                    alert("数据丢失了，刷新下试试吧" + error.status);
+                                }
+                            });
+                            $("#search").click(function () {
+                                $.ajax({
+                                    url:"/Tdepartmentinfo/queryTdepartmentTuser",
+                                    data:{"id":data.nodeid,"username":$("#key").val()},
+                                    async:false,
+                                    dataType:"json",
+                                    type:"post",
+                                    success:function (data) {
+                                        table2();
+                                        $('#table2').bootstrapTable('load',data);
+                                        $("#tree").siblings().find(".pull-left.pagination-detail").css("left","19%");
+                                        $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                        /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                    },
+                                    error:function (error) {
+                                        alert("数据丢失了，刷新下试试吧" + error.status);
+                                    }
+                                });
+                            })
+                        }
+                    });
+                    $('#tree').treeview('collapseAll', { silent: true });
+                    $('#tree').find("ul li:first").click();
+                },
+                error:function (error) {
+                    alert("数据丢失了，刷新下试试吧" + error.status);
+                }
+            });
+
+
+        }
+        //初始化人员表格
+        function table2() {
+            $('#table2').bootstrapTable('destroy').bootstrapTable({
+                /*showToggle:!0,
+            showColumns:!0,*/
+                iconSize: "outline",
+                toolbar: "#exampleTableEventsToolbar",
+                /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                //url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                /*showRefresh:true,*/
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                checkboxHeader:0,
+                singleSelect : true, // 单选checkbox
+                columns: [
+                    {
+                        field: "state",
+                        checkbox: true,
+                        align: 'center',
+                    }, {
+                        field: 'usernumber',
+                        title: '姓名',
+                        align: 'center',
+                        width: '25%',
+                    },{
+                        field: 'username',
+                        title: '姓名',
+                        align: 'center',
+                        width: '25%',
+                    }, {
+                        field: 'sex',
+                        title: '性别',
+                        align: 'center',
+                        width: '10%',
+                    }, {
+                        field: 'age',
+                        title: '年龄',
+                        align: 'center',
+                        width: '28%',
+                    }, {
+                        field: 'phone1',
+                        title: '联系电话',
+                        align: 'center',
+                        width: '30%',
+                    }],
+                data: []
+            });
+        }
+        //人员选择确认
+        function chose() {
+            var selectContent = $('#table2').bootstrapTable('getSelections');
+            if(selectContent.length ==1){
+                var num1 = selectContent[0].id;
+                var name1 = selectContent[0].username;
+                $('.searchable-select-holder').html(name1);
+                $('.searchable-select-holderappend').html(num1);
+            }else{
+                $('.searchable-select-holder').html(name2);
+                $('.searchable-select-holderappend').html(num2);
+            }
+            $("#personselect").modal('hide');
+        }
+    </script>
+</head>
+<body>
+<div class="namebox" style="width:500px;width:100px;"></div>
+<div class="gray-bg" >
+    <div id="donghua" class="col-sm-12" style="height:100%;">
+        <div class="ibox ">
+            <div class="ibox-content">
+                <div class="spiner-example" style="padding-top: 210px;">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="big" class="col-sm-12" style="display: none">
+        <!-- Example Events -->
+        <div class="example-wrap"  style="margin-top: 25px;">
+            <!-- 搜索框-->
+            <div id="toolbar1" style="width: 93%;overflow: hidden;margin-bottom: 14px;float:left;">
+                <div class="my-container">
+                    <label class="myLabel-content">日期</label>
+                    <div class="myText-content">
+                        <input id="Begtime" class="com laydate-icon form-control layer-date"  placeholder="开始日期">
+                    </div>
+                    <label class="myLabel-content">至</label>
+                    <div class="myText-content">
+                        <input id="Endtime" class="com laydate-icon form-control layer-date" placeholder="结束日期">
+                    </div>
+                </div>
+                <div class="my-container" style="margin-left: 10px;">
+                    <label class="myLabel-content">对象</label>
+                    <div class="myText-content" style="width: 80px">
+                        <select id="name1" data-placeholder="选择用户..." class="chosen-select" style="width:350px;" tabindex="2">
+                            <option part='01' value='全部'>全部</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="my-container"  style="margin-left: 10px;">
+                    <label class="myLabel-content">方式</label>
+                    <div class="myText-content" style="width: 80px;">
+                        <select id="type" onchange="leixingselect()" data-placeholder="选择方式..." class="selectpicker"   style="width:350px;" tabindex="2">
+                            <option  value="01">横比</option>
+                            <option  value="02">纵比</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="my-container"  style="margin-left: 10px;">
+                    <label class="myLabel-content">类型</label>
+                    <div class="myText-content" style="width: 80px;">
+                        <select id="leixing" data-placeholder="选择类型..." class="selectpicker" style="width:350px;" tabindex="2">类型
+                            <option value=01>人员</option><option value=02>小组</option><option value=03>部门</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="my-container"  style="margin-left: 10px;">
+                    <label class="myLabel-content" >排名</label>
+                    <div class="myText-content" style="width: 110px;">
+                        <select id="paimingtype" onchange="pictab()" data-placeholder="选择排名方式..." multiple data-live-search="true" data-max-options="3"  class="selectpicker" style="width:350px;" tabindex="2">
+                            <option  value="01">完成业绩</option>
+                            <option  value="02">计划业绩</option>
+                            <option  value="03">业绩偏差</option>
+                            <option  value="04">计划用时</option>
+                            <option  value="05">实际用时</option>
+                            <option  value="06">用时偏差</option>
+                            <option  value="07">计划效率</option>
+                            <option  value="08">实际效率</option>
+                            <option  value="09">效率偏差</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="myBtn-content" style="margin-top: 0.2%;margin-left: 3%;">
+                    <button id="search1" type="button" class="btn btn-primary" style="background-color:#0099CC">查询</button>
+                    <button id="reset1" type="button" class="btn btn-default" >重置</button>
+                </div>
+            </div>
+            <!-- 个人表格搜索框-->
+            <div class="btn-group hidden-xs" style="float: right">
+                <button  style="border-right: 0px;" type="button" data-trigger="hover" data-placement="bottom" title="列表信息" class="btn btn-outline btn-default" onclick="liebiaotab();">
+                    <i class="iconfont icon-liebiao" aria-hidden="true" style="font-size:14px;"></i>
+                </button>
+                <button type="button" data-placement="bottom" data-trigger="hover" title="图表信息" class="btn btn-outline btn-default" onclick="tubiaotab();">
+                    <i class="iconfont icon-tubiao" aria-hidden="true" style="font-size:14px;"></i>
+                </button>
+            </div>
+            <!-- 个人表格-->
+            <div class="example" id="example" >
+                <table id="table1" ></table>
+                <script>
+
+                </script>
+            </div>
+            <!-- 排名-->
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB;" id="paiming" aria-hidden="true" ></div>
+            <div id="sliders" align="center" style="width: 100%; height: 30px; margin: 5px; float: left; border: 0px solid">
+            </div>
+            <table id="tongjitable" align="center" style="width: 30%;float: left;margin-left: 3%;">
+                <tbody><tr>
+                    <td style="width: 10%">α角</td>
+                    <td style="width: 40%;"><input class="range" id="R0" type="range" min="0" max="45" value="" style="float: left;"> <span id="R0-value" class="value">10</span></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="width: 10%">β角</td>
+                    <td style="width: 40%;"><input class="range" id="R1" type="range" min="0" max="45" value="" style="float:left;"> <span id="R1-value" class="value">5</span></td>
+                </tr>
+                </tbody></table>
+            <div id="typeChange" style="float:right;margin-top: -6px;padding-right: 30px;">
+            </div></div>
+    </div>
+    <!-- End Example Events -->
+</div>
+<!-- 名字选择模态框部分-->
+<div id="personselect" class="modal fade" aria-hidden="true" style="overflow-y: hidden" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-left: 220px;width:800px;background-color: #FFFFFF;">
+            <div class="modal-body">
+                <div class="row" >
+                    <div id="tree" class="col-sm-4" style="overflow-y: scroll;overflow-x: hidden;width: 30%"></div>
+                    <div class="col-sm-8" style="width: 70%">
+                        <div class="myText-content" style="margin-left: 0;width:100%;margin-bottom: 10px">
+                            <input id="key" type="text" style="outline: none;float: left;height:33px;width: 78%;" class="form-control" placeholder="请输入要搜索的姓名或员工编号">
+                            <button id="search" type="button" class="btn btn-primary" style="line-height: 19px;border-radius: 0;width: 20%;background-color:#0099CC">搜索</button>
+                        </div>
+                        <div id="table2"></div>
+                    </div>
+                    <div style="overflow: hidden;width: 200px;position: absolute;top: 85%;left: 70%;">
+                        <button id="closed" style="color:#73777A;background-color: #F5F5F6;margin-right: 15px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="closePage();" value="取消">取消</button>
+                        <button id="commit" style="margin-right:3px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose();" value="发布">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

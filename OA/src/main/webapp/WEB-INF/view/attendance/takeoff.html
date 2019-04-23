@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+          rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet"  href="/static/js/plugins/webuploader/webuploader.css">
+    <link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelectparse.css">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="/static/js/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/achievement/manage.css" rel="stylesheet">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <script src="/static/js/news.js"></script>
+</head>
+<style>
+    input[type=range] {
+        margin-top: 8px;
+        outline: none;
+        -webkit-appearance: none; /*清除系统默认样式*/
+        width: 80% !important;
+        background: #e7eaec;
+        height: 3px; /*横条的高度*/
+    }
+    /*拖动块的样式*/
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none; /*清除系统默认样式*/
+        height: 16px; /*拖动块高度*/
+        width: 16px; /*拖动块宽度*/
+        background: #0099CC; /*拖动块背景*/
+        border-radius: 50%; /*外观设置为圆形*/
+        border: solid 1px #ddd
+    }
+
+    #text {
+        white-space: normal;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .czbtn{
+        cursor: default;
+    }
+    .my-container {
+        float: left;
+        display: inline-block;
+    }
+
+    .myLabel-content, .myText-content, .myBtn-content {
+        float: left;
+        display: inline-block;
+        line-height: 30px;
+
+    }
+
+    .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+    {
+        height: 30px;
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .myBtn-content .btn {
+        margin-bottom: 10px;
+    }
+
+    /* 模态框 */
+
+    .hourdiv {
+        width: 138px;
+    }
+    #fbyjbox  tr{
+        margin-top:10px;
+    }
+    .yjbox{
+        width: 181px;
+        height: 32px;
+        line-height:32px;
+        border: 1px solid #D9D9D9;
+        float:left;
+        padding-left: 12px;
+    }
+    .yeji {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 15px;
+        /* margin-left: -21px; */
+    }
+    .yeji2 {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 32px;
+        /* margin-left: -21px; */
+    }
+    .shen2 {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 15px;
+    }
+    .czbtn2{
+        cursor:pointer;
+    }
+    .yejibigtext {
+        width: 461px;
+        height: 99px;
+        float: left;
+        border: 1px solid #D9D9D9;
+        padding-left: 15px;
+        padding-top: 3px;
+    }
+    .yejibigtextyjnr {
+        padding-top: 3px;
+        padding-left: 5px;
+        width: 461px;
+        height: 99px;
+        margin-left: -16px;
+        margin-top: -4px;
+        border: 1px solid #D9D9D9;
+    }
+    .yjtext {
+        width: 136px;
+        height: 23px;
+        margin-left: 8px;
+        margin-top: 4px;
+        font-size: 14px;
+        font-family: FangSong;
+        font-weight: 400;
+        color: rgba(124,124,124,1);
+        line-height: 19px;
+    }
+
+    .gzsc {
+        margin-left: 4%;
+    }
+
+    .yejimidtext {
+        width: 461px;
+        height: 32px;
+        border: 1px solid #D9D9D9;
+    }
+    .fbsmbox{
+        width: 461px;
+        height: 44px;
+        border: 1px solid #D9D9D9;
+        float: left;
+        padding-left: 12px;
+    }
+    /* 按钮 */
+    .btnn {
+        width: 59px;
+        height: 31px;
+        /* border-radius: 10px; */
+        background-color: #F5F5F6;
+        float: left;
+        margin-left:10px;
+        color:#73777A;
+        outline:none;
+        text-align:center;
+        font-family: cursive;
+        line-height:31px;
+    }
+    /* 按钮点击事件 */
+    .btnn:link{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:hover{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:active{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:visited{
+        background-color: #0099CC;
+        color:white;
+    }
+
+    .btndiv {
+        position: relative;
+        left: 68%;
+        float: left;
+    }
+    .btndiv2 {
+        position: relative;
+        left: 63%;
+        top: 2%;
+        float: left;
+    }
+    .btndiv3 {
+        position: relative;
+        left: 63%;
+        top: 2%;
+        float: left;
+    }
+    .btndiv4 {
+        position: relative;
+        left: 63%;
+        top: 2%;
+        float: left;
+    }
+    .hour1 {
+        font-size: 15px;
+        width: 7%;
+        color: #D9D9D9;
+        float:right;
+    }
+    .hoursh {
+        font-size: 15px;
+        position: absolute;
+        left: 40.5%;
+        top: 12%;
+        width: 7%;
+        color: #D9D9D9;
+    }
+    .hoursh2 {
+        font-size: 15px;
+        position: absolute;
+        left: 86.5%;
+        top: 12%;
+        width: 9%;
+        color: #D9D9D9;
+    }
+    .hour {
+        width: 18px;
+        float: left;
+        margin-left: -21px;
+        margin-top: 8px;
+    }
+    .tjfj11{
+
+    }
+    .fb {
+        font-family: FangSong;
+        margin-left: -6px;
+        /* margin-top: 10px; */
+        margin-bottom: 8px;
+        color: rgba(51,51,51,1);
+        font-weight: 400;
+        border-bottom: 1px solid #E5E5E5;
+        width: 581px;
+        height: 26px;
+    }
+    .qr {
+        margin-left: -2.77%;
+        /* margin-bottom: 11px; */
+        border-bottom: 1px solid #E5E5E5;
+        width: 105.4%;
+        height: 10px;
+        font-size: 8px;
+        font-family: FangSong;
+        font-weight: 400;
+        color: rgba(51,51,51,1);
+    }
+
+
+    .hour2 {
+        font-size: 15px;
+        float:right;
+        width: 9%;
+        color: #D9D9D9;
+    }
+
+    .everydiv{
+        margin-top:10px;
+    }
+    .com {
+        cursor: pointer;
+        width: 316px;
+        background-repeat: no-repeat;
+        background-position: 99% center;
+        background-size: 18px;
+    }
+    .com2 {
+        cursor: pointer;
+        width: 316px;
+        background-repeat: no-repeat;
+        background-position: 93% center;
+        background-size: 18px;
+    }
+
+    /* 确认业绩 */
+    .qrdiv {
+        margin-left: -5.77%;
+        /* margin-bottom: 11px; */
+        border-bottom: 1px solid #E5E5E5;
+        width: 111.4%;
+        height: 17px;
+        font-size: 10px;
+        font-family: FangSong;
+        font-weight: 400;
+        color: rgba(51,51,51,1);
+    }
+    .modal-contentqryj {
+        /*  margin-left: 420px;
+         margin-top: -10px; */
+        width: 591px;
+        background-clip: padding-box;
+        background-color: #FFF;
+        border: 1px solid rgba(0,0,0,0);
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.3);
+        outline: 0 none;
+    }
+    .qryj{
+        float:left;
+    }
+    .qryjbigbox {
+        width: 557px;
+        height: 233px;
+        background: rgba(244,251,255,1);
+        box-shadow: 0px 1px 15px 0px rgba(231,231,231,0.88);
+        /*margin-left: -14px;*/
+        margin-top: 15px;
+    }
+
+    .qryjbigbox2{
+        /* border: 1px red solid;  */
+        width: 613px;
+        height:172px;
+        margin-left: -15px;
+    }
+    .qryjbox {
+        /*  border: 1px red solid;  */
+        width: 77%;
+        /* margin-top: 6%; */
+        margin-top: 4px;
+        height: 45px;
+        margin-left: 10px;
+    }
+    .qryjbox2{
+
+    }
+    .yqryjword {
+        margin-left: 23px;
+        height: 12px;
+        line-height: 26px;
+    }
+    .qryjword {
+        font-family: FangSong;
+        font-size: 14.5px;
+        font-weight: 400;
+        color: rgba(159,159,159,1);
+        width: 79px;
+        float: left;
+        height: 12px;
+        line-height: 26px;
+        margin-left: 2px;
+    }
+    .qryjword1{
+        font-family: FangSong;
+        font-size: 14.5px;
+        font-weight: 400;
+        color:rgba(159,159,159,1);
+        line-height:31px;
+        width: 79px;
+        float:left;
+        margin-left: 2px;
+    }
+    .shortdiv {
+        width: 174px;
+        height: 29px;
+        height: 30px;
+        line-height: 30px;
+        float: left;
+        border: 1px solid rgba(217,217,217,1);
+        border-radius: 1px;
+        font-family: FangSong;
+        padding-left: 12px;
+    }
+    .longdiv {
+        width: 300px;
+        height: 35px;
+        border:1px solid rgba(217,217,217,1);
+        border-radius:1px;
+        float: right;
+        margin-right: -123px;
+    }
+    .llongdiv {
+        width: 454px;
+        height: 30px;
+        line-height: 35px;
+        border: 1px solid #D9D9D9;
+        float: right;
+        margin-right: -107px;
+        font-family: FangSong;
+        padding-left: 12px;
+    }
+    .timecom{
+        cursor: pointer;
+        width: 171px;
+        height: 35px;
+        background-repeat: no-repeat;
+        background-position: 99% center;
+        background-size: 18px;
+        border: 1px solid #ccc;
+        /*  background-image: url(icon.png); */
+    }
+    /* 完成业绩css */
+    .wcqryjword {
+        font-family: FangSong;
+        font-size: 14.5px;
+        font-weight: 400;
+        font-weight: 400;
+        color: rgba(0,0,0,1);
+        width: 79px;
+        float: left;
+        height: 12px;
+        line-height: 26px;
+    }
+    .wcyjbox {
+        /*  border: 1px red solid;  */
+        width: 77%;
+        /* margin-top: 6%; */
+        margin-top: 4px;
+        height: 38px;
+        margin-left: 10px;
+    }
+    .shyjbox{
+        /* border: 1px red solid; */
+        width: 77%;
+        /* margin-top: 6%; */
+        margin-top: 4px;
+        height: 41px;
+        margin-left: 10px;
+    }
+    .divleft{
+        float: left;
+    }
+    .divright{
+        margin-left: 9%;
+        float: left;
+    }
+    /* 进度条 */
+    .progress{position: relative; width:300px;margin:100px auto;}
+    .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+    .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+    .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+        left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+    .progress_btn:hover{border-color:#F7B824;}
+    /* 审核业绩 */
+    .divrightsh{
+        margin-left: 10%;
+        float: left;
+    }
+    ::-ms-browse, [type='file'] {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+    ::-webkit-file-upload-button {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+
+    /* 发布业绩 */
+    .everybox{
+        width:100%;
+        /* border:1px red solid; */
+        height:36px;
+        margin-top: 11px;
+    }
+
+    .everybox2{
+        width:100%;
+        /* border:1px red solid; */
+        height:100px;
+        margin-top: 6px;
+    }
+
+    /* 业绩完成 */
+    .layui-input{
+        padding-left: 4px;
+    }
+
+    /* 所属部门 */
+    .filter-option-inner-inner{
+        font-family: fangsong;
+    }
+    /* 分页 */
+    .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+        margin-left: 2%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .layui-slider {
+        height: 4px;
+        background: #e2e2e2;
+        border-radius: 3px;
+        position: relative;
+        cursor: pointer;
+        margin-right: 90px !important;
+    }
+    .columns{
+        display: none;
+    }
+</style>
+
+<script>
+    $(function() {
+
+        $("#big").show();
+        $("#example").hide();
+        $("#paimingtable").show();
+        now();
+        before();
+        qjlx();//类型接口
+        tabledata();
+        table();//表格
+        //qjsq();//请假发布
+        //qingjia();
+    });
+
+
+    var astarttime ;
+    var aendtime ;
+    //格式化现在日期
+    function now() {
+        // 给input  date设置默认值
+        var now = new Date();
+        //格式化日，如果小于9，前面补0
+        var day = "01";
+        //格式化月，如果小于9，前面补0
+        var month = ("0" + (now.getMonth() + 2)).slice(-2);
+        var year =now.getFullYear();
+        if(month >12){ month ="01"; year = now.getFullYear()+1};
+        //拼装完整日期格式
+        var today = year+"-"+(month)+"-"+(day) ;
+        //完成赋值
+        $('#Endtime0').val(today);
+        aendtime =$('#Endtime0').val();
+    };
+    //格式化15天前的日期
+    function before() {
+        //十五天毫秒值：1209600000
+        var date = new Date();
+        var times = date.getTime();
+        var now = new Date(times);
+        //格式化日，如果小于9，前面补0
+        var day = "01";
+        //格式化月，如果小于9，前面补0
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        //拼装完整日期格式
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        //完成赋值
+        $('#Begtime0').val(today);
+        astarttime=$('#Begtime0').val();
+    };
+
+
+    var num=0;
+    var datatable;
+    //表格接口
+    function tabledata(){
+
+        var  data = {"astarttime":astarttime,"aendtime":aendtime,"type":"01"};
+
+        $.ajax({
+            url:"/attendance/queryWdAttendance",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable=data;
+            }
+        });
+    }
+    var  plan_id;
+    //获取主键planid
+    function planid() {
+        $.ajax({
+            url:"/random/randomid",
+            data:{},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                plan_id=data.randomid;
+            },
+            error:function (error) {
+                alert("计划图片上传失败" + error.status);
+            }
+        });
+    }
+    //表格代码
+    function table(){
+        $('#table1').bootstrapTable({
+            showToggle:!0,
+            showColumns:!0,
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            showRefresh:true,
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: true, // 在表格底部显示分页组件，默认false
+            pageList: [5,10, 15], // 设置页面可以显示的数据条数
+            pageSize: 5, // 页面数据条数
+            pageNumber: 1, // 首页页码
+            onClickRow: function (row, $element) {
+                //alert("业绩id"+field);
+
+
+            },
+            onClickCell:function(field, value, row, $element,event){
+                if(field=="operate" && row.state=="03" && $("#sxxx").find("option:selected").val() =="02"){
+                    if(row.state=="03"){
+                        shenhe(row.id);
+                    }
+                }
+                else{
+                    page('/timeoff?id='+row.id,'请假详情');
+                }
+            },
+            columns: [
+                {
+                    field: 'username',
+                    title: '请假人',
+                    width:'7%' ,
+                    align:'center',
+                },
+                {
+                    field: 'text',
+                    width:'7%' ,
+                    title: '请假事由',
+                    align:'center',
+                }, {
+                    field: 'timetype',
+                    width:'10%' ,
+                    title: '请假类型',
+                    align:'center',
+                    formatter: function (value,row,index){
+                        if(row.atype=="01"){
+                            return "事假";
+                        }else if(row.atype=="02"){
+                            return "病假";
+                        }else if(row.atype=="03"){
+                            return "产假";
+                        }else if(row.atype=="04"){
+                            return "婚假";
+                        }else if(row.atype=="05"){
+                            return "丧假";
+                        }else if(row.atype=="06"){
+                            return "年休";
+                        }
+                    }
+                },{
+                    field: 'astarttime',
+                    width:'13%' ,
+                    title: '开始时间',
+                    align:'center',
+                },{
+                    field: 'aendtime',
+                    width:'13%' ,
+                    title: '结束时间',
+                    align:'center',
+
+                },{
+                    width:'10%' ,
+                    field: 'duration',
+                    title: '请假时长',
+                    align:'center',
+                },{
+                    width:'10%' ,
+                    field: 'timetype',
+                    title: '时间类型',
+                    align:'center',
+                    formatter: function (value,row,index){
+                        if(row.timetype=="01"){
+                            return "天";
+                        }else if(row.timetype=="02"){
+                            return "时";
+                        }
+                    }
+                },{
+                    field: 'nucleusname',
+                    width:'6%' ,
+                    title: '审核人姓名',
+                    align:'center',
+                }, {
+                    field: 'state',
+                    width:'6%' ,
+                    title: '审核状态',
+                    align:'center',
+                    formatter: function (value,row,index){
+                        if(row.state =="01"){
+                            return "通过";
+                        }else if(row.state =="02"){
+                            return "未通过";
+                        }else if(row.state =="03"){
+                            return "审核中";
+                        }
+                    }
+                }, {
+                    field: 'operate',
+                    title: '操作',
+                    width:'10%' ,
+                    align: 'center',
+                    formatter: operate
+                }
+            ] ,
+            data:datatable
+        });
+    };
+    //表格操作权限
+    function operate(value,row,index){
+        if( $("#sxxx").find("option:selected").val() =="01" && row.userid == userid){
+            if(row.state=="01"  ){
+                return "<a href='javascript:void(0);' class='czbtn' style='color:#595959;'>已通过</a>"
+            }else if(row.state=="02"  ){
+                return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959;'>未通过</a>"
+            }else if(row.state=="03" ){
+                return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959;'>审核中</a>"
+            }
+        }else if( $("#sxxx").find("option:selected").val() =="01" && row.userid != userid ){
+            if(row.state=="01"){
+                return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>已通过</a>"
+            }else if(row.state=="02"  ){
+                return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>未通过</a>"
+            }else if(row.state=="03" ){
+                return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>审核</a>"
+            }
+        };
+        if($("#sxxx").find("option:selected").val() =="02"){
+            if(row.state=="01"  ){
+                return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959;'>已通过</a>"
+            }else if(row.state=="02"  ){
+                return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959;'>未通过</a>"
+            }else if(row.state=="03" ){
+                return "<a href='javascript:void(0);'  class='czbtn2' style='color:#0099CC'>审核</a>"
+            }
+        }
+
+    };
+    function chaxun(){
+        var type=$("#sxxx").find("option:selected").val();
+        var astate = $("#sxzt").find("option:selected").val();
+        var atype = $("#sxlx").find("option:selected").val();
+        var astarttime2 =  $("#Begtime0").val();
+        var aendtime2 = $("#Endtime0").val();
+        var data;
+        if(astate == "00"&& atype=="00"){
+            data= {"astarttime":astarttime2,"aendtime":aendtime2,"type":type};
+        } else if(astate ==  "00" ){
+            data= {"astarttime":astarttime2,"aendtime":aendtime2,"atype":atype,"type":type};
+        }else if(atype=="00"){
+            data= {"astarttime":astarttime2,"aendtime":aendtime2,"state":astate,"type":type};
+        }else{
+            data= {"astarttime":astarttime2,"aendtime":aendtime2,"atype":atype,"state":astate,"type":type};
+        }
+        $.ajax({
+            url:"/attendance/queryWdAttendance",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable=data;
+                console.log(data)
+                table();
+                $('#table1').bootstrapTable('load',datatable);
+            }
+        });
+
+    };
+
+    function chongzhi(){
+        var  data = {"astarttime":astarttime,"aendtime":aendtime,"type":"01"};
+
+        $.ajax({
+            url:"/attendance/queryWdAttendance",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable=data;
+                table();
+                $('#table1').bootstrapTable('load',datatable);
+                $("#sxzt").find("option:selected").val("00");
+                $("#sxlx").find("option:selected").val("00");
+            }
+        });
+
+    };
+
+    $(".fht-cell").remove();
+
+    function qjtc(){
+        $("#modal-form").modal('show');
+        $(".modal-dialog").show();
+        //  ssyj();
+    };
+    /*类型*/
+    function qjlx(){
+        $.ajax({
+            url:"/tdictionary/queryTdictionary",
+            data:{"dtype":"attendance"},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                // datatable=data;
+                for(var i=0;i<data.length;i++){
+                    //$("#sxlx").html("");   //先置空
+                    $("#sxlx").append('<option label="'+data[i].dvalue+'"value="'+data[i].dkey+'"></option>');
+                    $("#sxlx2").append('<option label="'+data[i].dvalue+'"value="'+data[i].dkey+'"></option>');
+                    //$("#qjlx").html("");   //先置空
+                    $("#qjlx").append('<option label="'+data[i].dvalue+'"value="'+data[i].dkey+'"></option>');
+                    $("#qjlx2").append('<option label="'+data[i].dvalue+'"value="'+data[i].dkey+'"></option>');
+
+                }
+
+            }
+        });
+    }
+    var userid;
+    queryUser();
+    function queryUser() {
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            success: function (data) {
+                userid = data.id;
+            }
+        })
+    }
+    /*请假发布*/
+    function sq(){
+
+        var atype =$("#qjlx").find("option:selected").val();  //请假类型
+
+        var astarttime =  $("#Searchtimeqj").val();
+        var aendtime = $("#Endtimeqj").val();
+        var d1 = new Date(astarttime.replace(/\-/g, "\/"));
+        var d2 = new Date(aendtime.replace(/\-/g, "\/"));
+        if(astarttime!=""&&aendtime!=""&&d1 >d2){
+            alert("开始时间不能大于结束时间！");
+            return false;
+        }
+
+        var duration = $("#qjsc").html();
+        var text ;
+        if($("#qjnr").html() != "请输入请假的原因..."){
+            text =  $("#qjnr").html();
+        }else{
+            text ="";
+        }
+        planid();
+        var  timetype = $("#sjlxxx").find("option:selected").val();
+        if(text == ""|| astarttime==""|| aendtime==""|| atype==null){
+            alert("温馨提示：请把其他选项填写完整~")
+        }else{
+            var data = {"text":text,"astarttime":astarttime,"aendtime":aendtime,"atype":atype,"timetype":timetype,"duration":duration,"userid":userid,"id":plan_id};
+
+            $.ajax({
+                url:"/attendance/saveAttendance",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    if(data.code!=404){
+                        $.ajax({
+                            url:"/attendance/queryWdAttendance",
+                            data: {"astarttime":astarttime.split(" ")[0],"aendtime":aendtime.split(" ")[0],"atype":atype,"type":"01"},
+                            async:false,
+                            dataType:"json",
+                            type:"post",
+                            success:function (data) {
+                                console.log(data);
+                                $(".uploader-list").css("border-top","1px solid #eaece7");
+                                saveNews(data[0].groupuserid,"02","考勤管理",text,plan_id)
+                                $("#reset1").trigger("click");
+                            }
+                        })
+                        console.log($("#fileList").html());
+                        if($("#fileList").html()!=""){
+                            console.log("上传...");
+                            uploader.option('server','/file/saveFileupload');
+                            uploader.option('formData',{'itemtype':'takeoff','itemid':plan_id,'attfrom':"01"});
+                            uploader.upload();   //执行手动提交
+                            console.log("上传成功");
+
+                        }
+                        $("#fileList").html("");
+
+                        alert("发布成功");
+                        $("#modal-form").modal('hide');
+                        tabledata();
+                        table();
+                        $('#table1').bootstrapTable('load',datatable);
+
+                        $("#qjnr").html("请输入请假的原因...") ;
+                        $("#Searchtimeqj").val("");
+                        $("#Endtimeqj").val("");
+
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+    };
+    function sq2() {
+        var id=$("#shid").val();
+        var shlx2=$("#shlx2").find("option:selected").val();
+        var userid1=$("#userid").val();
+        var duration=$("#qjsc2").html();
+        var timetype=$("#sjlxxx2").val();
+        var qjnr2=$("#qjnr2").html()
+        var totalmanagerid=$("#totalmanagerid").val();
+        var groupuserid=$("#groupuserid").val();
+        var partuserid=$("#partuserid").val();
+        var data={"id":id,"userid":userid1,"duration":duration,"statetype":shlx2,"timetype":timetype,"totalmanagerid":totalmanagerid,"groupuserid":groupuserid,"partuserid":partuserid};
+        $.ajax({
+            url:"/attendance/updateAttendacne",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                alert("审核成功")
+                $("#modal-form2").modal('hide');
+                chaxun();
+                saveNews(id,"01","考勤管理",qjnr2,userid)
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    }
+    function qx(){
+        $("#modal-form").modal('hide');
+        $("#qjnr").html("请输入请假的原因...") ;
+        $("#qjsc").html("");
+        $("#Searchtimeqj").val("");
+        $("#Endtimeqj").val("");
+    };
+
+    function qx2(){
+        $("#modal-form2").modal('hide');
+    };
+    $(function(){
+        <!-- jeDate 插件 -->
+        jeDate("#Begtime0",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"2014-09-19"
+        });
+
+        jeDate("#Endtime0",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"2014-09-19"
+        });
+        jeDate("#Endtimeqj",{
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#Searchtimeqj",{
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#Endtimeqj2",{
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#Searchtimeqj2",{
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+            //调用
+            uploader = WebUploader.create({
+
+                // 自动上传。
+                auto: false,
+
+                // swf文件路径
+                swf: '/static/js/plugins/webuploader/Uploader.swf',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#filePicker',
+
+                duplicate :true,//是否可以重复上传
+
+                fileSizeLimit: 10000*1024*1024, //限制图片大小，不可以超过
+
+                compress: null,
+
+                // 只允许选择文件，可选。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/jpg,image/jpeg,image/png'   //修改这行，加快上传文件框的打开速度
+                }
+            });
+            picUpload('#fileList',80,80,'#filePicker',10000);
+            console.log($("#fileList").href)
+            // $('#testTable').bootstrapTable('refresh', { url: '/Home/GetPaginationData2' });
+        });
+
+        //id -> 存放图片  width，height  存放图片尺寸宽高  id2 按钮  allMaxSize图片大小
+        function picUpload(id,width,height,id2,allMaxSize){
+            var flag = false;
+            var $ = jQuery;
+            $list = $(id);
+            // 优化retina, 在retina下这个值是2
+            ratio = window.devicePixelRatio || 1;
+            // 缩略图大小
+            thumbnailWidth = 80 * ratio;
+            thumbnailHeight = 80 * ratio;
+            allMaxSize = 8;//限制图片大小
+            // 当有文件添加进来的时候
+            uploader.on( 'fileQueued', function( file ) {
+                var $li = $(
+                    '<li id="' + file.id + '" class="file-item thumbnail" style="float:left;">' +
+                    '<div class="delete" style="overflow: hidden;height:0px;width: 80px;position: fixed;background-color: black;opacity: 0.6"><i class="iconfont icon-guanbi-copy" style="float: left;cursor: pointer;font-size: 53px;margin-top: -29px;margin-left: 32px;width: 39px;color:white">关闭</i></div>' +
+                    '<img style="width: 50px;height: 50px;">' +
+                    '<div class="info">' + file.name + '</div>' +
+                    '</li>'
+                    ),
+                    $img = $li.find('img');
+                $list.append( $li );
+
+                // 创建缩略图
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+
+                    //去掉默认的头像，清空图片名字的信息
+                    $('.webuploader-pick img').attr('src','')
+                    $('.file-item .info').empty();
+
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+
+                $li.on( 'mouseenter', function() {
+                    $(".delete").stop().animate({height: 15});
+                });
+
+                $li.on( 'mouseleave', function() {
+                    $(".delete").stop().animate({height: 0});
+                });
+
+                $li.on('click','.iconfont.icon-guanbi-copy' , function() {
+                    uploader.removeFile( file,true );
+                    num++;
+                    $li.remove();
+                    $(".delete").stop().animate({height: 0});
+                    if($(".fileList").size()<=0){
+                        $(".uploader-list").css("border-top","");
+                        $(".uploader-list").css("padding","");
+                    }
+                })
+            });
+
+
+            // 文件上传过程中创建进度条实时显示。
+            /* uploader.on( 'uploadProgress', function( file, percentage ) {
+                 var $li = $( '#'+file.id ),
+                     $percent = $li.find('.progress span');
+
+                 // 避免重复创建
+                 if ( !$percent.length ) {
+                     $percent = $('<p class="progress"><span></span></p>')
+                         .appendTo( $li )
+                         .find('span');
+                 }
+
+                 $percent.css( 'width', percentage * 100 + '%' );
+             });*/
+
+            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+            uploader.on( 'uploadSuccess', function( file ) {
+                $( '#'+file.id ).addClass('upload-state-done');
+                /*uploader.removeFile(uploader.getFiles(),true);*/
+
+                flag = true;
+            });
+
+            // 文件上传失败，现实上传出错。
+            uploader.on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+
+                // 避免重复创建
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+
+                //$error.text('上传失败');
+
+            });
+
+            // 完成上传完了，成功或者失败，先删除进度条。
+            uploader.on( 'uploadComplete', function( file ) {
+                num++;
+                if(num==uploader.getFiles().length){
+                    $("#reset1").trigger("click");
+                }
+                $( '#'+file.id ).find('.progress').remove();
+
+            });
+
+            //  验证大小
+            uploader.on("error",function (type){
+
+                if(type == "Q_EXCEED_SIZE_LIMIT"){
+                    window.alert("系统提示:所选图片总大小不可超过" + allMaxSize + "个哦！");
+                }
+
+                // 判断传入的是不是函数
+                /*  if( jQuery.isFunction(sideFun) ){
+                 sideFun(type,allMaxSize);
+                 }else {
+                 //不是函数
+                 console.log(2)
+                 return false;
+                 }*/
+                /*  if(sideFun === 'undefined'){
+                 return true;
+                 }else{
+                 sideFun(type,allMaxSize);
+                 }
+                 */
+            });
+
+            //绑定提交事件
+            if(flag){
+                alert("发布成功！");
+            }
+        }
+        function textInit(e) {
+            e.preventDefault();//阻止默认事件
+            var text;
+            var clp = (e.originalEvent || e).clipboardData;
+            if (clp === undefined || clp === null) {
+                text = window.clipboardData.getData("text") || "";
+                if (text !== "") {
+                    if (window.getSelection) {
+                        var newNode = document.createElement("span");
+                        newNode.innerHTML = text;
+                        window.getSelection().getRangeAt(0).insertNode(newNode);
+                    } else {
+                        document.selection.createRange().pasteHTML(text);
+                    }
+                }
+            } else {
+                text = clp.getData('text/plain') || "";
+                if (text !== "") {
+                    var qutext = text
+                    var span=/<span\s*[^>]*>(.*?)<\/span>/ig;
+                    var div =/<div\s*[^>]*>(.*?)<\/div>/ig;
+                    var a = /<a\s*[^>]*>(.*?)<\/a>/ig;
+                    var p = /<p\s*[^>]*>(.*?)<\/p>/ig;
+                    qutext = qutext.replace(span,"$1");
+                    qutext = qutext.replace(a,"$1");
+                    qutext = qutext.replace(div,"$1");
+                    qutext = qutext.replace(p,"$1");
+                    document.execCommand('insertText', false, qutext);
+                }
+            }
+        }
+        $( document ).on( "paste", "#plan", function(e) {
+            //去除复制样式
+            textInit(e);
+        });
+
+    <!-- 业绩审核接口 -->
+    function shenhe(id){
+        $("#modal-form2").modal('show');
+        $(".modal-dialog").show();
+        var data = {"id":id}
+        $.ajax({
+            url:"/attendance/queryAttendanceById",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                for(var i=0;i<data.length;i++){
+                    $("#shid").val(data[i].id);
+                    $("#userid").val(data[i].userid)
+                    $("#qjlx2").val(data[i].atype);  //请假类型
+                    $("#Searchtimeqj2").val(data[i].astarttime);
+                    $("#Endtimeqj2").val(data[i].aendtime);
+                    $("#qjsc2").html(data[i].duration);
+                    $("#qjnr2").html(data[i].text);
+                    $("#sjlxxx2").find("option:selected").val(data[i].timetype);
+                    $("#totalmanagerid").val(data[i].totalmanagerid);
+                    $("#groupuserid").val(data[i].groupuserid);
+                    $("#partuserid").val(data[i].partuserid);
+                    $.ajax({
+                        url: "/file/queryitemidtatt",
+                        data: {"itemid":id},
+                        async: false,
+                        dataType: "json",
+                        type: "post",
+                        success: function (data) {
+                            var src="";
+                            for(var j=0;j<data.length;j++){
+                                src+='<img class="layui-upload-img" src="'+data[j].ip+data[j].filename+'" style="width: 75px;height:75px;border:1px solid #E5E5E5;margin-left: -115px;margin-top: 5px;">';
+                            }
+                            $("#test12").html(src);
+                        }
+                    })
+                }
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+    };
+</script>
+<body>
+<div id="big" class="col-sm-12" style="display: none">
+    <div class="example-wrap" style="margin-top: 25px;">
+        <div id="toolbar1"
+             style="width: 100%; overflow: hidden; margin-bottom: 14px; float: left;">
+            <div class="myText-content" style="float: left;width: 11%;cursor:pointer;">
+                <label class="myLabel-content">选项:&nbsp;&nbsp;&nbsp;</label>
+                <select
+                        name="select" id="sxxx"
+                        style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                    <option value="01">申请</option>
+                    <option value="02">审批</option>
+                </select>
+            </div>
+
+
+            <div class="myText-content" style="float: left;width: 13%;cursor:pointer;">
+                <label class="myLabel-content">状态:&nbsp;&nbsp;&nbsp;</label> <select
+                    name="select" id="sxzt" style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                <option value="00">全部</option>
+                <option value="01">已通过</option>
+                <option value="02">未通过</option>
+                <option value="03">审核中</option>
+            </select>
+            </div>
+
+            <div class="myText-content" style="float: left;width: 13%;">
+                <label class="myLabel-content">类型:&nbsp;&nbsp;&nbsp;</label>
+                <select  name="select" id="sxlx"  style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                    <option value="00" >全部</option>
+                </select>
+            </div>
+
+
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content" style="">日期：</label>
+                <div class="myText-content" style="">
+                    <input id="Begtime0"
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="开始日期" style="width: 154px;margin-right: 10px;">
+                </div>
+
+            </div>
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content">至</label>
+            </div>
+            <div class="my-container"
+                 style="display: block;  float: left;">
+                <label class="myLabel-content"></label>
+                <div class="myText-content" style="margin-left: 10px;">
+                    <input id="Endtime0"
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="结束日期" style="width: 154px;">
+                </div>
+            </div>
+
+            <div class="myBtn-content"
+                 style="float: left;margin-left: 2%;">
+                <button id="search1" type="button" class="btn btn-primary"
+                        style="background-color: #0099CC;border-color: #0099CC;color: #FFF;" onclick="chaxun()">查询</button>
+                <button id="reset1" type="button" class="btn btn-default"
+                        style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;" onclick="chongzhi()">重置</button>
+            </div>
+
+            <div id="fabu" onclick="qjtc()" style="float: right;width:76px;height:30px;background-color:#0099CC;margin-right: 10px;cursor:pointer;">
+                <i class="iconfont icon-fabu"style="position: relative;top: 7px;left: 14px;color: white;" ><font style="font-size:10px;position: relative;top: -1px;left: 2px;">请假</font></i>
+            </div>
+
+            <div class="example" id="paimingtable">
+                <table id="table1"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 请假-->
+<div id="modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="height: 530px;width:583px;">
+            <div class="modal-body" style="height: 530px;width: 627px;margin-left: -9px;margin-top: -5px;">
+
+                <div class="fb">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">请假申请</p>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+                <div class="everybox">
+                    <div class="yeji">请假类型:</div>
+                    <div class="">
+                        <select id="qjlx" class="form-control  "
+                                style="width: 461px;height:32px;float: left;font-family: FangSong;">
+                        </select>
+                    </div>
+                </div>
+                <div style="width:100%;height:0px;"></div>
+                <div class="everybox">
+                    <div class="yeji ">开始时间:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style=" ">
+                                <input id="Searchtimeqj"
+                                       class="com laydate-icon form-control layer-date"
+                                       placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="yeji2 ">结束时间:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style="">
+                                <input id="Endtimeqj"
+                                       class="com laydate-icon form-control layer-date"
+                                       placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:100%;height:2px;"></div>
+                <div class="everybox">
+                    <div class="yeji ">请假时长:</div>
+                    <div id="qjsc" class="yjbox" contenteditable="true" style="
+									    width: 181px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+
+                    <div class="yeji2" style="">时间类型:</div>
+                    <div>
+                        <select id="sjlxxx" class="form-control  "
+                                style="width: 181px;height:32px;float: left;font-family: FangSong;">
+                            <option value="01">天</option>
+                            <option value="02">时</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="width:100%;height:1px;"></div>
+
+
+                <div style="width:100%;height:5px;"></div>
+                <div class="everybox2">
+                    <div class="yeji ">请假事由:</div>
+                    <div  style="" class="yejibigtext" >
+                        <div id="qjnr" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                             onfocus="if(this.innerText=='请输入请假的原因...')this.innerText=''"
+                             onblur="if(this.innerText=='')this.innerText='请输入请假的原因...'">请输入请假的原因...</div>
+                    </div>
+                </div>
+                <div style="width:100%;height:5px;"></div>
+                <div >
+                    <label class="yeji">附件:</label>
+                    <div style="position:absolute; bottom: 110px;width: 27%;">
+                        <div class="tongji" style="float: right;font-size: 20px;margin-right: 10px;">
+
+                            <div id="filePicker" class="layui-upload-button" style="font-size:14px;margin-top: 4px; "><span style="font-size: 13px;float: right;margin-top: 3px;">上传图片</span></div>
+                        </div>
+                    </div>
+                    <div  class="uploader-list">
+                        <ul id="fileList" style=" width: 460px; height: 90px;padding-left: 17px;list-style: none;overflow: hidden;margin-bottom: 15px; border: 1px solid #d9d9d9"></ul>
+                    </div>
+                </div>
+
+                <div class="btndiv">
+                    <div class="btnn" style="background-color:#0099CC;color:white;" onclick="sq()">确认</div>
+                    <div class="btnn" style="border: 1px solid #EEEEEF;" onclick="qx()"> 取消</div>
+                    <div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--请假审核-->
+<div id="modal-form2" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="height: 490px;width:583px;">
+            <div class="modal-body" style="height: 471px;width: 627px;margin-left: -9px;margin-top: -5px;">
+
+                <div class="fb2">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">请假申请</p>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+                <input id="userid" type="hidden" value=""/>
+                <input id="shid" type="hidden" value=""/>
+                <input id="groupuserid" type="hidden" value=""/>
+                <input id="partuserid" type="hidden" value=""/>
+                <input id="totalmanagerid" type="hidden" value=""/>
+                <div class="everybox">
+                    <div class="yeji">请假类型:</div>
+                    <div class="">
+                        <select id="qjlx2" class="form-control  "
+                                style="width: 461px;height:32px;float: left;font-family: FangSong;">
+                        </select>
+                    </div>
+                </div>
+                <div style="width:100%;height:0px;"></div>
+                <div class="everybox">
+                    <div class="yeji ">开始时间:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style=" ">
+                                <input id="Searchtimeqj2"
+                                       class="com laydate-icon form-control layer-date"
+                                       placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="yeji2 ">间:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style="">
+                                <input id="Endtimeqj2"
+                                       class="com laydate-icon form-control layer-date"
+                                       placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:100%;height:2px;"></div>
+                <div class="everybox">
+                    <div class="yeji ">请假时长:</div>
+                    <div id="qjsc2" class="yjbox" contenteditable="true" style="
+									    width: 181px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+
+                    <div class="yeji2" style="">时间类型:</div>
+                    <div>
+                        <select id="sjlxxx2" class="form-control  "
+                                style="width: 181px;height:32px;float: left;font-family: FangSong;">
+                            <option value="01">天</option>
+                            <option value="02">时</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="everybox2">
+                    <div class="yeji ">请假事由:</div>
+                    <div  style="" class="yejibigtext" >
+                        <div id="qjnr2" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                             onfocus="if(this.innerText=='请输入请假的原因...')this.innerText=''"
+                             onblur="if(this.innerText=='')this.innerText='请输入请假的原因...'">请输入请假的原因...</div>
+                    </div>
+                </div>
+                <div style="width:100%;height:5px;"></div>
+                <div class="layui-upload">
+                    <div class="yeji " style="width: 183px;">附件申明（最多可添加6张）</div></br>
+                    <div class="layui-upload-list" id="test12">
+                        <img class="layui-upload-img" id="demo12" style="width: 75px;height:75px;border:1px solid #E5E5E5;margin-left: -115px;margin-top: 5px;">
+                        <p id="demoText2"></p>
+                    </div>
+                </div>
+                <div class="everybox">
+                    <div class="shen2" style="">审批意见:</div>
+                    <div>
+                        <select id="shlx2" class="form-control  "
+                                style="width: 181px;height:32px;float: left;font-family: FangSong;">
+                            <option value="01">通过</option>
+                            <option value="02">驳回</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="btndiv">
+                    <div class="btnn" style="background-color:#0099CC;color:white;" onclick="sq2()">确认</div>
+                    <div class="btnn" style="border: 1px solid #EEEEEF;" onclick="qx2()"> 取消</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

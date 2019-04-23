@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>说说详情</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/layui/layui.all.js"></script>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        /*外围*/
+        #ww{
+            border: 1px solid #f0f2f5;
+            margin: 20px 10px;
+            width: 1300px;
+
+            /*background: blue;*/
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        /*内块*/
+        #ww1{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        /*第一块*/
+        .ww1{
+            /*border: 1px solid red;*/
+            width: 100%;
+            margin-bottom: 30px;
+            display: flex;
+        }
+        /*第二块*/
+        .ww2{
+            width: 100%;
+
+            /*border: 1px solid blue;*/
+            background: #f5f6fa;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        /*第三块*/
+        .ww3{
+            width: 100%;
+            border-top: 1px solid #f5f6fa;
+            padding-top: 20px;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body style="background: #ffffff">
+<!-- 外围 -->
+<div id="ww">
+    <!-- 內块 -->
+    <div id="ww1">
+        <!-- 第一块 -->
+        <div class="ww1">
+            <img src="../../../static/img/timg.jpg" style="width: 50px;
+                height:50px;margin-right: 20px;
+                border-radius: 100px;">
+            <div style="width: 100%;">
+                <div>
+                    <p style="margin-bottom: 4px;font-weight: 500;">田文</p>
+                    <span style="margin-right: 10px;font-size: 12px;">
+                    2018-09-26 08:24
+                    </span>
+                    <a href="#">删除</a>
+                </div>
+                <div style="width: 100%;height:60px;display: flex; line-height: 60px;font-size: 20px;">
+                    打字速度对编程影响大吗？
+                </div>
+                <div style="line-height: 20px;padding: 6px;margin-bottom: 20px;font-size: 12px;">本人打字极慢。程序员,指法很差，可能是小时候计算机接触晚造成的。但感觉自己编程还行，编程的时候没必要像聊天那么快，因为要考虑好多东西，命名，设计模式等。由于担心工作之后的工作环境变的非常“艰难”，最近想用vim。问题：现在再练指法提升打字速度，必要吗？
+                </div>
+                <img src="../../../static/img/timg.jpg" style="width: 260px;height: 160px; margin-right: 14px;border-radius: 10px;">
+                <p>
+                    <img src="../../../static/img/留言.png" style="width: 26px;height: 22px;margin-top: 10px;float: right;">
+                </p>
+            </div>
+        </div>
+        <!-- 第二块 -->
+        <div class="ww2">
+            <p style="padding-top: 10px;padding-bottom: 10px;box-sizing: border-box;display: flex;">
+                <img src="../../../static/img/爱心.png">
+            <p style="font-size: 12px;line-height: 36px;color: #b3b3b4;margin-left: 10px;">田文</p>
+            <p style="font-size: 12px;color: #333;line-height: 36px;">觉得很赞</p>
+            </p>
+            <p style="width: 100%;height: 2px;background: yellow;"></p>
+            <div style="display: flex; padding-top: 10px;box-sizing: border-box;">
+                <img src="../../../static/img/timg.jpg" style="width: 40px;
+                height:40px;margin-right: 20px;
+                border-radius: 100px;">
+                <div style="width: 100%;">
+                    <div style="overflow: hidden;">
+                        <p style="margin-bottom: 4px; display: inline; color: #58b4d9;font-size: 12px;">田文</p>
+                        <span style="margin-right: 10px;float: right;">
+                    2018-09-26 08:24
+                    </span>
+                    </div>
+                    <div style="line-height: 20px;padding: 6px;margin-bottom: 20px;font-size: 12px;">本人打字极慢。程序员,指法很差，可能是小时候计算机接触晚造成的。但感觉自己编程还行，编程的时候没必要像聊天那么快，因为要考虑好多东西，命名，设计模式等。由于担心工作之后的工作环境变的非常“艰难”，最近想用vim。问题：现在再练指法提升打字速度，必要吗？
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; padding-top: 10px;box-sizing: border-box;">
+                <img src="../../../static/img/timg.jpg" style="width: 40px;
+                height:40px;margin-right: 20px;
+                border-radius: 100px;">
+                <div style="width: 100%;">
+                    <div style="overflow: hidden;">
+                        <p style="margin-bottom: 4px; display: inline;color: #58b4d9;font-size: 12px;">田文</p>
+                        <span style="margin-right: 10px;float: right;">
+                    2018-09-26 08:24
+                    </span>
+                    </div>
+                    <div style="line-height: 20px;padding: 6px;margin-bottom: 20px;font-size: 12px;">本人打字极慢。程序员,指法很差，可能是小时候计算机接触晚造成的。但感觉自己编程还行，编程的时候没必要像聊天那么快，因为要考虑好多东西，命名，设计模式等。由于担心工作之后的工作环境变的非常“艰难”，最近想用vim。问题：现在再练指法提升打字速度，必要吗？
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; padding-top: 10px;box-sizing: border-box;">
+                <img src="../../../static/img/timg.jpg" style="width: 40px;
+                height:40px;margin-right: 20px;
+                border-radius: 100px;">
+                <div style="width: 100%;">
+                    <div style="overflow: hidden;">
+                        <p style="margin-bottom: 4px;display: inline; color: #58b4d9;font-size: 12px;">田文</p>
+                        <span style="margin-right: 10px;float: right;">
+                    2018-09-26 08:24
+                    </span>
+                    </div>
+                    <div style="line-height: 20px;padding: 6px;margin-bottom: 20px;font-size: 12px;">本人打字极慢。程序员,指法很差，可能是小时候计算机接触晚造成的。但感觉自己编程还行，编程的时候没必要像聊天那么快，因为要考虑好多东西，命名，设计模式等。由于担心工作之后的工作环境变的非常“艰难”，最近想用vim。问题：现在再练指法提升打字速度，必要吗？
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 第三块 -->
+        <div class="ww3">
+            <div  contenteditable="true"  style="width: 100%;height: 120px;border: 1px solid #58b4d9;color: #0b2e13">说点什么...</div>
+            <button class="layui-btn layui-btn-normal" style="width: 60px;height: 30px;float: right;margin-top: 16px;text-align: center;line-height: 30px;padding: 0;">发布</button>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

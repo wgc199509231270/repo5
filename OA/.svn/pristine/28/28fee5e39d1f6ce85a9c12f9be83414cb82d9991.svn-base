@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tscorp.TscorpDao">
+
+	
+	
+	<!-- 查询部门列表  -->
+    <select id="QueryTscorpList" parameterType="com.OuSoft.system.dao.Tscorp.Model.TscorpModel" resultType="com.OuSoft.system.dao.Tscorp.Model.TscorpModel">
+		SELECT
+			tp.id,tp.corpname,tp.epid,tp.pid,tp.ordernum,tp.type,tp.topcorpid,tp.remark
+		FROM
+			tscorp tp 
+		<where>
+			<if test='id != null'>
+	           	and te.id = #{id}
+	       	</if>
+	       	<if test='corpname != null'>
+	           	and te.corpname like #{corpname}
+	       	</if>
+			<if test='epid != null'>
+	           	and tt.epid like #{epid}
+	       	</if>
+	   		<if test="ordernum != null">
+	   			and acs.ordernum = #{ordernum}
+	   		</if>
+	   		<if test="remark != null">
+	   			and acs.remark = #{remark} 
+	   		</if>
+		</where>
+		order by tp.epid
+		<if test="page != null">
+			<if test="pageSize != null">
+				limit #{page} , #{pageSize}
+			</if>
+     	</if>
+     	
+    </select>
+    
+ 	<!-- 添加部门 -->
+	<insert id="InsertTscorp" parameterType="com.OuSoft.system.entity.Tscorp">
+		 insert into tscorp 
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        id,
+	      </if>
+	      <if test="corpname != null">
+	        corpname,
+	      </if>
+	      <if test="epid != null">
+	        epid,
+	      </if>
+	      <if test="ordernum != null">
+	        ordernum,
+	      </if>
+	      <if test="remark != null">
+	        remark,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=CHAR},
+	      </if>
+	      <if test="corpname != null">
+	        #{corpname,jdbcType=VARCHAR},
+	      </if>
+	      <if test="epid != null">
+	        #{epid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ordernum != null">
+	        #{ordernum,jdbcType=INT},
+	      </if>
+	      <if test="remark != null">
+	        #{remark,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+	</insert>
+	
+	<!-- 根据id删除部门 -->
+	<delete id="DelTscorp" parameterType="java.lang.String">
+		delete from tscorp where id = #{id}
+	</delete>
+	
+	
+	<!-- 修改部门 -->
+	<update id="UpdateTscorp" parameterType="com.OuSoft.system.entity.Achievements">
+		 insert into tscorp 
+	    <trim prefix="set (" suffix=")" suffixOverrides=",">
+	      <if test="acs_id != null">
+   			id = #{id,jdbcType=CHAR},
+	      </if>
+	      <if test="corpname != null">
+	        corpname = #{corpname,jdbcType=VARCHAR},
+	      </if>
+	      <if test="epid != null">
+	        epid = #{epid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ordernum != null">
+	        ordernum = #{ordernum,jdbcType=INT},
+	      </if>
+	      <if test="remark != null">
+	        remark = #{remark,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+	</update>
+<!-- 	<resultMap type="com.OuSoft.system.entity.Clock"  id="clock_user" autoMapping="true"> -->
+<!--         <id column="id" property="id"/> -->
+<!--         <result column="userid" jdbcType="VARCHAR" property="userid" /> -->
+<!--         <result column="cltime" jdbcType="VARCHAR" property="cltime" /> -->
+<!--         <result column="clplace" jdbcType="VARCHAR" property="clplace" /> -->
+<!--         <result column="clform" jdbcType="VARCHAR" property="clform" /> -->
+<!--         <result column="clpcip" jdbcType="VARCHAR" property="clpcip" /> -->
+<!--         <result column="cltype" jdbcType="VARCHAR" property="cltype" /> -->
+<!--         <collection property="tsuser" javaType="list"  ofType="com.OuSoft.system.entity.Tsuser"> -->
+<!--         	 <id property="id" column="id"/> -->
+<!--              <result property="username" column="username"/> -->
+<!--         </collection>    -->
+<!--    </resultMap> -->
+	
+	
+</mapper>

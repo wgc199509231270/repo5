@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Plan.PlansDao">
+
+
+		<!-- 计划图表个人 -->
+		<select id="queryGNumListTplanDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+			SELECT
+				tpl.*, round(SUM(tpl.workhour), 1) AS numworkhour,tsi.clstatus,tsi.cltype
+			FROM tplan tpl
+			LEFT JOIN tsign tsi ON tpl.userid = tsi.userid and tpl.createtime = tsi.cltime
+			<where>
+			    	1=1
+				<if test="userid != null">
+					and tpl.userid = #{userid}
+				</if>
+				<if test="plantype != null">
+					and tpl.plantype = #{plantype}
+				</if>
+				<if test="loginname != null and loginname != '' ">
+					and tpl.userid = #{loginname}
+				</if>
+				<if test="planning != null and planning != '' ">
+					and tpl.planning = #{planning}
+				</if>
+				<if test="prospectus != null and prospectus != '' ">
+					and tpl.prospectus = #{prospectus}
+				</if>
+				<if test="begtime != null">
+					and SUBSTR(tpl.createtime, 1, 10) &gt;= #{begtime} 
+				</if>
+				<if test="endtime != null">
+					and SUBSTR(tpl.createtime, 1, 10) &lt;= #{endtime}
+				</if>
+				GROUP BY SUBSTR(tpl.createtime,1,10) ORDER BY tpl.createtime desc
+			</where>
+		</select>
+		
+		<!-- 计划图表全查 -->
+		<select id="queryNumListTplanDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+				 
+				SELECT
+				tpl.*,tu.username as username, round(SUM(tpl.workhour), 1) AS numworkhour
+				FROM
+					tplan tpl
+				LEFT JOIN tuser tu on tu.id = tpl.userid and tu.userpid=#{tcmid} 
+				<where>
+						1=1 and tu.status != '02' and tu.status != '03'
+					<if test="plantype != null">
+						and tpl.plantype = #{plantype} 
+					</if>
+					<if test="planning != null and planning != '' ">
+						and tpl.planning = #{planning}
+					</if>
+					<if test="prospectus != null and prospectus != '' ">
+						and tpl.prospectus = #{prospectus}
+					</if>
+					<if test="begtime != null">
+						and SUBSTR(tpl.createtime, 1, 10) &gt;= #{begtime} 
+					</if>
+					<if test="endtime != null">
+						and SUBSTR(tpl.createtime, 1, 10) &lt;= #{endtime}
+					</if>
+						GROUP BY 	tpl.userid ORDER BY numworkhour DESC
+				</where>
+		</select>
+
+		<!-- 根据di,删除一条计划， -->
+		<delete id="deleteIdTplanDao" parameterType="java.lang.String">
+			delete from tplan where id = #{id}
+		</delete>
+
+		<!-- 插入计划数据 -->
+		<insert id="insertTplanDao" parameterType="com.OuSoft.system.entity.Plan" >
+			 insert into tplan
+		    <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="userid != null">
+		        userid,
+		      </if>
+		      <if test="createtime != null">
+		        createtime,
+		      </if>
+		      <if test="plantext != null">
+		        plantext,
+		      </if>
+		      <if test="plantype != null">
+		        plantype,
+		      </if>
+		      <if test="workhour != null">
+		        workhour,
+		      </if>
+		      <if test="remark != null">
+		        remark,
+		      </if>
+		      <if test="workload != null">
+		        workload,
+		      </if>
+				<if test="planning != null">
+					planning,
+				</if>
+				<if test="prospectus != null">
+					prospectus,
+				</if>
+				<if test="status != null">
+					status,
+				</if>
+				<if test="starttime != null">
+					starttime,
+				</if>
+				<if test="verifierid != null">
+					verifierid,
+				</if>
+				<if test="clockid != null">
+					clockid,
+				</if>
+                <if test="complantime != null">
+                    complantime,
+                </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="userid != null">
+		        #{userid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="createtime != null">
+		        #{createtime,jdbcType=VARCHAR},
+		      </if>
+		      <if test="plantext != null">
+		        #{plantext,jdbcType=VARCHAR},
+		      </if>
+		      <if test="plantype != null">
+		        #{plantype,jdbcType=VARCHAR},
+		      </if>
+		      <if test="workhour != null">
+		        #{workhour,jdbcType=DOUBLE},
+		      </if>
+		      <if test="remark != null">
+		        #{remark,jdbcType=VARCHAR},
+		      </if>
+		      <if test="workload != null">
+		        #{workload,jdbcType=DOUBLE},
+		      </if>
+			  <if test="planning != null">
+				  #{planning,jdbcType=VARCHAR},
+			  </if>
+			  <if test="prospectus != null">
+				  #{prospectus,jdbcType=VARCHAR},
+			  </if>
+				<if test="status != null">
+					#{status,jdbcType=VARCHAR},
+				</if>
+				<if test="starttime != null">
+					#{starttime,jdbcType=VARCHAR},
+				</if>
+				<if test="verifierid != null">
+					#{verifierid,jdbcType=VARCHAR},
+				</if>
+				<if test="clockid != null">
+					#{clockid,jdbcType=VARCHAR},
+				</if>
+                <if test="complantime != null">
+                    #{complantime,jdbcType=VARCHAR},
+                </if>
+		      </trim>
+		</insert>
+
+	<!-- 更新计划数据 -->
+	<update id="UpdatePlanByid" parameterType="com.OuSoft.system.entity.Plan" >
+		UPDATE tplan
+		<set>
+		<if test="completetext != null">
+			completetext=#{completetext},
+		</if>
+		<if test="comtime != null">
+			comtime=#{comtime},
+		</if>
+		<if test="complan != null">
+			complan=#{complan},
+		</if>
+		<if test="verplan != null">
+			verplan=#{verplan},
+		</if>
+		<if test="vertime != null">
+			vertime=#{vertime},
+		</if>
+		<if test="verifiertext != null">
+			verifiertext=#{verifiertext},
+		</if>
+			<if test="plantext != null">
+				plantext=#{plantext},
+			</if>
+			<if test="plantype != null">
+				plantype=#{plantype},
+			</if>
+			<if test="workhour != null">
+				workhour=#{workhour},
+			</if>
+			<if test="remark != null">
+				remark=#{remark},
+			</if>
+			<if test="workload != null">
+				workload=#{workload},
+			</if>
+			<if test="planning != null">
+				planning=#{planning},
+			</if>
+			<if test="prospectus != null">
+				prospectus=#{prospectus},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+            <if test="complantime != null">
+                complantime=#{complantime},
+            </if>
+		<if test="starttime != null">
+			starttime=#{starttime},
+		</if>
+		<if test="verifierid != null">
+			verifierid=#{verifierid},
+		</if>
+			<if test="verendtime != null">
+				verendtime=#{verendtime},
+			</if>
+	</set>
+		WHERE
+		id=#{id}
+	</update>
+		<!-- 计划列表 -->
+		<select id="queryListTpraiseDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+			SELECT
+			tpl.*,
+			SUBSTR(tpl.createtime ,1,10) as rtime, SUBSTR(tpl.createtime ,11,20) as mtime,
+			CONCAT(SUBSTR(tpl.plantext,1,30),'...') as text,
+			ta.filename AS txfilename,
+			tu.username AS username,
+			IfNULL(tpra.num, 0) AS tpranum,
+			IfNULL(tmoo.tmonum, 0) AS comnum,
+			ip.ip as ip,
+			IFNULL(tp.id,0) as dz,
+			tdi.deparname,
+			tji.jobname,
+			tsi.clstatus,
+			tsi.clstatusp
+			FROM
+			tplan tpl
+			LEFT JOIN (
+			SELECT
+			t.itemid AS itemid,
+			count(t.itemid) AS num
+			FROM tpraise t
+			where t.itemtype = 'tplan'
+			GROUP BY
+			t.itemid
+			) tpra ON tpl.id = tpra.itemid
+			LEFT JOIN
+			(
+			SELECT  tmo.commentid as commentid,
+			count(tmo.commentid) as tmonum
+			from tcomment tmo
+			WHERE tmo.itemtype = 'tplan' GROUP BY tmo.commentid
+			) tmoo on tmoo.commentid = tpl.id
+
+			LEFT JOIN tuser tu ON tu.id = tpl.userid and tu.userpid=#{tcmid}
+			LEFT JOIN tatt ta ON ta.itemid = tpl.userid
+			left JOIN tattip ip on ip.id = '1'
+			left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tpl.id
+			LEFT JOIN tdepartuser tdu ON tdu.userid=tpl.userid
+			LEFT JOIN tdepartmentinfo tdi ON tdi.id=tdu.deparid
+			LEFT JOIN tjobtsuser tju ON tju.userid=tpl.userid
+			LEFT JOIN tjobinfo tji ON tji.id=tju.jobid
+			LEFT JOIN tsign tsi ON  tsi.id=tpl.clockid
+			<where>
+				1=1
+				<if test="userid != null and userid != '' and type != 02">
+					and tpl.userid = #{userid}
+				</if>
+				<if test="clstatus != null and clstatus != ''">
+					and tsi.clstatus = #{clstatus}
+				</if>
+				<if test="type == 02">
+					and tpl.verifierid = #{dzuserid}
+				</if>
+				<if test="status != null and status != ''">
+					and tpl.status = #{status}
+				</if>
+				<if test="plantype != null and plantype != ''">
+					and tpl.plantype = #{plantype}
+				</if>
+				<if test="begtime != null and begtime != ''">
+					and SUBSTR(tpl.createtime, 1, 10) &gt;= #{begtime}
+				</if>
+				<if test="endtime != null and endtime != ''">
+					and SUBSTR(tpl.createtime, 1, 10) &lt;= #{endtime}
+				</if>
+				<if test="loginname != null and loginname != '' and type != 02 and idtype == 03">
+				and tpl.userid = #{loginname}
+			</if>
+				<if test="idtype == 02">
+					and tdi.id = #{loginname}
+				</if>
+				ORDER BY
+				tpl.createtime desc
+			</where>
+		
+		</select>
+		
+		<!-- 计划点赞详情 -->
+		<select id="queryListTpraiseTplanDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+			SELECT 
+			  tpra.id as tpraid,
+				tpl.*,
+				tutsi.username as username,
+			  tutpra.username as tprausername,
+			  tpra.userid as tprauserid,
+			  ta.filename as txfilename ,ip.ip as ip,
+			  IFNULL(tp.id,0) as dz
+			FROM
+				tplan tpl
+			LEFT JOIN tpraise tpra ON tpra.itemid = tpl.id
+			LEFT JOIN tuser tutpra on tutpra.id = tpra.userid and tutpra.userpid=#{tcmid}
+			LEFT JOIN tuser tutsi ON tutsi.id = tpl.userid and tutsi.userpid=#{tcmid}
+			left join tatt ta on ta.itemid = tpl.userid 
+			left JOIN tattip ip on ip.id = '1' 
+			left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tpl.id
+			WHERE 1=1 
+			 and tpl.id = #{id}
+			order by tpra.praisetime
+		</select>
+		<!--查询计划-->
+		<select id="QueryPlanListByidDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+			SELECT tpl.*,tsi.*,GROUP_CONCAT(ta.filename) as txfilename ,ip.ip as ip ,GROUP_CONCAT(ta.id) as tattid FROM tplan tpl
+			LEFT JOIN tsign tsi ON  tsi.id=tpl.clockid
+			left join tatt ta on ta.itemid = tpl.id
+			left JOIN tattip ip on ip.id = '1'
+			WHERE
+			1=1
+		  	and tpl.id = #{id}
+		</select>
+    <!--查询所有计划-->
+    <select id="QueryAllPlanListByidDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+		SELECT tp.*,tu.username,td.deparname FROM tplan tp
+		LEFT JOIN tuser tu ON tu.id=tp.userid
+		LEFT JOIN tdepartuser tdu ON tdu.userid=tp.userid
+		LEFT JOIN tdepartmentinfo td ON td.id=tdu.deparid
+		WHERE
+		1=1
+		<if test="plantype != null and plantype != '' ">
+			and tp.plantype = #{plantype}
+		</if>
+		<if test="userid != null and userid != '' ">
+			and tp.userid = #{userid}
+		</if>
+         ORDER BY tp.createtime desc
+		<if test="limit != null and limit != '' ">
+			limit #{limit}
+		</if>
+    </select>
+    <select id="queryPlanListNewDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+        SELECT * FROM tplan
+        WHERE
+        1=1
+        and id = #{id}
+    </select>
+    <!--查询效率-->
+	<select id="queryRealycientDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+		SELECT *
+		FROM
+		tplan tpl
+		WHERE
+		<if test="userid != null and userid != '' ">
+			tpl.userid = #{userid}
+		</if>
+		<if test="begtime != null and begtime != '' ">
+			and tpl.starttime &gt;= #{begtime}
+		</if>
+		<if test="endtime != null and endtime != '' ">
+			and tpl.starttime &lt;= #{endtime}
+		</if>
+	</select>
+    <!--查询进度-->
+    <select id="queryPlanPlanDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+		SELECT *
+		FROM
+		tplan tpl
+		WHERE
+		<if test="userid != null and userid != '' ">
+			tpl.userid = #{userid}
+		</if>
+		<if test="begtime != null and begtime != '' ">
+			and tpl.starttime &gt;= #{begtime}
+		</if>
+		<if test="endtime != null and endtime != '' ">
+			and tpl.starttime &lt;= #{endtime}
+		</if>
+    </select>
+
+	<!--查询排名-->
+	<select id="queryClockRankDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan">
+		SELECT
+		tpl.*,tdi.deparname,tji.jobname,tu.username,SUBSTR(tpl.starttime FROM 12 FOR 19) as clocktime,tt.filename as txfilename,tti.ip as ip
+		FROM
+		tplan tpl
+		LEFT JOIN tdepartuser tdu ON tdu.userid=tpl.userid
+		LEFT JOIN tdepartmentinfo tdi ON tdi.id=tdu.deparid
+		LEFT JOIN tjobtsuser tju ON tju.userid=tpl.userid
+		LEFT JOIN tjobinfo tji ON tji.id=tju.jobid
+		LEFT JOIN tuser tu ON tu.id=tpl.userid
+		LEFT JOIN tatt tt ON tt.itemid=tpl.userid
+		LEFT JOIN tattip tti ON tti.id='1'
+		WHERE
+		1=1
+		<if test="plantype != null and plantype != '' ">
+			and tpl.plantype=#{plantype}
+		</if>
+		<if test="deparname != null and deparname != '' ">
+			and tdi.deparname=#{deparname}
+		</if>
+		<if test="userid != null and userid != '' ">
+			and tpl.userid = #{userid}
+		</if>
+		<if test="begtime != null and begtime != '' ">
+			and tpl.starttime &gt;= #{begtime}
+		</if>
+		<if test="endtime != null and endtime != '' ">
+			and tpl.starttime &lt;= #{endtime}
+		</if>
+		ORDER BY
+		<if test="clockrank == 01">
+			SUBSTR(tpl.starttime FROM 12 FOR 19)
+		</if>
+		<if test="clockrank == 02">
+			tpl.workhour desc
+		</if>
+		<if test="clockrank == 03">
+			tpl.workload
+		</if>
+		<if test="clockrank == 04">
+			tpl.complan desc
+		</if>
+		<if test="clockrank == 05">
+			tpl.comtime
+		</if>
+		<if test="limit != null and limit != '' ">
+			limit  #{limit}
+		</if>
+	</select>
+<!--计划分析-->
+	<select id="queryAnalysis" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.performanceRank">
+		SELECT
+		n.*,
+		IfNULL( n.planhours - n.realyhours,0) AS hoursbias,
+		IfNULL( n.planefficiency - n.realycient,0) AS efficiencybias,
+		IfNULL( n.planpernum - n.realynum,0) as pernum,
+		(select count(*) from tpraise tp where tp.itemid=n.name) praisenum,
+		(select count(*) from tcomment tc where tc.itemid=n.name) commentnum
+		FROM (
+		SELECT
+		<if test="state == '01'">
+			DATE_FORMAT(tpl.starttime, '%Y%u') name,
+		</if>
+		<if test="state == '02'">
+			DATE_FORMAT(tpl.starttime, '%Y%m') name,
+		</if>
+		<if test="state == '03'">
+			CONCAT(YEAR(tpl.starttime),'_',quarter(tpl.starttime)) name,
+		</if>
+		<if test="state == '04'">
+			DATE_FORMAT(tpl.starttime, '%Y') name,
+		</if>
+			tpl.starttime as time,
+			IfNULL( sum(tpl.workhour) ,0) as planpernum,
+			IfNULL( sum(tpl.complan) ,0) AS realynum,
+			IfNULL( sum(tpl.workload) ,0) AS planhours,
+			IfNULL( sum(tpl.comtime) ,0) AS realyhours,
+			IfNULL(sum(tpl.status='05'), 0) AS realsum,
+			IfNULL(sum(tpl.status='04'), 0) AS nosum,
+			IfNULL(sum(tsi.cltype='04'), 0) AS absen,
+			IfNULL( sum(tpl.complan/tpl.comtime) ,0) AS realycient,
+			IfNULL( sum(tpl.workload) / sum(tpl.workhour)  ,0)AS planefficiency
+
+		FROM
+		tplan tpl
+		LEFT JOIN tdepartuser tu ON tpl.userid = tu.userid
+		LEFT JOIN tdepartmentinfo tdp ON tdp.id = tu.deparid
+		LEFT JOIN tsign tsi ON tpl.clockid = tsi.id
+		where 1=1
+		<if test="userid != null">
+			and tpl.userid=#{userid}
+		</if>
+		<if test="deparepid != null">
+			and tdp.deparepid=#{deparepid}
+		</if>
+		and tpl.starttime between #{begtime} and #{endtime}
+		GROUP BY name ) n ORDER BY n.time asc
+	</select>
+    <select id="queryAnalysis1" parameterType="com.OuSoft.system.entity.PlanAnalyze" resultType="com.OuSoft.system.entity.performanceRank">
+        select
+        n.*,
+        IfNULL( n.planhours - n.realyhours,0) AS hoursbias,
+        IfNULL( n.planefficiency - n.realycient,0) AS efficiencybias,
+        IfNULL( n.planpernum - n.realynum,0) as pernum
+        from ( SELECT tu.id,
+        tu.username as name,
+        tpl.workhour as valuenum,
+        IfNULL( sum(tpl.workhour) ,0) as planpernum,
+			IfNULL( sum(tpl.complan) ,0) AS realynum,
+			IfNULL( sum(tpl.workload) ,0) AS planhours,
+			IfNULL( sum(tpl.comtime) ,0) AS realyhours,
+			IfNULL(sum(tpl.status='05'), 0) AS realsum,
+			IfNULL(sum(tpl.status='04'), 0) AS nosum,
+			IfNULL(sum(tsi.cltype='04'), 0) AS absen,
+			IfNULL( sum(tpl.complan/tpl.comtime) ,0) AS realycient,
+			IfNULL( sum(tpl.workload) / sum(tpl.workhour)  ,0)AS planefficiency
+
+        FROM
+        tuser tu
+        LEFT JOIN tdepartuser tdp ON tdp.userid = tu.id
+        LEFT JOIN tdepartmentinfo tde ON tde.id = tdp.deparid
+        LEFT JOIN tplan tpl on tu.id=tpl.userid and tpl.starttime BETWEEN ${begtime} and ${endtime}
+        LEFT JOIN tsign tsi ON tpl.clockid = tsi.id
+        where 1=1 tde.deparpid=#{tcmid} tu.id=#{userid}
+        ORDER BY tpl.workhour DESC) n
+    </select>
+    <select id="queryAnalysis2" parameterType="com.OuSoft.system.entity.PlanAnalyze" resultType="com.OuSoft.system.entity.performanceRank">
+        SELECT
+        n.*,
+        @a := @a + 1 AS RANK,
+        IfNULL( n.planhours - n.realyhours,0) AS hoursbias,
+        IfNULL( n.planefficiency - n.realycient,0) AS efficiencybias,
+        IfNULL( n.planpernum - n.realynum,0) as pernum
+        FROM
+        (
+        SELECT
+        tu.id,
+        tu.username as name,
+        (select count(*) from tpraise tp where tp.itemid=tu.id) praisenum,
+        (select count(*) from tcomment tc where tc.itemid=tu.id) commentnum,
+        IfNULL( sum(tpl.workhour) ,0) as planpernum,
+        IfNULL( sum(tpl.complan) ,0) AS realynum,
+        IfNULL( sum(tpl.workload) ,0) AS planhours,
+        IfNULL( sum(tpl.comtime) ,0) AS realyhours,
+		IfNULL(sum(tpl.status='05'), 0) AS realsum,
+		IfNULL(sum(tpl.status='04'), 0) AS nosum,
+		IfNULL(sum(tsi.cltype='04'), 0) AS absen,
+        IfNULL( sum(tpl.complan/tpl.comtime) ,0) AS realycient,
+        IfNULL( sum(tpl.workload) / sum(tpl.workhour)  ,0)AS planefficiency
+
+        FROM
+        tuser tu
+        LEFT JOIN tdepartuser tpu ON tu.id = tpu.userid
+        LEFT JOIN tdepartmentinfo tdp ON tdp.id = tpu.deparid
+        LEFT JOIN tplan tpl ON tu.id = tpl.userid and tpl.starttime BETWEEN #{begtime} and #{endtime}
+		LEFT JOIN tsign tsi ON tpl.clockid = tsi.id
+        where 1=1 and tdp.deparpid=#{tcmid} AND tu.`status` !='02' and tu.status != '03'
+        <if test="userid != null">
+            and tpl.userid = #{userid}
+        </if>
+        GROUP BY
+        tu.id
+        ) n,
+        (SELECT @a := 0) r
+        order by <if test='type == "planpernum"'>
+        n.planpernum
+    </if>
+        <if test='type == "realynum"'>
+            n.realynum
+        </if>
+        <if test='type == "planhours"'>
+            n.planhours
+        </if>
+        <if test='type == "realyhours"'>
+            n.realyhours
+        </if>
+        <if test='type == "realycient"'>
+            n.realycient
+        </if>
+        <if test='type == "planefficiency"'>
+            n.planefficiency
+        </if>
+		<if test='type == "realsum"'>
+			n.realsum
+		</if>
+		<if test='type == "nosum"'>
+			n.nosum
+		</if>
+		<if test='type == "absen"'>
+			n.absen
+		</if>
+        <if test='type == "hoursbias"'>
+            n.planhours - n.realyhours
+        </if>
+        <if test='type == "efficiencybias"'>
+            n.planefficiency - n.realycient
+        </if>
+        <if test='type == "pernum"'>
+            n.planpernum - n.realynum
+        </if> desc
+    </select>
+    <select id="queryAnalysis3" parameterType="com.OuSoft.system.entity.PlanAnalyze" resultType="com.OuSoft.system.entity.performanceRank">
+        select n.*,@rownum := @rownum + 1 as RANK,
+        IfNULL( n.planhours - n.realyhours,0) AS hoursbias,
+        IfNULL( n.planefficiency - n.realycient,0) AS efficiencybias,
+        IfNULL( n.planpernum - n.realynum,0) as pernum
+        from (
+        SELECT
+        tpl.id,
+        tdp.deparname as name,
+        (select count(*) from tpraise tp where tp.itemid=tdp.id) praisenum,
+        (select count(*) from tcomment tc where tc.itemid=tdp.id) commentnum,
+        IfNULL( sum(tpl.workhour) ,0) as planpernum,
+        IfNULL( sum(tpl.complan) ,0) AS realynum,
+        IfNULL( sum(tpl.workload) ,0) AS planhours,
+        IfNULL( sum(tpl.comtime) ,0) AS realyhours,
+		IfNULL(sum(tpl.status='05'), 0) AS realsum,
+		IfNULL(sum(tpl.status='04'), 0) AS nosum,
+		IfNULL(sum(tsi.cltype='04'), 0) AS absen,
+        IfNULL( sum(tpl.complan/tpl.comtime) ,0) AS realycient,
+        IfNULL( sum(tpl.workload) / sum(tpl.workhour)  ,0)AS planefficiency
+
+        FROM
+        tdepartmentinfo tdp
+        LEFT JOIN tdepartuser tdu ON tdp.id = tdu.deparid
+        LEFT JOIN tuser tu ON tu.id=tdu.userid
+        left join tplan tpl on tpl.userid=tu.id and tpl.starttime BETWEEN ${begtime} and ${endtime}
+		LEFT JOIN tsign tsi ON tpl.clockid = tsi.id
+        where 1=1 and tdp.deparpid=#{tcmid} AND LENGTH(tdp.deparepid) = 9
+        GROUP BY tdp.id) n,(SELECT @rownum := 0) r
+        order by
+        <if test='type == "planpernum"'>
+            n.planpernum
+        </if>
+        <if test='type == "realynum"'>
+            n.realynum
+        </if>
+        <if test='type == "planhours"'>
+            n.planhours
+        </if>
+        <if test='type == "realyhours"'>
+            n.realyhours
+        </if>
+        <if test='type == "realycient"'>
+            n.realycient
+        </if>
+        <if test='type == "planefficiency"'>
+            n.planefficiency
+        </if>
+		<if test='type == "realsum"'>
+			n.realsum
+		</if>
+		<if test='type == "nosum"'>
+			n.nosum
+		</if>
+		<if test='type == "absen"'>
+			n.absen
+		</if>
+        <if test='type == "hoursbias"'>
+            n.planhours - n.realyhours
+        </if>
+        <if test='type == "efficiencybias"'>
+            n.planefficiency - n.realycient
+        </if>
+        <if test='type == "pernum"'>
+            n.planpernum - n.realynum
+        </if> desc
+    </select>
+
+
+    <select id="queryAnalysis4" parameterType="com.OuSoft.system.entity.PlanAnalyze" resultType="com.OuSoft.system.entity.performanceRank">
+        SELECT
+        n.*,
+        t.deparname AS NAME,
+        IfNULL( n.planhours - n.realyhours,0) AS hoursbias,
+        IfNULL( n.planefficiency - n.realycient,0) AS efficiencybias,
+        IfNULL( n.planpernum - n.realynum,0) AS pernum
+        FROM
+        (
+        SELECT
+        tdp.id,
+        tdp.deparepid,
+        (
+        SELECT
+        count(*)
+        FROM
+        tpraise tp
+        WHERE
+        tp.itemid = tdp.id
+        ) praisenum,
+        (
+        SELECT
+        count(*)
+        FROM
+        tcomment tc
+        WHERE
+        tc.itemid = tdp.id
+        ) commentnum,
+        IfNULL( sum(tpl.workhour) ,0) as planpernum,
+        IfNULL( sum(tpl.complan) ,0) AS realynum,
+        IfNULL( sum(tpl.workload) ,0) AS planhours,
+        IfNULL( sum(tpl.comtime) ,0) AS realyhours,
+		IfNULL(sum(tpl.status='05'), 0) AS realsum,
+		IfNULL(sum(tpl.status='04'), 0) AS nosum,
+		IfNULL(sum(tsi.cltype='04'), 0) AS absen,
+        IfNULL( sum(tpl.complan/tpl.comtime) ,0) AS realycient,
+        IfNULL( sum(tpl.workload) / sum(tpl.workhour)  ,0)AS planefficiency
+
+        FROM
+        tdepartmentinfo tdp
+        LEFT JOIN tdepartuser tdu ON tdp.id = tdu.deparid
+        LEFT JOIN tuser tu ON tu.id = tdu.userid
+        LEFT JOIN tplan tpl ON tpl.userid = tu.id and tpl.starttime BETWEEN ${begtime} and ${endtime}
+		LEFT JOIN tsign tsi ON tpl.clockid = tsi.id
+        WHERE tdp.deparpid=#{tcmid} and
+        LENGTH(tdp.deparepid) = 9
+        GROUP BY
+        tdp.id
+        ) n
+        LEFT JOIN tdepartmentinfo t ON t.deparepid = SUBSTR(n.deparepid FROM 1 FOR 6),
+        (SELECT @a := 0) r
+        WHERE  t.deparpid=#{tcmid} AND
+        LENGTH(t.deparepid) = 6
+        GROUP BY
+        t.deparepid
+        order by
+        <if test='type == "planpernum"'>
+            n.planpernum
+        </if>
+        <if test='type == "realynum"'>
+            n.realynum
+        </if>
+        <if test='type == "planhours"'>
+            n.planhours
+        </if>
+        <if test='type == "realyhours"'>
+            n.realyhours
+        </if>
+        <if test='type == "realycient"'>
+            n.realycient
+        </if>
+        <if test='type == "planefficiency"'>
+            n.planefficiency
+        </if>
+		<if test='type == "realsum"'>
+			n.realsum
+		</if>
+		<if test='type == "nosum"'>
+			n.nosum
+		</if>
+		<if test='type == "absen"'>
+			n.absen
+		</if>
+        <if test='type == "hoursbias"'>
+            n.planhours - n.realyhours
+        </if>
+        <if test='type == "efficiencybias"'>
+            n.planefficiency - n.realycient
+        </if>
+        <if test='type == "pernum"'>
+            n.planpernum - n.realynum
+        </if> desc
+    </select>
+
+    <select id="queryAnalysis5" parameterType="com.OuSoft.system.entity.PlanAnalyze" resultType="com.OuSoft.system.entity.performanceRank">
+        SELECT
+        n.*,
+        @a := @a + 1 AS RANK,
+        IfNULL( n.planhours - n.realyhours,0) AS hoursbias,
+        IfNULL( n.planefficiency - n.realycient,0) AS efficiencybias,
+        IfNULL( n.planpernum - n.realynum,0) as pernum
+        FROM
+        (
+        SELECT
+        tu.id,
+        tu.username as name,
+        (select count(*) from tpraise tp where tp.itemid=tu.id) praisenum,
+        (select count(*) from tcomment tc where tc.itemid=tu.id) commentnum,
+        IfNULL( sum(tpl.workhour) ,0) as planpernum,
+        IfNULL( sum(tpl.complan) ,0) AS realynum,
+        IfNULL( sum(tpl.workload) ,0) AS planhours,
+        IfNULL( sum(tpl.comtime) ,0) AS realyhours,
+		IfNULL(sum(tpl.status='05'), 0) AS realsum,
+		IfNULL(sum(tpl.status='04'), 0) AS nosum,
+		IfNULL(sum(tsi.cltype='04'), 0) AS absen,
+        IfNULL( sum(tpl.complan/tpl.comtime) ,0) AS realycient,
+        IfNULL( sum(tpl.workload) / sum(tpl.workhour)  ,0)AS planefficiency
+
+        FROM
+        tuser tu
+        LEFT JOIN tdepartuser tpu ON tu.id = tpu.userid
+        LEFT JOIN tdepartmentinfo tdp ON tdp.id = tpu.deparid
+        LEFT JOIN tplan tpl ON tu.id = tpl.userid and tpl.starttime BETWEEN ${begtime} and ${endtime}
+		LEFT JOIN tsign tsi ON tpl.clockid = tsi.id
+        where 1=1 and tdp.deparpid=#{tcmid} AND tu.`status` !='02' and tu.status != '03'
+        <!-- 			and tdp.deparepid like '$deparepid}%' -->
+        and tdp.deparepid like '${deparepid}%'
+        and LENGTH(tdp.deparepid)=9
+        GROUP BY
+        tu.id
+        ) n,
+        (SELECT @a := 0) r
+        order by <if test='type == "planpernum"'>
+        n.planpernum
+    </if>
+        <if test='type == "realynum"'>
+            n.realynum
+        </if>
+        <if test='type == "planhours"'>
+            n.planhours
+        </if>
+        <if test='type == "realyhours"'>
+            n.realyhours
+        </if>
+        <if test='type == "realycient"'>
+            n.realycient
+        </if>
+        <if test='type == "planefficiency"'>
+            n.planefficiency
+        </if>
+		<if test='type == "realsum"'>
+			n.realsum
+		</if>
+		<if test='type == "nosum"'>
+			n.nosum
+		</if>
+		<if test='type == "absen"'>
+			n.absen
+		</if>
+        <if test='type == "hoursbias"'>
+            n.planhours - n.realyhours
+        </if>
+        <if test='type == "efficiencybias"'>
+            n.planefficiency - n.realycient
+        </if>
+        <if test='type == "pernum"'>
+            n.planpernum - n.realynum
+        </if> desc
+    </select>
+
+    <select id="queryAnalysis6" parameterType="com.OuSoft.system.entity.PlanAnalyze" resultType="com.OuSoft.system.entity.performanceRank">
+        select n.*,@rownum := @rownum + 1 as RANK,
+        IfNULL( n.planhours - n.realyhours,0) AS hoursbias,
+        IfNULL( n.planefficiency - n.realycient,0) AS efficiencybias,
+        IfNULL( n.planpernum - n.realynum,0) as pernum
+        from (
+        SELECT
+        tpl.id,
+        tdp.deparname as name,
+        (select count(*) from tpraise tp where tp.itemid=tdp.id) praisenum,
+        (select count(*) from tcomment tc where tc.itemid=tdp.id) commentnum,
+        IfNULL( sum(tpl.workhour) ,0) as planpernum,
+        IfNULL( sum(tpl.complan) ,0) AS realynum,
+        IfNULL( sum(tpl.workload) ,0) AS planhours,
+        IfNULL( sum(tpl.comtime) ,0) AS realyhours,
+		IfNULL(sum(tpl.status='05'), 0) AS realsum,
+		IfNULL(sum(tpl.status='04'), 0) AS nosum,
+		IfNULL(sum(tsi.cltype='04'), 0) AS absen,
+        IfNULL( sum(tpl.complan/tpl.comtime) ,0) AS realycient,
+        IfNULL( sum(tpl.workload) / sum(tpl.workhour)  ,0)AS planefficiency
+        FROM
+        tdepartmentinfo tdp
+        LEFT JOIN tdepartuser tdu ON tdp.id = tdu.deparid
+        LEFT JOIN tuser tu ON tu.id=tdu.userid
+        left join tplan tpl on tpl.userid=tu.id and tpl.createtime BETWEEN ${begtime} and ${endtime}
+		LEFT JOIN tsign tsi ON tpl.clockid = tsi.id
+        where 1=1 and tdp.deparpid=#{tcmid} and tdp.deparepid like '${deparepid}%'
+        and length(tdp.deparepid)=9
+        GROUP BY tdp.id) n,(SELECT @rownum := 0) r
+        order by
+        <if test='type == "planpernum"'>
+            n.planpernum
+        </if>
+        <if test='type == "realynum"'>
+            n.realynum
+        </if>
+        <if test='type == "planhours"'>
+            n.planhours
+        </if>
+        <if test='type == "realyhours"'>
+            n.realyhours
+        </if>
+        <if test='type == "realycient"'>
+            n.realycient
+        </if>
+        <if test='type == "planefficiency"'>
+            n.planefficiency
+        </if>
+		<if test='type == "realsum"'>
+			n.realsum
+		</if>
+		<if test='type == "nosum"'>
+			n.nosum
+		</if>
+		<if test='type == "absen"'>
+			n.absen
+		</if>
+        <if test='type == "hoursbias"'>
+            n.planhours - n.realyhours
+        </if>
+        <if test='type == "efficiencybias"'>
+            n.planefficiency - n.realycient
+        </if>
+        <if test='type == "pernum"'>
+            n.planpernum - n.realynum
+        </if> desc
+    </select>
+    <select id="querygroupid" parameterType="java.lang.String" resultType="com.OuSoft.system.entity.Tdepartmentinfo">
+        select * from tdepartmentinfo where deparepid=#{id} and tdp.deparpid=#{tcmid}
+    </select>
+</mapper>

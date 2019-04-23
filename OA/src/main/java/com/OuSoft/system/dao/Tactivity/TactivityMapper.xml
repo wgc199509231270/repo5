@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tactivity.TactivityDao">
+
+    <!--新增活动-->
+    <insert id="insertTactivityDao" parameterType="com.OuSoft.system.entity.Tactivity">
+        insert into tactivity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="promulgatorid != null">
+                promulgatorid,
+            </if>
+            <if test="activname != null">
+                activname,
+            </if>
+            <if test="theme != null">
+                theme,
+            </if>
+            <if test="starttime != null">
+                starttime,
+            </if>
+            <if test="endtime != null">
+                endtime,
+            </if>
+            <if test="regstarttime != null">
+                regstarttime,
+            </if>
+            <if test="regendtime != null">
+                regendtime,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="requires != null">
+                requires,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="creattime != null">
+                creattime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="promulgatorid != null">
+                #{promulgatorid,jdbcType=VARCHAR},
+            </if>
+            <if test="activname != null">
+                #{activname,jdbcType=VARCHAR},
+            </if>
+            <if test="theme != null">
+                #{theme,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null">
+                #{starttime,jdbcType=VARCHAR},
+            </if>
+            <if test="endtime != null">
+                #{endtime,jdbcType=VARCHAR},
+            </if>
+            <if test="regstarttime != null">
+                #{regstarttime,jdbcType=DOUBLE},
+            </if>
+            <if test="regendtime != null">
+                #{regendtime,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=DOUBLE},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="requires != null">
+                #{requires,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="creattime != null">
+                #{creattime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--删除活动-->
+    <delete id="delTactivityDao"  parameterType="java.lang.String">
+        delete from tactivity where id = #{id}
+    </delete>
+
+    <!--查询活动
+    alluser:01全部  02个人
+    status: 01未开始 02进行中 03已结束
+    -->
+    <select id="queryListActivityDao" parameterType="com.OuSoft.system.entity.Tactivity" resultType="com.OuSoft.system.entity.Tactivity">
+        SELECT tac.* FROM
+        tactivity tac
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                and tac.id = #{id}
+            </if>
+            <if test="status != null and status != '' ">
+                and tac.status = #{status}
+            </if>
+            <if test=" regstarttime != null and regstarttime != '' ">
+                and tac.starttime &gt;= #{regstarttime}
+            </if>
+            <if test=" regendtime != null and regendtime != '' ">
+                and tac.starttime &lt;= #{regendtime}
+            </if>
+            <if test=" alluser == '02' and userid != null and userid != '' " >
+                and (SELECT COUNT(*) FROM tactivityuser tacu where tacu.userid=#{userid} and tacu.activityid=tac.id)&gt;=1
+            </if>
+            <if test=" text != null and text != ''">
+                and (tac.activname LIKE '%${text}%'
+                  or tac.address LIKE '%${text}%'
+                )
+            </if>
+        </where>
+        ORDER BY tac.creattime desc
+    </select>
+
+    <!--修改活动-->
+    <update id="updateTactivityDao" parameterType="com.OuSoft.system.entity.Tactivity">
+        update tactivity
+        <trim prefix="set" suffixOverrides=",">
+            <if test="activname != null">
+                activname = #{activname},
+            </if>
+            <if test="theme != null">
+                theme = #{theme},
+            </if>
+            <if test="starttime != null">
+                starttime = #{starttime},
+            </if>
+            <if test="endtime != null">
+                endtime = #{endtime},
+            </if>
+            <if test="regstarttime !=null">
+                regstarttime = #{regstarttime},
+            </if>
+            <if test="regendtime != null">
+                regendtime = #{regendtime},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="requires != null">
+                requires = #{requires},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+    <!--查询报名人员-->
+    <select id="queryListRegActivityDao" parameterType="com.OuSoft.system.entity.Tactivity" resultType="com.OuSoft.system.entity.Tactivity">
+        SELECT tacu.*,tu.username,ta.filename,tp.ip FROM
+        tactivity tac
+        RIGHT JOIN tactivityuser tacu ON tac.id=tacu.activityid
+        LEFT JOIN tuser tu ON tu.id = tacu.userid
+        LEFT JOIN tatt ta ON ta.itemid = tacu.userid
+        LEFT JOIN tattip tp ON 1=1
+        <where>
+            1=1
+            <if test="id != null and id != '' ">
+                and tac.id = #{id}
+            </if>
+        </where>
+        ORDER BY tacu.creattime desc
+    </select>
+
+    <insert id="insertTactivityUserDao" parameterType="com.OuSoft.system.entity.Tactivity">
+        insert into tactivityuser
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userid != null">
+                userid,
+            </if>
+            <if test="activityid != null">
+                activityid,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="creattime != null">
+                creattime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=VARCHAR},
+            </if>
+            <if test="activityid != null">
+                #{activityid,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=DOUBLE},
+            </if>
+            <if test="creattime != null">
+                #{creattime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改活动人员-->
+    <update id="updateTactivityUserDao" parameterType="com.OuSoft.system.entity.Tactivity">
+        update tactivityuser
+        <trim prefix="set" suffixOverrides=",">
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!--删除活动人员-->
+    <delete id="delTactivityUserDao"  parameterType="java.lang.String">
+        delete from tactivityuser where id = #{id}
+    </delete>
+
+    <select id="queryDzTactivityuserRequestDao"  parameterType="com.OuSoft.system.entity.parformanceRequest" resultType="com.OuSoft.system.entity.performanceRank" >
+       SELECT
+        tpra.id as tpraid,
+        tutsi.username as username,
+        tutpra.username as tprausername,
+        tpra.userid as tprauserid,
+        ta.filename as txfilename ,ip.ip as ip,
+        IFNULL(tp.id,0) as dz
+        FROM
+         tactivity tac
+        LEFT JOIN tpraise tpra ON tpra.itemid = tac.id and tpra.itemtype = 'tactivity'
+        LEFT JOIN tuser tutpra on tutpra.id = tpra.userid and tutpra.userpid='001'
+        LEFT JOIN tuser tutsi ON tutsi.id = tac.promulgatorid and tutsi.userpid='001'
+        left join tatt ta on ta.itemid = tac.promulgatorid
+        left JOIN tattip ip on ip.id = '1'
+        left join tpraise tp on tp.userid = #{userid} and tp.itemid = tac.id
+        WHERE 1=1
+        and tac.id = #{id}
+        order by tpra.praisetime
+    </select>
+</mapper>

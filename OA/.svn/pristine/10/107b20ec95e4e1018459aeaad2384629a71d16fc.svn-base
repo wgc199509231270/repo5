@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
+<link rel="shortcut icon" href="favicon.ico">
+<link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+<link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+	rel="stylesheet">
+<link href="/static/css/plugins/bootstrap-table/bootstrap-table.min.css"
+	rel="stylesheet">
+<link href="/static/css/animate.min.css" rel="stylesheet">
+<link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+<link rel="stylesheet"
+	href="/static/js/plugins/webuploader/webuploader.css">
+<link rel="stylesheet" href="/static/css/jquery.searchableSelect.css">
+<link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/static/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script
+	src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script
+	src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/static/17com/js/echarts.js"></script>
+<script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+<script src="/static/js/plugins/laydate/laydate.js"></script>
+<script src="/static/js/jquery.searchableSelect.js"></script>
+<script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+<script src="/static/js/highcharts-3d.js"></script>
+<script src="/static/js/jedate.js"></script>
+<link href="/static/css/skin/jedate.css" rel="stylesheet">
+
+<style>
+input[type=range] {
+	margin-top: 8px;
+	outline: none;
+	-webkit-appearance: none; /*清除系统默认样式*/
+	width: 80% !important;
+	background: #e7eaec;
+	height: 3px; /*横条的高度*/
+}
+/*拖动块的样式*/
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none; /*清除系统默认样式*/
+	height: 16px; /*拖动块高度*/
+	width: 16px; /*拖动块宽度*/
+	background: #0099CC; /*拖动块背景*/
+	border-radius: 50%; /*外观设置为圆形*/
+	border: solid 1px #ddd
+}
+
+#text {
+	white-space: normal;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+.my-container {
+	float: left;
+	display: inline-block;
+}
+
+.myLabel-content, .myText-content, .myBtn-content {
+	float: left;
+	display: inline-block;
+	line-height: 30px;
+	margin-left: 10px;
+}
+
+.myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+	{
+	height: 30px;
+	font-size: 12px;
+}
+
+.myBtn-content .btn {
+	margin-bottom: 10px;
+}
+
+/* 模态框 */
+.hourdiv {
+	width: 138px;
+}
+
+.yeji {
+    float: left;
+    margin-left: 1%;
+    font-family: cursive;
+}
+
+.yejitext {
+    width: 7%;
+    height: 30px;
+    border: 1px solid #D9D9D9;
+    margin-left: 2%;
+}
+
+.yejibigtext {
+	width: 300px;
+	height: 93px;
+	border: 1px solid #D9D9D9;
+}
+.yjtext {
+    margin-top: 2%;
+    margin-left: 2%;
+}
+.fbyj {
+	width: 60%;
+	border: 1px solid #D9D9D9;
+}
+
+.yejimidtext {
+	width: 300px;
+	height: 30px;
+	border: 1px solid #D9D9D9;
+}
+
+/* 按钮 */
+.btn {
+	width: 59px;
+	height: 31px;
+	/* border-radius: 10px; */
+	background-color: #0099CC;
+	float: left;
+	margin-left:10px;
+}
+
+.btndiv {
+	position: relative;
+	left: -13%;
+    top: 50px;
+    float: left;
+}
+.hour1 {
+    font-size: 15px;
+    position: absolute;
+    left: 13.5%;
+    top: 13%;
+    width: 7%;
+    color: #D9D9D9;
+}
+.fb{
+	font-family: cursive;
+    margin-left: 10px;
+    /* margin-top: 10px; */
+    margin-bottom: 8px;
+    border-bottom: 1px solid #E5E5E5;
+    width: 37%;
+}
+.hour2 {
+    font-size: 15px;
+    position: absolute;
+    left: 27%;
+    top: 13%;
+    width: 9%;
+    color: #D9D9D9;
+}
+.xing {
+    position: relative;
+    left: 3px;
+    top: 37px;
+    color: red;
+}
+.gzsc {
+    margin-left: 1%;
+}
+.everydiv{
+	margin-top:10px;
+}
+.com {
+    cursor: pointer;
+    width: 299px;
+    background-repeat: no-repeat;
+    background-position: 99% center;
+    background-size: 18px;
+}
+</style>
+</head>
+<body>
+	<div class="modal-body" style="height: 600px;">
+		<div class="fb"><h3>业绩发布</h3></div>
+		<div style="margin-top:-1%;">
+		<p class="xing">*</p>
+			<div class="yeji">
+				<h3>业绩量:</h3>
+			</div>
+			<div class="yeji yejitext " contenteditable="true" style=""></div>
+			<div class="hour1">(h)</div>
+			<div class="yeji ">
+				<h3>工作时长:</h3>
+			</div>
+			<div class="yeji yejitext gzsc" contenteditable="true" style=""></div>
+			<div class="hour2">(h)</div>
+		</div>
+		</br>
+		</br>
+		<div class="everydiv">
+			<div class="yeji">
+				<h3>业绩内容:</h3>
+			</div>
+			<div class="yeji yejibigtext" contenteditable="true"
+				onfocus="if(this.innerText=='添加您的业绩内容...')this.innerText=''"
+				onblur="if(this.innerText=='')this.innerText='添加您的业绩内容...'"><p class="yjtext">添加您的业绩内容...</p>
+			</div>
+			
+			<div class="tjfj">
+				<i class="iconfont icon-fujian" style="font-size: 12px;position: relative;left: -8%;top: 69px;">
+				&nbsp;上传附件</i>
+			</div>
+		</div>
+		</br>
+		</br> </br>
+		</br>
+		<div class="everydiv">
+			<div class="yeji">
+				<h3>业绩类型:</h3>
+			</div>
+			<!-- <div class="yeji yejimidtext"  contenteditable="true"></div> -->
+			<select class="form-control yeji yejimidtext" style="width: 20.5%;">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select>
+		</div>
+		</br>
+		</br>
+		<div class="everydiv" >
+			<div class="yeji">
+				<h3>所属部门:</h3>
+			</div>
+			<select class="form-control yeji yejimidtext" style="width: 20.5%;">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select>
+		</div>
+		</br>
+		</br>
+		<div class="everydiv">
+			<div class="yeji">
+				<h3>开始时间:</h3>
+			</div>
+			<div class="my-container  ">
+				<div class="myText-content" style="width: 50%;">
+					<input id="Searchtime"
+						class="com laydate-icon form-control layer-date" placeholder="">
+				</div>
+			</div>
+		</div>
+		</br>
+		</br>
+		<div class="everydiv" style="float:left;">
+			<div class="yeji ">
+				<h3>结束时间:</h3>
+			</div>
+			<div class="my-container  ">
+				<div class="myText-content" style="width: 50%;">
+					<input id="Endtime"
+						class="com laydate-icon form-control layer-date" placeholder="">
+				</div>
+			</div>
+		</div>
+		</br>
+		</br>
+		<div style="margin-top: 20px;">
+			<div class="yeji">
+				<h3>所属业绩:</h3>
+			</div>
+			<select class="form-control yeji yejimidtext" style="width: 20.5%;">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select>
+		</div>
+
+		<div class="btndiv">
+			<button class="btn">发布</button>
+			<button class="btn">取消</button>
+			<div></div>
+		</div>
+
+
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	<script>
+		jeDate("#Searchtime",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		
+		jeDate("#Endtime",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+</script>
+
+
+
+</body>
+</html>

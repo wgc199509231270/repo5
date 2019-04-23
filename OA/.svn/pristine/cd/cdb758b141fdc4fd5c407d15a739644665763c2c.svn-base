@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Troleinfo.TroleinfoDao">
+	
+	
+	
+	<!-- 1、给角色分配子菜单下的按钮：   roleid  角色id 	menuid	菜单id 	buttonid	按钮id
+		返回 ：信息  -->
+	<insert id="insertTrolemenubuttonDao" parameterType="com.OuSoft.system.entity.Trolemenubutton" >
+		  INSERT INTO trolemenubutton VALUES(#{id}, #{roleid}, #{menuid}, #{buttonid})
+	</insert>
+	
+	
+	<!-- 查询角色下的主菜单 roleid 角色id 必传
+		返回：
+		menuname 菜单名称
+		menuurl  菜单地址菜单排序
+		menutime 时间
+		menuinfo  菜单描述
+		menuimage  菜单图表
+		remark 备注
+		-->
+	<select id="queryByRoleidTrolemenubuttonDao"  parameterType="com.OuSoft.system.entity.Tmenurole" resultType="com.OuSoft.system.entity.Tmenuinfo" >
+		select mr.*,me.* from  tmenuinfo me
+		LEFT JOIN tmenurole mr on mr.menuid = me.id
+		where 1=1 and me.menuepid = '1zcd'
+		AND mr.roleid = #{roleid}
+	</select>
+
+
+	<!-- 查询角色下主菜单下的子菜单        roleid	角色id , menuepid 主菜单id
+			返回：
+			menuname	菜单名称 
+			menuurl	菜单子菜单路径
+			menusort	序号排列
+			menutime	创建时间
+			menuinfo	按钮描述
+			remark	备注信息
+			menuimage	图标
+			menutype	菜单端
+			menupid	顶级公司id
+	 -->
+	 <select id="queryByMenuidTmenuinfoDao"  parameterType="com.OuSoft.system.entity.Tmenurole" resultType="com.OuSoft.system.entity.Tmenuinfo" >
+	 	SELECT me.* from tmenuinfo me
+		LEFT JOIN tmenurole tr on tr.menuid = me.id  
+		where me.menuepid != '1zcd'
+		and tr.roleid = #{roleid} 
+		and me.menuepid = #{menuepid}
+	 </select>
+
+
+	<!--  查询角色下子菜单下的按钮：
+			 接：
+			roleid  角色id
+			menuid	菜单id
+			返回：
+			buttonname	按钮名称
+			buttonmark	按钮标识
+			buttontime	创建时间
+			buttonimage	按钮图标
+			buttonsort	按钮排序 
+			buttontext	按钮说明 
+			buttonpid		顶级公司id
+	 -->
+	 <select id="queryByTrolemenuTbuttonDao" parameterType="com.OuSoft.system.entity.Tmenurole" resultType="com.OuSoft.system.entity.Tbuttonsinfo" >
+	 	SELECT bu.* from tbuttonsinfo bu
+		LEFT JOIN trolemenubutton trbu on trbu.buttonid = bu.id
+		where 1=1 
+		and trbu.roleid = #{roleid}
+		and trbu.menuid = #{menuid}
+	 </select>
+	
+	<!-- 删除给角色分配的按钮  
+	roleid	角色id 	menuid	菜单id buttonid	按钮id 
+	返回：信息  
+	 -->
+	<delete id="deleTrolemenubuttonDao" parameterType="com.OuSoft.system.entity.Trolemenubutton" >
+		DELETE from trolemenubutton where roleid = #{roleid} and menuid = #{menuid} and buttonid = #{buttonid}
+	</delete>
+	
+	<!-- 
+	删除给角色分配的主菜单和子菜单 roleid	角色id   		menuid	菜单id 
+	返回： 信息 
+	 -->
+	<delete id="deleTroleTmenuDao" parameterType="com.OuSoft.system.entity.Tmenurole"  >
+		DELETE FROM tmenurole where roleid = #{roleid} and menuid =  #{menuid}
+	</delete>
+	
+	
+	<!-- 修改角色信息 
+	rolename 角色名称
+	id 主键id
+	remark 备注	
+	-->
+	<update id="updateByidTroleinfoDao" parameterType="com.OuSoft.system.entity.Troleinfo" >
+		UPDATE troleinfo t
+		<set>
+			<if test="rolename != null and rolename != '' ">
+				t.rolename = #{rolename},
+			</if>
+			<if test="remark != null and remark != '' ">
+				t.remark = #{remark},
+			</if>
+		</set>
+		WHERE 1 = 1 and t.id = #{id}
+	</update>
+	
+	<!-- 给用户分配角色
+	 userid用户id
+	 roleid角色id 
+	 -->
+	<insert id="insertByidTroleinfotuserDao" parameterType="com.OuSoft.system.entity.Troleinfo">
+			 insert into troletuser
+		    <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="userid != null">
+		        userid,
+		      </if>
+		      <if test="roleid != null">  
+		        roleid,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="userid != null">
+		        #{userid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="roleid != null">
+		        #{roleid,jdbcType=VARCHAR},
+		      </if>
+		    </trim>
+		</insert>
+	
+	
+	<!-- 给角色分配主菜单
+	roleid 角色id
+	menuid 主菜单id
+	 -->
+	<insert id="insertByidTmenuinfoTuserDao" parameterType="com.OuSoft.system.entity.Troleinfo">
+			 insert into tmenurole
+		    <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="roleid != null">
+		        roleid,
+		      </if>
+		      <if test="menuid != null">  
+		        menuid,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="roleid != null">
+		        #{roleid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="menuid != null">
+		        #{menuid,jdbcType=VARCHAR},
+		      </if>
+		    </trim>
+		</insert>
+	
+	
+	
+	<!-- rolepid,rolename.查询角色列表，条件为顶级公司pid.如果是不传则是平台系统管理员，模糊查询角色名称 -->
+	<select id="queryPidTroleinfoDao" parameterType="com.OuSoft.system.entity.Troleinfo" resultType="com.OuSoft.system.entity.Troleinfo">
+		select *from troleinfo t
+		<where>
+			1=1 
+			<if test=" rolepid != null and rolepid != '' ">
+				and t.rolepid = #{rolepid}
+			</if>
+			<if test="rolename != null and rolename != '' ">
+				and t.rolename like '%${rolename}%'
+			</if>
+			order by t.roletime desc
+		</where>
+	</select>
+	
+	
+	<!-- 角色新增 -->
+	<insert id="saveTroleinfoDao" parameterType="com.OuSoft.system.entity.Troleinfo" >
+			insert into troleinfo
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="userid != null">
+		        userid,
+		      </if>
+		      <if test="rolename != null">  
+		        rolename,
+		      </if>
+		      <if test="roletime != null">
+		        roletime,
+		      </if>
+		      <if test="rolepid != null">
+		        rolepid,
+		      </if>
+		      <if test="remark != null">
+		        remark,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="userid != null">
+		        #{userid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="rolename != null ">
+		        #{rolename,jdbcType=VARCHAR},
+		      </if>
+		      <if test="roletime != null">
+		        #{roletime,jdbcType=VARCHAR},
+		      </if>
+		      <if test="rolepid != null">
+		        #{rolepid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="remark != null">
+		        #{remark,jdbcType=VARCHAR},
+		      </if>
+		    </trim>
+	</insert>
+	
+	<!-- 删除一个角色 -->
+	<delete id="deleByIdTroleinfoDao" parameterType="com.OuSoft.system.entity.Troleinfo">
+		delete from troleinfo where id = #{id}
+	</delete>
+	
+	
+		 
+		 
+		 
+		
+</mapper>

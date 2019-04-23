@@ -1,0 +1,202 @@
+.edui-editor-body .edui-body-container {
+    outline: none;
+    padding: 0 0 0 10px;
+    word-wrap: break-word;
+    font-size: 20px;
+}
+.edui-container .edui-editor-body.body-container-focus {
+    border-color: #5c9dff;
+}
+
+/*滚动条样式*/
+.edui-editor-body::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 4px;
+}
+.edui-editor-body::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
+}
+.edui-editor-body::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: rgba(0,0,0,0.1);
+}
+.edui-editor-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #ccc;
+    border-left-color: #9a9a9a;
+    border-top-color: #9a9a9a;
+    background-color: #fff;
+}
+.p_author .icon .icon_relative {
+    margin-top: 0;
+}
+.l_post_bright .d_nameplate {
+    margin-bottom: 8px;
+}
+.p_author .d_nameplate {
+    margin-top: -2px;
+}
+.l_post_bright .d_name {
+    padding: 0;
+}
+.d_name {
+    padding: 4px 0 7px;
+    letter-spacing: -3px;
+}
+.d_name .p_author_name {
+    letter-spacing: normal;
+}
+.l_post_bright .d_icons {
+    margin-top: 8px;
+}
+.d_author .d_pb_icons {
+    overflow: hidden;
+    width: 80px;
+    margin: 0 auto 5px;
+    float: none;
+    padding: 0 0 3px 3px;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 1px;
+    display: block;
+}
+.l_badge {
+    display: none;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-top: 9px;
+}
+.d_post_content_main {
+    position: relative;
+    float: left;
+    width: 588px;
+    padding: 0 0 8px 20px;
+    background: #fff;
+}
+.l_post_bright .d_post_content_main .p_content {
+    height: auto!important;
+    height: 170px;
+    min-height: 170px;
+}
+
+.edui-btn-toolbar .edui-btn {
+    font-size: 30px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    margin-right: 11px;
+    padding: 1px 7px 1px 1px;
+    border: 0;
+    background: url(//tb2.bdstatic.com/tb/static-common/img/rich_editor/separator_97ec61b.png) right center no-repeat;
+}
+.old_style_wrapper {
+    width: 100%;
+    padding:13px 20px 13px;
+    border: 1px solid #dfdfdf;
+    background: #fafafa;
+}
+
+tb_poster_placeholder{
+    display: none;
+}
+/* 评论点赞 */
+.mail-box{
+    background-color: #fff;
+    border-top: 0;
+    padding: 0;
+    margin-top: -2%;
+}
+.mail-body {
+    border: none;
+    padding: 20px;
+
+}
+
+.zan{
+    margin-left: 20px;
+    padding-bottom: 5px;
+    background-color: #F5F6FA;
+    height: 60px;
+    border-bottom: 1px white solid;
+}
+.pinglun{
+    margin-left: 20px;
+    background-color: #F5F6FA;
+    height: 560px;
+    border-top: 1px white solid;
+}
+
+#say{
+    width: 85%;
+    height: 100px;
+    background-color: white;
+    position: absolute;
+    left: 7%;
+    top: 139%;
+}
+/* 按钮 */
+.btn{
+    width: 59px;
+    height: 31px;
+    border-radius:10px;
+    background-color:#0099CC;
+}
+.btndiv{
+    position:relative;
+    left: 80%;
+    top: -79px;
+}
+
+#name {
+    font-size: 17px;
+    font-family: MicrosoftYaHei;
+    font-weight: 400;
+    color: rgba(58,58,58,1);
+    margin-left: -16%;
+    margin-top: -3%;
+}
+
+.picnametext {
+    float: left;
+    margin-top: -7%;
+}
+#yjl {
+    font-size: 14px;
+    font-family: MicrosoftYaHei;
+    font-weight: 400;
+    color: rgba(0,193,222,1);
+    margin-top: 1%;
+    margin-left: 161px;
+}
+.maintext {
+    width: 1183px;
+    background: rgba(255,255,255,1);
+    margin-left: 160px;
+    margin-top: 10px;
+}
+
+#ckyjxq{
+        width:110px;
+        height:36px;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(0,153,204,1);
+        border-radius: 3px;
+        font-size: 13px;
+        font-family: MicrosoftYaHei;
+        font-weight: 400;
+        color: rgba(0,153,204,1);
+        line-height: 36px;
+        position: relative;
+        left: 88%;
+        top: -25%;
+        text-align: center;
+}
+
+
+/* rankMess2 的样式 */

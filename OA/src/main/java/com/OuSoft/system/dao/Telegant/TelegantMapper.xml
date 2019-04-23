@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Telegant.TelegantDao">
+
+    <!--插入风采信息-->
+    <insert id="insertElegantDao"  parameterType="com.OuSoft.system.entity.Telegant">
+        insert into telegant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userid != null">
+                userid,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="text != null">
+                text,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="text != null">
+                #{text,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!-- 查询风采信息 -->
+    <select id="queryElegantDao"  resultType="com.OuSoft.system.entity.Telegant" parameterType="com.OuSoft.system.entity.Telegant"  >
+        SELECT
+        tel.*,
+        tip.ip,
+        tu.username,
+        ta.filename,
+        td.deparname,
+        (select count(*) from tpraise tp where tp.itemid=tel.id) praisenum,
+        (select count(*) from tcomment tc where tc.itemid=tel.id) commentnum
+        FROM telegant tel
+        LEFT JOIN tuser tu ON tu.id=tel.userid
+        LEFT JOIN tatt ta on ta.itemid = tel.userid
+        LEFT JOIN tattip tip ON tip.id='1'
+        LEFT JOIN tdepartuser tdu ON tdu.userid=tel.userid
+        LEFT JOIN tdepartmentinfo td ON td.id=tdu.deparid
+        WHERE
+        1=1
+        <if test="id != null and id != '' ">
+            and tel.id = #{id}
+        </if>
+        <if test="userid != null and userid != '' ">
+            and tel.userid = #{userid}
+        </if>
+        <if test="title != null and title != '' ">
+            and tel.title like CONCAT('%',#{title},'%')
+        </if>
+        <if test="starttime != null and starttime != '' ">
+            and tel.createtime &gt;= #{starttime}
+        </if>
+        <if test="endtime != null and endtime != '' ">
+            and tel.createtime &lt;= #{endtime}
+        </if>
+        ORDER BY tel.createtime desc
+    </select>
+    <!-- 更新风采数据 -->
+    <update id="updateElegantByidDao" parameterType="com.OuSoft.system.entity.Telegant" >
+        UPDATE telegant
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title != null">
+                title=#{title},
+            </if>
+            <if test="text != null">
+                text=#{text},
+            </if>
+        </trim>
+        WHERE
+        id=#{id}
+    </update>
+    <!-- 删除风采数据 -->
+    <delete id="deleteElegantByidDao" parameterType="com.OuSoft.system.entity.Telegant">
+        delete from telegant where id = #{id}
+    </delete>
+    <select id="queryDzTelegantuserRequestDao"  parameterType="com.OuSoft.system.entity.parformanceRequest" resultType="com.OuSoft.system.entity.performanceRank" >
+        SELECT
+        tpra.id as tpraid,
+        tutsi.username as username,
+        tutpra.username as tprausername,
+        tpra.userid as tprauserid,
+        ta.filename ,ip.ip,
+        IFNULL(tp.id,0) as dz
+        FROM
+        telegant tel
+        LEFT JOIN tpraise tpra ON tpra.itemid = tel.id and tpra.itemtype = 'telegant'
+        LEFT JOIN tuser tutpra on tutpra.id = tpra.userid and tutpra.userpid='001'
+        LEFT JOIN tuser tutsi ON tutsi.id = tel.userid and tutsi.userpid='001'
+        left join tatt ta on ta.itemid = tel.userid
+        left JOIN tattip ip on ip.id = '1'
+        left join tpraise tp on tp.userid = #{userid} and tp.itemid = tel.id
+        WHERE 1=1
+        and tel.id = #{id}
+        order by tpra.praisetime
+    </select>
+</mapper>

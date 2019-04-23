@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.mobileCommerce.dao.Tquestion.MTquestionDao">
+ 
+ 
+		<!-- 问答所有人列表
+		 	接收：pagenum:页。pagesize:一页条数 	begtime:开始时间年月日 endtime:结束时间 
+			问题类型 01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+			响应：qucreatetime：时间，qutext：问题内容，qustatus：问题状态（01：解决，02：未解决）
+			qudetail：问题描述，qutype：01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+			username:姓名，txfilename:头像，tpranum:点赞数，comnum：评论数，ip：ip 
+		-->
+		<select id="queryQBLBListTquestionDao" parameterType="com.OuSoft.system.entity.Tquestion" resultType="com.OuSoft.system.entity.Tquestion" >
+				SELECT
+				tqu.*, 
+				SUBSTR(tqu.qucreatetime ,1,10) as rtime, SUBSTR(tqu.qucreatetime ,11,20) as mtime, 
+				CONCAT(SUBSTR(tqu.qutext,1,30),'...') as text,	
+				ta.filename AS txfilename,
+				tu.username AS username,
+				IfNULL(tpra.num, 0) AS tpranum,
+				IfNULL(tmoo.tmonum, 0) AS comnum,
+				ip.ip as ip,
+				IFNULL(tp.id,0) as dz
+				FROM
+					tquestion tqu
+				LEFT JOIN (
+					SELECT
+						t.itemid AS itemid,
+						count(t.itemid) AS num
+					FROM
+						tpraise t
+					WHERE
+						t.itemtype = 'tquestion'
+					GROUP BY
+						t.itemid
+				) tpra ON tqu.id = tpra.itemid
+				LEFT JOIN 
+				(
+				SELECT  tmo.commentid as commentid, 
+				count(tmo.commentid) as tmonum 
+				from tcomment tmo 
+				WHERE tmo.itemtype = 'tquestion' GROUP BY tmo.commentid
+				) tmoo on tmoo.commentid = tqu.id
+				
+				LEFT JOIN tuser tu ON tu.id = tqu.userid
+				LEFT JOIN tatt ta ON ta.itemid = tqu.userid
+				left JOIN tattip ip on ip.id = '1' 
+				left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tqu.id 
+				<where>
+						1=1 
+		  			<if test="userid != null and userid != '' ">
+			  			and tqu.userid = #{userid}
+		  			</if>
+			  		<if test="qutype != null and qutype != '' ">
+			  			and tqu.qutype = #{qutype}
+		  			</if>
+		  			<if test="begtime != null and begtime != '' ">
+		    			and SUBSTR(tqu.qucreatetime, 1, 10) &gt;= #{begtime}
+	  				</if>
+		  			<if test="endtime != null and endtime != '' ">
+		    			and SUBSTR(tqu.qucreatetime, 1, 10) &lt;= #{endtime}
+		  			</if>
+		  			<if test="loginname != null and loginname != '' ">
+			  			and tqu.userid = (SELECT id from tuser where loginname = #{loginname})
+			  		</if>
+			  		<if test="username != null and username != '' ">
+			  			and tqu.userid = (SELECT id from tuser where username = #{username})
+			  		</if>
+			  		<if test="sqgjz != null and sqgjz != '' ">
+			  			and tqu.qudetail like '%',#{sqgjz},'%' or tqu.qutext LIKE '%',#{sqgjz},'%'
+			  		</if>
+						ORDER BY tqu.qucreatetime DESC,comnum desc 
+						limit ${pagenum}, ${pagesize}
+				 </where>
+		</select>
+		
+		
+		
+		<!-- 问答个人列表
+			接收：pagenum:页。pagesize:一页条数 	begtime:开始时间年月日 endtime:结束时间 
+			问题类型 01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+			响应：qucreatetime：时间，qutext：问题内容，qustatus：问题状态（01：解决，02：未解决）
+			qudetail：问题描述，qutype：01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+			username:姓名，txfilename:头像，tpranum:点赞数，comnum：评论数，ip：ip
+		 -->
+		<select id="queryGRLBListTquestionDao" parameterType="com.OuSoft.system.entity.Tquestion" resultType="com.OuSoft.system.entity.Tquestion" >
+				SELECT
+				tqu.*, 
+				SUBSTR(tqu.qucreatetime ,1,10) as rtime, SUBSTR(tqu.qucreatetime ,11,20) as mtime, 
+				CONCAT(SUBSTR(tqu.qutext,1,30),'...') as text,	
+				ta.filename AS txfilename,
+				tu.username AS username,
+				IfNULL(tpra.num, 0) AS tpranum,
+				IfNULL(tmoo.tmonum, 0) AS comnum,
+				ip.ip as ip,
+				IFNULL(tp.id,0) as dz
+				FROM
+					tquestion tqu
+				LEFT JOIN (
+					SELECT
+						t.itemid AS itemid,
+						count(t.itemid) AS num
+					FROM
+						tpraise t
+					WHERE
+						t.itemtype = 'tquestion'
+					GROUP BY
+						t.itemid
+				) tpra ON tqu.id = tpra.itemid
+				LEFT JOIN 
+				(
+				SELECT  tmo.commentid as commentid, 
+				count(tmo.commentid) as tmonum 
+				from tcomment tmo 
+				WHERE tmo.itemtype = 'tquestion' GROUP BY tmo.commentid
+				) tmoo on tmoo.commentid = tqu.id
+				
+				LEFT JOIN tuser tu ON tu.id = tqu.userid
+				LEFT JOIN tatt ta ON ta.itemid = tqu.userid
+				left JOIN tattip ip on ip.id = '1' 
+				left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tqu.id 
+				<where>
+						1=1 
+		  			<if test="userid != null and userid != '' ">
+			  			and tqu.userid = #{userid}
+		  			</if>
+			  		<if test="qutype != null and qutype != '' ">
+			  			and tqu.qutype = #{qutype}
+		  			</if>
+		  			<if test="begtime != null and begtime != '' ">
+		    			and SUBSTR(tqu.qucreatetime, 1, 10) &gt;= #{begtime}
+	  				</if>
+		  			<if test="endtime != null and endtime != '' ">
+		    			and SUBSTR(tqu.qucreatetime, 1, 10) &lt;= #{endtime}
+		  			</if>
+		  			<if test="loginname != null and loginname != '' ">
+			  			and tqu.userid = (SELECT id from tuser where loginname = #{loginname})
+			  		</if>
+			  		<if test="username != null and username != '' ">
+			  			and tqu.userid = (SELECT id from tuser where username = #{username})
+			  		</if>
+			  		<if test="sqgjz != null and sqgjz != '' ">
+			  			and tqu.qudetail like '%',#{sqgjz},'%' or tqu.qutext LIKE '%',#{sqgjz},'%'
+			  		</if>
+						ORDER BY tqu.qucreatetime DESC,comnum desc 
+						limit ${pagenum}, ${pagesize}
+				 </where>
+		</select>
+		
+		
+		
+		<!-- 问答所有人图表
+			 接收：pagenum:页。pagesize:一页条数 	begtime:开始时间年月日 endtime:结束时间 
+			问题类型 01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+			响应：qucreatetime：时间，qutext：问题内容，qustatus：问题状态（01：解决，02：未解决）
+			qudetail：问题描述，qutype：01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+			username:姓名，txfilename:头像，tpranum:点赞数，comnum：评论数，tsnum：发布数 ,ip：ip
+		 -->
+		<select id="queryQBTBListTquestionDao" parameterType="com.OuSoft.system.entity.Tquestion" resultType="com.OuSoft.system.entity.Tquestion" >
+				SELECT
+				tqu.*,
+				tu.username AS username,
+				IFNULL(SUM(tpra.num), 0 ) AS tpranum,
+				IFNULL( SUM(tmoo.tmonum), 0) AS comnum,
+				IFNULL( count((substr(tqu.qucreatetime,1,10 ))) , 0)as tsnum
+				FROM
+					tquestion tqu
+				LEFT JOIN (
+					SELECT
+						t.itemid AS itemid,
+						count(t.itemid) AS num
+					FROM
+						tpraise t
+					WHERE
+						t.itemtype = 'tquestion'
+					GROUP BY
+						t.itemid
+				) tpra ON tqu.id = tpra.itemid
+
+				LEFT JOIN (
+					SELECT
+						tmo.commentid AS commentid,
+						count(tmo.commentid) AS tmonum
+					FROM
+						tcomment tmo
+					WHERE
+						tmo.itemtype = 'tquestion'
+					GROUP BY
+						tmo.commentid
+				) tmoo ON tmoo.commentid = tqu.id
+				LEFT JOIN tuser tu ON tu.id = tqu.userid
+				<where>
+						1=1
+			  		<if test="begtime != null and begtime != '' " >
+						and SUBSTR(tqu.qucreatetime, 1, 10) &gt;= #{begtime}
+			  		</if>
+			  		<if test="endtime != null and endtime != ''">
+						and SUBSTR(tqu.qucreatetime, 1, 10) &lt;= #{endtime}
+			  		</if>
+						GROUP BY tqu.userid ORDER BY tpranum desc,comnum desc, tsnum desc
+			  	</where>
+		</select>
+		
+		
+		
+		<!-- 问答个人图表
+			接收：pagenum:页。pagesize:一页条数 	begtime:开始时间年月日 endtime:结束时间 
+			问题类型 01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+			响应：qucreatetime：时间，qutext：问题内容，qustatus：问题状态（01：解决，02：未解决）
+			qudetail：问题描述，qutype：01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+			username:姓名，txfilename:头像，tpranum:点赞数，comnum：评论数，tsnum：发布数 ,ip：ip
+		 -->
+		<select id="queryGRTBListTquestionDao" parameterType="com.OuSoft.system.entity.Tquestion" resultType="com.OuSoft.system.entity.Tquestion" >
+			SELECT
+				tqu.*,
+				tu.username AS username,
+				IFNULL(SUM(tpra.num), 0 ) AS tpranum,
+				IFNULL( SUM(tmoo.tmonum), 0) AS comnum,
+				IFNULL( count((substr(tqu.qucreatetime,1,10 ))) , 0)as tsnum
+				FROM
+					tquestion tqu
+				LEFT JOIN (
+					SELECT
+						t.itemid AS itemid,
+						count(t.itemid) AS num
+					FROM
+						tpraise t
+					WHERE
+						t.itemtype = 'tquestion'
+					GROUP BY
+						t.itemid
+				) tpra ON tqu.id = tpra.itemid
+
+				LEFT JOIN (
+					SELECT
+						tmo.commentid AS commentid,
+						count(tmo.commentid) AS tmonum
+					FROM
+						tcomment tmo
+					WHERE
+						tmo.itemtype = 'tquestion'
+					GROUP BY
+						tmo.commentid
+				) tmoo ON tmoo.commentid = tqu.id
+				LEFT JOIN tuser tu ON tu.id = tqu.userid
+				<where>
+						1=1
+					<if test="userid != null and userid != '' ">
+						AND tqu.userid = #{userid}
+					</if>
+			  		<if test="begtime != null and begtime != '' ">
+						and SUBSTR(tqu.qucreatetime, 1, 10) &gt;= #{begtime}
+			  		</if>
+			  		<if test="endtime != null and endtime != '' ">
+						and SUBSTR(tqu.qucreatetime, 1, 10) &lt;= #{endtime}
+			  		</if>
+						GROUP BY tqu.userid ORDER BY tsnum desc
+			  	</where>
+		</select>
+		
+		
+		<!-- 问答点赞详情
+			接收：pagenum:页。pagesize:一页条数 	begtime:开始时间年月日 endtime:结束时间 
+			响应： 
+			username:姓名，txfilename:头像，tpranum:点赞数，comnum：评论数，tsnum：发布数 ,ip：ip
+		 -->
+		<select id="queryDzListTquestionDao" parameterType="com.OuSoft.system.entity.Tquestion" resultType="com.OuSoft.system.entity.Tquestion" >
+				SELECT 
+				tpra.id as tpraid,
+				tqu.*,
+				tutsi.username as username,
+				ta.filename as txfilename,
+				tutpra.username as tprausername , ip.ip as ip,
+				tatp.filename as tprafilename,
+				IFNULL(tp.id,0) as dz
+				FROM
+					tquestion tqu
+				LEFT JOIN tpraise tpra ON tpra.itemid = tqu.id
+				LEFT JOIN tuser tutpra on tutpra.id = tpra.userid
+				LEFT JOIN tuser tutsi ON tutsi.id = tqu.userid
+				left join tatt ta on ta.itemid = tqu.userid
+				left JOIN tattip ip on ip.id = '1'  
+				LEFT JOIN tatt tatp on tatp.itemid = tpra.userid
+				left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tqu.id
+				WHERE tpra.itemtype = 'tquestion'
+				and	tqu.id = #{id}
+		</select>
+		
+		
+		
+		<!-- 问答评论详情
+			参数，项目itemid  
+			响应：pusername:评论人姓名，txfilename：姓名头像，hfilename,回复头像,husername:回复人姓名，
+		 -->
+		<select id="queryPlListTquestionDao" parameterType="com.OuSoft.system.entity.Tquestion" resultType="com.OuSoft.system.entity.Tquestion" >
+				SELECT
+				tc.*, tu.username AS pusername,
+				ta.filename AS txfilename,
+				tcomme.userid AS userid,
+				tcomme.commentid AS tcommentid,
+				tus.username AS husername,
+				tah.filename AS hfilename
+			FROM
+				tcomment tc
+			LEFT JOIN (
+				SELECT
+					tcom.id AS id,
+					tcom.commenttime AS commenttime
+				FROM
+					tcomment tcom
+				WHERE
+					tcom.itemid = tcom.commentid
+				ORDER BY
+					tcom.commenttime
+			) tcomm ON tcomm.id = tc.commentid
+			LEFT JOIN tuser tu ON tu.id = tc.userid
+			LEFT JOIN tatt ta ON ta.itemid = tc.userid
+			LEFT JOIN tcomment tcomme ON tcomme.commentid = tc.id
+			LEFT JOIN tuser tus ON tus.id = tcomme.userid
+			LEFT JOIN tatt tah ON tah.itemid = tus.id
+			<where>
+				1 = 1
+				AND tc.itemid = #{itemid}
+				AND tc.itemtype = 'tquestion'
+				ORDER BY tc.commenttime, tcomm.commenttime DESC
+			</where>
+		</select>
+		
+	 
+	
+
+</mapper>

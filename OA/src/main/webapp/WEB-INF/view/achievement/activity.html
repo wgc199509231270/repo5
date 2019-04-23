@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelectparse.css">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/achievement/manage.css" rel="stylesheet">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <script src="/static/js/news.js"></script>
+</head>
+<style>
+    input[type=range] {
+        margin-top: 8px;
+        outline: none;
+        -webkit-appearance: none; /*清除系统默认样式*/
+        width: 80% !important;
+        background: #e7eaec;
+        height: 3px; /*横条的高度*/
+    }
+    /*拖动块的样式*/
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none; /*清除系统默认样式*/
+        height: 16px; /*拖动块高度*/
+        width: 16px; /*拖动块宽度*/
+        background: #0099CC; /*拖动块背景*/
+        border-radius: 50%; /*外观设置为圆形*/
+        border: solid 1px #ddd
+    }
+
+    #text {
+        white-space: normal;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .czbtn{
+        cursor: default;
+    }
+    .my-container {
+        float: left;
+        display: inline-block;
+    }
+
+    .myLabel-content, .myText-content, .myBtn-content {
+        float: left;
+        display: inline-block;
+        line-height: 30px;
+
+    }
+
+    .fixed-table-container{
+        padding-top: 14px;
+    }
+    .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+    {
+        height: 30px;
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .myBtn-content .btn {
+        margin-bottom: 10px;
+    }
+
+    .cross{
+        overflow: hidden;
+        width: 181px;
+        height: 32px;
+        line-height:32px;
+        border: 1px solid #D9D9D9;
+        float:left;
+        padding-left: 12px;
+    }
+    .activ {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 15px;
+        /* margin-left: -21px; */
+    }
+    .activ2 {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 32px;
+        /* margin-left: -21px; */
+    }
+    .shen2 {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 15px;
+    }
+    .czbtn2{
+        cursor:pointer;
+    }
+    .activbigtext {
+        width: 461px;
+        height: 99px;
+        float: left;
+        border: 1px solid #D9D9D9;
+        padding-left: 15px;
+        padding-top: 3px;
+    }
+    .activbigtextyjnr {
+        overflow: hidden;
+        padding-top: 3px;
+        padding-left: 5px;
+        width: 461px;
+        height: 99px;
+        margin-left: -16px;
+        margin-top: -4px;
+        border: 1px solid #D9D9D9;
+    }
+    .activmidtext {
+        width: 461px;
+        height: 32px;
+        border: 1px solid #D9D9D9;
+    }
+    .fbsmbox{
+        width: 461px;
+        height: 44px;
+        border: 1px solid #D9D9D9;
+        float: left;
+        padding-left: 12px;
+    }
+    /* 按钮 */
+    .btnn {
+        width: 59px;
+        height: 31px;
+        /* border-radius: 10px; */
+        background-color: #F5F5F6;
+        float: left;
+        margin-left:10px;
+        color:#73777A;
+        outline:none;
+        text-align:center;
+        font-family: cursive;
+        line-height:31px;
+    }
+    /* 按钮点击事件 */
+    .btnn:link{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:hover{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:active{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:visited{
+        background-color: #0099CC;
+        color:white;
+    }
+
+    .btndiv {
+        position: relative;
+        left: 68%;
+        float: left;
+    }
+    .fb {
+        font-family: FangSong;
+        margin-left: -6px;
+        /* margin-top: 10px; */
+        margin-bottom: 8px;
+        color: rgba(51,51,51,1);
+        font-weight: 400;
+        border-bottom: 1px solid #E5E5E5;
+        width: 581px;
+        height: 26px;
+    }
+    .com {
+        cursor: pointer;
+        width: 316px;
+        background-repeat: no-repeat;
+        background-position: 99% center;
+        background-size: 18px;
+    }
+
+
+    /* 进度条 */
+    .progress{position: relative; width:300px;margin:100px auto;}
+    .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+    .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+    .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+        left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+    .progress_btn:hover{border-color:#F7B824;}
+    ::-ms-browse, [type='file'] {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+    ::-webkit-file-upload-button {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+
+    /* 发布业绩 */
+    .everybox{
+        width:100%;
+        /* border:1px red solid; */
+        height:36px;
+        margin-top: 11px;
+    }
+
+    .everybox2{
+        width:100%;
+        /* border:1px red solid; */
+        height:100px;
+        margin-top: 6px;
+    }
+
+    /* 分页 */
+    .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+        margin-left: 2%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .columns{
+        display: none;
+    }
+</style>
+
+<script>
+    $(function() {
+        queryUser();
+        $("#big").show();
+        $("#example").hide();
+        $("#paimingtable").show();
+        now();
+        before();
+        tabledata();
+    });
+    var userid;
+    var astarttime ;
+    var aendtime ;
+    //格式化现在日期
+    function now() {
+        // 给input  date设置默认值
+        var now = new Date();
+        //格式化日，如果小于9，前面补0
+        var day = "01";
+        //格式化月，如果小于9，前面补0
+        var month = ("0" + (now.getMonth() + 2)).slice(-2);
+        var year =now.getFullYear();
+        if(month >12){ month ="01"; year = now.getFullYear()+1};
+        //拼装完整日期格式
+        var today = year+"-"+(month)+"-"+(day) ;
+        //完成赋值
+        $('#Endtime0').val(today);
+        aendtime =$('#Endtime0').val();
+    };
+    //格式化15天前的日期
+    function before() {
+        //十五天毫秒值：1209600000
+        var date = new Date();
+        var times = date.getTime();
+        var now = new Date(times);
+        //格式化日，如果小于9，前面补0
+        var day = "01";
+        //格式化月，如果小于9，前面补0
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        //拼装完整日期格式
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        //完成赋值
+        $('#Begtime0').val(today);
+        astarttime=$('#Begtime0').val();
+    };
+    var datatable;
+    //表格接口
+    function tabledata(){
+        var options=$("#options").val();
+        var status=$("#status").val();
+        var Begtime0=$("#Begtime0").val();
+        var Endtime0=$("#Endtime0").val();
+        var text=$("#text").val();
+        var status2=status;
+        if(status=="02"){
+            status="01";
+        }
+        var  data = {"regstarttime":Begtime0,"regendtime":Endtime0,"alluser":options,"status":status,"text":text};
+        $.ajax({
+            url:"/tactivity/queryTactivity",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                if(status2=="02"){
+                    var datas=[];
+                    var newdate=getNewDate();
+                   for(var i=0;i<data.length;i++){
+                       if(data[i].regstarttime<=newdate && data[i].regendtime>newdate){
+                           datas.push(data[i]);
+                       }
+                   }
+                   datatable=datas;
+                }else{
+                    datatable=data;
+                }
+
+            }
+        });
+    }
+
+    //表格代码
+    function table(){
+        $('#table1').bootstrapTable({
+            showToggle:!0,
+            showColumns:!0,
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            showRefresh:true,
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: true, // 在表格底部显示分页组件，默认false
+            pageList: [5,10, 15], // 设置页面可以显示的数据条数
+            pageSize: 5, // 页面数据条数
+            pageNumber: 1, // 首页页码
+            onClickRow: function (row, $element) {
+            },
+            onClickCell:function(field, value, row, $element,event){
+                if(field!="operate"){
+                    page('/activityMess?id='+row.id,'活动详情');
+                }
+            },
+            columns: [
+                {
+                    field: 'number',
+                    title: '序号',
+                    width:'4%' ,
+                    align:'center',
+                    formatter: function (value,row,index){
+                        return index+1; //序号正序排序从1开始
+                    }
+                },
+                {
+                    field: 'activname',
+                    title: '活动名称',
+                    width:'7%' ,
+                    align:'center',
+                },
+                {
+                    field: 'address',
+                    width:'7%' ,
+                    title: '活动地址',
+                    align:'center',
+                },{
+                    field: 'starttime',
+                    width:'10%' ,
+                    title: '活动时间',
+                    align:'center',
+                },{
+                    field: 'regstarttime',
+                    width:'10%' ,
+                    title: '报名开始时间',
+                    align:'center',
+                },{
+                    field: 'regendtime',
+                    width:'10%' ,
+                    title: '报名结束时间',
+                    align:'center',
+
+                },{
+                    field: 'status',
+                    width:'10%' ,
+                    title: '活动状态',
+                    align:'center',
+                    formatter: function (value,row,index){
+                        var newstime=getNewDate();
+                        if(row.status =="01"){
+                            if(row.regstarttime>=newstime && row.regendtime<newstime){
+                                return "报名中";
+                            }else{
+                                return "未开始";
+                            }
+                        }else if(row.status =="02"){
+                            return "进行中";
+                        }else if(row.status =="03"){
+                            return "已结束";
+                        }else{
+                            return "-";
+                        }
+                    }
+
+                }, {
+                    field: 'operate',
+                    title: '操作',
+                    width:'10%' ,
+                    align: 'center',
+                    formatter: operate
+                }
+            ] ,
+            data:datatable
+        });
+    }
+    //表格操作权限
+    function operate(value,row,index){
+        var ret="";
+        if(row.promulgatorid===userid){
+            ret+="<a href='javascript:void(0);' id='"+row.id+"' class='czbtn' onclick='compile(this.id)' style='color:#0099CC;'>编辑</a> " +
+                "<a href='javascript:void(0);' id='"+row.id+"' class='czbtn' onclick='deletedata(this.id)' style='color:#0099CC;'>删除</a> " +
+                "<a href='javascript:void(0);' id='"+row.id+"' class='czbtn' onclick='gotomess(this.id)' style='color:#0099CC;'>报名信息</a> ";
+        }
+        if(ret==""){
+            return "<a href='javascript:void(0);' id='"+row.id+"' class='czbtn' onclick='gotopage(this.id)' style='color:#0099CC;'>详情</a>"
+        }else{
+            return ret;
+        }
+    }
+    function compile(id) {
+        $.ajax({
+            url:"/tactivity/queryTactivity",
+            data: {"id":id},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                $("#activname").html(data[0].activname);
+                $("#theme").html(data[0].theme);
+                $("#starttime").val(data[0].starttime);
+                $("#endtime").val(data[0].endtime);
+                $("#regstarttime").val(data[0].regstarttime);
+                $("#regendtime").val(data[0].regendtime);
+                $("#address").html(data[0].address);
+                $("#content").html(data[0].content);
+                $("#requires").html(data[0].requires);
+                $("#remark").html(data[0].remark);
+                $("#getId").val(data[0].id);
+                issue(2);
+            }
+        });
+    }
+    function deletedata(id) {
+        var msg = "是否删除？";
+        if (confirm(msg)==true){
+            $.ajax({
+                url:"/tactivity/delTactivity",
+                data: {"id":id},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    chongzhi();
+                }
+            });
+        }
+    }
+    function gotomess(id) {
+        page('/activityRegMess?id='+id,'报名信息');
+    }
+    function gotopage(id) {
+        page('/activityMess?id='+id,'活动详情');
+    }
+    //选项卡设置
+    function page(url, title) {
+        var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+        $(window.top.document).find('.J_mainContent').find("iframe").hide();
+        var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+            + '" seamless="" style="display: inline;"></iframe>';
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+            ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+        $(window.top.document).find('.J_mainContent').append(iframe);
+    }
+    function chaxun(){
+        tabledata();
+        $('#table1').bootstrapTable('load',datatable);
+    }
+
+    function chongzhi(){
+        now();
+        before();
+       $("#options").val("01");
+       $("#status").val("00");
+       $("#text").val("");
+        chaxun();
+    }
+    function issue(i){
+        if(i===1){
+            $("#issues").html("活动发布");
+        }else if(i===2){
+            $("#issues").html("活动修改");
+        }
+        $("#modal-form").modal('show');
+        $(".modal-dialog").show();
+    }
+    /*活动发布*/
+    function affirm(){
+        var activname=$("#activname").html();
+        var theme=$("#theme").html();
+        var starttime=$("#starttime").val();
+        var endtime=$("#endtime").val();
+        var regstarttime=$("#regstarttime").val();
+        var regendtime=$("#regendtime").val();
+        var address=$("#address").html();
+        var content=$("#content").html();
+        var requires=$("#requires").html();
+        var remark=$("#remark").html();
+        var data={"activname":activname,"theme":theme,"starttime":starttime,"endtime":endtime,"regstarttime":regstarttime,"regendtime":regendtime,"address":address,"content":content,"requires":requires,"remark":remark};
+        if($("#issues").html()==="活动发布"){
+            $.ajax({
+                url:"/tactivity/insertTactivity",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    console.log(data);
+                }
+            });
+        }else if($("#issues").html()==="活动修改"){
+            data.id=$("#getId").val();
+            $.ajax({
+                url:"/tactivity/updateTactivity",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    console.log(data);
+                }
+            });
+        }
+        cancel();
+        chongzhi();
+    }
+    function cancel(){
+        $("#modal-form").modal('hide');
+        $("#activname").html("");
+        $("#theme").html("");
+        $("#starttime").val("");
+        $("#endtime").val("");
+        $("#regstarttime").val("");
+        $("#regendtime").val("");
+        $("#address").html("");
+        $("#content").html("");
+        $("#requires").html("");
+        $("#remark").html("");
+    }
+    $(function(){
+        <!-- jeDate 插件 -->
+        jeDate("#Begtime0",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"2014-09-19"
+        });
+
+        jeDate("#Endtime0",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"2014-09-19"
+        });
+        jeDate("#regstarttime",{
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#regendtime",{
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#starttime",{
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#endtime",{
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+    });
+    function setStatus() {
+        if($("#options").val()==="01"){
+            $("#status").find("option").remove();
+            $("#status").append('<option value="00">全部</option>\n' +
+                '                <option value="01">未开始</option>\n' +
+                '                <option value="02">报名中</option>\n' +
+                '                <option value="03">已结束</option>')
+        }else if($("#options").val()==="02"){
+            $("#status").find("option").remove();
+            $("#status").append('<option value="00">全部</option>\n' +
+                '                <option value="01">已报名</option>\n' +
+                '                <option value="02">已结束</option>')
+        }
+    }
+    function queryUser() {
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            success: function (data) {
+                userid = data.id;
+                table();//表格
+            }
+        })
+    }
+    function getNewDate() {
+        var date=new Date();
+        var year=date.getFullYear();
+        var month=date.getMonth()+1;
+        var day=date.getDate();
+        var hours=date.getHours();
+        var minu=date.getMinutes();
+        var seconds=date.getSeconds();
+        if(month<10){
+            month="0"+month;
+        }
+        if(day<10){
+            day="0"+day;
+        }
+        if(hours<10){
+            hours="0"+hours;
+        }
+        if(minu<10){
+            minu="0"+minu;
+        }
+        if(seconds<10){
+            seconds="0"+seconds;
+        }
+        console.log(year+"-"+month+"-"+day+" "+hours+":"+minu+":"+seconds);
+        return year+"-"+month+"-"+day+" "+hours+":"+minu+":"+seconds;
+    }
+</script>
+<body>
+<div id="big" class="col-sm-12" style="display: none">
+    <div class="example-wrap" style="margin-top: 25px;">
+        <div id="toolbar1"
+             style="width: 100%; overflow: hidden; margin-bottom: 14px; float: left;">
+            <div class="myText-content" style="float: left;width: 11%;cursor:pointer;">
+                <label class="myLabel-content">选项:&nbsp;&nbsp;&nbsp;</label>
+                <select onchange="setStatus()"
+                        name="select" id="options"
+                        style="float: left; width: 80px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                    <option value="01">全部活动</option>
+                    <option value="02">我的活动</option>
+                </select>
+            </div>
+
+
+            <div class="myText-content" style="float: left;width: 10%;cursor:pointer;">
+                <label class="myLabel-content">状态:&nbsp;&nbsp;&nbsp;</label> <select
+                    name="select" id="status" style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                <option value="00">全部</option>
+                <option value="01">未开始</option>
+                <option value="02">报名中</option>
+                <option value="03">已结束</option>
+            </select>
+            </div>
+
+            <div class="myText-content" style="float: left;width: 13%;">
+                <label class="myLabel-content">活动:&nbsp;&nbsp;&nbsp;</label>
+                <input id="text" style="width: 104px;border: solid 1px #D9D9D9;" value="" placeholder="请输入关键字"/>
+            </div>
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content" style="">日期：</label>
+                <div class="myText-content" style="">
+                    <input id="Begtime0" readonly
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="开始日期" style="width: 154px;margin-right: 10px;background-color: #fff;">
+                </div>
+
+            </div>
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content">至</label>
+            </div>
+            <div class="my-container"
+                 style="display: block;  float: left;">
+                <label class="myLabel-content"></label>
+                <div class="myText-content" style="margin-left: 10px;">
+                    <input id="Endtime0" readonly
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="结束日期" style="width: 154px;background-color: #fff;">
+                </div>
+            </div>
+            <input type="hidden" value="" id="getId" name="getId"/>
+            <div class="myBtn-content"
+                 style="float: left;margin-left: 2%;">
+                <button id="search1" type="button" class="btn btn-primary"
+                        style="background-color: #0099CC;border-color: #0099CC;color: #FFF;" onclick="chaxun()">查询</button>
+                <button id="reset1" type="button" class="btn btn-default"
+                        style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;" onclick="chongzhi()">重置</button>
+            </div>
+
+            <div id="fabu" onclick="issue(1)" style="float: right;width:76px;height:30px;background-color:#0099CC;margin-right: 10px;cursor:pointer;">
+                <i class="iconfont icon-fabu"style="position: relative;top: 7px;left: 14px;color: white;" ><span style="font-size:10px;position: relative;top: -1px;left: 2px;">发布</span></i>
+            </div>
+            <div class="example" id="paimingtable">
+                <table id="table1"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 发布活动-->
+<div id="modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="height: 481px;width:583px;">
+            <div class="modal-body" style="height: 471px;width: 627px;margin-left: -9px;margin-top: -5px;">
+
+                <div class="fb">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;" id="issues">发布活动</p>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+                <div class="everybox">
+                    <div class="activ ">活动名称:</div>
+                    <div id="activname" class="cross" contenteditable="true" style="
+									    width: 181px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;" ></div>
+                    <div class="activ ">活动主题:</div>
+                    <div id="theme" class="cross" contenteditable="true" style="
+									    width: 181px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+                </div>
+                <div class="everybox">
+                    <div class="activ ">活动开始:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style=" ">
+                                <input id="starttime" readonly required
+                                       class="com laydate-icon form-control layer-date"
+                                        value="" style="width:181px;height:32px;font-family: FangSong;background-color: #fff;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activ ">活动结束:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style=" ">
+                                <input id="endtime" readonly required
+                                       class="com laydate-icon form-control layer-date"
+                                        value="" style="width:181px;height:32px;font-family: FangSong;background-color: #fff;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:100%;height:0px;"></div>
+                <div class="everybox">
+                    <div class="activ ">报名开始:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style=" ">
+                                <input id="regstarttime" readonly
+                                       class="com laydate-icon form-control layer-date"
+                                        value="" style="width:181px;height:32px;font-family: FangSong;background-color: #fff;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activ ">报名结束:</div>
+                    <div class="">
+                        <div class="my-container">
+                            <div class="myText-content" style="">
+                                <input id="regendtime" readonly
+                                       class="com laydate-icon form-control layer-date"
+                                        value="" style="width:181px;height:32px;font-family: FangSong;background-color: #fff;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:100%;height:2px;"></div>
+                <div class="everybox">
+                    <div class="activ ">活动地址:</div>
+                    <div id="address" placeholder="请输入活动地址" class="cross" contenteditable="true" style="
+									    width: 181px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+                </div>
+                <div class="everybox">
+                    <div class="activ ">活动要求:</div>
+                    <div id="requires" placeholder="请输入活动要求" class="cross" contenteditable="true" style="
+									    width: 77%;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+                </div>
+                <div class="everybox2">
+                    <div class="activ ">活动内容:</div>
+                    <div  style="" class="activbigtext" >
+                        <div id="content" class="activbigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                             onfocus="if(this.innerText=='请输入活动内容...')this.innerText=''"
+                             onblur="if(this.innerText=='')this.innerText='请输入活动内容...'">请输入活动内容...</div>
+                    </div>
+                </div>
+                <div class="everybox">
+                    <div class="activ ">活动备注:</div>
+                    <div id="remark" placeholder="请输入活动备注" class="cross" contenteditable="true" style="
+									    width: 77%;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+                </div>
+                <div style="width:100%;height:5px;"></div>
+                <div class="btndiv">
+                    <div class="btnn" style="background-color:#0099CC;color:white;" onclick="affirm()">确认</div>
+                    <div class="btnn" style="border: 1px solid #EEEEEF;" onclick="cancel()"> 取消</div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

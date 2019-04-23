@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Conference.ConferenceUserDao">
+	<select id="queryConferenceUserlist" parameterType="com.OuSoft.system.entity.Conferenceuser" resultType="com.OuSoft.system.entity.Conferenceuser">
+		SELECT
+		tu.username AS username,
+		cn.*,
+		cu.* from
+		conferenceuser cu
+
+		LEFT JOIN conferenceonifo  cn ON cu.conferenceid = cn.id
+		LEFT JOIN tuser  tu ON cu.userid = tu.id
+		WHERE 1=1
+			<if test="userid != '' and userid  != null">
+				  and  cu.userid = #{userid}
+			</if>
+            <if test="manage != '' and manage  != null">
+                  and cu.userid in #{list}
+            </if>
+	</select>
+
+	<insert id="InsertConferenceUser" parameterType="com.OuSoft.system.entity.Conferenceonifo">
+		insert  into  conferenceuser (id,conferenceid,userid,signin,signout,remark,audit,auditRemark,auditid,conferenceSummarize) value (#{id},#{conferenceid},#{userid},#{signin},#signout},#{remark},#{audit},#{auditRemark},#{auditid},#{conferenceSummarize})
+	</insert>
+
+	<update id="UpdateConferenceUser" parameterType="com.OuSoft.system.entity.Conferenceonifo">
+		update conferenceuser
+		<set>
+			<if test="signin != '' and signin != null" >
+				signin = #{signin}
+			</if>
+			<if test="signout != '' and signout != null">
+				signout = #{signout}
+			</if>
+			<if test="remark != '' and remark != null">
+				remark = #{remark}
+			</if>
+			<if test="audit != '' and audit != null">
+				audit = #{audit}
+			</if>
+			<if test="auditRemark != '' and auditRemark != null">
+				auditRemark = #{auditRemark}
+			</if>
+			<if test="auditid != '' and auditid != null">
+				auditid = #{auditid}
+			</if>
+			<if test="conferenceSummarize != '' and conferenceSummarize != null">
+				conferenceSummarize = #{conferenceSummarize}
+			</if>
+			<if test="signinExplain != '' and signinExplain != null">
+				signinExplain = #{signinExplain}
+			</if>
+			<if test="signoutExplain != '' and signoutExplain != null">
+				signoutExplain = #{signoutExplain}
+			</if>
+
+		</set>
+			where userid =#{userid}
+	</update>
+
+	<delete id="DelConferenceUser" parameterType="java.lang.String">
+		delete  from conferenceuser where id = #{id}
+	</delete>
+</mapper>

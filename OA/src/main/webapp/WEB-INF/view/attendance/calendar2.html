@@ -1,0 +1,418 @@
+<html>
+<head>
+    <title>c.html</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="IE=9" />
+    <script src="/static/js/calendar/jquery.min.js"></script>
+    <script src="/static/js/calendar/simple-calendar.js"></script>
+    <link href="/static/css/calendar/simple-calendar.css" rel="stylesheet">
+    <script src="/static/js/calendar/amazeui.min.js"></script>
+    <script src="/static/js/calendar/calendar.js"></script>
+    <script src="/static/js/calendar/timedropper.js"></script>
+    <link href="/static/css/calendar/amazeui.min.css" rel="stylesheet">
+    <link href="/static/css/calendar/calendar.css" rel="stylesheet">
+    <link href="/static/css/calendar/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/calendar/timedropper.css" rel="stylesheet">
+    <script src="/static/js/news.js"></script>
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+</head>
+<body>
+<style>
+    .startbasic{
+        margin-top: 10px;
+        height: 10%;
+    }
+</style>
+<div id='container'></div>
+<!--录入信息口-->
+<div id="Idiv" style="display:none; position:absolute; z-index:1000; background:#67a3d9;">
+    <div class="am-modal-no-btn  hd_info_modal">
+        <div class="am-modal-dialog radius">
+    <div class="am-modal-hd" style="border-bottom: 2px solid #31aaef;text-align: center;">创建日程
+        <a href="javascript: void(0)" class="am-close am-close-spin" onclick="closeDiv()" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">
+        <div class="am-margin-sm">
+            <form action="" class="am-form am-form-inline">
+                <div class="hd-work-type">
+                    <div class="hd-work-block">
+                        <label class="hd-type-label" >类型:</label>
+                        <div class="hd-type-select">
+                            <select data-am-selected class="am-u-sm-10" id="hd-type-option">
+                                <option value="01" >工作日</option>
+                                <option value="02" >休息日</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="stone"></div>
+                </div>
+                <div class="hd-work-date">
+                    <div class="hd-work-block">
+                        <label for="hd-start-date" class="am-form-label">时间:</label>
+                        <div class="am-form-group am-form-icon">
+                            <i class="am-icon-calendar"></i>
+                            <input id="hd-start-date" type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly required>
+                        </div>
+                    </div>
+                    <div class="hd-work-block">
+                        <label for="hd-end-date" class="am-form-label">至</label>
+                        <div class="am-form-group am-form-icon">
+                            <i class="am-icon-calendar"></i>
+                            <input id="hd-end-date" type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly required>
+                        </div>
+                    </div>
+                </div>
+                <div class="hd-work-btns">
+                    <button type="button" class="am-btn am-btn-secondary"  onClick="addDiv();">添加</button>
+                    <button type="button" class="am-btn am-btn-default" onClick="closeDiv();">取消</button>
+                </div>
+                <div class="hd-work-block">
+                    <label class="hd-type-label" >备注:</label>
+                        <input style="margin-top: 6px;width: 78%;
+    height: 12%;" id="mark" value="" name="mark"/>
+                </div>
+                <div class="stone"></div>
+            </form>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+<div id="basic" style="display:none; position:absolute; z-index:1000; background:#67a3d9;">
+    <div class="am-modal-no-btn  hd_info_modal">
+        <div class="am-modal-dialog radius">
+            <div class="am-modal-hd" style="border-bottom: 2px solid #31aaef;text-align: center;margin-bottom: -29px;">删除日程
+                <a href="javascript: void(0)" class="am-close am-close-spin" onclick="hideBasic()" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <div class="am-margin-sm">
+                    <form action="" class="am-form am-form-inline">
+                        <div class="hd-work-type">
+                            <div class="hd-work-block">
+                                <label class="hd-type-label" style="width: 80px;">事务类型:</label>
+                                <div id="type" style="margin-top: 7px;
+    margin-right: 97px;"></div>
+                            </div>
+                            <div class="stone"></div>
+                        </div>
+                        <div class="hd-work-date">
+                            <div class="hd-work-block">
+                                <label for="hd-start-date" class="am-form-label" style="width: 80px;">开始时间:</label>
+                                <div class="am-form-group am-form-icon" style="width: 342px;
+    margin-top: -39px;">
+                                    <div id="startbasic" style="    margin-top: 7px;
+    margin-right: 114px;"></div>
+                                </div>
+                            </div>
+                            <div class="hd-work-block">
+                                <label for="hd-end-date" class="am-form-label" style="width: 80px;">截止时间：</label>
+                                <div class="am-form-group am-form-icon" style="width: 342px;
+    margin-top: -39px;">
+                                    <div id="endbasic" style="    margin-top: 7px;
+    margin-right: 114px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hd-work-btns">
+                            <button type="button" class="am-btn am-btn-secondary"  onClick="delCalendar();">删除</button>
+                            <button type="button" class="am-btn am-btn-default" onClick="hideBasic();">取消</button>
+                        </div>
+                        <div class="stone"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var urlyear;
+    var urlmonth;
+    var Request = new Object();
+    Request = GetRequest();
+    urlyear= Request["year"];
+    urlmonth=Request["month"];
+    $(".sc-select-year").val(urlyear);
+    $(".sc-select-month").val(urlmonth);
+    function checkRate(number) {
+        var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
+        if (!re.test(number)) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+    var myCalendar = new SimpleCalendar('#container');
+    if(setQuanx()) {
+        $(document).on('click', '.sc-item', function () {
+            var year = $(".sc-select-year").val();
+            var month = $(".sc-select-month").val();
+            var date = $(this)[0].innerText.split("\n")[0].split(" ")[0];
+            if ($(this)[0].title != "" && $(this)[0].title != null) {
+                $("#startbasic").html(year + "-" + month + "-" + date);
+                $("#endbasic").html(year + "-" + month + "-" + date);
+                $("#type").html($(this)[0].title)
+                showBasic();
+            } else {
+                if (checkRate(date)) {
+                    $("#hd-start-date").datepicker('setValue', year + "-" + month + "-" + date);
+                    $("#hd-end-date").datepicker('setValue', year + "-" + month + "-" + date);
+                } else {
+                    $("#hd-start-date").datepicker("");
+                    $("#hd-end-date").datepicker("");
+                }
+                $("#mark").val("")
+                showDiv()
+            }
+
+        });
+        $(document).on('click', '.creatdate', function () {
+            var year = $(".sc-select-year").val();
+            var month = $(".sc-select-month").val();
+            var date = $(this)[0].innerText.split("\n")[0].split(" ")[0];
+            if (checkRate(date)) {
+                $("#hd-start-date").datepicker('setValue', year + "-" + month + "-" + date);
+                $("#hd-end-date").datepicker('setValue', year + "-" + month + "-" + date);
+            } else {
+                $("#hd-start-date").datepicker("");
+                $("#hd-end-date").datepicker("");
+            }
+            $("#mark").val("")
+            showDiv()
+        });
+    }
+    queryAllCalendar();
+    function queryAllCalendar() {
+        /*var year=$(".sc-select-year").val();
+        var month=$(".sc-select-month").val();
+        if(month.length===1){
+            month="0"+month;
+        }
+        var starttime=year+"-"+month+"-01"
+        var endtime=year+"-"+month+"-31"*/
+        $.ajax({
+            url:"/tcalendar/queryallcalendar",
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                console.log(data)
+                for(var i=0;i<data.length;i++){
+                    var newDate=data[i].time.split(" ")[0];
+                    var mark="";
+                    if(data[i].mark==""||data[i].mark==null){
+                        if(data[i].type=="01"){
+                            mark="工作日";
+                        }else if(data[i].type=="02"){
+                            mark="休息日"
+                        }
+                    }else{
+                        mark=data[i].mark;
+                    }
+                    console.log(newDate+","+mark)
+                    myCalendar.addMark(getString(newDate),mark,data[i].type)
+                }
+            }
+        })
+    }
+    //删除日历信息
+    function delCalendar() {
+        var id=queryCalendar($("#startbasic").html(),$("#endbasic").html()).id;
+        $.ajax({
+            url:"/tcalendar/deTcalendar",
+            data:{"id":id},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                alert("删除成功");
+                myCalendar.delMark();
+                queryAllCalendar();
+                hideBasic();
+            }
+        })
+    }
+    function getString(str) {
+        var st=str.split("-")[0]+"-"+parseInt(str.split("-")[1])+"-"+parseInt(str.split("-")[2]);
+        console.log(st)
+        return st;
+    }
+    function showDiv()
+    {
+        var Idiv     = document.getElementById("Idiv");
+        Idiv.style.display = "block";
+        Idiv.style.width="510px";
+        Idiv.style.height="268px";
+        Idiv.style.backgroundColor="#f8f8f8";
+//以下部分要将弹出层居中显示
+        Idiv.style.left=(document.documentElement.clientWidth-Idiv.clientWidth)/2+document.documentElement.scrollLeft+"px";
+        Idiv.style.top =(document.documentElement.clientHeight-Idiv.clientHeight)/2+document.documentElement.scrollTop-50+"px";
+
+//以下部分使整个页面至灰不可点击
+        var procbg = document.createElement("div"); //首先创建一个div
+        procbg.setAttribute("id","mybg"); //定义该div的id
+        procbg.style.background = "#000000";
+        procbg.style.width = "100%";
+        procbg.style.height = "100%";
+        procbg.style.position = "fixed";
+        procbg.style.top = "0";
+        procbg.style.left = "0";
+        procbg.style.zIndex = "500";
+        procbg.style.opacity = "0.6";
+        procbg.style.filter = "Alpha(opacity=70)";
+//背景层加入页面
+        document.body.appendChild(procbg);
+        document.body.style.overflow = "hidden"; //取消滚动条
+        fadeIn(0.9,Idiv)
+    }
+    function closeDiv() //关闭弹出层
+    {
+        var Idiv=document.getElementById("Idiv");
+        Idiv.style.display="none";
+        document.body.style.overflow = "auto"; //恢复页面滚动条
+        var body = document.getElementsByTagName("body");
+        var mybg = document.getElementById("mybg");
+        body[0].removeChild(mybg);
+        fadeOut(1,Idiv)
+    }
+    //解析url参数
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    function addDate(date, days) {
+        if (days == undefined || days == '') {
+            days = 1;
+        }
+        var date = new Date(date);
+        date.setDate(date.getDate() + days);
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        return date.getFullYear() + '-' + getFormatDate(month) + '-' + getFormatDate(day);
+    }
+    // 日期月份/天的显示，如果是1位数，则在前面加上'0'
+    function getFormatDate(arg) {
+        if (arg == undefined || arg == '') {
+            return '';
+        }
+
+        var re = arg + '';
+        if (re.length < 2) {
+            re = '0' + re;
+        }
+
+        return re;
+    }
+    function addDiv() {
+        var date=new Date($("#hd-start-date").val());
+        var date2=new Date($("#hd-end-date").val());
+        for(var i=date;i<=date2;i=new Date(addDate(i,1))){
+            insertCalendar(i.getFullYear()+"-"+(i.getMonth()+1)+"-"+i.getDate());
+        }
+        queryAllCalendar();
+        closeDiv();
+    }
+    function insertCalendar(time) {
+        var type=$("#hd-type-option").val();
+        var mark=$("#mark").val();
+        var data={"type":type,"mark":mark,"time":time}
+        $.ajax({
+            url:"/tcalendar/saveTcalendar",
+            data:data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                alert("添加成功")
+            }
+        })
+    }
+    function showBasic() {
+        var Idiv     = document.getElementById("basic");
+        Idiv.style.display = "block";
+        Idiv.style.width="273px";
+        Idiv.style.height="268px";
+        Idiv.style.backgroundColor="#f8f8f8";
+//以下部分要将弹出层居中显示
+        Idiv.style.left=(document.documentElement.clientWidth-Idiv.clientWidth)/2+document.documentElement.scrollLeft+"px";
+        Idiv.style.top =(document.documentElement.clientHeight-Idiv.clientHeight)/2+document.documentElement.scrollTop-50+"px";
+
+//以下部分使整个页面至灰不可点击
+        var procbg = document.createElement("div"); //首先创建一个div
+        procbg.setAttribute("id","mybg"); //定义该div的id
+        procbg.style.background = "#000000";
+        procbg.style.width = "100%";
+        procbg.style.height = "100%";
+        procbg.style.position = "fixed";
+        procbg.style.top = "0";
+        procbg.style.left = "0";
+        procbg.style.zIndex = "500";
+        procbg.style.opacity = "0.6";
+        procbg.style.filter = "Alpha(opacity=70)";
+//背景层加入页面
+        document.body.appendChild(procbg);
+        document.body.style.overflow = "hidden"; //取消滚动条
+    }
+    function hideBasic() {
+        var Idiv=document.getElementById("basic");
+        Idiv.style.display="none";
+        document.body.style.overflow = "auto"; //恢复页面滚动条
+        var body = document.getElementsByTagName("body");
+        var mybg = document.getElementById("mybg");
+        body[0].removeChild(mybg);
+    }
+    function queryCalendar(starttime,endtime) {
+        var cal={};
+        $.ajax({
+            url:"/tcalendar/querycalendar",
+            data:{"starttime":starttime,"endtime":endtime},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                if(data.length>0){
+                    cal= {"length":data.length,"id":data[0].id};
+                }
+            }
+        })
+        return cal;
+    }
+    function addd() {
+        var data_2019= [];
+        for(var i=0;i<data_2019.length;i++){
+            insertCalendar("2019-"+data_2019[i])
+        }
+
+    }
+    function fadeIn(tm,ts){
+        if(tm<1){
+            for(var i=tm;i<=1;i+=0.1){
+                ts.style.opacity=i;
+            }
+            setTimeout(fadeIn,100);
+        }else{
+            setTimeout(fadeOut,5000);
+        }
+    }
+    function fadeOut(tm,ts){
+        if(tm>0){
+            for(var i=tm;i<=0;i-=0.1){
+                ts.style.opacity=i;
+            }
+            setTimeout(fadeOut,100);
+        }else{
+            ts.style.display="none";
+        }
+    }
+</script>
+
+</body>
+</html>

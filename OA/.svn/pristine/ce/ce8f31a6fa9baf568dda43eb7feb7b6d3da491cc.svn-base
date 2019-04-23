@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tsuser.TsusersDao">
+
+	
+	<!-- 人员管理列表
+	接	：可以设置状态为:   start == 01 则查询出除离职和离岗外的所有用户
+		userpid,后台自己给，获取用户自己的userpid,没有则是全查，pid只有平台管理员才可以设置，其他不能设置
+		starttime 开始时间  年/月/日/
+		endtime 结束时间  年/月/日/
+		zdeparid  小组id 
+		bdeparid 部门id  
+		id 用户id
+		在职状态：statuss  :  01正式、02离岗、03离职，04试岗、04实习、  
+		返回： 用户基础信息，，，  小组名称grzdeparname  部门名称 grbdeparname  用户状态 dvalue
+			 posiname 职位名称  jobname 岗位名称
+		
+	 -->
+	<select id="queryPeopleTuserDao" parameterType="com.OuSoft.system.entity.Tsuser" resultType="com.OuSoft.system.entity.Tsuser" >
+			SELECT
+				poin.posiname as posiname, jobin.jobname as jobname,
+				tdic.dvalue as dvalue,
+				tdeinfo.id AS grzdeparid,
+				tdeinfo.deparname AS grzdeparname,
+				tdeinfo.deparepid AS deparepid,
+				dein.id AS grbdeparid,
+				dein.deparname AS grbdeparname,
+				t.*
+			FROM
+				tuser t
+			LEFT JOIN tdictionary tdic on tdic.dkey = t.`status` and tdic.dtype = 'tuser'
+			LEFT JOIN tdepartuser tdetu ON tdetu.userid = t.id
+			LEFT JOIN tdepartmentinfo tdeinfo ON tdeinfo.id = tdetu.deparid  
+			LEFT JOIN tdepartmentinfo dein ON dein.deparepid = SUBSTR(tdeinfo.deparepid, 1, 6)
+			LEFT JOIN tposituser potu on potu.userid = t.id
+			
+			LEFT JOIN tpositioninfo poin on poin.id = potu.posiid
+
+			LEFT JOIN tjobtsuser jobtu on jobtu.userid = t.id
+			LEFT JOIN tjobinfo jobin on jobin.id = jobtu.jobid
+			<where> 1=1
+				<if test=" userpid != null and userpid != '' ">
+					and t.userpid = #{userpid}
+				</if>
+				<if test=" username != null and username != '' ">
+					and t.username = #{username}
+				</if>
+				<if test=" starttime != null and starttime != '' ">
+					AND t.inductiontime = #{starttime}
+				</if>
+				<if test=" endtime != null and endtime != '' ">
+					and t.inductiontime = #{endtime} 
+				</if>
+				<if test=" zdeparid != null and zdeparid != '' "> 
+					and tdeinfo.id = #{zdeparid}
+				</if>
+				<if test=" bdeparid != null and bdeparid != '' ">
+					and dein.id = #{bdeparid} 
+				</if>
+				<if test=" id != null and id != '' ">
+					and t.id = #{id}
+				</if>
+				<if test=" statuss != null and statuss != '' ">
+					AND t.status = #{statuss}
+				</if>
+				<if test=" start == '01' ">
+					and t.status != '02' and t.status != '03'
+				</if>
+			</where>
+				ORDER BY t.inductiontime desc
+	</select>
+	
+	<!-- 修改用户个人信息 -->
+	<update id="updateIdTuserInfoDao" parameterType="com.OuSoft.system.entity.Tsuser" >
+		
+		UPDATE tuser t
+		<set>
+			<if test="username != null and username != '' ">
+				t.username = #{username},
+			</if>
+			<if test="loginname != null and loginname != '' ">
+				t.loginname = #{loginname},
+			</if>
+			<if test="userpass != null and userpass != '' ">
+				t.userpass = #{userpass},
+			</if>
+			<if test="sex != null and sex != '' ">
+				t.sex = #{sex},
+			</if>
+			<if test="age != null and age != '' ">
+				t.age = #{age},
+			</if>
+			<if test="phone1 != null and phone1 != '' ">
+				t.phone1 = #{phone1},
+			</if>
+			<if test="phone2 != null and phone2 != '' ">
+				t.phone2 = #{phone2},
+			</if>
+			<if test="phone3 != null and phone3 != '' ">
+				t.phone3 = #{phone3},
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				t.idcard = #{idcard},
+			</if>
+			<if test="residence != null and residence != '' ">
+				t.residence = #{residence},
+			</if>
+			<if test="nations != null and nations != '' ">
+				t.nations = #{nations},
+			</if>
+			<if test="nativeplace != null and nativeplace != '' ">
+				t.nativeplace = #{nativeplace},
+			</if>
+			<if test="residencetype != null and residencetype != '' ">
+				t.residencetype = #{residencetype},
+			</if>
+			<if test="maritalstatus != null and maritalstatus != '' ">
+				t.maritalstatus = #{maritalstatus},
+			</if>
+			<if test="schooling != null and schooling != '' ">
+				t.schooling = #{schooling},
+			</if>
+			<if test="professional != null and professional != '' ">
+				t.professional = #{professional},
+			</if>
+			<if test="political != null and political != '' ">
+				t.political = #{political},
+			</if>
+			<if test="school != null and school != '' ">
+				t.school = #{school},
+			</if>
+			<if test="graduationtime != null and graduationtime != '' ">
+				t.graduationtime = #{graduationtime},
+			</if>
+			<if test="qualification != null and qualification != '' ">
+				t.qualification = #{qualification},
+			</if>
+			<if test="computer != null and computer != '' ">
+				t.computer = #{computer},
+			</if>
+			<if test="address != null and address != '' ">
+				t.address = #{address},
+			</if>
+			<if test="linkman != null and linkman != '' ">
+				t.linkman = #{linkman},
+			</if>
+			<if test="relationship != null and relationship != '' ">
+				t.relationship = #{relationship},
+			</if>
+			<if test="linkmanphone != null and linkmanphone != '' ">
+				t.linkmanphone = #{linkmanphone},
+			</if>
+			<if test="isinsurance != null and isinsurance != '' ">
+				t.isinsurance = #{isinsurance},
+			</if>
+			<if test="insurancetime != null and insurancetime != '' ">
+				t.insurancetime = #{insurancetime},
+			</if>
+			<if test="insurancenum != null and insurancenum != '' ">
+				t.insurancenum = #{insurancenum},
+			</if>
+			<if test="compensation != null and compensation != '' ">
+				t.compensation = #{compensation},
+			</if>
+			<if test="subsidies != null and subsidies != '' ">
+				t.subsidies = #{subsidies},
+			</if>
+			<if test="status != null and status != '' ">
+				t.status = #{status},
+			</if>
+			<if test="inductiontime != null and inductiontime != '' ">
+				t.inductiontime = #{inductiontime},
+			</if>
+			<if test="trialperiod != null and trialperiod != '' ">
+				t.trialperiod = #{trialperiod},
+			</if>
+			<if test="topcorpid != null and topcorpid != '' ">
+				t.topcorpid = #{topcorpid},
+			</if>
+			<if test="area != null and area != '' ">
+				t.area = #{area},
+			</if>
+			<if test="levaetime != null and levaetime != '' ">
+				t.levaetime = #{levaetime},
+			</if>
+			<if test="accidentstart != null and accidentstart != '' ">
+				t.accidentstart = #{accidentstart},
+			</if>
+			<if test="accidentend != null and accidentend != '' ">
+				t.accidentend = #{accidentend},
+			</if>
+			<if test="userpid != null and userpid != '' ">
+				t.userpid = #{userpid},
+			</if>
+			<if test="usernumber != null and usernumber != '' ">
+				t.usernumber = #{usernumber},
+			</if>
+			<if test="wechat != null and wechat != '' ">
+				t.wechat = #{wechat},
+			</if>
+			<if test="qq != null and qq != '' ">
+				t.qq = #{qq},
+			</if>
+			<if test="certificate != null and certificate != '' ">
+				t.certificate = #{certificate},
+			</if>
+			<if test="email != null and email != '' ">
+				t.email = #{email},
+			</if>
+			<if test="specialityinarts != null and specialityinarts != '' ">
+				t.specialityinarts = #{specialityinarts},
+			</if>
+			<if test="dateofbirth != null and dateofbirth != '' ">
+				t.dateofbirth = #{dateofbirth},
+			</if>
+		</set>
+		WHERE 1 = 1 and t.id = #{id}
+	</update>
+	
+
+	<!-- 用户个人信息  包括：职位，岗位，角色，部门（小组）-->
+	<select id="queryIdTuserDao" parameterType="java.lang.String" resultType="com.OuSoft.system.entity.Tsuser">
+ 			SELECT
+<!--  			deinfo.deparepid as deparepid, -->
+<!-- 			deinfo.id AS deinfoid, -->
+<!-- 			deinfo.deparname AS deparname, -->
+<!-- 			roinfo.id as roinfoid, -->
+<!-- 			roinfo.rolename AS rolename, -->
+<!-- 			poinfo.id as poinfoid, -->
+<!-- 			poinfo.posiname AS posiname, -->
+<!-- 			jobinfo.id as jobinfoid, -->
+<!-- 			jobinfo.jobname AS jobname, -->
+ 			tus.*,
+			tat.filename as txfilename,
+			taip.ip as ip
+			FROM
+				tuser tus
+			LEFT JOIN tatt tat ON tat.itemid = tus.id
+			LEFT JOIN tattip taip ON taip.id = '1'
+						
+<!-- 			LEFT JOIN tdepartuser detu on detu.userid = tus.id -->
+<!-- 			left JOIN tdepartmentinfo deinfo on deinfo.id = detu.deparid -->
+			
+<!-- 			LEFT JOIN troletuser rotu on rotu.roleid = tus.id -->
+<!-- 			LEFT JOIN troleinfo roinfo on roinfo.id = rotu.roleid -->
+			
+<!-- 			LEFT JOIN tposituser potu on potu.userid = tus.id -->
+<!-- 			LEFT JOIN tpositioninfo poinfo on poinfo.id = potu.posiid -->
+			
+<!-- 			LEFT JOIN tjobtsuser jobtu on jobtu.userid = tus.id -->
+<!-- 			LEFT JOIN tjobinfo jobinfo on jobinfo.id = jobtu.jobid -->
+						
+			where 1=1 and tus.id = #{id}
+	</select>
+	
+	<!-- 用户登录验证 -->
+	<select id="QueryTsuserByid" parameterType="com.OuSoft.system.entity.Tsuser" resultType="com.OuSoft.system.entity.Tsuser">
+		select * from tuser where 1=1 and loginname='${username}' and userpass = '${password}'
+	</select>
+
+<!-- 
+	 查询所有用户，
+	 status：在职状态：01正式、02离岗、03离职，04试岗、04实习
+	 username：用户姓名，模糊查询
+	 usernumber:用户编号
+ -->
+	<select id="QueryTsuserList" parameterType="com.OuSoft.system.entity.Tsuser" resultType="com.OuSoft.system.entity.Tsuser">
+		select * from tuser t
+		<where>
+				t.userpid = #{userpid}
+				and t.status = #{status}
+			 <if test="username != null and username != '' ">
+				and t.username like '%${username}%'
+			 </if>
+			 <if test="usernumber != null and usernumber != '' ">
+				and t.usernumber like '%${usernumber}%'
+			 </if>
+				ORDER BY t.inductiontime desc
+		</where>
+	</select>	
+		
+<!-- 	<select id="QueryTsuserList" resultType="com.OuSoft.system.entity.Tsuser"> -->
+<!-- 		select * from tuser where 1=1 -->
+<!-- 	</select>	 -->
+		
+<!-- 	<select id="QueryTsuserList" resultType="com.OuSoft.system.entity.Tsuser" parameterType="java.lang.String"> -->
+<!-- 		select * from tuser where 1=1 and userpid=#{tcmid} -->
+<!-- 	</select> -->
+
+	<!-- 删除用户个人信息 -->
+	<delete id="DelTsuser" parameterType="int">
+		DELETE FROM tuser where 1=1 AND id = #{id}
+	</delete>
+	
+	<update id="UpdateTsuserByid" parameterType="com.OuSoft.system.entity.Tsuser">
+		Update tuser set
+			id='${model.id}',
+			username='${model.username}',
+			loginname='${model.loginname}',
+			userpass='${model.userpass}',
+			sex='${model.sex}',
+			age='${model.age}',
+			phone1='${model.phone1}',
+			phone2='${model.phone2}',
+			phone3='${model.phone3}',
+			idcard='${model.idcard}',
+			residence='${model.residence}',
+			nations='${model.nations}',
+			nativeplace='${model.nativeplace}',
+			residencetype='${model.residencetype}',
+			maritalstatus='${model.maritalstatus}',
+			schooling='${model.schooling}',
+			professional='${model.professional}',
+			political='${model.political}',
+			school='${model.school}',
+			graduationtime='${model.graduationtime}',
+			qualification='${model.qualification}',
+			computer='${model.computer}',
+			address='${model.address}',
+			linkman='${model.linkman}',
+			relationship='${model.relationship}',
+			linkmanphone='${model.linkmanphone}',
+			isinsurance='${model.isinsurance}',
+			insurancetime='${model.insurancetime}',
+			insurancenum='${model.insurancenum}',
+			compensation='${model.compensation}',
+			subsidies='${model.subsidies}',
+			status='${model.status}',
+			inductiontime='${model.inductiontime}',
+			trialperiod='${model.trialperiod}',
+			topcorpid='${model.topcorpid}',
+			area='${model.area}',
+			levaetime='${model.levaetime}',
+			accidentstart='${model.accidentstart}',
+			accidentend='${model.accidentend}',
+			id='${model.id}',
+			username='${model.username}',
+			loginname='${model.loginname}',
+			userpass='${model.userpass}',
+			sex='${model.sex}',
+			age='${model.age}',
+			phone1='${model.phone1}',
+			phone2='${model.phone2}',
+			phone3='${model.phone3}',
+			idcard='${model.idcard}',
+			residence='${model.residence}',
+			nations='${model.nations}',
+			nativeplace='${model.nativeplace}',
+			residencetype='${model.residencetype}',
+			maritalstatus='${model.maritalstatus}',
+			schooling='${model.schooling}',
+			professional='${model.professional}',
+			political='${model.political}',
+			school='${model.school}',
+			graduationtime='${model.graduationtime}',
+			qualification='${model.qualification}',
+			computer='${model.computer}',
+			address='${model.address}',
+			linkman='${model.linkman}',
+			relationship='${model.relationship}',
+			linkmanphone='${model.linkmanphone}',
+			isinsurance='${model.isinsurance}',
+			insurancetime='${model.insurancetime}',
+			insurancenum='${model.insurancenum}',
+			compensation='${model.compensation}',
+			subsidies='${model.subsidies}',
+			status='${model.status}',
+			inductiontime='${model.inductiontime}',
+			trialperiod='${model.trialperiod}',
+			topcorpid='${model.topcorpid}',
+			area='${model.area}',
+			levaetime='${model.levaetime}',
+			accidentstart='${model.accidentstart}',
+			accidentend='${model.accidentend}',
+			remuneration='${model.remuneration}'
+		where 1=1 and id='${id}'
+	</update>
+
+	<insert id="InsertTsuser" parameterType="com.OuSoft.system.entity.Tsuser">
+	INSERT INTO tuser VALUES ('${model.id}','${model.username}','${model.loginname}','${model.userpass}','${model.sex}','${model.age}','${model.phone1}','${model.phone2}','${model.phone3}','${model.idcard}','${model.residence}','${model.nations}','${model.nativeplace}','${model.residencetype}','${model.maritalstatus}','${model.schooling}','${model.professional}','${model.political}','${model.school}','${model.graduationtime}','${model.qualification}','${model.computer}','${model.address}','${model.linkman}','${model.relationship}','${model.linkmanphone}','${model.isinsurance}','${model.insurancetime}','${model.insurancenum}','${model.compensation}','${model.subsidies}','${model.status}','${model.inductiontime}','${model.trialperiod}','${model.topcorpid}','${model.area}','${model.levaetime}','${model.accidentstart}','${model.accidentend}','${model.id}','${model.username}','${model.loginname}','${model.userpass}','${model.sex}','${model.age}','${model.phone1}','${model.phone2}','${model.phone3}','${model.idcard}','${model.residence}','${model.nations}','${model.nativeplace}','${model.residencetype}','${model.maritalstatus}','${model.schooling}','${model.professional}','${model.political}','${model.school}','${model.graduationtime}','${model.qualification}','${model.computer}','${model.address}','${model.linkman}','${model.relationship}','${model.linkmanphone}','${model.isinsurance}','${model.insurancetime}','${model.insurancenum}','${model.compensation}','${model.subsidies}','${model.status}','${model.inductiontime}','${model.trialperiod}','${model.topcorpid}','${model.area}','${model.levaetime}','${model.accidentstart}','${model.accidentend}','${model.remuneration}')
+	</insert>
+
+	<!-- 修改用户个人密码 -->
+	<update id="updateTuserByUserpassDao" parameterType="com.OuSoft.system.entity.Tsuser">
+		UPDATE tuser t
+		SET t.userpass = #{userpass}
+		WHERE
+			1 = 1
+		and t.id = #{id}
+	</update>
+
+	<!-- 查询在职信息，按照工号进行排序-->
+	<select id="queryTuserDao" parameterType="com.OuSoft.system.entity.Tsuser" resultType="com.OuSoft.system.entity.Tsuser">
+		SELECT
+		poin.posiname as posiname,
+		tdeinfo.deparname,
+		t.*
+		FROM
+			tuser t
+
+			LEFT JOIN	tposituser potu on potu.userid = t.id
+			LEFT JOIN tpositioninfo poin on poin.id = potu.posiid
+			LEFT JOIN tdepartuser tdetu ON tdetu.userid = t.id
+			LEFT JOIN tdepartmentinfo tdeinfo ON tdeinfo.id = tdetu.deparid
+		WHERE 1=1
+		<if test="status != null and status != '' ">
+			and status = #{status}
+		</if>
+		 <if test="id != null and id != '' ">
+			 and id = #{id}
+		 </if>
+		<if test="username != null and username != '' ">
+			and username
+
+
+			 like '%${username}%'
+		</if>
+		ORDER BY CONVERT (usernumber  using gbk)
+	</select>
+	<insert id="Insertsuser"  parameterType="com.OuSoft.system.entity.Tsuser">
+		insert into  tuser (id,username,sex,nations,dateofbirth,idcard,phone1,address,schooling,graduationtime,school,qualification,professional,specialityinarts,status,userpid,inductiontime)
+		value (#{id},#{username},#{sex},#{nations},#{dateofbirth},#{idcard},#{phone1},#{address},#{schooling},#{graduationtime},#{school},#{qualification},#{professional},#{specialityinarts},'01','001'#{inductiontime})
+	</insert>
+</mapper>

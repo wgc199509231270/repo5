@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/17com/images/favicon.png">
+    <title>OuSoft Office Automation</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/17com/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- chartist CSS -->
+    <link href="/static/17com/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="/static/17com/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="/static/17com/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <!--This page css - Morris CSS -->
+    <link href="/static/17com/plugins/c3-master/c3.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/17com/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="/static/17com/css/colors/blue.css   " id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond./static/17com/js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<style>
+    .WB_main_l {
+        width: 150px;
+    }
+    .WB_left_nav .lev_Box_noborder {
+        border-bottom: none;
+    }
+    .WB_left_nav .lev_Box {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+    }
+    .WB_left_nav .lev_Box, .WB_left_nav fieldset {
+        border-color: #82b9dc;
+        border-color: rgba(255,255,255,0.2);
+    }
+    .WB_left_nav .lev_Box h3.lev a {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 0 0 0 15px;
+        height: 34px;
+        line-height: 34px;
+    }
+    .WB_left_nav .lev a {
+        display: block;
+        height: 34px;
+        line-height: 34px;
+        font-size: 12px;
+        padding: 0 0 0 13px;
+        text-decoration: none;
+        overflow: hidden;
+        position: relative;
+    }
+    .WB_left_nav .UI_scrollView {
+        position: relative;
+    }
+    .levtxt{
+        color:white;
+    }
+</style>
+<script type="text/javascript" th:inline="none">
+    window.onload=function () {
+        var ind = $("#ind");
+        var workS = $("#workS");
+        ind.show();
+        workS.hide();
+        $("#workClick").click(function(){
+            workS.show();
+            ind.hide();
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/login/test"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        })
+         $("#dk").click(function(){
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/checkin"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        })
+        $("#jihua").click(function(){
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/jihua"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        });
+        $("#xinqingqiang").click(function(){
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/xinqingqiang"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        });
+        $("#wendaqu").click(function(){
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/wendaqu"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        });
+        $("#zhishiqu").click(function(){
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/zhishiqu"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        });
+        $("#jinrizongjie").click(function(){
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/jinrizongjie"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        });
+        $("#wanchengzhuangkuang").click(function(){
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/wanchengzhuangkuang"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        });
+        $("#qiantui").click(function(){
+            var a = '<iframe id="mainFrame" width="100%"  frameborder="0" scrolling="no" allowtransparency="true" src="/qiantui"></iframe>';
+            $("#content_one").html(a);
+            var ifm= document.getElementById("mainFrame");
+            ifm.height=document.documentElement.clientHeight;
+        });
+         startInit('mainFrame', 560);
+        b();
+        a();
+        c();
+        d();
+        e();
+        f();
+        g();
+    }
+	var browserVersion = window.navigator.userAgent.toUpperCase();
+	var isOpera = browserVersion.indexOf("OPERA") > -1 ? true : false;
+	var isFireFox = browserVersion.indexOf("FIREFOX") > -1 ? true : false;
+	var isChrome = browserVersion.indexOf("CHROME") > -1 ? true : false;
+	var isSafari = browserVersion.indexOf("SAFARI") > -1 ? true : false;
+	var isIE = (!!window.ActiveXObject || "ActiveXObject" in window);
+	var isIE9More = (! -[1,] == false);
+	function reinitIframe(iframeId, minHeight) {
+	    try {
+	        var iframe = document.getElementById(iframeId);
+	        var bHeight = 0;
+	        if (isChrome == false && isSafari == false) {
+	            try {
+	                bHeight = iframe.contentWindow.document.body.scrollHeight;
+	            } catch (ex) {                
+	            }
+	        }
+	        var dHeight = 0;
+	        if (isFireFox == true)
+	            dHeight = iframe.contentWindow.document.documentElement.offsetHeight + 2;//如果火狐浏览器高度不断增加删除+2
+	        else if (isIE == false && isOpera == false && iframe.contentWindow) {
+	            try {
+	                dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+	            } catch (ex) {
+	            }
+	        }
+	        else if (isIE == true && isIE9More) {//ie9+
+	            var heightDeviation = bHeight - eval("window.IE9MoreRealHeight" + iframeId);
+	            if (heightDeviation == 0) {
+	                bHeight += 3;
+	            } else if (heightDeviation != 3) {
+	                eval("window.IE9MoreRealHeight" + iframeId + "=" + bHeight);
+	                bHeight += 3;
+	            }
+	        }
+	        else//ie[6-8]、OPERA
+	            bHeight += 3;
+	
+	        var height = Math.max(bHeight, dHeight);
+	        if (height < minHeight) height = minHeight;
+	        //alert(iframe.contentWindow.document.body.scrollHeight + "~" + iframe.contentWindow.document.documentElement.scrollHeight);
+	        iframe.style.height = height + "px";
+	    } catch (ex) { }
+	}
+	function startInit(iframeId, minHeight) {
+	    eval("window.IE9MoreRealHeight" + iframeId + "=0");
+	    window.setInterval("reinitIframe('" + iframeId + "'," + minHeight + ")", 100);
+	}
+    function a(){// 基于准备好的dom，初始化echarts图表
+        var myChart = echarts.init(document.getElementById('amp-pxl'));
+        var option = {
+            tooltip: {
+                show: true
+            },
+            legend: {
+                data:['签到次数']
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ["常宗涛","常","宗","涛"]
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    "name":"签到次数",
+                    "type":"bar",
+                    "data":[5, 20, 10, 7]
+                }
+            ]
+        };
+
+        // 为echarts对象加载数据
+        myChart.setOption(option);}
+    function b() {
+        var myChart = echarts.init(document.getElementById('plan'));
+        var option = {
+
+
+            series: [
+                {
+                    radius: '100%',
+                    name: '业务指标',
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: [[0.2, '#c23531'],[0.8, '#63869e'],[1, '#595959']]
+                        }
+                    },
+                    type: 'gauge',
+                    detail: {formatter:'{value}%',color:'white'},
+                    data: [{value: 50}]
+                }
+            ]
+        };
+       myChart.setOption(option, true);
+       myChart.resize({width:230,height:230});
+    }
+    function c(){
+
+        var myChart = echarts.init(document.getElementById('jixiao'));
+        var option = {
+
+            series: [
+                {
+                    name: '绩效',
+                    type: 'gauge',
+                    z: 3,
+                    min: 0,
+                    max: 220,
+                    splitNumber: 11,
+                    radius: '100%',
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 10,
+                            color: [[40, '#c23531'],[160, '#63869e'],[220, '#595959']]
+                        }
+                    },
+
+                    axisTick: {            // 坐标轴小标记
+                        length: 15,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    axisLabel: {
+                        backgroundColor: 'auto',
+                        borderRadius: 20,
+                        color: '#eee',
+                        padding: 2,
+                        textShadowBlur: 2,
+                        textShadowOffsetX: 1,
+                        textShadowOffsetY: 1,
+                        textShadowColor: '#222'
+                    },
+                    title : {
+                        // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontSize: 20,
+                        color:'white',
+                    },
+                    detail : {
+                        // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        formatter:'{value}',
+                        fontWeight: 'bolder',
+                        borderRadius: 25,
+                        backgroundColor: '#444',
+                        borderColor: '#aaa',
+                        shadowBlur: 5,
+                        shadowColor: '#333',
+                        shadowOffsetX: 0,
+                        shadowOffsetY: 3,
+                        borderWidth: 1,
+                        textBorderColor: '#000',
+                        textBorderWidth: 1,
+
+                        textShadowColor: '#fff',
+                        textShadowOffsetX: 0,
+                        textShadowOffsetY: 0,
+                        fontFamily: 'Arial',
+                        width: 50,
+                        color: '#eee',
+                        rich: {}
+                    },
+                    data:[{value: 132, name: '绩效'}]
+                }
+            ]
+        };
+        myChart.setOption(option,true);
+        myChart.resize({width:230,height:230});
+    }
+    function d() {
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['','']
+            },
+            graphic:{
+                type:'text',
+                left:'center',
+                top:'center',
+                style:{
+                    text:'75%',
+                    font: '1em "STHeiti", sans-serif',
+                    textAlign:'center',
+                    fill:'#000',
+                    width:200,
+                    height:200,
+                }
+            },
+            color:['#00b3ee', '#aab7d1'],
+            series: [
+                {
+
+                    name:'我的任务',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+            /*            emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }*/
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:270, name:'已完成'},
+                        {value:90, name:'未完成'}
+
+                    ]
+                }
+            ]
+        };
+        var myChart = echarts.init(document.getElementById('myduty'));
+        myChart.setOption(option,true);
+        myChart.resize({width:100,height:100});
+    }
+    function e() {
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['','']
+            },
+            graphic:{
+                type:'text',
+                left:'center',
+                top:'center',
+                style:{
+                    text:'50%',
+                    font: '1em "STHeiti", sans-serif',
+                    textAlign:'center',
+                    fill:'#000',
+                    width:200,
+                    height:200,
+                }
+            },
+            color:['#00b3ee', '#aab7d1'],
+            series: [
+                {
+
+                    name:'我的目标',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        /*emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }*/
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:5, name:'已完成'},
+                        {value:5, name:'未完成'}
+
+                    ]
+                }
+            ]
+        };
+        var myChart = echarts.init(document.getElementById('mygoal'));
+        myChart.setOption(option,true);
+        myChart.resize({width:100,height:100});
+    }
+    function f() {
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['','']
+            },
+            graphic:{
+                type:'text',
+                left:'center',
+                top:'center',
+                style:{
+                    text:'40%',
+                    font: '1em "STHeiti", sans-serif',
+                    textAlign:'center',
+                    fill:'#000',
+                    width:200,
+                    height:200,
+                }
+            },
+            color:['#00b3ee', '#aab7d1'],
+            series: [
+                {
+
+                    name:'项目工作',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        /*emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }*/
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:4, name:'已完成'},
+                        {value:6, name:'未完成'}
+
+                    ]
+                }
+            ]
+        };
+        var myChart = echarts.init(document.getElementById('work'));
+        myChart.setOption(option,true);
+        myChart.resize({width:100,height:100});
+    }
+    function g(){
+        option = {
+            title: {
+                text: '签到统计',
+                left: 'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                // orient: 'vertical',
+                // top: 'middle',
+                bottom: 10,
+                left: 'center',
+                data: ['签到', '缺卡','请假']
+            },
+            color:['#00625A', 'red','#000'],
+            series : [
+                {
+                    type: 'pie',
+                    radius : '65%',
+
+
+                    data:[
+                        {value:16,name: '签到'},
+                        {value:3, name: '缺卡'},
+                        {value:1, name: '请假'},
+
+                    ],
+
+                }
+            ]
+        };
+        var myChart = echarts.init(document.getElementById('sign'));
+        myChart.setOption(option,true);
+        myChart.resize({width:250,height:250});
+    }
+</script>
+
+<body class="fix-header fix-sidebar card-no-border logo-center">
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <!--tab切换-->
+
+    <div id = "ind">
+        <div class="page-wrapper" style="height:100%;min-height: 1418.3px;">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid" >
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <!--<div class="col-md-5 col-8 align-self-center">
+                    <h3 class="text-themecolor">Dashboard</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>-->
+                <div class="col-md-7 col-4 align-self-center">
+                    <div class="d-flex m-t-10 justify-content-end">
+                        <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                            <div class="chart-text m-r-10" >
+                               <!-- <h6 class="text-muted text-info" style="float: right"><i class="fa fa-circle font-10 m-r-10"></i>签到:16天</h6>
+                                <h6 class="text-muted text-info" style="float: right;margin-left: 20px;"><i class="fa fa-circle font-10 m-r-10"></i>缺卡:3天</h6>
+                                <h6 class="text-muted text-info" style="float: right;margin-left: 20px;"><i class="fa fa-circle font-10 m-r-10"></i>请假:1天</h6>-->
+                                <!--<h6 class="m-b-0"><small>THIS MONTH</small></h6>-->
+                                <!--<h4 class="m-t-0 text-info">$58,356</h4>--></div>
+                           <!-- <div class="spark-chart">
+                                <div id="monthchart"></div>
+                            </div>-->
+                        </div>
+                      <!--  <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                            <div class="chart-text m-r-10">
+                                <h6 class="m-b-0"><small>LAST MONTH</small></h6>
+                                <h4 class="m-t-0 text-primary">$48,356</h4></div>
+                            <div class="spark-chart">
+                                <div id="lastmonthchart"></div>
+                            </div>
+                        </div>-->
+                        <div class="">
+                            <button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <!-- Row -->
+            <div class="row">
+                <!-- Column -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex flex-wrap">
+                                        <div>
+                                            <h3 class="card-title"><a href="#">签到统计</a></h3>
+                                            <h6 class="card-subtitle">签到次数柱状图</h6> </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div  id="amp-pxl" style="height: 360px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                    <div class="card">
+                        <div class="card-body" style="height: 465px;">
+                            <h3 class="card-title"><a href="#">签到系统</a></h3>
+                            <h6 class="card-subtitle"></h6>
+                            <button class="btn btn-primary" style="margin-left:15px;height: 50px;width: 80px;">签到</button>
+                            <button class="btn btn-primary" style="height: 50px;width: 80px; ">签退</button>
+                            <button class="btn btn-primary" style="height: 50px;width: 80px; ">发表心情</button>
+                            <button class="btn btn-primary" style="height: 50px;width: 80px; ">工作评价</button>
+
+                            <div id="visitors" style="height:290px; width:100%;">
+                               <div id="sign" style="margin-left: 50px;margin-top:50px; "></div>
+                                <div class="chart-text m-r-10" style="margin-left: 40px">
+                                    <h6 class="text-muted text-info" style="float:left;"><i class="fa fa-circle font-10 m-r-10"></i>签到:16天</h6>
+                                    <h6 class="text-muted text-info" style="float:left;margin-left: 20px;"><i class="fa fa-circle font-10 m-r-10"></i>缺卡:3天</h6>
+                                    <h6 class="text-muted text-info" style="float:left;margin-left: 20px;"><i class="fa fa-circle font-10 m-r-10"></i>请假:1天</h6>
+                                    <!--<h6 class="m-b-0"><small>THIS MONTH</small></h6>-->
+                                    <!--<h4 class="m-t-0 text-info">$58,356</h4>--></div>
+                            </div>
+                        </div>
+                        <div>
+                            <hr class="m-t-0 m-b-0">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Row -->
+            <!-- Row -->
+            <div class="row">
+                <!-- Column -->
+                <div class="col-lg-4 col-xlg-3 col-md-5">
+                    <div class="card blog-widget" style="margin-top: 0px;">
+                        <div class="card-body" style="margin-top: 35px;">
+                            <div class="blog-image"><img src="/static/17com/images/big/img1.jpg" alt="img" class="img-responsive" /></div>
+                                <h3>暂定</h3>
+                            <label class="label label-rounded label-success">Technology</label>
+                            <p class="m-t-20 m-b-20">
+                                Lorem ipsum dolor sit amet, this is a consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                            </p>
+                            <div class="d-flex">
+                                <div class="read"><a href="javascript:void(0)" class="link font-medium">Read More</a></div>
+                                <div class="ml-auto">
+                                    <a href="javascript:void(0)" class="link m-r-10 " data-toggle="tooltip" title="Like"><i class="mdi mdi-heart-outline"></i></a> <a href="javascript:void(0)" class="link" data-toggle="tooltip" title="Share"><i class="mdi mdi-share-variant"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-xlg-9 col-md-7">
+                    <div class="card">
+                        <div class="card-body" style="height: 485px;">
+                            <div class="d-flex flex-wrap">
+                                <div>
+                                    <h3 class="card-title"><a href="#">个人计划</a></h3>
+                                    <h6 class="card-subtitle">Overview of Newsletter Campaign</h6>
+                                </div>
+                                <div class="ml-auto align-self-center">
+                                    <ul class="list-inline m-b-0">
+                                       <!-- <li>
+                                                <h6 class="text-muted text-success"><i class="fa fa-circle font-10 m-r-10 "></i>Open Rate</h6> </li>
+                                        <li>
+                                            <h6 class="text-muted text-info"><i class="fa fa-circle font-10 m-r-10"></i>Recurring Payments</h6> </li>-->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="table table-hover col-10">
+                                <table style="width: 765px;">
+                                    <tr>
+                                        <td>编号</td>
+                                        <td>任务</td>
+                                        <td>预计时间</td>
+                                        <td>完成状态</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>完成xxx</td>
+                                        <td>2018-08-24</td>
+                                        <td>未完成</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>完成xxx</td>
+                                        <td>2018-08-24</td>
+                                        <td>未完成</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>完成xxx</td>
+                                        <td>2018-08-24</td>
+                                        <td>未完成</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row text-center">
+                                <div  class="col-lg-4 col-md-4 m-t-20">
+                                    <h1 class="m-b-0 font-light">我的任务</h1><small>完成</small>
+                                <div id="myduty" style="margin-left: 70px;"></div></div>
+                                <div class="col-lg-4 col-md-4 m-t-20">
+                                    <h1 class="m-b-0 font-light">我的目标</h1><small>完成</small>
+                                    <div id="mygoal" style="margin-left: 70px;"></div></div>
+                                <div class="col-lg-4 col-md-4 m-t-20">
+                                    <h1 class="m-b-0 font-light">项目工作</h1><small>完成</small>
+                                    <div id="work" style="margin-left: 70px;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row -->
+            <div class="row">
+                <!-- Column -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card card-inverse card-primary">
+                        <div class="card-body" style="height:260px;">
+                            <div class="d-flex">
+                                <div class="m-r-20 align-self-center">
+                                    <h1 class="text-white"><i class="ti-pie-chart"></i></h1></div>
+                                <div>
+                                    <h3 class="card-title"><a href="#" style="color: white;">绩效排名</a></h3>
+                                     </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 align-self-center" style="margin-left: -1px;margin-top: 57px;">
+                                    <h2 class="font-light text-white">我的绩效</h2>
+                                    <h6 class="card-subtitle" style="width: 95px;">距前一名差32个工作量</h6>
+
+                                </div>
+                                <div id="jixiao" class="col-8 p-t-10 p-b-20 text-right" style="height:200px;width: 200px;margin-left: -9px;margin-top: -21px;">
+                                    <!--   <div  class="spark-count" style="height:200px;width: 200px;"></div>-->
+                                </div>
+
+                                <!--<div id="jixiao" class="col-8 p-t-10 p-b-20 align-self-center">
+                                    &lt;!&ndash;<div class="usage chartist-chart" style="height:65px"></div>&ndash;&gt;
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <!-- Column -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card card-inverse card-success">
+                        <div class="card-body" style="height: 260px;">
+                            <div class="d-flex">
+                                <div class="m-r-20 align-self-center">
+                                    <h1 class="text-white"><i class="icon-cloud-download"></i></h1></div>
+                                <div>
+                                    <h3 class="card-title"><a href="#" style="color: white;">今日计划</a> </h3>
+                                    <h6 class="card-subtitle">今日计划：5</h6> </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 align-self-center" style="margin-left: 30px;margin-top: 57px;">
+                                    <h2 class="font-light text-white">完成率</h2>
+                                </div>
+                                <div id="plan" class="col-8 p-t-10 p-b-20 text-right" style="height:200px;width: 200px;margin-left: 120px;margin-top: -140px;">
+                                 <!--   <div  class="spark-count" style="height:200px;width: 200px;"></div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <!-- Column -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card">
+                        <img class="" src="/static/17com/images/background/weatherbg.jpg" alt="Card image cap">
+                        <div class="card-img-overlay" style="height:110px;">
+                            <h3 class="card-title text-white m-b-0 dl">暂定</h3>
+                            <small class="card-text text-white font-light">Sunday 15 march</small>
+                        </div>
+                        <div class="card-body weather-small">
+                            <div class="row">
+                                <div class="col-8 b-r align-self-center">
+                                    <div class="d-flex">
+                                        <div class="display-6 text-info"><i class="wi wi-day-rain-wind"></i></div>
+                                        <div class="m-l-20">
+                                            <h1 class="font-light text-info m-b-0">32<sup>0</sup></h1>
+                                            <small>Sunny Rainy day</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <h1 class="font-light m-b-0">25<sup>0</sup></h1>
+                                    <small>Tonight</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+            <!-- Row -->
+            <!-- Row -->
+           <!-- <div class="row">
+                &lt;!&ndash; Column &ndash;&gt;
+                <div class="col-lg-4 col-xlg-3 col-md-5">
+                    &lt;!&ndash; Column &ndash;&gt;
+                    <div class="card">
+                        <img class="card-img-top" src="/static/17com/images/background/profile-bg.jpg" alt="Card image cap">
+                        <div class="card-body little-profile text-center">
+                            <div class="pro-img"><img src="/static/17com/images/users/4.jpg" alt="user" /></div>
+                            <h3 class="m-b-0">Angela Dominic</h3>
+                            <p>Web Designer &amp; Developer</p>
+                            <a href="javascript:void(0)" class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded">Follow</a>
+                            <div class="row text-center m-t-20">
+                                <div class="col-lg-4 col-md-4 m-t-20">
+                                    <h3 class="m-b-0 font-light">1099</h3><small>Articles</small></div>
+                                <div class="col-lg-4 col-md-4 m-t-20">
+                                    <h3 class="m-b-0 font-light">23,469</h3><small>Followers</small></div>
+                                <div class="col-lg-4 col-md-4 m-t-20">
+                                    <h3 class="m-b-0 font-light">6035</h3><small>Following</small></div>
+                            </div>
+                        </div>
+                    </div>
+                    &lt;!&ndash; Column &ndash;&gt;
+                    <div class="card">
+                        <div class="card-body bg-info">
+                            <h4 class="text-white card-title">My Contacts</h4>
+                            <h6 class="card-subtitle text-white m-b-0 op-5">Checkout my contacts here</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="message-box contact-box">
+                                <h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark">+</button></h2>
+                                <div class="message-widget contact-widget">
+                                    &lt;!&ndash; Message &ndash;&gt;
+                                    <a href="#">
+                                        <div class="user-img"> <img src="/static/17com/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                        <div class="mail-contnet">
+                                            <h5>Pavan kumar</h5> <span class="mail-desc">info@wrappixel.com</span></div>
+                                    </a>
+                                    &lt;!&ndash; Message &ndash;&gt;
+                                    <a href="#">
+                                        <div class="user-img"> <img src="/static/17com/images/users/2.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                        <div class="mail-contnet">
+                                            <h5>Sonu Nigam</h5> <span class="mail-desc">pamela1987@gmail.com</span></div>
+                                    </a>
+                                    &lt;!&ndash; Message &ndash;&gt;
+                                    <a href="#">
+                                        <div class="user-img"> <span class="round">A</span> <span class="profile-status away pull-right"></span> </div>
+                                        <div class="mail-contnet">
+                                            <h5>Arijit Sinh</h5> <span class="mail-desc">cruise1298.fiplip@gmail.com</span></div>
+                                    </a>
+                                    &lt;!&ndash; Message &ndash;&gt;
+                                    <a href="#">
+                                        <div class="user-img"> <img src="/static/17com/images/users/4.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                        <div class="mail-contnet">
+                                            <h5>Pavan kumar</h5> <span class="mail-desc">kat@gmail.com</span></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-xlg-9 col-md-7">
+                    <div class="card">
+                        &lt;!&ndash; Nav tabs &ndash;&gt;
+                        <ul class="nav nav-tabs profile-tab" role="tablist">
+                            <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Activity</a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Profile</a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a> </li>
+                        </ul>
+                        &lt;!&ndash; Tab panes &ndash;&gt;
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="home" role="tabpanel">
+                                <div class="card-body">
+                                    <div class="profiletimeline">
+                                        <div class="sl-item">
+                                            <div class="sl-left"> <img src="/static/17com/images/users/1.jpg" alt="user" class="img-circle"> </div>
+                                            <div class="sl-right">
+                                                <div><a href="#" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
+                                                    <p>assign a new task <a href="#"> Design weblayout</a></p>
+                                                    <div class="row">
+                                                        <div class="col-lg-3 col-md-6 m-b-20"><img src="/static/17com/images/big/img1.jpg" alt="user" class="img-responsive radius"></div>
+                                                        <div class="col-lg-3 col-md-6 m-b-20"><img src="/static/17com/images/big/img2.jpg" alt="user" class="img-responsive radius"></div>
+                                                        <div class="col-lg-3 col-md-6 m-b-20"><img src="/static/17com/images/big/img3.jpg" alt="user" class="img-responsive radius"></div>
+                                                        <div class="col-lg-3 col-md-6 m-b-20"><img src="/static/17com/images/big/img4.jpg" alt="user" class="img-responsive radius"></div>
+                                                    </div>
+                                                    <div class="like-comm"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="sl-item">
+                                            <div class="sl-left"> <img src="/static/17com/images/users/2.jpg" alt="user" class="img-circle"> </div>
+                                            <div class="sl-right">
+                                                <div> <a href="#" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
+                                                    <div class="m-t-20 row">
+                                                        <div class="col-md-3 col-xs-12"><img src="/static/17com/images/big/img1.jpg" alt="user" class="img-responsive radius"></div>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. </p> <a href="#" class="btn btn-success"> Design weblayout</a></div>
+                                                    </div>
+                                                    <div class="like-comm m-t-20"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="sl-item">
+                                            <div class="sl-left"> <img src="/static/17com/images/users/3.jpg" alt="user" class="img-circle"> </div>
+                                            <div class="sl-right">
+                                                <div><a href="#" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
+                                                    <p class="m-t-10"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper </p>
+                                                </div>
+                                                <div class="like-comm m-t-20"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="sl-item">
+                                            <div class="sl-left"> <img src="/static/17com/images/users/4.jpg" alt="user" class="img-circle"> </div>
+                                            <div class="sl-right">
+                                                <div><a href="#" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
+                                                    <blockquote class="m-t-10">
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            &lt;!&ndash;second tab&ndash;&gt;
+                            <div class="tab-pane" id="profile" role="tabpanel">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xs-6 b-r"> <strong>Full Name</strong>
+                                            <br>
+                                            <p class="text-muted">Johnathan Deo</p>
+                                        </div>
+                                        <div class="col-md-3 col-xs-6 b-r"> <strong>Mobile</strong>
+                                            <br>
+                                            <p class="text-muted">(123) 456 7890</p>
+                                        </div>
+                                        <div class="col-md-3 col-xs-6 b-r"> <strong>Email</strong>
+                                            <br>
+                                            <p class="text-muted">johnathan@admin.com</p>
+                                        </div>
+                                        <div class="col-md-3 col-xs-6"> <strong>Location</strong>
+                                            <br>
+                                            <p class="text-muted">London</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <p class="m-t-30">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries </p>
+                                    <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <h4 class="font-medium m-t-30">Skill Set</h4>
+                                    <hr>
+                                    <h5 class="m-t-30">Wordpress <span class="pull-right">80%</span></h5>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                                    </div>
+                                    <h5 class="m-t-30">HTML 5 <span class="pull-right">90%</span></h5>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                                    </div>
+                                    <h5 class="m-t-30">jQuery <span class="pull-right">50%</span></h5>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                                    </div>
+                                    <h5 class="m-t-30">Photoshop <span class="pull-right">70%</span></h5>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="settings" role="tabpanel">
+                                <div class="card-body">
+                                    <form class="form-horizontal form-material">
+                                        <div class="form-group">
+                                            <label class="col-md-12">Full Name</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="example-email" class="col-md-12">Email</label>
+                                            <div class="col-md-12">
+                                                <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">Password</label>
+                                            <div class="col-md-12">
+                                                <input type="password" value="password" class="form-control form-control-line">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">Phone No</label>
+                                            <div class="col-md-12">
+                                                <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">Message</label>
+                                            <div class="col-md-12">
+                                                <textarea rows="5" class="form-control form-control-line"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-12">Select Country</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control form-control-line">
+                                                    <option>London</option>
+                                                    <option>India</option>
+                                                    <option>Usa</option>
+                                                    <option>Canada</option>
+                                                    <option>Thailand</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <button class="btn btn-success">Update Profile</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+           <!-- <div class="right-sidebar">
+                <div class="slimscrollright">
+                    <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+                    <div class="r-panel-body">
+                        <ul id="themecolors" class="m-t-20">
+                            <li><b>With Light sidebar</b></li>
+                            <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                            <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                            <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                            <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+                            <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                            <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                            <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
+                            <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
+                            <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                            <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                            <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                            <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
+                            <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
+                        </ul>
+                        <ul class="m-t-20 chatonline">
+                            <li><b>Chat option</b></li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="/static/17com/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="/static/17com/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="/static/17com/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="/static/17com/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="/static/17com/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="/static/17com/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="/static/17com/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="/static/17com/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>-->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    </div>
+    <!--工作圈-->
+        <div id = "workS" style="background-image: url('/static/achievement/img/bg.jpg')">
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <!-- End Sidebar navigation -->
+            </div>
+            <div id="content" class="container-fluid" style="margin-top: 70px">
+                <div class="row">
+                <div class="col-2" style="margin-left: 80px">
+                    <div class="WB_main_l" fixed-box="true" style="float:right">
+                        <div id="v6_pl_leftnav_group">    <div style="visibility: hidden; height: 519px;"></div><div style="z-index: 10; transform: translateZ(0px); position: fixed; transition: margin-top 0.3s ease; will-change: margin-top, top; width: 150px; top: 60px;" class=" W_fixed_top"><div class="WB_left_nav WB_left_nav_Atest" node-type="groupList" fixed-item="true" fixed-id="3">
+                            <div class="lev_Box lev_Box_noborder">
+                                <h3 class="lev"><a href="/u/2758606075/home?leftnav=1" class="S_txt1 lev_curr" node-type="item" bpfilter="main" nm="status" suda-uatrack="key=V6update_leftnavigate&amp;value=homepage"><span class="levtxt">首页</span></a></h3>
+                            </div>
+                            <div class="lev_Box lev_Box_noborder">
+                                <h3 class="lev"><a dot="pos55b9e09c8ae74" href="/fav?leftnav=1" class="S_txt1" node-type="item" bpfilter="main" suda-uatrack="key=V6update_leftnavigate&amp;value=collect"><span class="levtxt">我的收藏</span></a></h3>
+                            </div>
+                            <div class="lev_Box lev_Box_noborder">
+                                <h3 class="lev"><a dot="pos55b9e0b0ca122" href="/like/outbox?leftnav=1" class="S_txt1 " node-type="item" bpfilter="main" suda-uatrack="key=V6update_leftnavigate&amp;value=collect"><span class="levtxt">我的赞</span><i class="W_new" like-dot="likeDot" style="display: none;"></i></a></h3>
+                            </div>
+                            <div class="lev_line lev_line_v2"><fieldset></fieldset></div>
+                            <div class="lev_Box lev_Box_noborder">
+                                <div class="lev">
+                                    <a page_id="102803_ctg1_1760_-_ctg1_1760" dot="" href="//d.weibo.com" class="S_txt1" node-type="item" suda-uatrack="key=V6update_leftnavigate&amp;value=left_hotweibo"><span class="ico_block"><em class="W_ficon ficon_hot S_ficon">ì</em></span><span class="levtxt">热门微博</span><i class="W_new"></i></a>
+                                </div>
+                                <div class="lev">
+                                    <a page_id="" dot="" href="https://krcom.cn" class="S_txt1" node-type="item" suda-uatrack="key=V6update_leftnavigate&amp;value=left_video"><span class="ico_block"><em class="W_ficon ficon_video_v3 S_ficon"></em></span><span class="levtxt">热门视频</span></a>
+                                </div>
+                                <!--
+                            <div class="lev">
+                                <a dot="" href="/feed/olympics?leftnav=1" class="S_txt1" node-type="item" bpfilter="main" suda-uatrack="key=V6update_leftnavigate&value=left_news""><span class="ico_block"><em class="W_ficon ficon_olympic S_ficon">&#xe60e;</em></span><span class="levtxt">里约奥运会</span></a>
+                            </div>
+                        -->
+                            </div>
+                            <div node-type="leftnav_scroll" class=" UI_scrollView" style="height: 140px;"><div class="UI_scrollContainer">
+                                <div class="UI_scrollContent" style="width: 167px;">
+                                    <div class="lev_Box">
+                                        <div class="lev"><a href="/friends?leftnav=1&amp;wvr=6&amp;isfriends=1&amp;step=2" title="好友圈" class="S_txt1" node-type="item" bpfilter="main" isfriends="1" nm="moments_to_me" suda-uatrack="key=V6update_leftnavigate&amp;value=friends"><span class="ico_block"><em node-type="left_item" class="W_ficon ficon_friends S_ficon">C</em></span><span class="levtxt">好友圈</span></a></div>
+                                        <div node-type="system_list" specialgid="3667577375554852">
+                                            <div class="lev" gid="3667577375554852" node-type="group" action-data="id=3667577375554852"><a href="/mygroups?gid=3667577375554852&amp;wvr=6&amp;leftnav=1&amp;isspecialgroup=1" class="S_txt1" title="" node-type="item" bpfilter="main" gid="3667577375554852" suda-uatrack="key=V6update_leftnavigate&amp;value=special"><span class="ico_block"><em node-type="left_item" class="W_ficon ficon_p_interest S_ficon">æ</em></span><span class="levtxt">特别关注</span></a></div>
+                                        </div>
+
+                                        <div class="lev" node-type="group"><a href="/mygroups?vplus=1&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="V+微博" node-type="item" bpfilter="main" vplus="1" suda-uatrack="key=V6update_leftnavigate&amp;value=vplus"><span class="ico_block"></span><span class="levtxt">V+微博</span></a></div>
+
+                                        <div node-type="leftnav_grouplists">
+                                            <div node-type="group_show_list">
+                                                <div class="lev" gid="3443958162417674" node-type="group" action-data="id=3443958162417674"><a href="/mygroups?gid=3443958162417674&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="同学" node-type="item" bpfilter="main" gid="3443958162417674" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">同学</span></a></div>
+                                                <div class="lev" gid="3443958166612033" node-type="group" action-data="id=3443958166612033"><a href="/mygroups?gid=3443958166612033&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="明星" node-type="item" bpfilter="main" gid="3443958166612033" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">明星</span></a></div>
+                                                <div class="lev" gid="3742168340096002" node-type="group" action-data="id=3742168340096002"><a href="/mygroups?gid=3742168340096002&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="搞笑" node-type="item" bpfilter="main" gid="3742168340096002" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">搞笑</span></a></div>
+                                                <div class="lev" gid="3750514213227289" node-type="group" action-data="id=3750514213227289"><a href="/mygroups?gid=3750514213227289&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="数据分析" node-type="item" bpfilter="main" gid="3750514213227289" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">数据分析</span></a></div>
+                                                <div class="lev" gid="3750518260378099" node-type="group" action-data="id=3750518260378099"><a href="/mygroups?gid=3750518260378099&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="企业" node-type="item" bpfilter="main" gid="3750518260378099" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">企业</span><em class="W_new_count">3</em></a></div>
+                                            </div>
+                                            <div node-type="moreList" style="display:none;">
+                                                <div class="lev" gid="3754512218680034" node-type="group" action-data="id=3754512218680034"><a href="/mygroups?gid=3754512218680034&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="美女" node-type="item" bpfilter="main" gid="3754512218680034" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">美女</span></a></div>
+                                                <div class="lev" gid="3807269462236707" node-type="group" action-data="id=3807269462236707"><a href="/mygroups?gid=3807269462236707&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="音乐人" node-type="item" bpfilter="main" gid="3807269462236707" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">音乐人</span></a></div>
+                                                <div class="lev" gid="3910810545802293" node-type="group" action-data="id=3910810545802293"><a href="/mygroups?gid=3910810545802293&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="作家" node-type="item" bpfilter="main" gid="3910810545802293" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">作家</span></a></div>
+                                                <div class="lev" gid="3949753014108978" node-type="group" action-data="id=3949753014108978"><a href="/mygroups?gid=3949753014108978&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="dota" node-type="item" bpfilter="main" gid="3949753014108978" suda-uatrack="key=V6update_leftnavigate&amp;value=commongroup"><span class="ico_block"></span><span class="levtxt">dota</span></a></div>
+                                                <div class="lev"><a bpfilter="main" groupnm="page_group_to_me" href="/groupsfeed?leftnav=1&amp;wvr=6&amp;isgroupsfeed=1&amp;step=2" class="S_txt1" node-type="item" suda-uatrack="key=V6update_leftnavigate&amp;value=group_weibo"><span class="ico_block"></span><span class="levtxt">群微博</span></a></div>                <div class="lev"><a href="/mygroups?whisper=1&amp;wvr=6&amp;leftnav=1" class="S_txt1" title="悄悄关注" node-type="item" bpfilter="main" whisper="1" suda-uatrack="key=V6update_leftnavigate&amp;value=secret"><span class="ico_block"><em class="W_ficon ficon_p_quietfollow S_ficon">â</em></span><span class="levtxt">悄悄关注</span></a></div>
+                                            </div>
+                                        </div>
+                                    </div>    </div>
+                            </div><div class="UI_scrollBar W_scroll_y S_bg1" style=""><div class="bar S_txt2_bg" style="top: 0%; height: 46.2046%;"></div></div></div>
+                        </div><div style="height:1px;margin-top:-1px;visibility:hidden;"></div></div></div>
+                    </div>
+                </div>
+                <div id="content_one" class="col-8"></div>
+                </div>
+            </div>
+            <footer class="footer"> © 2018 OuSoft Office Automation Design  </footer>
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="/static/17com/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/static/17com/plugins/bootstrap/js/popper.min.js"></script>
+<script src="/static/17com/plugins/bootstrap/js/bootstrap.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/static/17com/js/jquery.slimscroll.js"></script>
+<!--Wave Effects -->
+<script src="/static/17com/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/static/17com/js/sidebarmenu.js"></script>
+<!--stickey kit -->
+<script src="/static/17com/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+<script src="/static/17com/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+<!--Custom JavaScript -->
+<script src="/static/17com/js/custom.min.js"></script>
+<script src="/static/17com/js/echarts.js"></script>
+<!-- ============================================================== -->
+<!-- This page plugins -->
+<!-- ============================================================== -->
+<!-- chartist chart -->
+<script src="/static/17com/plugins/chartist-js/dist/chartist.min.js"></script>
+<script src="/static/17com/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+<!--c3 JavaScript -->
+<script src="/static/17com/plugins/d3/d3.min.js"></script>
+<script src="/static/17com/plugins/c3-master/c3.min.js"></script>
+<!-- Chart JS -->
+<script src="/static/17com/js/dashboard1.js"></script>
+<!-- ============================================================== -->
+<!-- Style switcher -->
+<!-- ============================================================== -->
+<script src="/static/17com/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+</body>
+
+</html>

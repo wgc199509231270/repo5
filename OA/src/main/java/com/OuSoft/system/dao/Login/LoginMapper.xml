@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Login.LoginDao">
+
+	<!-- 查询用户表中的用户名和手机号是否已经存在 -->
+	<select id="queryLoginname" parameterType="java.lang.String" resultType="com.OuSoft.system.entity.Tsuser">
+		SELECT * from tuser t 
+		where 1 = 1 
+		and t.loginname = #{loginname}
+	</select>
+	
+	
+
+	<!-- 修改tattip中的ip -->
+	<update id="updateTattipIpDao" parameterType="java.lang.String" >
+		UPDATE tattip taip set ip = #{ip} where taip.id='1'
+	</update>
+	
+    <!-- 登录验证 -->
+    <select id="QueryUser" parameterType="com.OuSoft.system.entity.Tsuser" resultType="com.OuSoft.system.entity.Tsuser">
+        select * from tuser t
+        <where>
+        	1=1
+       		<if test="loginname != null">
+       			and t.loginname = #{loginname}
+       		</if>
+       		<if test="userpass != null">
+       			and t.userpass = #{userpass}
+       		</if>
+        </where>
+    </select>
+
+	<!-- 查询所有用户名 -->
+	<select id="queryNameTuserDao" parameterType="com.OuSoft.system.entity.Tsuser" resultType="com.OuSoft.system.entity.Tsuser">
+		SELECT * FROM tuser t
+		<where>
+			1=1
+			and t.userpid = #{userpid}
+			and t.`status != '02' and t.`status != '03'
+			<if test="username != null and username != '' ">
+				and t.username LIKE '%',#{username},'%'
+			</if>
+			 ORDER BY CONVERT(t.username using gbk)
+		</where>
+	</select>
+
+ 	<!-- 注册 -->
+	<insert id="insertUserDao" parameterType="com.OuSoft.system.entity.Tsuser">
+		 insert into tuser
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        id,
+	      </if>
+	      <if test="username != null">
+	        username,
+	      </if>
+	      <if test="loginname != null">
+	        loginname,
+	      </if>
+	      <if test="userpass != null">
+	        userpass,
+	      </if>
+	      <if test="sex != null">
+	        sex,
+	      </if>
+	      <if test="age != null">
+	        age,
+	      </if>
+	      <if test="phone1 != null">
+	        phone1,
+	      </if>
+	      <if test="phone2 != null">
+	        phone2,
+	      </if>
+	      <if test="phone3 != null">
+	        phone3,
+	      </if>
+	      <if test="idcard != null">
+	        idcard,
+	      </if>
+	      <if test="residence != null">
+	        residence,
+	      </if>
+	      <if test="nations != null">
+	        nations,
+	      </if>
+	      <if test="nativeplace != null">
+	        nativeplace,
+	      </if>
+	      <if test="residencetype != null">
+	        residencetype,
+	      </if>
+	      <if test="maritalstatus != null">
+	        maritalstatus,
+	      </if>
+	      <if test="schooling != null">
+	        schooling,
+	      </if>
+	      <if test="professional != null">
+	        professional,
+	      </if>
+	      <if test="political != null">
+	        political,
+	      </if>
+	      <if test="school != null">
+	        school,
+	      </if>
+	      <if test="graduationtime != null">
+	        graduationtime,
+	      </if>
+	      <if test="qualification != null">
+	        qualification,
+	      </if>
+	      <if test="computer != null">
+	        computer,
+	      </if>
+	      <if test="address != null">
+	        address,
+	      </if>
+	      <if test="linkman != null">
+	        linkman,
+	      </if>
+	      <if test="relationship != null">
+	        relationship,
+	      </if>
+	      <if test="linkmanphone != null">
+	        linkmanphone,
+	      </if>
+	      <if test="isinsurance != null">
+	        isinsurance,
+	      </if>
+	      <if test="insurancetime != null">
+	        insurancetime,
+	      </if>
+	      <if test="insurancenum != null">
+	        insurancenum,
+	      </if>
+	      <if test="compensation != null">
+	        compensation,
+	      </if>
+	      <if test="subsidies != null">
+	        subsidies,
+	      </if>
+	      <if test="status != null">
+	        status,
+	      </if>
+	      <if test="inductiontime != null">
+	        inductiontime,
+	      </if>
+	      <if test="trialperiod != null">
+	        trialperiod,
+	      </if>
+	      <if test="topcorpid != null">
+	        topcorpid,
+	      </if>
+	      <if test="area != null">
+	        area,
+	      </if>
+	      <if test="levaetime != null">
+	        levaetime,
+	      </if>
+	      <if test="accidentstart != null">
+	        accidentstart,
+	      </if>
+	      <if test="accidentend != null">
+	        accidentend,
+	      </if>
+	      <if test="usernumber != null">
+	        usernumber,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="username != null">
+	        #{username,jdbcType=VARCHAR},
+	      </if>
+	      <if test="loginname != null">
+	        #{loginname,jdbcType=VARCHAR},
+	      </if>
+	      <if test="userpass != null">
+	        #{userpass,jdbcType=VARCHAR},
+	      </if>
+	      <if test="sex != null">
+	        #{sex,jdbcType=VARCHAR},
+	      </if>
+	      <if test="age != null">
+	        #{age,jdbcType=VARCHAR},
+	      </if>
+	      <if test="phone1 != null">
+	        #{phone1,jdbcType=VARCHAR},
+	      </if>
+	      <if test="phone2 != null">
+	        #{phone2,jdbcType=VARCHAR},
+	      </if>
+	      <if test="phone3 != null">
+	        #{phone3,jdbcType=VARCHAR},
+	      </if>
+	      <if test="idcard != null">
+	        #{idcard,jdbcType=VARCHAR},
+	      </if>
+	      <if test="residence != null">
+	        #{residence,jdbcType=VARCHAR},
+	      </if>
+	      <if test="nations != null">
+	        #{nations,jdbcType=VARCHAR},
+	      </if>
+	      <if test="nativeplace != null">
+	        #{nativeplace,jdbcType=VARCHAR},
+	      </if>
+	      <if test="residencetype != null">
+	        #{residencetype,jdbcType=VARCHAR},
+	      </if>
+	      <if test="maritalstatus != null">
+	        #{maritalstatus,jdbcType=VARCHAR},
+	      </if>
+	      <if test="schooling != null">
+	        #{schooling,jdbcType=VARCHAR},
+	      </if>
+	      <if test="professional != null">
+	        #{professional,jdbcType=VARCHAR},
+	      </if>
+	      <if test="political != null">
+	        #{political,jdbcType=VARCHAR},
+	      </if>
+	      <if test="school != null">
+	        #{school,jdbcType=VARCHAR},
+	      </if>
+	      <if test="graduationtime != null">
+	        #{graduationtime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="qualification != null">
+	        #{qualification,jdbcType=VARCHAR},
+	      </if>
+	      <if test="computer != null">
+	        #{computer,jdbcType=VARCHAR},
+	      </if>
+	      <if test="address != null">
+	        #{address,jdbcType=VARCHAR},
+	      </if>
+	      <if test="linkman != null">
+	        #{linkman,jdbcType=VARCHAR},
+	      </if>
+	      <if test="relationship != null">
+	        #{relationship,jdbcType=VARCHAR},
+	      </if>
+	      <if test="linkmanphone != null">
+	        #{linkmanphone,jdbcType=VARCHAR},
+	      </if>
+	      <if test="isinsurance != null">
+	        #{isinsurance,jdbcType=VARCHAR},
+	      </if>
+	      <if test="insurancetime != null">
+	        #{insurancetime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="insurancenum != null">
+	        #{insurancenum,jdbcType=VARCHAR},
+	      </if>
+	      <if test="compensation != null">
+	        #{compensation,jdbcType=VARCHAR},
+	      </if>
+	      <if test="subsidies != null">
+	        #{subsidies,jdbcType=VARCHAR},
+	      </if>
+	      <if test="status != null">
+	        #{status,jdbcType=VARCHAR},
+	      </if>
+	      <if test="inductiontime != null">
+	        #{inductiontime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="trialperiod != null">
+	        #{trialperiod,jdbcType=VARCHAR},
+	      </if>
+	      <if test="topcorpid != null">
+	        #{topcorpid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="area != null">
+	        #{area,jdbcType=VARCHAR},
+	      </if>
+	      <if test="levaetime != null">
+	        #{levaetime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="accidentstart != null">
+	        #{accidentstart,jdbcType=VARCHAR},
+	      </if>
+	      <if test="accidentend != null">
+	        #{accidentend,jdbcType=VARCHAR},
+	      </if>
+	      <if test="usernumber != null">
+	        #{usernumber,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+	</insert>
+	
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Clock.ClockDao">
+
+	<!-- 评论详情，评论用户 -->
+	<select id="queryListTcommentDao" parameterType="java.lang.String" resultType="com.OuSoft.system.entity.Tcomment">
+				SELECT
+				tc.*, tu.username AS username,
+				ta.filename AS filename,
+				tus.username AS pusername,
+				tatth.filename as hfilename,ip.ip as ip
+				FROM
+					tcomment tc
+				LEFT JOIN (
+					SELECT
+						tcom.id AS id,
+						tcom.commenttime AS commenttime
+					FROM
+						tcomment tcom
+					WHERE
+						tcom.itemid = tcom.commentid
+					ORDER BY
+						tcom.commenttime
+				) tcomm ON tcomm.id = tc.commentid
+				LEFT JOIN tuser tu ON tu.id = tc.userid
+				LEFT JOIN tatt ta ON ta.itemid = tc.userid
+				LEFT JOIN tcomment tcomme ON tcomme.id = tc.commentid
+				LEFT JOIN tuser tus ON tus.id = tcomme.userid
+				left join tatt tatth on tatth.itemid = tcomme.userid
+				LEFT JOIN tattip ip ON ip.id = '1'
+				WHERE 1 = 1 AND tc.itemid = #{itemid}
+				ORDER BY tc.commenttime, tcomm.commenttime DESC
+		 
+	</select>
+
+	<insert id="InsertClock" parameterType="com.OuSoft.system.entity.Clock" >
+		 insert into tsign
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        id,	
+	      </if>
+	      <if test="userid != null">
+	        userid,
+	      </if>
+	      <if test="cltime != null">
+	        cltime,
+	      </if>
+	      <if test="clplace != null">
+	        clplace,
+	      </if>
+	      <if test="clform != null">
+	        clform,
+	      </if>
+	      <if test="clpcip != null">
+	        clpcip,
+	      </if>
+	      <if test="cltype != null">
+	        cltype,
+	      </if>
+	      <if test="clstatus != null">
+	        clstatus,
+	      </if>
+	      <if test="clremark != null and clremark != '' ">
+	        clremark,
+	      </if>
+			<if test="cltimep != null">
+				cltimep,
+			</if>
+			<if test="clplacep != null">
+				clplacep,
+			</if>
+			<if test="clformp != null">
+				clformp,
+			</if>
+			<if test="clpcipp != null">
+				clpcipp,
+			</if>
+			<if test="clstatusp != null">
+				clstatusp,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="plantype != null">
+				plantype,
+			</if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="userid != null">
+	        #{userid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="cltime != null">
+	        #{cltime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="clplace != null">
+	        #{clplace,jdbcType=VARCHAR},
+	      </if>
+	      <if test="clform != null">
+	        #{clform,jdbcType=VARCHAR},
+	      </if>
+	      <if test="clpcip != null">
+	        #{clpcip,jdbcType=VARCHAR},
+	      </if>
+	      <if test="cltype != null">
+	        #{cltype,jdbcType=VARCHAR},
+	      </if>
+	      <if test="clstatus != null">
+	        #{clstatus,jdbcType=VARCHAR},
+	      </if>
+	      <if test="clremark != null and clremark != '' " >
+	        #{clremark,jdbcType=VARCHAR},
+	      </if>
+			<if test="cltimep != null">
+				#{cltimep,jdbcType=VARCHAR},
+			</if>
+			<if test="clplacep != null">
+				#{clplacep,jdbcType=VARCHAR},
+			</if>
+			<if test="clformp != null">
+				#{clformp,jdbcType=VARCHAR},
+			</if>
+			<if test="clpcipp != null">
+				#{clpcipp,jdbcType=VARCHAR},
+			</if>
+			<if test="clstatusp != null">
+				#{clstatusp,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=VARCHAR},
+			</if>
+			<if test="plantype != null">
+				#{plantype,jdbcType=VARCHAR},
+			</if>
+	    </trim>
+	</insert>
+	
+	<!-- 查询查询用户是否签到和签退 -->
+    <select id="queryClockDao" parameterType="com.OuSoft.system.entity.Clock" resultType="com.OuSoft.system.entity.Clock">
+        SELECT * FROM tsign 
+        <where>
+        	<if test="userid != null">
+        		userid = #{userid}
+        	</if>
+        	<if test="cltime != null and plantype != 02">
+        		and cltime LIKE '%${cltime}%'
+        	</if>
+			<if test="plantype == 02">
+				<if test="firstday !=''">
+					and cltime &gt;= #{firstday}
+					and cltime &lt;= #{lastday}
+				</if>
+				<if test="firstday == ''">
+					and cltime LIKE '%${cltime}%'
+				</if>
+			</if>
+        	<if test="cltype != null">
+        		and cltype = #{cltype}
+        	</if>
+			<if test="plantype != null">
+			and plantype = #{plantype}
+		</if>
+        
+        </where>
+        
+        
+    </select>
+
+	<!-- 更新签到数据 -->
+	<update id="UpdateClockByid" parameterType="com.OuSoft.system.entity.Plan" >
+		UPDATE tsign
+		<set>
+		<if test="cltimep != null">
+			cltimep=(SELECT complantime from tplan  where clockid=tsign.id),
+		</if>
+		<if test="cltype != null">
+			cltype=#{cltype},
+		</if>
+		<if test="clstatusp != null">
+			clstatusp=#{clstatusp},
+		</if>
+			<if test="clplacep != null">
+				clplacep=#{clplacep},
+			</if>
+			<if test="clpcipp != null">
+				clpcipp=#{clpcipp},
+			</if>
+			<if test="clformp != null">
+				clformp=#{clformp},
+			</if>
+		</set>
+		WHERE
+		id=#{id}
+	</update>
+	<!-- 查询签到列表：筛选条件有用户名称、签到开始时间和结束时间2018/xx/xx、状态01签到02签退 -->
+   <select id="queryListClockDao"  parameterType="com.OuSoft.system.entity.Clock" resultMap="clock_user">
+        SELECT * FROM tsign AS c LEFT JOIN `tuser` AS u ON c.userid = u.id
+		<where>
+			<if test="id != null">
+				u.id = #{id}
+			</if>
+			<if test="cltype != null" >
+				AND c.cltype = #{cltype}
+			</if>
+			<if test="begtime != null">
+				AND substring(c.cltime,1,10) &gt;= #{begtime}
+			</if>
+			<if test="endtime != null">
+				AND substring(c.cltime,1,10) &lt;= #{endtime}
+			</if>
+			<if test="username != null">
+				and u.username like CONCAT('%',#{username},'%')  
+			</if>
+		</where>
+			order by  substring(c.cltime,1,10) desc ,c.userid,c.cltype
+   </select> 
+   
+   
+   <!-- 查询签到列表和点赞总数,查询用户名，用户头像，签到点赞总数等，筛选条件:用户名、当天的时间年月日、 -->
+   <select id="queryListTsignDao" parameterType="com.OuSoft.system.entity.Clock" resultMap="clock_user">
+   		
+				SELECT tsi.*, ta.filename AS txfilename, SUBSTR(tsi.cltime ,1,10) as rtime, SUBSTR(tsi.cltime ,11,20) as mtime, 
+				tu.username AS username, IFNULL(tpra.num, 0) AS tpranum,IFNULL(tmoo.tmonum, 0) as comnum, ip.ip as ip,
+				IFNULL(tp.id,0) as dz
+				FROM tsign tsi
+				LEFT JOIN (
+					SELECT
+						t.itemid AS itemid,
+						count(t.itemid) AS num
+					FROM
+						tpraise t
+					WHERE
+						t.itemtype = 'tsign'
+					GROUP BY
+						t.itemid
+				) tpra ON tsi.id = tpra.itemid
+				LEFT JOIN 
+				(
+				SELECT  tmo.commentid as commentid, 
+				count(tmo.commentid) as tmonum 
+				from tcomment tmo 
+				WHERE tmo.itemtype = 'tsign' GROUP BY tmo.commentid
+				) tmoo on tmoo.commentid = tsi.id
+				LEFT JOIN tuser tu ON tu.id = tsi.userid
+				LEFT JOIN tatt ta ON ta.itemid = tsi.userid 
+				left JOIN tattip ip on ip.id = '1' 
+				left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tsi.id
+				<where>
+				    	1=1
+					<if test="userid != null and userid != '' ">
+						 and tsi.userid = #{userid}
+					</if>
+					<if test=" cltype != null and cltype != '' ">
+						 and tsi.cltype = #{cltype}
+					</if>
+					<if test="begtime != null and begtime != '' ">
+						and substring(tsi.cltime, 1, 10) &gt;= #{begtime}
+					</if>
+					<if test="endtime != null and endtime != '' ">
+						and substring(tsi.cltime, 1, 10) &lt;= #{endtime}
+					</if>
+					<if test="loginname != null and loginname != '' ">
+						and tsi.userid =#{loginname}
+					</if>
+				</where>
+				ORDER BY cltime DESC
+		 
+   </select>
+   <!-- 详情，查询用户头像，点赞用户头像,传签到id -->
+   <select id="queryListDzTsignDao" parameterType="com.OuSoft.system.entity.Clock" resultMap="clock_user" >
+						  SELECT 
+				 tpra.id as tpraid,
+				tsi.*,
+				tutsi.username as username,
+			  tutpra.username as tprausername,
+			  tpra.userid as tprauserid,
+			  ta.filename as txfilename,
+			  tat.filename as tprafilename, ip.ip as ip,
+			  IFNULL(tp.id, 0) AS dz
+			FROM
+				tsign tsi
+			LEFT JOIN tpraise tpra ON tpra.itemid = tsi.id
+			LEFT JOIN tuser tutpra on tutpra.id = tpra.userid
+			LEFT JOIN tuser tutsi ON tutsi.id = tsi.userid
+			left join tatt ta on ta.itemid = tsi.userid
+			LEFT JOIN tatt tat on tat.itemid = tpra.userid
+			left JOIN tattip ip on ip.id = '1' 
+			LEFT JOIN tpraise tp ON tp.userid = #{dzuserid} AND tp.itemid = tsi.id
+			WHERE 1=1
+			and tsi.id = #{id}
+			order by tpra.praisetime
+   </select>
+   <!--查询所有签到信息-->
+   <select id="queryAllListDao" parameterType="com.OuSoft.system.entity.Clock" resultMap="clock_user">
+	   SELECT
+	   tj.jobname as posiname,
+	   tu.username AS username,
+	   tdeinfo.deparname AS deparname,
+	   tsi.*
+	   FROM  tsign tsi
+	   LEFT JOIN tuser tu ON tu.id =tsi.userid
+	   LEFT JOIN tjobtsuser tju on tju.userid=tsi.userid
+	   LEFT JOIN tjobinfo tj on tju.jobid = tj.id
+	   LEFT JOIN tdepartuser tdetu ON tdetu.userid =tsi.userid
+	   LEFT JOIN tdepartmentinfo tdeinfo ON tdeinfo.id = tdetu.deparid
+	   <where>
+		   1=1
+		   <if test="userid != null and userid != '' ">
+			   and tsi.userid = #{userid}
+		   </if>
+		   <if test="begtime != null and begtime != '' ">
+			   and substring(tsi.cltime, 1, 10) &gt;= #{begtime}
+		   </if>
+		   <if test="endtime != null and endtime != '' ">
+			   and substring(tsi.cltime, 1, 10) &lt;= #{endtime}
+		   </if>
+	   </where>
+
+
+   </select>
+   
+	<!-- 多表查询对应的返回 -->
+	<resultMap type="com.OuSoft.system.entity.Clock"  id="clock_user" autoMapping="true">
+        <id column="tpraid" property="id"/>
+        <result column="id" jdbcType="VARCHAR" property="id" />
+        <result column="userid" jdbcType="VARCHAR" property="userid" />
+        <result column="cltime" jdbcType="VARCHAR" property="cltime" />
+        <result column="clplace" jdbcType="VARCHAR" property="clplace" />
+        <result column="clform" jdbcType="VARCHAR" property="clform" />
+        <result column="clpcip" jdbcType="VARCHAR" property="clpcip" />
+        <result column="cltype" jdbcType="VARCHAR" property="cltype" />
+        <result column="filename" jdbcType="VARCHAR" property="filename" />
+        <result column="tpranum" jdbcType="VARCHAR" property="tpranum" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="tprausername" jdbcType="VARCHAR" property="tprausername" />
+        <result column="txfilename" jdbcType="VARCHAR" property="txfilename" />
+        <result column="tprafilename" jdbcType="VARCHAR" property="tprafilename" />
+        <result column="tpruserid" jdbcType="VARCHAR" property="tpruserid" />
+        <result column="ip" jdbcType="VARCHAR" property="ip" />
+        
+        <collection property="tsuser" javaType="list"  ofType="com.OuSoft.system.entity.Tsuser">
+        	 <id property="id" column="id"/>
+             <result property="username" column="username"/>
+             <result property="tprausername" column="tprausername"/>
+             <result property="loginname" column="loginname"/>
+        </collection>   
+        <collection property="tatt" javaType="list" ofType="com.OuSoft.system.entity.Tatt">
+        	 <id property="id" column="id"/>
+             <result property="filename" column="filename"/>
+             <result property="tprafilename" column="tprafilename"/>
+             <result property="originalfilename" column="originalfilename" />
+             <result property="customname" column="customname" />
+             <result property="cretatetime" column="cretatetime" />
+             <result property="tattfrom" column="tattfrom" />
+             <result property="itemfrom" column="itemfrom" />
+        </collection> 
+   </resultMap>
+
+	<!--删除签到-->
+	<delete id="deleteClockByid" parameterType="com.OuSoft.system.entity.Clock">
+		delete from tsign where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/mail_detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:09 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 查看邮件</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <!--<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/iconfont.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet"  href="/static/js/plugins/webuploader/webuploader.css">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/news.js"></script>
+    <script>
+        var commentid;
+        var id;
+        var Request = new Object();
+        Request = GetRequest();
+        $(function () {
+            $("#p").click(function(ev){
+                var oEvent = ev || event;
+                oEvent.stopPropagation();
+                $("#p").css("display","none");
+            })
+            $("#pl").click(function () {
+                var speed=200;//滑动的速度
+                var h = $(document).height()-$(window).height();
+                $(document).scrollTop(h);
+                $('body,html').animate({ scrollTop: h }, speed);
+                return false;
+            });
+            $(".edui-body-container").click(function () {
+                $("#ueditor_replace").focus();
+                $("#p").css("display","none");
+            })
+            id= Request["id"];
+            commentid=id;
+            myid= Request["myid"];
+            messid= Request["messid"];
+            if(myid==messid){
+                $("#deletemess").show();
+                $("#deletemess").find('span').text("删除");
+            }
+            mess();
+            commentmess();
+            picmessa();
+            init();
+            tab();
+            pl();
+        })
+        var personmess;
+        function mess() {
+            $.ajax({
+                url:"/tquestion/queryListTquestionTpraise",
+                data: {"id":id},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    personmess=data;
+                    console.log(data);
+                    console.log("dataaaaaaaaaaaaaaaa");
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        var comment;
+        function commentmess() {
+            $.ajax({
+                url:"/clock/queryListTcomment",
+                data: {"itemid":id},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    comment=data;
+                    console.log(comment);
+                    console.log("comment+========================")
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        var picmess;
+        function picmessa() {
+            $.ajax({
+                url:"/file/queryitemidtatt",
+                data: {"itemid":id},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    picmess=data;
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        //初始化数据
+        function init(){
+            $("#tx").attr("src",personmess[0].ip+personmess[0].txfilename);
+            $("#username").html(personmess[0].username);
+            var date = dateformate(personmess[0].qucreatetime);
+            $("#date").html(date);
+            var time = personmess[0].qucreatetime.substr(11,8);
+            $("#title").html(personmess[0].qudetail);
+            $("#text").html(personmess[0].qutext);
+            zan();
+            pinglun();
+            tupian();
+        }
+        //格式化日期
+        function dateformate(mocreatetime) {
+            var date1 = mocreatetime.substr(0,10).split("/");
+            return date1[0]+"年"+date1[1]+"月"+date1[2]+"日";
+        }
+        //jq写点赞
+        function zan() {
+            $("#user-list").html("");
+            var userinfo = '<i class="iconfont icon-xin1" style="line-height: 15px;font-size: 17px;float:left;padding-right: 5px;"></i>';
+            for(var i=0;i<personmess.length;i++){
+                var userinfo = userinfo+'<a href="/sign/signMess?id="'+personmess[i].tprauserid+' class="item q_namecard" target="_blank" link="nameCard_215790339 des_215790339">'+personmess[i].tprausername+'' +
+                    '</a>'+'、'
+            }
+            userinfo.substr(0,userinfo.length-1);
+            if(JSON.stringify(personmess[0].tprausername) !='null'){
+                $("#user-list").html(userinfo.substr(0,userinfo.length-1));
+                $(".zan").show();
+            }else{
+                $(".zan").hide();
+            }
+        }
+        //jq写评论
+        function pinglun() {
+            $("#pinlun").html("");
+            var com = ' <i class="iconfont icon-pinglun2" style="float: left;width: 20px;height:50px;line-height: 50px;font-size: 20px;margin-left: 17px;"></i>';
+            for (var i = 0; i < comment.length; i++) {
+                var date = dateformate(comment[i].commenttime);
+                var time = comment[i].commenttime.substr(11, 5);
+                if (JSON.stringify(comment[i].pusername)=='null') {
+                    var src = comment[i].ip + comment[i].filename;
+                    var com = com + "<div onclick=\"control('" + comment[i].id + "','" + comment[i].username + "')\"  style='cursor: pointer;width: 100%;height:50px;padding-left: 50px;' data-id='" + comment[i].id + "'>" +
+                        '<img src="'+src+'" style="width: 30px;height:30px;margin-top: 11px;border-radius: 50%;float:left;">' +
+                        '<div class="comments-content" style="width: 94%;float: left;margin-top: 10px;margin-left: 5px;">' +
+                        '<a>' + comment[i].username + '</a>' +
+                        '<div class="comments-op">' +
+                        '<span class=" ui-mr10 state" style="float:left;">' + comment[i].commenttext + '</span>' +
+                        '<span class=" ui-mr10 state" style="float: right;">' + date + '&nbsp;' + time + '</span> </div> </div> </div>'
+                } else {
+                    var src = comment[i].ip + comment[i].filename;
+                    var com = com + "<div onclick=\"control('" + comment[i].id + "','" + comment[i].username + "')\"  style='cursor: pointer;width: 100%;height:50px;padding-left: 50px;' data-id='" + comment[i].id + "'>" +
+                        '<img src="'+src+'" style="width: 30px;height:30px;margin-top: 11px;border-radius: 50%;float:left;">' +
+                        '<div class="comments-content" style="width: 94%;float: left;margin-top: 10px;margin-left: 5px;">' +
+                        '<a>' + comment[i].username + '</a>回复<a>' + comment[i].pusername + '</a>' +
+                        '<div class="comments-op">' +
+                        '<span class=" ui-mr10 state" style="float:left;">' + comment[i].commenttext + '</span>' +
+                        '<span class=" ui-mr10 state" style="float: right;">' + date + '&nbsp;' + time + '</span> </div> </div> </div>'
+                }
+                com.substr(0, com.length - 1);
+                if (comment.length != 0) {
+                    $("#pinlun").html(com);
+                }
+            }
+        }
+        //jq写图片
+        function tupian(){
+            var pic='<ul style="margin-top: 20px;overflow: hidden;">';
+            for(var i=0;i<picmess.length;i++){
+                pic = pic+"<li style=\"float:left;margin-right: 10px;\"><img src=\""+picmess[i].ip+picmess[i].filename+"\" style=\"width: 100px;height:100px;\"></li>"
+            }
+            /*if(picmess.length >0){
+                $("#type1").css("marginTop","73px");
+            }*/
+            pic = pic+"</ul>";
+            $("#picture").html(pic);
+        }
+        //解析url参数
+        function GetRequest() {
+                var url = location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            }
+        //发表评论
+        function post(){
+            var commont =$("#ueditor_replace").children("span").html();
+            if(typeof($("#ueditor_replace").html())!='undefined'&&$("#ueditor_replace").children("span").size()<=0){
+                if(typeof(commont)!='undefined') {
+                    commont = commont + $("#ueditor_replace").html();
+                }else {
+                    commont = $("#ueditor_replace").html();
+                }
+            }else if(typeof(commont)!='undefined'){
+                commont=commont
+            }else {
+                alert("请输入内容");
+                return;
+            }
+            saveNews(messid,"04","工作圈",commont,id);
+            var data = {'itemtype':'tquestion','itemid':id,'commentid':commentid,'commenttext':commont};
+            $.ajax({
+                url:"/tcomment/savetcomment",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    $("#ueditor_replace").children("span").html("");
+                    $("#ueditor_replace").html("");
+                    commentmess();
+                    pinglun();
+                    var a =$(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#pinglun"+id).text();
+                    var num = parseInt(a)+1;
+                    $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#pinglun"+id).text(num);
+                },
+                error:function (error) {
+                    alert("字数太多了!o(╥﹏╥)o");
+                }
+            });
+        }
+        //评论框相关
+        function control(id,name) {
+             commentid = id;
+             $("#ueditor_replace").click().focus();
+             $("#reply_head").html("回复" + name+":");
+             $("#reply_head").show();
+         }
+        //切换评论对象
+        function pl() {
+            $("#pl").click(function () {
+                commentid = id;
+                $("#ueditor_replace").click().focus();
+                $("#reply_head").hide();
+            })
+        }
+         //点赞评论按钮的显示
+        function tab(){
+            if(personmess[0].dz=='0'||typeof(personmess[0].dz)=='undefined'){
+                $("#zan").css("color","#adb7cb");
+            }else{
+                $("#zan").css("color","#586c95");
+            }
+         }
+         //点赞中间表 用于传递js中的id参数
+        function temp(){
+            zan1(id);
+        }
+        /* 点赞*/
+        function zan1(id) {
+            if($("#zan").css("color")!="rgb(88, 108, 149)"){
+                var data = {"itemid":id,"itemtype":"tquestion"};
+                $.ajax({
+                    url:"/tpraise/savetpraise",
+                    data: data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.code!='404'){
+                            saveNews(messid,"03","工作圈","",id);
+                            mess();
+                            zan();
+                            $("#zan").css("color","#586c95");
+                            var tem= Request["tem"];
+                            $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan"+id+tem).css("color","#586c95");
+                            var a =$(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan1"+id+"h").text();
+                            if(a==null||a==""){
+                                a =$(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan1"+id+"x").text();
+                                var num = parseInt(a)+1;
+                                $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan1"+id+"x").text(num);
+                            }else{
+                                var num = parseInt(a)+1;
+                                $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan1"+id+"h").text(num);
+                            }
+
+                        }else{
+                            alert(data.msg);
+                        }
+                    },
+                    error:function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+            }else {
+                var data = {"itemid":id};
+                $.ajax({
+                    url:"/tpraise/deleteIdTpraise",
+                    data: data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.code!='404'){
+                            mess();
+                            zan();
+                            $("#zan").css("color","#adb7cb");
+                            var tem= Request["tem"];
+                            $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan"+id+tem).css("color","#adb7cb");
+                            var a =$(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan1"+id+"h").text();
+                            if(a==null||a==""){
+                                a =$(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan1"+id+"x").text();
+                                var num = parseInt(a)-1;
+                                $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan1"+id+"x").text(num);
+                            }else{
+                                var num = parseInt(a)-1;
+                                $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#zan1"+id+"h").text(num);
+                            }
+                        }else{
+                            alert(data.msg);
+                        }
+                    },
+                    error:function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+
+
+            }
+
+        }
+        function deleteMess(){
+            var data = {"id":id};
+            $.ajax({
+                url:"/tquestion/delteTquestion",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    if(data.code!='404'){
+                        $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#reset1").trigger("click");
+                        $(window.parent.document).find(".J_iframe[data-id='/wendaqu']").contents().find("#reset2").trigger("click");
+                        $(window.top.document).find(".J_menuTab.active").find(".iconfont.icon-guanbi-copy").trigger("click");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        function textInit(e) {
+            e.preventDefault();//阻止默认事件
+            var text;
+            var clp = (e.originalEvent || e).clipboardData;
+            if (clp === undefined || clp === null) {
+                text = window.clipboardData.getData("text") || "";
+                if (text !== "") {
+                    if (window.getSelection) {
+                        var newNode = document.createElement("span");
+                        newNode.innerHTML = text;
+                        window.getSelection().getRangeAt(0).insertNode(newNode);
+                    } else {
+                        document.selection.createRange().pasteHTML(text);
+                    }
+                }
+            } else {
+                text = clp.getData('text/plain') || "";
+                if (text !== "") {
+                    /*document.execCommand('insertText', false, text);*/
+                    var qutext = text
+                    var span=/<span\s*[^>]*>(.*?)<\/span>/ig;
+                    var div =/<div\s*[^>]*>(.*?)<\/div>/ig;
+                    var a = /<a\s*[^>]*>(.*?)<\/a>/ig;
+                    var p = /<p\s*[^>]*>(.*?)<\/p>/ig;
+                    qutext = qutext.replace(span,"$1");
+                    qutext = qutext.replace(a,"$1");
+                    qutext = qutext.replace(div,"$1");
+                    qutext = qutext.replace(p,"$1");
+                    document.execCommand('insertText', false, qutext);
+                }
+            }
+        }
+        $( document ).on( "paste", "#ueditor_replace", function(e) {
+            //去除复制样式
+            textInit(e);
+        });
+    </script>
+</head>
+<style>
+    body{
+        width: 100%;
+        overflow-y: scroll;
+        scrollbar-base-color: transparent;
+        scrollbar-darkshadow-color: transparent;
+        scrollbar-highlight-color: transparent;
+        scrollbar-face-color: transparent;
+    }
+    .edui-editor-body .edui-body-container {
+        outline: none;
+        padding: 0 0 0 10px;
+        word-wrap: break-word;
+        font-size: 20px;
+    }
+    .edui-container .edui-editor-body.body-container-focus {
+        border-color: #5c9dff;
+    }
+
+    /*滚动条样式*/
+    .edui-editor-body::-webkit-scrollbar {/*滚动条整体样式*/
+        width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+        height: 4px;
+    }
+    .edui-editor-body::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        background: rgba(0,0,0,0.2);
+    }
+    .edui-editor-body::-webkit-scrollbar-track {/*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        border-radius: 0;
+        background: rgba(0,0,0,0.1);
+    }
+    .edui-editor-body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+    ul, li {
+        margin: 0;
+        padding: 0;
+    }
+    ul, ol, li {
+        list-style: none;
+    }
+    .p_author .icon .icon_relative {
+        margin-top: 0;
+    }
+    .l_post_bright .d_nameplate {
+        margin-bottom: 8px;
+    }
+    .p_author .d_nameplate {
+        margin-top: -2px;
+    }
+    .l_post_bright .d_name {
+        padding: 0;
+    }
+    .d_name {
+        padding: 4px 0 7px;
+        letter-spacing: -3px;
+    }
+    .d_name .p_author_name {
+        letter-spacing: normal;
+    }
+    .l_post_bright .d_icons {
+        margin-top: 8px;
+    }
+    .d_author .d_pb_icons {
+        overflow: hidden;
+        width: 80px;
+        margin: 0 auto 5px;
+        float: none;
+        padding: 0 0 3px 3px;
+        background-color: #fff;
+        border: 1px solid #e6e6e6;
+        border-radius: 1px;
+        display: block;
+    }
+    .l_badge {
+        display: none;
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 9px;
+    }
+    .d_post_content_main {
+        position: relative;
+        float: left;
+        width: 588px;
+        padding: 0 0 8px 20px;
+        background: #fff;
+    }
+    .l_post_bright .d_post_content_main .p_content {
+        height: auto!important;
+        height: 170px;
+        min-height: 170px;
+    }
+
+    .edui-btn-toolbar .edui-btn {
+        font-size: 30px;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: auto;
+        margin-right: 11px;
+        padding: 1px 7px 1px 1px;
+        border: 0;
+        background: url(//tb2.bdstatic.com/tb/static-common/img/rich_editor/separator_97ec61b.png) right center no-repeat;
+    }
+    .old_style_wrapper {
+        width: 100%;
+        padding:13px 20px 13px;
+        background: #FFFFFF;
+    }
+    ueditor_replace :active{
+
+    }
+    tb_poster_placeholder{
+        display: none;
+    }
+
+
+</style>
+<body class="gray-bg" id="body_wrap">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12 animated fadeInRight">
+                <div class="mail-box-header" style="height:110px">
+                    <div class="pull-right tooltip-demo" style="margin-top: 36px;width: 46px;height:21px;">
+                        <!-- &lt;!&ndash;<a href="mail_compose.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="赞"><i class="fa fa-thumbs-o-up"></i> 赞</a>
+                         <a href="mail_detail.html#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="踩"><i class="fa fa-thumbs-o-down"></i> 踩</a>
+                         <a id="reply" href="mail_detail.html#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="踩"><i class="fa fa-pencil-square-o"></i> 回复</a>-->
+                        <a id="deletemess" style="color:#8590a6;display: none;float:left;width: 60px"><i class="iconfont icon-icon--" style="float: left;"></i><span class="pull-right font-noraml" style="cursor:pointer;float: left !important;margin-top: 4px;" data-toggle="modal" href="#delcfmModel" ></span></a>
+                    </div>
+                    <h2 style="float:left;">
+                            <a href="/sign"> <img id="tx" src="" style="border-radius: 50%;width: 50px;margin-top: 5px;"></a>
+                    </h2>
+                        <h5 style="float:left;margin-left: 10px;margin-top: 15px;">
+                            <span id="username" class="font-noraml" style="font-size: 17px;font-family: MicrosoftYaHei"></span>
+                            <br>
+                        <span id="date" class="pull-right font-noraml" style="margin-top: 10px;"></span>
+
+                        </h5>
+                </div>
+                <div class="mail-box">
+                    <div class="mail-body" style="padding:0;padding-left: 80px;padding-bottom:10px;overflow:hidden;">
+                        <h3 style="font-size: 14px;font-family: 仿宋;overflow: hidden"><p id="title" style="color:black;float: left;width: 100%;line-height: 23px;font-size: 21px;font-family: MicrosoftYaHei"></p></h3>
+                        <div id="text" style="white-space: normal;word-break: break-all;word-wrap: break-word;padding-right: 60px;color: #454545"></div>
+                        <div id="picture">
+                        </div>
+                        <div id="type1" style="height: 30px;width: 144px;overflow: hidden;float: right;font-size: 20px;padding-right: 15px;">
+                            <i id="zan" onclick="temp()" class="iconfont icon-zan" style="cursor: pointer;float: left;" ></i><span style="font-size: 15px;float: left;margin-top: 1px;margin-left: 5px;"> 赞</span>
+                            <i id="pl" class="iconfont icon-pinglun3"  style="cursor: pointer;color: #adb7cb;float:left;margin-left: 15px;margin-top: -1px;cursor: pointer"></i><span style="font-size: 15px;float: left;margin-top: 2px;margin-left: 5px; "> 评论</span>
+                        </div>
+                    </div>
+                    <div class="mail-body tooltip-demo" style="padding: 10px">
+                        <div class="zan" style="margin-right: 20px;padding-left: 18px;margin-left: 20px;padding-bottom:5px;padding-top: 10px;background: #F5F6FA;">
+                            <div class="f-like-list f-like _likeInfo" likeinfo="34">
+                                <div class="icon-btn"><a href="javascript:;" data-islike="0" data-likecnt="34" data-showcount="34" data-unikey="http://user.qzone.qq.com/912924973/mood/2d216a368d60985bdfa60200" data-curkey="http://user.qzone.qq.com/912924973/mood/2d216a368d60985bdfa60200" data-clicklog="like" class="praise qz_like_prase"><i class="fui-icon icon-list-praise"></i></a><div class="bubble" style="display:none;"><div class="bd">+1</div><b class="arrow arrow-down"></b></div></div>
+                                <div id="user-list" class="user-list" style="text-align: left">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="pinlun" class="pinlun" style="overflow: hidden;margin-right: 20px;background:#F5F6FA;margin-left: 20px;">
+                        </div>
+                    </div>
+                    <div class="reply" style="border-top: 1px solid #e7eaec;">
+                        <div id="tb_rich_poster" class="tb_rich_poster  ">
+                            <div class="j_bubble_container"></div>
+                            <div class="poster_head clearfix">
+                                <div class="poster_body editor_wrapper"><div class="poster_component editor_content_wrapper ueditor_container">
+                                    <div class="old_style_wrapper"><div class="edui-container" style="width: 100%;position: relative;"><div class="tb_poster_placeholder" id="p" style="display: block; left: 15px; position: absolute;"><p  style="width:565px;line-height:25px;">说点什么吧...</p></div>
+                                        <div id="edui-editor-body" class="edui-editor-body" data-id="true" style="height: 170px; overflow: hidden auto;"><div class="edui-editor-top"></div><div class="edui-editor-middle">
+                                            <div style="width: 100%;  z-index: 0;height:168px;padding: 0 !important;" class=" edui-body-container" >
+                                                <p id="reply_head"  contenteditable="false" style="margin:0;float:left;"></p>
+                                                <div  id="ueditor_replace" style="min-height:168px;outline:none" contenteditable="true">
+
+                                                </div>
+                                            </div>
+                                </div></div></div></div></div><div class="poster_error j_error"></div></div>                <div class="j_poster_signature poster_signature" style="display: none;"><label><input type="checkbox" class="j_use_signature">使用签名档</label>&nbsp;<span class="j_signature_wrapper signature_wrapper"><select name="sign_id" class="j_sign_id"></select>&nbsp;<a style="color:#0449BE" target="_blank" href="/i/sys/jump?type=signsetting">查看全部</a></span></div>                <div class="poster_component editor_bottom_panel clearfix">
+                        <div class="j_floating" style="padding: 10px;float: right;margin-right: 30px;"><a id="commit" onclick="post();" class="btn btn-primary" title="Ctrl+Enter快捷发表"><span>发 表</span></a>                        <span class="poster_posting_status j_posting_status"></span><div class="poster-right-area"></div></div></div></div></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal fade" id="delcfmModel">
+                    <div class="modal-dialog">
+                        <div class="modal-content message_align">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <h4 class="modal-title">提示信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>您确认要删除吗？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="hidden" id="url"/>
+                                <a  onclick="deleteMess()" class="btn btn-success" data-dismiss="modal">确定</a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="color:#73777A;background-color: #F5F5F6;">取消</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script>
+        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
+    </script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/mail_detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:10 GMT -->
+</html>
+<script>
+   /* var a = document.getElementById('yrt');
+    a.onclick = function() {
+        window.location.href = "/sign?bs=1";
+    }*/
+
+
+</script>

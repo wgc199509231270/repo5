@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.mobileCommerce.dao.Tknowledge.MTknowledgeDao">
+ 
+ 
+ 
+ 	<!-- 
+ 	知识所有人列表    state    01 最新，02最热  03 最火
+ 	
+ 	接受，选填 latype：知识类型 01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+	pagenum:页。pagesize:一页数
+	begtime:开始时间年月日
+	endtime:结束时间
+	sqgjz: 模糊查询标题和内容
+	 响应：latitle:标题，latype:内容，lacreatetime:时间，time:年月日，times时分秒,
+	 username:姓名：txfilename:头像，tpranum点赞数，comnum：评论数，ip:ip
+	text:列表内容三十个字后是........
+	 -->
+ 	<select id="queryQBLBListTknowledgeDao" parameterType="com.OuSoft.system.entity.Tknowledge" resultType="com.OuSoft.system.entity.Tknowledge" >     
+ 				SELECT
+				tkn.*, 
+				SUBSTR(tkn.lacreatetime ,1,10) as time, SUBSTR(tkn.lacreatetime ,11,8) as times, 
+				CONCAT(SUBSTR(tkn.latext,1,30),'...') as text,
+				ta.filename as txfilename,
+				tu.username AS username,
+				IfNULL(tpra.num, 0) AS tpranum,
+				IfNULL(tmoo.tmonum, 0) AS comnum,
+				ip.ip as ip,IFNULL(tp.id,0) as dz
+				FROM
+					tknowledge tkn
+				LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tknowledge'
+				GROUP BY
+						t.itemid
+				) tpra ON tkn.id = tpra.itemid
+				LEFT JOIN 
+				(
+				SELECT  tmo.commentid as commentid, 
+				count(tmo.commentid) as tmonum 
+				from tcomment tmo 
+				WHERE tmo.itemtype = 'tknowledge' GROUP BY tmo.commentid
+				) tmoo on tmoo.commentid = tkn.id
+				
+				LEFT JOIN tuser tu ON tu.id = tkn.userid 
+				left JOIN tattip ip on ip.id = '1' 
+				left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tkn.id 
+				left JOIN tatt ta on ta.itemid = tkn.userid
+			<where>
+						1=1 
+				<if test="latype != null and latype != '' ">
+					and tkn.latype = #{latype}
+				</if>
+				<if test="begtime != null and begtime != '' ">
+				  	and SUBSTR(tkn.lacreatetime, 1, 10) &gt;= #{begtime}
+				</if>
+				<if test="endtime != null and endtime != '' ">
+				  	and SUBSTR(tkn.lacreatetime, 1, 10) &lt;= #{endtime}
+				</if>
+				<if test="loginname != null and loginname != '' ">
+					and tkn.userid = (SELECT id from tuser where loginname = #{loginname})
+			 	</if>
+			 	<if test="username != null and username != '' ">
+			 		 and tkn.userid = (SELECT id from tuser where username = #{username})
+				</if>
+			 	<if test="sqgjz != null and sqgjz != '' ">
+					 and tkn.latitle like '%${sqgjz}%' or tkn.latext like '%${sqgjz}%'
+			 	</if>
+			 	<if test=" state == '01' ">
+			 		ORDER BY time desc,comnum desc
+			 	</if>
+			 	<if test=" state == '02' ">
+			 		ORDER BY tpranum desc,comnum desc
+			 	</if>
+			 	<if test=" state == '03' ">
+			 		ORDER BY comnum desc,time desc
+			 	</if>
+					limit ${pagenum},${pagesize}
+			</where>
+ 	</select>
+ 	
+ 	
+ 	<!-- 
+ 	知识个人列表
+	接受，选填 latype：知识类型 01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+	pagenum:页。pagesize:一页数
+	begtime:开始时间年月日
+	endtime:结束时间
+	sqgjz: 模糊查询标题和内容
+	 响应：latitle:标题，latype:内容，lacreatetime:时间，time:年月日，times时分秒,
+	 username:姓名：txfilename:头像，tpranum点赞数，comnum：评论数，ip:ip
+	text:列表内容三十个字后是........
+	-->
+ 	<select id="queryGRLBListTknowledgeDao" parameterType="com.OuSoft.system.entity.Tknowledge" resultType="com.OuSoft.system.entity.Tknowledge" >     
+ 		SELECT
+				tkn.*, 
+				SUBSTR(tkn.lacreatetime ,1,7) as rtime, SUBSTR(tkn.lacreatetime ,11,20) as mtime, 
+				CONCAT(SUBSTR(tkn.latext,1,30),'...') as text,
+				ta.filename as txfilename,
+				tu.username AS username,
+				IfNULL(tpra.num, 0) AS tpranum,
+				IfNULL(tmoo.tmonum, 0) AS comnum,
+				ip.ip as ip,IFNULL(tp.id,0) as dz
+				FROM
+					tknowledge tkn
+				LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tknowledge'
+				GROUP BY
+						t.itemid
+				) tpra ON tkn.id = tpra.itemid
+				LEFT JOIN 
+				(
+				SELECT  tmo.commentid as commentid, 
+				count(tmo.commentid) as tmonum 
+				from tcomment tmo 
+				WHERE tmo.itemtype = 'tknowledge' GROUP BY tmo.commentid
+				) tmoo on tmoo.commentid = tkn.id
+				
+				LEFT JOIN tuser tu ON tu.id = tkn.userid 
+				left JOIN tattip ip on ip.id = '1' 
+				left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tkn.id 
+				left JOIN tatt ta on ta.itemid = tkn.userid
+				<where>
+						1=1 
+	   				<if test="userid != null and userid != '' ">
+				  		and tkn.userid = #{userid}
+			  		</if>
+				  	<if test="latype != null and latype != '' ">
+				  		and tkn.latype = #{latype}
+			  		</if>
+				  	<if test="begtime != null and begtime != '' ">
+				  		and SUBSTR(tkn.lacreatetime, 1, 10) &gt;= #{begtime}
+				  	</if>
+				  	<if test="endtime != null and endtime != '' ">
+				  		and SUBSTR(tkn.lacreatetime, 1, 10) &lt;= #{endtime}
+				  	</if>
+				  	<if test="loginname != null and loginname != '' ">
+			  			and tkn.userid = (SELECT id from tuser where loginname = #{loginname})
+			  		</if>
+			  		<if test="username != null and username != '' ">
+			  			 and tkn.userid = (SELECT id from tuser where username = #{username})
+				  	</if>
+			  		<if test="sqgjz != null and sqgjz != '' ">
+					  	 and tkn.latitle like '%${sqgjz}%' or tkn.latext like '%${sqgjz}%'
+			  		</if>
+						ORDER BY tpranum desc,comnum desc
+						limit ${pagenum},${pagesize}
+ 				</where>
+ 	</select>
+ 	
+ 	
+ 	<!--   state  01 点赞，02 评论，03发布数       
+ 	所有人图表  
+	接受，选填 latype：知识类型 01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+	pagenum:页。pagesize:一页数
+	begtime:开始时间年月日
+	endtime:结束时间
+	响应	tpranum:点赞数，comnum:评论数，tsnum，发布数，username:姓名 ，lacreatetime:时间
+ 	 -->
+ 	<select id="queryQBTBListTknowledgeDao" parameterType="com.OuSoft.system.entity.Tknowledge" resultType="com.OuSoft.system.entity.Tknowledge" >     
+ 		SELECT
+				tkn.*,
+				tu.username AS username,
+				IFNULL( SUM(tpra.num) ,0) as tpranum,
+				IFNULL( SUM(tmoo.tmonum)  ,0) as comnum,
+				IFNULL(COUNT(tkn.userid)  ,0) as tsnum
+				FROM
+					tknowledge tkn
+				LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tknowledge'
+				GROUP BY
+						t.itemid
+				) tpra ON tkn.id = tpra.itemid
+				LEFT JOIN 
+				(
+				SELECT  tmo.commentid as commentid, 
+				count(tmo.commentid) as tmonum 
+				from tcomment tmo 
+				WHERE tmo.itemtype = 'tknowledge' GROUP BY tmo.commentid
+				) tmoo on tmoo.commentid = tkn.id
+				LEFT JOIN tuser tu ON tu.id = tkn.userid
+				<where>
+					1=1
+				  	<if test="begtime != null and begtime != '' ">
+						and SUBSTR(tkn.lacreatetime, 1, 10) &gt;= #{begtime}
+				  	</if>
+			  		<if test="endtime != null and endtime != '' ">
+						and SUBSTR(tkn.lacreatetime, 1, 10) &lt;= #{endtime}
+				  	</if>
+				   	<if test="latype != null and latype != '' ">
+				  		and tkn.latype = #{latype}
+				  	</if>
+				   	<if test="state == '01' ">
+				  		GROUP BY tkn.userid ORDER BY tpranum DESC
+				  	</if>
+				   	<if test="state == '02' ">
+				  		GROUP BY tkn.userid ORDER BY comnum DESC
+				  	</if>
+				   	<if test="state == '03' ">
+				  		GROUP BY tkn.userid ORDER BY tsnum DESC
+				  	</if>
+ 				</where> 
+ 	
+ 	
+ 	</select>
+ 	
+ 	
+ 	<!-- 个人图表 
+	接受，选填 latype：知识类型 01.产品 02.技术 03.客户 04.组织 05.业务 06.其他
+	pagenum:页。pagesize:一页数
+	begtime:开始时间年月日
+	endtime:结束时间
+	响应	tpranum:点赞数，comnum:评论数，tsnum，发布数，username:姓名 ，lacreatetime:时间
+	-->
+ 	<select id="queryGRTBListTknowledgeDao" parameterType="com.OuSoft.system.entity.Tknowledge" resultType="com.OuSoft.system.entity.Tknowledge" >    
+ 		SELECT
+				tkn.*,
+				tu.username AS username,
+				IFNULL( SUM(tpra.num) ,0) as tpranum,
+				IFNULL( SUM(tmoo.tmonum)  ,0) as comnum,
+				IFNULL(COUNT(tkn.userid)  ,0) as tsnum
+				FROM
+					tknowledge tkn
+				LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tknowledge'
+				GROUP BY
+						t.itemid
+				) tpra ON tkn.id = tpra.itemid
+				LEFT JOIN 
+				(
+				SELECT  tmo.commentid as commentid, 
+				count(tmo.commentid) as tmonum 
+				from tcomment tmo 
+				WHERE tmo.itemtype = 'tknowledge' GROUP BY tmo.commentid
+				) tmoo on tmoo.commentid = tkn.id
+				LEFT JOIN tuser tu ON tu.id = tkn.userid
+				<where>
+					 1=1
+					<if test="userid != null and userid != '' ">
+				  		and tkn.userid = #{userid}
+			  		</if>
+				  	<if test="begtime != null and begtime != '' " >
+						and SUBSTR(tkn.lacreatetime, 1, 10) &gt;= #{begtime}
+				  	</if>
+			  		<if test="endtime != null and endtime != ''">
+						and SUBSTR(tkn.lacreatetime, 1, 10) &lt;= #{endtime}
+				  	</if>
+				   	<if test="latype != null and latype != '' ">
+				  		and tkn.latype = #{latype}
+				  	</if>
+						GROUP BY tkn.userid ORDER BY tsnum DESC
+				</where>
+ 	 </select>
+ 	
+ 	
+ 	<!-- 点赞详情 
+	接收：pagenum:页。pagesize:一页数 	begtime:开始时间年月日 endtime:结束时间 
+	id:项目id
+	响应：tprausername:点赞人，tprafilename点赞人头像 ip:ip
+ 	-->
+ 	<select id="queryDzListTknowledgeDao" parameterType="com.OuSoft.system.entity.Tknowledge" resultType="com.OuSoft.system.entity.Tknowledge" >    
+ 				SELECT 
+				tpra.id as tpraid, 
+					tutsi.username as username,
+				  tutpra.username as tprausername,
+				  tpra.userid as tprauserid,
+					tatpra.filename as tprafiname,
+				  ta.filename as txfilename , ip.ip as ip,
+				  IFNULL(tp.id,0) as dz
+				FROM
+					tknowledge tkn
+				LEFT JOIN tpraise tpra ON tpra.itemid = tkn.id
+				LEFT JOIN tuser tutpra on tutpra.id = tpra.userid
+				LEFT JOIN tuser tutsi ON tutsi.id = tkn.userid
+				left join tatt ta on ta.itemid = tkn.userid
+				left JOIN tattip ip on ip.id = '1' 
+				left JOIN tatt tatpra on tatpra.itemid = tpra.userid
+				LEFT JOIN tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tkn.id
+				WHERE
+				tpra.itemtype = 'tknowledge'
+				and tkn.id = #{id}
+ 	 </select>
+ 
+ 
+ 	<!-- 
+ 	评论详情 
+	接收：pagenum:页。pagesize:一页数 	begtime:开始时间年月日 endtime:结束时间 
+	itemid:项目id
+	响应：pusername评论人，txfilename:评论人头像，ip:ip，husername:回复人姓名，hfilename:回复人头像，commenttime:时间
+	-->
+ 	<select id="queryPlListTknowledgeDao" parameterType="com.OuSoft.system.entity.Tknowledge" resultType="com.OuSoft.system.entity.Tknowledge" >    
+			 	SELECT
+				tc.*, tu.username AS pusername,
+				ta.filename AS txfilename,
+				tcomme.userid AS userid,
+				tcomme.commentid AS tcommentid,
+				tus.username AS husername,
+				tah.filename as hfilename
+				FROM
+				tcomment tc
+				LEFT JOIN (
+				SELECT
+					tcom.id AS id,
+					tcom.commenttime AS commenttime
+				FROM
+					tcomment tcom
+				WHERE
+					tcom.itemid = tcom.commentid
+				ORDER BY
+					tcom.commenttime
+				) tcomm ON tcomm.id = tc.commentid
+				LEFT JOIN tuser tu ON tu.id = tc.userid
+				LEFT JOIN tatt ta ON ta.itemid = tc.userid
+				LEFT JOIN tcomment tcomme ON tcomme.commentid = tc.id
+				LEFT JOIN tuser tus ON tus.id = tcomme.userid
+				LEFT JOIN tatt tah on tah.itemid = tcomme.userid
+				<where>
+					1 = 1
+					AND tc.itemtype = 'tknowledge'
+					AND tc.itemid = #{itemid}
+					ORDER BY
+					tc.commenttime,
+					tcomm.commenttime DESC
+ 				</where>
+ 	
+ 	
+ 	
+ 	 </select>
+ 	
+ 
+	 
+	
+
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.mobileCommerce.dao.CircleofFriends.CircleofFriendsDao">
+  
+  
+  <!-- 查询签到签退图表列表 -->
+  <select id="queryCircleofFriends" parameterType="com.OuSoft.system.entity.Clock" resultType="com.OuSoft.mobileCommerce.entity.CircleofFriendsModel">
+	 		SELECT
+	d.*,t.originalfilename as filename,
+tu.username,tip.ip
+FROM
+	(
+			SELECT
+				tg.id,
+				tg.userid,
+				tg.cltype AS text,
+				@a := 1 AS type,
+				tg.cltime AS createtime,
+				@a =0 as sucompany,
+					@a =0 as sumanage,
+					@a =0 as suwork,
+					@a =0 as suhygienism
+			FROM
+				tsign tg,
+				(SELECT @a := 0) r
+		UNION ALL
+				SELECT
+					tp.id,
+					tp.userid,
+					tp.plantext AS text,
+					@a := 2 AS type,
+					tp.createtime AS createtime,
+@a =0 as sucompany,
+					@a =0 as sumanage,
+					@a =0 as suwork,
+					@a =0 as suhygienism
+				FROM
+					tplan tp,
+					(SELECT @a := 0) r
+		UNION ALL
+				SELECT
+					tm.id,
+					tm.userid,
+					tm.motext AS text,
+					@a := 3 AS type,
+					tm.mocreatetime AS createtime,
+@a =0 as sucompany,
+					@a =0 as sumanage,
+					@a =0 as suwork,
+					@a =0 as suhygienism
+				FROM
+					tmood tm,
+					(SELECT @a := 0) r
+		UNION ALL
+				SELECT
+					tk.id,
+					tk.userid,
+					tk.latext AS text,
+					@a := 4 AS type,
+					tk.lacreatetime AS createtime,
+@a =0 as sucompany,
+					@a =0 as sumanage,
+					@a =0 as suwork,
+					@a =0 as suhygienism
+				FROM
+					tknowledge tk,
+					(SELECT @a := 0) r
+		UNION ALL
+				SELECT
+					tq.id,
+					tq.userid,
+					tq.qudetail AS text ,@a := 5 AS type,
+					tq.qucreatetime AS createtime,
+					@a =0 as sucompany,
+					@a =0 as sumanage,
+					@a =0 as suwork,
+					@a =0 as suhygienism
+				FROM
+					tquestion tq,
+					(SELECT @a := 0) r
+		UNION ALL
+				SELECT
+					tt.id,
+					tt.userid,
+					tt.sutext AS text ,@a := 6 AS type,
+					tt.sucreatetime AS createtime,
+					tt.sucompany,
+					tt.sumanage,
+					tt.suwork,
+					tt.suhygienism
+				FROM
+					tsummary tt,
+					(SELECT @a := 0) r
+			
+	) d left join tatt t on d.userid=t.itemid  
+left join tuser tu on d.userid=tu.id 
+left join tattip tip on tip.id='1'
+					ORDER BY d.createtime DESC   limit ${pagenum},${pagesize}
+  </select>
+  
+   <select id="querytattAll" parameterType="com.OuSoft.mobileCommerce.entity.CircleofFriendsModel" resultType="com.OuSoft.system.entity.Tatt">
+  		select t.* from tatt t where t.itemid='${id}'
+  </select>
+  
+  
+  
+ </mapper>

@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>manage.html</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+          rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="/static/js/plugins/webuploader/webuploader.css">
+    <link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <link rel="stylesheet" href="/static/achievement/webuploader/webuploader.css">
+    <script src="/static/achievement/webuploader/webuploader.js"></script>
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelectparse.css">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/achievement/manage.css" rel="stylesheet">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <style>
+        input[type=range] {
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none; /*清除系统默认样式*/
+            width: 80% !important;
+            background: #e7eaec;
+            height: 3px; /*横条的高度*/
+        }
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background: #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+
+        #text {
+            white-space: normal;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+        .czbtn{
+            cursor:default;
+        }
+        .czbtn2{
+            cursor:pointer;
+        }
+        .my-container {
+            float: left;
+            display: inline-block;
+        }
+
+        .myLabel-content, .myText-content, .myBtn-content {
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+
+        }
+
+        .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+        {
+            height: 30px;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+
+        /* 模态框 */
+
+        .hourdiv {
+            width: 138px;
+        }
+        #fbyjbox  tr{
+            margin-top:10px;
+        }
+        .yjbox{
+            width: 181px;
+            height: 32px;
+            line-height:32px;
+            border: 1px solid #D9D9D9;
+            float:left;
+            padding-left: 12px;
+        }
+        .yeji {
+            font-family: FangSong;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(88,88,88,1);
+            height: 32px;
+            line-height: 32px;
+            width: 67px;
+            float: left;
+            margin-left: 15px;
+            /* margin-left: -21px; */
+        }
+        .yeji2 {
+            font-family: FangSong;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(88,88,88,1);
+            height: 32px;
+            line-height: 32px;
+            width: 67px;
+            float: left;
+            margin-left: 32px;
+            /* margin-left: -21px; */
+        }
+
+        .yejibigtext {
+            width: 461px;
+            height: 99px;
+            float: left;
+            border: 1px solid #D9D9D9;
+            padding-left: 15px;
+            padding-top: 3px;
+        }
+        .yejibigtextyjnr {
+            padding-top: 3px;
+            padding-left: 5px;
+            width: 461px;
+            height: 99px;
+            margin-left: -16px;
+            margin-top: -4px;
+            border: 1px solid #D9D9D9;
+        }
+        .yjtext {
+            width: 136px;
+            height: 23px;
+            margin-left: 8px;
+            margin-top: 4px;
+            font-size: 14px;
+            font-family: FangSong;
+            font-weight: 400;
+            color: rgba(124,124,124,1);
+            line-height: 19px;
+        }
+
+        .gzsc {
+            margin-left: 4%;
+        }
+
+        .yejimidtext {
+            width: 461px;
+            height: 32px;
+            border: 1px solid #D9D9D9;
+        }
+        .fbsmbox{
+            width: 461px;
+            height: 44px;
+            border: 1px solid #D9D9D9;
+            float: left;
+            padding-left: 12px;
+        }
+        /* 按钮 */
+        .btnn {
+            width: 59px;
+            height: 31px;
+            /* border-radius: 10px; */
+            background-color: #F5F5F6;
+            float: left;
+            margin-left:10px;
+            color:#73777A;
+            outline:none;
+            text-align:center;
+            font-family: cursive;
+            line-height:31px;
+        }
+        /* 按钮点击事件 */
+        .btnn:link{
+            background-color: #0099CC;
+            color:white;
+        }
+        .btnn:hover{
+            background-color: #0099CC;
+            color:white;
+        }
+        .btnn:active{
+            background-color: #0099CC;
+            color:white;
+        }
+        .btnn:visited{
+            background-color: #0099CC;
+            color:white;
+        }
+        .btndiv {
+            position: absolute;
+        left: 70%;
+        top: 85%;
+        float: left;
+        }
+        .btndiv0 {
+            /*position: absolute;
+            left: 70%;
+            top: 85%;
+            float: left;*/
+            margin-left: 70%;
+            margin-top: 11px;
+            height: 30px;
+        }
+        .btndiv2 {
+            position: relative;
+            left: 63%;
+            top: 2%;
+            float: left;
+        }
+        .btndiv3 {
+            position: relative;
+            left: 63%;
+            top: 2%;
+            float: left;
+        }
+        .btndiv4 {
+            position: relative;
+            left: 63%;
+            top: 2%;
+            float: left;
+        }
+        .hour1 {
+            font-size: 15px;
+            width: 7%;
+            color: #D9D9D9;
+            float:right;
+        }
+        .hoursh {
+            font-size: 15px;
+            position: absolute;
+            left: 40.5%;
+            top: 12%;
+            width: 7%;
+            color: #D9D9D9;
+        }
+        .hoursh2 {
+            font-size: 15px;
+            position: absolute;
+            left: 86.5%;
+            top: 12%;
+            width: 9%;
+            color: #D9D9D9;
+        }
+        .hour {
+            width: 18px;
+            float: left;
+            margin-left: -21px;
+            margin-top: 8px;
+        }
+        .tjfj11{
+
+        }
+        .fb {
+            font-family: FangSong;
+            margin-left: -6px;
+            /* margin-top: 10px; */
+            margin-bottom: 8px;
+            color: rgba(51,51,51,1);
+            font-weight: 400;
+            border-bottom: 1px solid #E5E5E5;
+            width: 581px;
+            height: 26px;
+        }
+        .qr {
+            margin-left: -2.77%;
+            /* margin-bottom: 11px; */
+            border-bottom: 1px solid #E5E5E5;
+            width: 105.4%;
+            height: 10px;
+            font-size: 8px;
+            font-family: FangSong;
+            font-weight: 400;
+            color: rgba(51,51,51,1);
+        }
+
+
+        .hour2 {
+            font-size: 15px;
+            float:right;
+            width: 9%;
+            color: #D9D9D9;
+        }
+
+        .everydiv{
+            margin-top:10px;
+        }
+        .com {
+            cursor: pointer;
+            width: 316px;
+            background-repeat: no-repeat;
+            background-position: 99% center;
+            background-size: 18px;
+        }
+        .com2 {
+            cursor: pointer;
+            width: 316px;
+            background-repeat: no-repeat;
+            background-position: 93% center;
+            background-size: 18px;
+        }
+
+        /* 确认业绩 */
+        .qrdiv {
+            margin-left: -2.77%;
+            /* margin-bottom: 11px; */
+            border-bottom: 1px solid #E5E5E5;
+            width: 105.4%;
+            height: 17px;
+            font-size: 17px;
+            font-family: FangSong;
+            font-weight: 400;
+            color: rgba(51,51,51,1);
+        }
+        .modal-contentqryj {
+            /*  margin-left: 420px;
+             margin-top: -10px; */
+            width: 591px;
+            background-clip: padding-box;
+            background-color: #FFF;
+            border: 1px solid rgba(0,0,0,0);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.3);
+            outline: 0 none;
+        }
+        .qryj{
+            float:left;
+        }
+        .qryjbigbox {
+            width: 557px;
+            height: 233px;
+            background: rgba(244,251,255,1);
+            box-shadow: 0px 1px 15px 0px rgba(231,231,231,0.88);
+            /*margin-left: -14px;*/
+            margin-top: 15px;
+        }
+
+        .qryjbigbox2{
+            /* border: 1px red solid;  */
+            width: 613px;
+            height:172px;
+            margin-left: -15px;
+        }
+        .qryjbox {
+            /*  border: 1px red solid;  */
+            width: 77%;
+            /* margin-top: 6%; */
+            margin-top: 4px;
+            height: 45px;
+            margin-left: 10px;
+        }
+        .qryjbox2{
+
+        }
+        .yqryjword {
+            margin-left: 23px;
+            height: 12px;
+            line-height: 26px;
+        }
+        .qryjword {
+            font-family: FangSong;
+            font-size: 14.5px;
+            font-weight: 400;
+            color: rgba(159,159,159,1);
+            width: 79px;
+            float: left;
+            height: 12px;
+            line-height: 26px;
+            margin-left: 2px;
+        }
+        .qryjword1{
+            font-family: FangSong;
+            font-size: 14.5px;
+            font-weight: 400;
+            color:rgba(159,159,159,1);
+            line-height:31px;
+            width: 79px;
+            float:left;
+            margin-left: 2px;
+        }
+        .shortdiv {
+            width: 174px;
+            height: 29px;
+            height: 30px;
+            line-height: 30px;
+            float: left;
+            border: 1px solid rgba(217,217,217,1);
+            border-radius: 1px;
+            font-family: FangSong;
+            padding-left: 12px;
+        }
+        .longdiv {
+            width: 300px;
+            height: 35px;
+            border:1px solid rgba(217,217,217,1);
+            border-radius:1px;
+            float: right;
+            margin-right: -123px;
+        }
+        .llongdiv {
+            width: 454px;
+            height: 30px;
+            line-height: 35px;
+            border: 1px solid #D9D9D9;
+            float: right;
+            margin-right: -107px;
+            font-family: FangSong;
+            padding-left: 12px;
+        }
+        .timecom{
+            cursor: pointer;
+            width: 171px;
+            height: 35px;
+            background-repeat: no-repeat;
+            background-position: 99% center;
+            background-size: 18px;
+            border: 1px solid #ccc;
+            /*  background-image: url(icon.png); */
+        }
+        /* 完成业绩css */
+        .wcqryjword {
+            font-family: FangSong;
+            font-size: 14.5px;
+            font-weight: 400;
+            font-weight: 400;
+            color: rgba(0,0,0,1);
+            width: 79px;
+            float: left;
+            height: 12px;
+            line-height: 26px;
+        }
+        .wcyjbox {
+            /*  border: 1px red solid;  */
+            width: 77%;
+            /* margin-top: 6%; */
+            margin-top: 4px;
+            height: 38px;
+            margin-left: 10px;
+        }
+        .shyjbox{
+            /* border: 1px red solid; */
+            width: 77%;
+            /* margin-top: 6%; */
+            margin-top: 4px;
+            height: 41px;
+            margin-left: 10px;
+        }
+        .divleft{
+            float: left;
+        }
+        .divright{
+            margin-left: 9%;
+            float: left;
+        }
+        /* 进度条 */
+        .progress{position: relative; width:300px;margin:100px auto;}
+        .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+        .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+        .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+            left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+        .progress_btn:hover{border-color:#F7B824;}
+        /* 审核业绩 */
+        .divrightsh{
+            margin-left: 10%;
+            float: left;
+        }
+        ::-ms-browse, [type='file'] {
+            padding: .4em;
+            line-height: 10px;
+            border: 1px solid #D9D9D9;
+            background: #f0f3f9;
+            color: rgba(88,88,88,1);
+        }
+        ::-webkit-file-upload-button {
+            padding: .4em;
+            line-height: 10px;
+            border: 1px solid #D9D9D9;
+            background: #f0f3f9;
+            color: rgba(88,88,88,1);
+        }
+
+        /* 发布业绩 */
+        .everybox{
+            width:100%;
+            /* border:1px red solid; */
+            height:36px;
+            margin-top: 20px;
+        }
+
+        .everybox2{
+            width:100%;
+            /* border:1px red solid; */
+            height:40px;
+            margin-top: 35px;
+        }
+        .everybox3{
+            width:100%;
+            /* border:1px red solid; */
+            height:100px;
+            /*margin-top: 10px;*/
+        }
+        .everybox4{
+            width:100%;
+            height:100px;
+            padding-bottom:30px;
+        }
+        .everybox5{
+            width:100%;
+            height:100px;
+            margin-top:30px ;
+        }
+        .everybox6{
+            width:100%;
+            height:50px;
+        }
+        /* 业绩完成 */
+        .layui-input{
+            padding-left: 4px;
+        }
+
+        /* 所属部门 */
+        .filter-option-inner-inner{
+            font-family: fangsong;
+        }
+        /* 分页 */
+        .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+            margin-left: 2%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .layui-slider {
+            height: 4px;
+            background: #e2e2e2;
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+            margin-right: 90px !important;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<div id="big" class="col-sm-12" style="display: none">
+    <div class="example-wrap" style="margin-top: 25px;">
+
+        <!-- 顶部筛选框 -->
+        <div id="toolbar1"
+             style="width: 100%; overflow: hidden; margin-bottom: 14px; float: left;">
+            <div class="myText-content" style="float: left;width: 12%;cursor:pointer;">
+                <label class="myLabel-content">类型:&nbsp;&nbsp;&nbsp;</label>
+                <select
+                        name="select" id="type"
+                        style="float: left; width: 84px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;;">
+                    <option value="01">我的发布</option>
+                    <option value="02">我的参与</option>
+                    <option value="03">我的管理</option>
+                </select>
+            </div>
+            <div class="myText-content" style="float: left;width: 11%;cursor:pointer;">
+                <label class="myLabel-content">类型:&nbsp;&nbsp;&nbsp;</label>
+                <select
+                        name="select" id="type1"
+                        style="float: left; width: 68px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;;">
+                    <option value="01">临时会</option>
+                    <option value="02">周会</option>
+                    <option value="03">月会</option>
+                    <option value="03">年会</option>
+                </select>
+            </div>
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content" style="">日期：</label>
+                <div class="myText-content" style="">
+                    <input id="Begtime"
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="开始日期" style="width: 119px;margin-right: 10px;">
+                </div>
+            </div>
+            <div class="my-container"
+                 style="display: block;float: left;margin-left: 1%;">
+                <label class="myLabel-content">至</label>
+            </div>
+            <div class="my-container"
+                 style="display: block;  float: left;">
+                <label class="myLabel-content"></label>
+                <div class="myText-content" style="margin-left: 20px;">
+                    <input id="Endtime"
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="结束日期" style="width: 119px;">
+                </div>
+            </div>
+            <div class="myText-content" style="float: left;width: 10%;cursor:pointer;margin-left: 20px;">
+                <label class="myLabel-content">状态:&nbsp;&nbsp;&nbsp;</label>
+                <select
+                        name="select" id="type2"
+                        style="float: left; width: 69px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;;">
+                    <option value="01">全部</option>
+                    <option value="02">未开始</option>
+                    <option value="03">进行中</option>
+                    <option value="03">已结束</option>
+                </select>
+            </div>
+            <div class="myBtn-content"
+                 style="float: left;margin-left: 2%;">
+                <button id="search1" type="button" class="btn btn-primary"
+                        style="background-color: #0099CC;border-color: #0099CC;color: #FFF;" onclick="chaxunn()">查询</button>
+                <button id="reset1" type="button" class="btn btn-default"
+                        style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;" onclick="chongzhii()">重置</button>
+            </div>
+        <div id="fabu"
+             style="float: right;width:76px;height:30px;background-color:#0099CC;margin-right: 10px;cursor:pointer;"
+             onclick="xinzeng()">
+            <i class="iconfont icon-fabu"style="position: relative;top: 7px;left: 14px;color: white;" ><font style="font-size:10px;position: relative;top: -1px;left: 2px;">发布计划</font></i>
+        </div>
+        <!-- 业绩管理列表 -->
+    </div>
+</div>
+</div>
+<div class="example" id="paimingtable">
+    <table id="table1"></table>
+</div>
+<!-- 新增薪资规划-->
+<div id="modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="width:583px;">
+            <div class="modal-body" style="width: 627px;margin-left: -9px;margin-top: -5px;">
+
+                <div class="fb">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">新增会议</p>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+
+                <div class="everybox">
+                    <div class="yeji ">会议主题:</div>
+                    <div id="rank" class="yjbox" contenteditable="true" style="
+									    width: 460px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+
+                </div>
+                <div class="everybox">
+                    <div class="yeji ">部门:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style=" ">
+                                <select id="selectdep" style="float: left;     width: 181px;
+    height: 32px; line-height: 35px; border: solid 1px #D9D9D9;;"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="yeji2 ">会议类型:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style="">
+                                <select name="select" id="status"  style="float: left;     width: 181px;
+    height: 32px; line-height: 35px; border: solid 1px #D9D9D9;">
+                                    <option value="1" >临时会</option>
+                                    <option value="2" >周会</option>
+                                    <option value="3" >月会</option>
+                                    <option value="4" >年会</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="everybox">
+                    <div class="yeji ">开始时间:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style=" ">
+                                <input id="Searchtimeqj"
+                                       class="com laydate-icon form-control layer-date"
+                                       placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="yeji2 ">结束时间:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style="">
+                                <input id="Endtimeqj"
+                                       class="com laydate-icon form-control layer-date"
+                                       placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="everybox2">
+                    <div class="yeji ">会议地点:</div>
+                    <div id="meritpay" class="yjbox" contenteditable="true" style="
+									    width: 460px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+                </div>
+                <div class="everybox2">
+                    <div class="yeji ">主持人:</div>
+                    <div id="compere" class="yjbox" contenteditable="true" style="
+									    width: 460px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+                </div>
+
+                <div style="width:100%;height:5px;"></div>
+                <div class="everybox3">
+                    <div class="yeji ">备注:</div>
+                    <div  style="" class="yejibigtext" >
+                        <div id="describe" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                             onfocus="if(this.innerText=='请输入备注...')this.innerText=''"
+                             onblur="if(this.innerText=='')this.innerText='请输入备注...'">请输入备注...</div>
+                        <!-- <div class="tjfj" style="width: 20%;">
+                                    <input class="change" type="file" multiple="multiple"
+                                    style="
+                                        position: absolute;
+                                        left: 18.8%;
+                                        top: 38%;font-family: fangsong;
+                                    " />
+                        </div> -->
+                    </div>
+                </div>
+                <div class="btndiv0">
+                    <div class="btnn" style="background-color:#0099CC;color:white;" onclick="sq()">确认</div>
+                    <div class="btnn" style="border: 1px solid #EEEEEF;" onclick="qx()"> 取消</div>
+                    <div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 修改薪资规则-->
+<div id="modal-form1" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="height: 400px;width:583px;">
+            <div class="modal-body" style="height: 420px;width: 627px;margin-left: -9px;margin-top: -5px;">
+
+                <div class="fb">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">修改薪资规则</p>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+
+                <div class="everybox4">
+                    <div class="yeji ">级别:</div>
+                    <input id="rank1" disabled="disabled" class="yjbox" contenteditable="true" style="
+									    width: 460px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;    margin-bottom: 20px;">
+
+
+
+                    <div class="everybox5">
+                        <div class="yeji ">最低标准:</div>
+                        <div id="minimum1" class="yjbox" contenteditable="true" style="
+									    width: 181px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+
+                        <div class="yeji ">最高标准:</div>
+                        <div id="thehighest1" class="yjbox" contenteditable="true" style="
+									    width: 197px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+                    </div>
+
+                    <div class="everybox6">
+                        <div class="yeji ">业绩工资:</div>
+                        <div id="meritpay1" class="yjbox" contenteditable="true" style="
+									    width: 460px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+                    </div>
+
+                    <div class="everybox3">
+                        <div class="yeji ">备注:</div>
+                        <div  style="" class="yejibigtext" >
+                            <div id="describe1" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                                 onfocus="if(this.innerText=='请输入备注...')this.innerText=''"
+                                 onblur="if(this.innerText=='')this.innerText='请输入备注...'">请输入备注...</div>
+                        </div>
+                    </div>
+                    <div class="btndiv">
+                        <div class="btnn" style="background-color:#0099CC;color:white;" onclick="xg()">确认</div>
+                        <div class="btnn" style="border: 1px solid #EEEEEF;" onclick="qx1()"> 取消</div>
+                        <div></div>
+                    </div>
+
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- js初始化 -->
+<script>
+    var userid="";
+    userid1();
+    queryDep();
+    function userid1() {
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            success: function (data) {
+                userid = data.id;
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+    }
+    //如需刷新iframe，则只需把window替换为响应的iframe的 属性值或ID属性值
+    $(function () {
+        jeDate("#Begtime",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#Endtimeqj",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#Searchtimeqj",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        jeDate("#Endtime",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"2014-09-19 00:00:00"
+        });
+        var Request = new Object();
+
+        var opstatus;
+        now();
+        before();
+        $("#kntype").val("01");
+        $("a").tooltip();
+        $(":button").tooltip();
+        $("#top").click(function () {
+            var speed=200;//滑动的速度
+            $('body,html').animate({ scrollTop: 0 }, speed);
+            return false;
+        });
+        $("#big").show();
+        $("#example").hide();
+
+
+        table();
+        $("#paimingtable").show();
+        $(".searchable-select").click(function () {
+            $("#personselect").modal('show');
+            // $(".modal-dialog").modal('show');
+        });
+        $("#personselect").find(".row").height($(document).height()-100);
+
+        tree();
+        $("#tree").height($(document).height()-110);
+        //名字选择框 copy结束
+    });
+    //格式化现在日期
+    function now() {
+        // 给input  date设置默认值
+        var now = new Date();
+        //格式化日，如果小于9，前面补0
+        var day = "01";
+        //格式化月，如果小于9，前面补0
+        var month = ("0" + (now.getMonth() + 2)).slice(-2);
+        var year =now.getFullYear();
+        if(month >12){ month ="01"; year = now.getFullYear()+1};
+        //拼装完整日期格式
+        var today = year+"/"+(month)+"/"+(day) ;
+        //完成赋值
+        $('#Endtime').val(today);
+    }
+    //格式化15天前的日期
+    function before() {
+        //十五天毫秒值：1209600000
+        var date = new Date();
+        var times = date.getTime();
+        var now = new Date(times);
+        //格式化日，如果小于9，前面补0
+        var day = "01";
+        //格式化月，如果小于9，前面补0
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        //拼装完整日期格式
+        var today = now.getFullYear()+"/"+(month)+"/"+(day) ;
+        //完成赋值
+        $('#Begtime').val(today);
+    }
+    //查询所有部门
+    function queryDep() {
+        $.ajax({
+            url:"/Tdepartmentinfo/queryTdepartmentinfo",
+            type:"post",
+            dataType:'json',
+            success:function(data){
+                var selector=$("#selectdep");
+                for(var i=0;i<data.length;i++){
+                    selector.append('<option value="'+data[i].id+'">'+data[i].deparname+'</option>');
+                }
+                // //查询个人部门
+                // $.ajax({
+                //     url:"/Tdepartmentinfo/queryTuserByIdTdepartmentinfo",
+                //     type:"post",
+                //     dataType:'json',
+                //     success:function(data){
+                //         console.log(data)
+                //         $("#selectdep").val(data[0].id);
+                //         depid=data[0].id;
+                //     }
+                // })
+            }
+        })
+
+    }
+    //表格接口
+    function table(){
+        //  alert("当前状态=="+$("#sxlx").find("option:selected").val());
+        $('#table1').bootstrapTable({
+            /*showToggle:!0,
+            showColumns:!0,*/
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            /*showRefresh:true,*/
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: true, // 在表格底部显示分页组件，默认false
+            pageList: [5,10, 15], // 设置页面可以显示的数据条数
+            pageSize: 5, // 页面数据条数
+            clickToSelect: true,//单击选中行
+            pageNumber: 1, // 首页页码
+            onClickCell:function(field, value, row, $element,event){
+                // alert(row.rank);
+                // alert(row.minimum);
+                // // page('/manageMess?id='+row.id,'业绩详情');
+                $("#rank1").val(row.rank);
+                $("#minimum1").html(row.minimum);
+                $("#thehighest1").html(row.thehighest);
+                $("#meritpay1").html(row.meritpay);
+                $("#qjnr1").html(row.qjnr);
+
+                //alert(field +"，"+value+"，"+row.id);//value当前点击列所在行的内容，可以直接理解为单元格的内容，row为当前点击列所在行的所有数据
+            },
+            columns: [
+                {
+                    field: 'number',
+                    title: '序号',
+                    width:'4%' ,
+                    align:'center',
+                    formatter: function (value,row,index){
+                        return index+1; //序号正序排序从1开始
+                    }
+                },{
+                    field: 'conferencename',
+                    width:'5%' ,
+                    title: '会议名称',
+                    align:'center',
+
+                },{
+                    field: 'conferenceType',
+                    width:'7%' ,
+                    title: '会议类别',
+                    align:'center',
+                } , {
+                    field: 'conferenceDate',
+                    width:'7%' ,
+                    title: '会议日期',
+                    align:'center',
+                }  ,{
+                    field: 'meetingPlace',
+                    width:'5%' ,
+                    title: '会议地点',
+                    align:'center',
+                } ,{
+                    width:'7%' ,
+                    field: 'startTime',
+                    title: '开始时间',
+                    align:'center',
+                },{
+                    width:'7%' ,
+                    field: 'endTime',
+                    title: '结束时间',
+                    align:'center',
+                },{
+                    width:'12%' ,
+                    field: 'sessionState',
+                    title: '状态',
+                    align:'center',formatter: function (value,row,index){
+                        var stase =  row.sessionState;
+                        if(stase == 1){
+                            return "未开始" ;
+                        }else if(stase == 2){
+                            return "进行中";
+                        }else{
+                            return "已结束";
+                        }
+                    }
+                }
+            ] ,
+            data:datatable1
+        });
+    };
+    //表格代码
+    $(".fht-cell").remove();
+    /* 查询 */
+    var epid ;
+    function chaxunn(){
+        getNews();
+    }
+    /* 重置 */
+    function chongzhii(){
+
+        if($("#sxmk").find("option:selected").html() != "全部"){
+            $("#sxmk option:first").prop("selected", 'selected');
+        };
+        if( $("#sxlx").find("option:selected").html() != "全部"){
+            $("#sxlx option:first").prop("selected", 'selected');
+        };
+        getNews();
+    };
+    //解析url参数
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+
+    //进度条
+    layui.use('slider', function(){
+        var $ = layui.$
+            ,slider = layui.slider;
+        //默认滑块
+        slider.render({
+            elem: '#slideTest1',
+
+        });
+        //开启输入框
+        slider.render({
+            elem: '#slideTest8'
+            ,input: true //输入框
+            , change: function(value){
+                // alert(value);
+                console.log(value); //动态获取滑块数值
+                $("#wcjd").val(value);
+                //do something
+            }
+        });
+    });
+    //选项卡设置
+    function page(url, title) {
+        var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+        $(window.top.document).find('.J_mainContent').find("iframe").hide();
+        var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+            + '" seamless="" style="display: inline;"></iframe>';
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+            ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+        $(window.top.document).find('.J_mainContent').append(iframe);
+    }
+
+    //初始化树形结构
+    function tree() {
+        $.ajax({
+            url: "/Tdepartmentinfo/querySXJGTdepartmentinfo",
+            data: {},
+            async: false,
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                data.splice(0, 0, {'text': '全部', 'nodeid': '01'});
+                $('#tree').treeview({
+                    data: data,         // 数据源
+                    collapseIcon: "iconfont icon-xiangshangjiantou",
+                    expandIcon: "iconfont icon-iconset0417",
+                    checkedIcon:"glyphicon glyphicon-check",
+                    color: "#000000",
+                    backColor: "#FFFFFF",
+                    href: "#node-1",
+                    selectable: true,
+                    //showCheckbox:true,
+                    //multiSelect: false,    //多选
+                    singleSelect : true, // 单选checkbox
+                    state: {
+                        checked: true,
+                        disabled: true,
+                        expanded: true,
+                        selected: true
+                    },
+                    tags: ['available'],
+                    /*onNodeChecked: function (event, data) {
+                        alert("onNodeChecked----"+data.nodeid);
+
+                        //alert("deparepid"+data.deparepid);
+                    },*/
+                    onNodeSelected: function (event, data) {
+                        num2 = data.nodeid;
+                        name2 = data.text;
+                        $.ajax({
+                            url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                            data: {"id": data.nodeid},
+                            async: false,
+                            dataType: "json",
+                            type: "post",
+                            success: function (data) {
+
+                                //alert("deparepid"+deparepid);
+
+                                $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                            },
+                            error: function (error) {
+                                alert("数据丢失了，刷新下试试吧" + error.status);
+                            }
+                        });
+                        $("#search").click(function () {
+                            $.ajax({
+                                url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                                data: {"id": data.nodeid, "username": $("#key").val()},
+                                async: false,
+                                dataType: "json",
+                                type: "post",
+                                success: function (data) {
+
+
+                                    $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                    $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                    /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                },
+                                error: function (error) {
+                                    alert("数据丢失了，刷新下试试吧" + error.status);
+                                }
+                            });
+                        })
+                    }
+                });
+                $('#tree').treeview('collapseAll', {silent: true});
+                $('#tree').find("ul li:first").click();
+            },
+            error: function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+
+    };
+    var  datatable1 ;
+    //查询消息
+    function getNews() {
+        var type=$("#type").val();
+        var type1=$("#type1").val();
+        var type2=$("#type2").val();
+        var data={"manage":type,"conferenceType":type1,"sessionState":type2};
+        $.ajax({
+            url: "/ConferenceController/queryConferenceonifolist",
+            data:data,
+            type: "post",
+            dataType: 'json',
+            async:false,
+            success: function (data) {
+                console.log(data);
+                datatable1 = data ;
+                $('#table1').bootstrapTable('load',datatable1);
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+    }
+    //获取头像
+    function getMyinfo(otherid){
+        $.ajax({
+            url:"/tuser/queryIdTuser",
+            type:"post",
+            dataType:'json',
+            data:{"userid":otherid},
+            success:function(data){
+                console.log(data)
+                if(data.txfilename==null){
+                    return data.ip+"a1.jpg";
+                }else{
+                    return  data.ip+data.txfilename;
+                }
+            }
+        });
+    }
+    chongzhii();
+    var userid;
+    queryUser();
+    function queryUser() {
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                userid = data.id;
+            }
+        })
+    }
+
+    function sq() {
+        var rank=$("#rank").html();
+        var minimum=$("#minimum").html();
+        var thehighest =$("#thehighest").html();
+        var meritpay=$("#meritpay").html();
+        var describe=$("#qjnr").html();
+        if(rank == ""|| minimum==""|| thehighest==""|| meritpay==null){
+            alert("温馨提示：请把其他选项填写完整~")
+        }else{
+            var data={"rank":rank,"minimum":minimum,"thehighest":thehighest,"meritpay":meritpay,"userId":userid,"describe":describe};
+            $.ajax({
+                url:"/compensationRules/insertCr",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+
+                    if(data.code!=404){
+                        alert("发布成功");
+                        $("#modal-form").modal('hide');
+                        table();
+                        $('#table1').bootstrapTable('load',datatable);
+                        $("#rank").html(" ");
+                        $("#minimum").html(" ");
+                        $("#thehighest").html(" ");
+                        $("#meritpay").html(" ");
+                        $("#qjnr").html(" ");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+    }
+    function xg() {
+        var rank=$("#rank1").val();
+        var minimum=$("#minimum1").html();
+        var thehighest =$("#thehighest1").html();
+        var meritpay=$("#meritpay1").html();
+        var describe=$("#qjnr1").html();
+        if(rank == ""|| minimum==""|| thehighest==""|| meritpay==null){
+            alert("温馨提示：请把其他选项填写完整~")
+        }else{
+            var data={"rank":rank,"minimum":minimum,"thehighest":thehighest,"meritpay":meritpay,"userId":userid,"describe":describe};
+
+            $.ajax({
+                url:"/compensationRules/updateCr",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+
+                    if(data.code!=404){
+                        alert("修改成功");
+                        $("#modal-form1").modal('hide');
+                        table();
+                        $('#table1').bootstrapTable('load',datatable);
+                        $("#rank").html(" ");
+                        $("#minimum").html(" ");
+                        $("#thehighest").html(" ");
+                        $("#meritpay").html(" ");
+                        $("#qjnr").html(" ");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+    }
+    function qx() {
+        $("#modal-form").modal('hide');
+        table();
+        $('#table1').bootstrapTable('load',datatable);
+        $("#rank").html(" ");
+        $("#minimum").html(" ");
+        $("#thehighest").html(" ");
+        $("#meritpay").html(" ");
+        $("#qjnr").html(" ");
+    }
+    function qx1() {
+        $("#modal-form1").modal('hide');
+        table();
+        $('#table1').bootstrapTable('load',datatable);
+        $("#rank").html(" ");
+        $("#minimum").html(" ");
+        $("#thehighest").html(" ");
+        $("#meritpay").html(" ");
+        $("#qjnr").html(" ");
+    }
+    function xinzeng(){
+        $("#modal-form").modal('show');
+        $(".modal-dialog").show();
+        //  ssyj();
+    };
+</script>
+</html>

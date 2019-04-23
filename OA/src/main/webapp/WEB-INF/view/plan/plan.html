@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc" xmlns="http://www.w3.org/1999/html">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:59 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title></title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/iconfont.css" rel="stylesheet">
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet"  href="/static/js/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet"  href="/static/css/jquery.searchableSelectparse.css">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="/static/js/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <script src="/static/js/news.js"></script>
+    <style>
+
+        .range{
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none;/*清除系统默认样式*/
+            width:80% !important;
+            background: #e7eaec;
+            height: 3px;/*横条的高度*/
+        }
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background:  #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+        input[type=range]::-ms-track {
+            height: 25px;
+            border-color: transparent; /*去除原有边框*/
+            color: transparent; /*去除轨道内的竖线*/
+        }
+
+        input[type=range]::-ms-thumb {
+            height: 20px;
+            width: 20px;
+            background: #000000;
+            border-radius: 50%;
+        }
+
+        input[type=range]::-ms-fill-lower {
+            /*进度条已填充的部分*/
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #059CFA, #E1E6EB 100%, #E1E6EB);
+        }
+
+        input[type=range]::-ms-fill-upper {
+            /*进度条未填充的部分*/
+            height: 22px;
+            border-radius: 50%;
+            background: #E1E6EB;
+        }
+
+        input[type=range]:focus::-ms-fill-lower {
+            background: linear-gradient(to right, #059CFA, #E1E6EB 100%, #E1E6EB);
+        }
+
+        input[type=range]:focus::-ms-fill-upper {
+            background: #E1E6EB;
+        }
+        .my-container {
+            float: left;
+            display: inline-block;
+        }
+
+        .myLabel-content ,.myText-content,.myBtn-content{
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+            margin-left: 10px;
+        }
+        .myLabel-content,.myText-content input[type='text'],.myBtn-content .btn {
+            height: 30px;
+            font-size: 12px;
+        }
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+    </style>
+    <script th:inline="javascript">
+        var bs = [[${bs}]]
+        var plan_id;
+        var myinfo;
+        var num=0;
+        window.onresize = function (){
+            c();
+            personLinePic()
+        };
+        $(function () {
+            jeDate("#Begtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            jeDate("#Endtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            jeDate("#Searchtime",{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate:"2014-09-19 00:00:00"
+            });
+            IEVersion();
+            $("a").tooltip();
+            $(":button").tooltip();
+            $("#big").show();
+            $("#donghua").remove();
+            $("#toolbar2").hide();
+            $("#example").hide();
+            $("#paiming").hide();
+            $("#paimingtable").hide();
+            $("#tongji").show();
+            $("#tongjitable").show();
+            $("#sliders").show();
+            if (bs==1){
+                $("#example").show();
+                $("#tongji").hide();
+                $("#tongjitable").hide();
+                $("#sliders").hide();
+            }
+            personname();
+            $("#name1").searchableSelect({width:85});
+            $(".searchable-select").click(function () {
+                $("#personselect").modal('show');
+            });
+            $("#personselect").find(".row").height($(document).height()-100);
+            $('#table2').height($("#personselect").find(".row").height()-100);
+            tree();
+            $("#tree").height($(document).height()-110);
+            $('#type').selectpicker({width:80});
+            $('#type2').selectpicker({width:80});
+            planid();
+            now();
+            before();
+            list1();
+            list();
+            pic();
+            pic1();
+            c();
+            table1();
+            table();
+            personLinePic();
+            search();
+            //调用
+            uploader = WebUploader.create({
+
+                // 自动上传。
+                auto: false,
+
+                // swf文件路径
+                swf: '/static/js/plugins/webuploader/Uploader.swf',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#filePicker',
+
+                duplicate :true,//是否可以重复上传
+
+                fileSizeLimit: 10000*1024*1024, //限制图片大小，不可以超过
+
+                compress: null,
+
+                // 只允许选择文件，可选。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/jpg,image/jpeg,image/png'   //修改这行，加快上传文件框的打开速度
+                }
+            });
+            picUpload('#fileList',80,80,'#filePicker',10000);
+            // $('#testTable').bootstrapTable('refresh', { url: '/Home/GetPaginationData2' });
+        });
+        function IEVersion() {
+            if (!!window.ActiveXObject || "ActiveXObject" in window) {
+                $("input[type=range]").removeClass("range");
+                $("input[type=range]").css("margin-top", "3px");
+                $("input[type=range]").css("padding", "0px");
+                $("input[type=range]").css("height", "11px");
+            }
+        }
+        function closePage(){
+            $("#modal-form").modal('hide');
+            $("#personselect").modal('hide');
+            $("#hourss").val("")
+            $("#hours").val("")
+            $("#plan").html("");
+            $("#type3  option:selected").text("日计划");
+        }
+        //用户名字下拉框
+        function personname() {
+            $.ajax({
+                url:"/tuser/queryIdTuser",
+                data:{},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    myinfo=data;
+                    var a = "<option part="+data.id+" value="+data.username+">"+data.username+"</option>"
+                    $("#name1").append(a);
+                },
+                error:function (error) {
+                    alert("数据丢失了，刷新下试试吧" + error.status);
+                }
+            });
+        }
+
+        function questionPublish(){
+            $(".modal-dialog").show();
+            planid();
+            uploader.refresh();
+            uploader.reset();
+            num = 0;
+        }
+        //获取主键planid
+        function planid() {
+            $.ajax({
+                url:"/random/randomid",
+                data:{},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    plan_id=data.randomid;
+                },
+                error:function (error) {
+                    alert("计划图片上传失败" + error.status);
+                }
+            });
+        }
+
+        //格式化现在日期
+        function now() {
+            // 给input  date设置默认值
+            var now = new Date();
+            //格式化日，如果小于9，前面补0
+            var day = ("0" + now.getDate()).slice(-2);
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            //完成赋值
+            $('#Endtime').val(today);
+            $('#Searchtime').val(today);
+            $('#orderId').val(today);
+
+        }
+        //格式化15天前的日期
+        function before() {
+            //十五天毫秒值：1209600000
+            var date = new Date();
+            var time = date.getTime();
+            console.info("time-----"+time);
+            var times = time-1209600000;
+            console.info("times====="+times);
+            var now = new Date(times);
+
+            //格式化日，如果小于9，前面补0
+            var day = ("0" + now.getDate()).slice(-2);
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            //完成赋值
+            $('#Begtime').val(today);
+
+        }
+        //发布计划
+        function plan(){
+            if($("#plan").html()!="记录您工作计划..."){
+                var plantext = $("#plan").html();
+            }else{
+                var plantext = "";
+            }
+            var plantype = $("#type3  option:selected").text();
+            if(plantype=="日计划"){
+                plantype="01";
+            }else if(plantype=='月计划'){
+                plantype='02';
+            }else{
+                plantype='03'
+            }
+            if($("#plan").html()!="记录您工作计划..." || $("#fileList").html()!="") {
+                var reg = "/^\w+$/"
+                var hour = $("#hours").val()
+                var hours = $("#hourss").val()
+                if(!(/^\d+(\.\d+)?$/.test(hour) && (/^\d+(\.\d+)?$/.test(hours)))){
+                   alert("请以数字形式填写工作量或计划量");
+                   return false;
+                }else{
+                    var workhour = $("#hours").val();
+                }
+                var data = {"plantext": plantext, "workhour": workhour, "plantype": plantype,"id":plan_id,"workload":hours};
+                $.ajax({
+                    url: "/tplan/InsertPlan",
+                    data: data,
+                    async: false,
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        if (data.code != 404) {
+                            alert(data.msg);
+                            $("#plan").html("记录您工作计划...");
+                            $("#hours").val("");
+                            $("#hourss").val("");
+                            $("#type3  option:selected").text("日计划");
+                            list1();
+                            list();
+                            c();
+                            $('#table1').bootstrapTable('load',datatable1);
+                            $('#table').bootstrapTable('load',datatable);
+                            personLinePic();
+                            $("#modal-form").modal('hide');
+                            $("#reset1").trigger("click");
+                            $("#reset2").trigger("click");
+                           // $("#type").siblings().find(".filter-option-inner-inner").html("日计划");
+                        } else {
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (error) {
+                        alert("234计划图片上传失败" + error.status);
+                    }
+                });
+            }
+        }
+
+        //选项卡设置
+        function page(url, title) {
+            var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+            $(window.top.document).find('.J_mainContent').find("iframe").hide();
+            var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+                + '" seamless="" style="display: inline;"></iframe>';
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+                ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + '(计划) <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+            $(window.top.document).find('.J_mainContent').append(iframe);
+        }
+        //搜索、重置按钮
+        function search() {
+            $('#search1').click(function () {
+                list();
+                pic();
+                $('#table').bootstrapTable('load',datatable);
+                personLinePic();
+            });
+            $('#reset1').click(function() {
+                $(".searchable-select-holder").html(myinfo.username);
+                $(".searchable-select-holderappend").html(myinfo.id);
+                $('#type').selectpicker('val','01');
+                now();
+                before();
+                list();
+                $('#table').bootstrapTable('load',datatable);
+                pic();
+                personLinePic();
+            });
+
+            $('#search2').click(function () {
+                list1();
+                $('#table1').bootstrapTable('load',datatable1);
+                pic1();
+                c();
+            });
+            $('#reset2').click(function() {
+                $('#type2').selectpicker('val','01');
+                now();
+                list1();
+                $('#table1').bootstrapTable('load',datatable1);
+                pic1();
+                c();
+            });
+
+
+        }
+        //切换按钮
+        function tab(){
+            if($("#tongji").is(":hidden")){
+                $("#toolbar1").show();
+                $("#example").hide();
+                $("#paiming").hide();
+                $("#tongji").show();
+                $("#tongjitable").show();
+                $("#sliders").show();
+                $("#toolbar2").hide();
+                $("#paimingtable").hide();
+            }else{
+                $("#example").show();
+                $("#tongji").hide();
+                $("#tongjitable").hide();
+                $("#sliders").hide();
+                $("#paiming").hide();
+                $("#toolbar2").hide();
+                $("#paimingtable").hide();
+            }
+        }
+        //排名图表切换按钮
+        function paiming() {
+            if($("#paiming").is(":hidden")){
+                $("#example").hide();
+                $("#tongji").hide();
+                $("#paiming").show();
+                $("#tongjitable").show();
+                $("#sliders").show();
+                $("#toolbar2").show();
+                $("#toolbar1").hide();
+                $("#paimingtable").hide();
+            }else{
+                $("#tongjitable").hide();
+                $("#sliders").hide();
+                $("#example").hide();
+                $("#paiming").hide();
+                $("#paimingtable").show();
+                $("#toolbar1").hide();
+
+            }
+
+        }
+
+        var pic2;
+        /* 获取图形数据*/
+        function pic(){
+            var name = $(".searchable-select-holderappend").html();
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 =$("#Endtime").val();
+            var plantype = $("#type").siblings().find(".filter-option-inner-inner").text();
+            if(plantype=="日计划"){
+                plantype="01";
+            }else if(plantype=='月计划'){
+                plantype='02';
+            }else{
+                plantype='03'
+            }
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime ="";
+            var Endtime ="";
+            for(var i=0;i<arr.length;i++){
+                Begtime += arr[i]+"/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for(var i=0;i<arr1.length;i++){
+                Endtime += arr1[i]+"/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var data = {"Loginname":name,"Begtime":Begtime,"Endtime":Endtime,"plantype":plantype};
+            $.ajax({
+                url:"/tplan/queryNumPlan",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    console.log("-------------个人计划表格");
+                    console.log(data);
+                    pic2=data;
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        /* 获取图形数据*/
+        var pic3;
+        function pic1(){
+            var Begtime1 = $("#Searchtime").val();
+            var Endtime1 =$("#Searchtime").val();
+            var plantype = $("#type2").siblings().find(".filter-option-inner-inner").text();
+            if(plantype=="日计划"){
+                plantype="01";
+            }else if(plantype=='月计划'){
+                plantype='02';
+            }else{
+                plantype='03'
+            }
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime ="";
+            var Endtime ="";
+            for(var i=0;i<arr.length;i++){
+                Begtime += arr[i]+"/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for(var i=0;i<arr1.length;i++){
+                Endtime += arr1[i]+"/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var data = {"Begtime":Endtime,"Endtime":Endtime,"plantype":plantype,"sqtsgin":"sq"};
+            $.ajax({
+                url:"/tplan/queryNumPlan",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    console.log("-------------个人计划表格");
+                    console.log(data);
+                    pic3=data;
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        /* 个人列表和折线图*/
+        var datatable;
+        //ajax获取个人签到数据 传给datatable
+        function list(){
+            var name = $(".searchable-select-holderappend").html();
+            var Begtime1 = $("#Begtime").val();
+            var Endtime1 =$("#Endtime").val();
+            var plantype = $("#type").siblings().find(".filter-option-inner-inner").text();
+            if(plantype=="日计划"){
+                plantype="01";
+            }else if(plantype=='月计划'){
+                plantype='02';
+            }else{
+                plantype='03'
+            }
+            var arr = Begtime1.split('-');
+            var arr1 = Endtime1.split('-');
+            var Begtime ="";
+            var Endtime ="";
+            for(var i=0;i<arr.length;i++){
+                Begtime += arr[i]+"/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for(var i=0;i<arr1.length;i++){
+                Endtime += arr1[i]+"/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            var data = {"Loginname":name,"Begtime":Begtime,"Endtime":Endtime,"plantype":plantype};
+            $.ajax({
+                url:"/tplan/queryListTpraise",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    console.log("-------------个人计划表格");
+                    console.log(data);
+                    datatable=data;
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        //初始化表格
+        function table() {
+            var id;
+            var name;
+            function operateFormatter(value, row, index) {
+                console.log(row.dz);
+                if(row.dz=='0'||typeof(row.dz)=='undefined'){
+                    return [
+                        "<button  type='button' onclick=\"zan('"+row.id+"','"+row.userid+"')\" class='RoleOfdelete btn btn-primary  btn-sm' style='background-color: #0099CC;width: 50.69px;height:30px;' ><i id='zan"+row.id+"' class='glyphicon glyphicon-heart-empty' style='float:left;margin-left:7%;font-size:14px;'></i><p id='zan1"+row.id+"' style='float:left;margin-left:12%' >"+row.tpranum+"</p></button>"+
+                        "<button type='button' class='RoleOfdelete btn btn-primary  btn-sm' onclick=\"page('/plan/planMess?id="+row.id+"&number="+index+"&dz="+row.dz+"&temp=1','"+row.username+"')\" style='margin-left: 5px;width: 50.69px;height:30px;background-color: #0099CC;' ><i class='glyphicon glyphicon-comment' ></i> <p id='pl1"+row.id+"' style='float:right;margin-left:11%'> "+row.comnum+"</p></button>"
+                    ].join('');
+                }else{
+                    return [
+                        "<button  type='button' onclick=\"zan('"+row.id+"','"+row.userid+"')\" class='RoleOfdelete btn btn-primary  btn-sm' style='background-color: #0099CC;width: 50.69px;height:30px;' ><i id='zan"+row.id+"' class='glyphicon glyphicon-heart' style='float:left;margin-left:7%;font-size:14px;'></i><p id='zan1"+row.id+"' style='float:left;margin-left:12%;background-color: #0099CC' >"+row.tpranum+"</p></button>"+
+                        "<button type='button' class='RoleOfdelete btn btn-primary  btn-sm' onclick=\"page('/plan/planMess?id="+row.id+"&number="+index+"&dz="+row.dz+"&temp=1','"+row.username+"')\" style='margin-left: 5px;width: 50.69px;height:30px;background-color: #0099CC;' ><i class='glyphicon glyphicon-comment' ></i> <p id='pl1"+row.id+"' style='float:right;margin-left:11%'> "+row.comnum+"</p></button>"
+                    ].join('');
+                }
+            }
+            function aFormatter(value, row, index) {
+                index=index+1;
+                return [
+                    /*'<a href="/mail_detail?id='+row.id+'  "style="color: black" class="J_menuTabs">'+row.id+'</a>'*/
+                    "<a class='J_menuItem'data-index='0' onclick=\"page('/plan/planMess?id="+row.id+"&number="+index+"&dz="+row.dz+"&myid="+myinfo.id+"&messid="+row.userid+"&temp=1','"+row.username+"')\">"+row.username+"</a>"
+                ].join("")
+            }
+
+            window.operateEvents = {
+                'click .RoleOfdelete': function (e, value, row, index) {
+                    alert(row.dno);
+                },
+                'click .RoleOfedit': function (e, value, row, index) {
+                    $("#editModal").modal('show');
+
+                }
+            };
+            function formattext(value,row,index){
+
+                if(JSON.stringify(row.plantext)!="null" && row.plantext.length>40){
+                    var b =JSON.stringify(row.plantext);
+                    b = b.substr(1,b.length-2);
+                    b=b.replace(/\\r/g,"");
+                    return value =b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"").substr(0,20)+"..."
+                }else {
+                    var b =JSON.stringify(row.plantext);
+                    b = b.substr(1,b.length-2);
+                    b=b.replace(/\\r/g,"");
+                    return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"");
+                }
+            }
+            $('#table').bootstrapTable({
+                /*showToggle:!0,
+                showColumns:!0,*/
+                iconSize:"outline",
+                toolbar:"#exampleTableEventsToolbar",
+                /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                /*showRefresh:true,*/
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                pagination: true, // 在表格底部显示分页组件，默认false
+                pageList: [8,10, 20], // 设置页面可以显示的数据条数
+                pageSize: 8, // 页面数据条数
+                pageNumber: 1, // 首页页码
+                columns: [
+                    {
+                        field: 'number',
+                        title: '序号',
+                        width:'5px' ,
+                        align:'center',
+                        formatter: function (value,row,index){
+                            return index+1; //序号正序排序从1开始
+                        }
+                    },{
+                        field: 'username',
+                        title: '姓名',
+                        align:'center',
+                        width:'70px',
+                        formatter: aFormatter //添加超链接的方法
+                    },  {
+                        field: 'rtime',
+                        title: '发表日期',
+                        align:'center',
+                        width:'80px',
+                    }, {
+                        field: 'mtime',
+                        title: '发表时间',
+                        align:'center',
+                        width:'80px',
+                    },{
+                        field: 'workhour',
+                        title: '工作量',
+                        align:'center',
+                        width:'30px',
+                    },{
+                        field: 'workload',
+                        title: '计划量',
+                        align:'center',
+                        width:'30px',
+                    }, {
+                        field: 'plantext',
+                        title: '计划内容',
+                        align:'center',
+                        width:'300px',
+                        formatter: formattext
+                    },
+                    {
+                        field: 'price',
+                        title: '赞',
+                        align: 'center',
+                        width: '140px',
+                        formatter: operateFormatter
+
+                    }],
+                data:datatable
+            });
+        }
+        //初始化图形
+        function personLinePic() {
+            var data1=[];
+            var data2=[];
+            var month;
+            var day;
+            month = $("#Begtime").val().substr(5,5).split("-")[0];
+            day = $("#Begtime").val().substr(5,5).split("-")[1];
+            day = parseInt(day)-1;
+            for(var i=pic2.length-1;i>=0;i--){
+                var data4 = pic2[i].createtime.substr(5, 5).split('/');
+                if(typeof(day)!='undefined'){
+                    if(parseInt(data4[1])<(parseInt(day)+1)){
+                        if(parseInt(data4[0])==(parseInt(month))){
+
+                        }
+                    }
+                    while(parseInt(data4[1])!=(parseInt(day)+1)&&(parseInt(day)+1)<32){
+                        if(parseInt(data4[0])==(parseInt(month)+1)){
+                            console.log("--------月份补充");
+                            var month1=['1','3','5','7','8','10','12'];
+                            var year = new Date().getFullYear();
+                            if($.inArray(month,month1)){
+                                console.log("--------+135781012");
+                                while((parseInt(day)+1)<=31){
+                                    if((parseInt(day)+1)<10){
+                                        data1.push(month+"/0"+(parseInt(day)+1));
+                                    }else{
+                                        data1.push(month+"/"+(parseInt(day)+1));
+                                    }
+                                    data2.push(0);
+                                    day = (parseInt(day)+1);
+                                    console.log(month+"/"+(day)+"-----加入");
+                                }
+                                month=parseInt(month)+1;
+                                day=0;
+                            }else if((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)){
+                                if(month=='2'){
+                                    console.log("二月+135781012");
+                                    while((parseInt(day)+1)<=28){
+                                        if((parseInt(day)+1)<10){
+                                            data1.push(month+"/0"+(parseInt(day)+1));
+                                        }else{
+                                            data1.push(month+"/"+(parseInt(day)+1));
+                                        }
+                                        data2.push(0);
+                                        day = (parseInt(day)+1);
+                                    }
+                                    month=parseInt(month)+1;
+                                    day=0;
+                                }else {
+
+                                    while((parseInt(day)+1)<=29){
+                                        if((parseInt(day)+1)<10){
+                                            data1.push(month+"/0"+(parseInt(day)+1));
+                                        }else{
+                                            data1.push(month+"/"+(parseInt(day)+1));
+                                        }
+                                        data2.push(0);
+                                        day = (parseInt(day)+1);
+                                    }
+                                    month=parseInt(month)+1;
+                                    day=0;
+                                }
+                            }else {
+                                console.log("其他月份");
+                                while((parseInt(day)+1)<=30){
+                                    if((parseInt(day)+1)<10){
+                                        data1.push(month+"/0"+(parseInt(day)+1));
+                                    }else{
+                                        data1.push(month+"/"+(parseInt(day)+1));
+                                    }
+                                    data2.push(0);
+                                    day = (parseInt(day)+1);
+                                }
+                                month=parseInt(month)+1;
+                                day=0;
+                            }
+                        }
+                        if(parseInt(data4[1])!=(parseInt(day)+1)){
+                            if((parseInt(day)+1)<10){
+                                if(typeof(month)=='number'&&month<10){
+                                    data1.push("0"+month+"/0"+(parseInt(day)+1));
+                                }else{
+                                    data1.push(month+"/0"+(parseInt(day)+1));
+                                }
+                            }else{
+                                data1.push(month+"/"+(parseInt(day)+1));
+                            }
+                            data2.push(0);
+                            day = (parseInt(day)+1)+"";
+                        }
+                    }
+                }
+
+                data1.push(pic2[i].createtime.substr(5, 5));
+                month = pic2[i].createtime.substr(5,5).split("/")[0];
+                day = pic2[i].createtime.substr(5,5).split("/")[1];
+                data2.push(parseInt(pic2[i].numworkhour));
+                if(i==0){
+                    if(day!=parseInt($("#Endtime").val().substr(5,5).split("-")[1])){
+                        var final=$("#Endtime").val().split('-');
+                        var a = {"createtime":final[0]+"/"+final[1]+"/"+final[2]+" 07:00","numworkhour":"0"}
+                        pic2[0]=a;
+                        i++;
+                    }
+                }
+            }
+            if(datatable.length==0){
+                var a = {"username":"暂无"};
+                datatable.push(a);
+            }
+
+            $("#R0").val(10);
+            $("#R1").val(0);
+
+            $("#tongji").highcharts(
+                {
+                    chart : {
+                        type : 'column',// 柱状图
+                        // type:'spline',//曲线图
+                        // type : 'line',// 折现图
+                        // type:'pie',//饼状图
+                        // renderTo : 'tongji', // 在哪个区域呈现，对应HTML中的DIV元素ID
+                        width : $(document).width()-70,
+                        height:$(document).height()*2/3,
+                        marginTop: 50,
+                        options3d : {
+                            enabled : true,// 是否使用3D渲染图表功能
+                            alpha : 10,
+                            beta : 0,
+                            depth : 50,
+                            viewDistance : 25,
+                        },
+                        plotBackgroundColor : null, // 绘图区的背景颜色
+                        plotBorderWidth : null, // 绘图区边框宽度
+                        plotShadow : false
+                        // 绘图区是否显示阴影
+                    },
+
+                    title : {
+                        text : '工作量(h)',
+                        align: 'left',
+                        y:20,
+                        x:10,
+                        style: {
+                            color: '#000',
+                            fontWeight: '100',
+                            fontSize: '12'
+                        }
+                    },
+                    xAxis : {
+                        categories : []
+                    },
+                    yAxis : {
+                        min : 0,
+                        title : {
+                            text : ''
+                        },
+                    },
+                    legend : {
+                        enabled : false
+                    },
+                    credits : {
+                        enabled : false
+                        // 去掉官网的超链接
+                    },
+                    exporting : {
+                        enabled : false
+                        // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                    },
+                    lang : {
+                        printChart : "打印图片",
+                        downloadJPEG : "导出JPEG 图片",
+                        downloadPDF : "导出PDF 文档",
+                        downloadPNG : "导出PNG 图片",
+                        downloadSVG : "导出SVG 矢量图",
+                        contextButtonTitle : "导出"
+                    },
+                    tooltip : {
+                        pointFormatter : function() {
+                            return '<span style="color:{' + this.series.data
+                                + '}">工作量：'+this.y+'</span>'
+                        }
+                    },
+
+                    series : [ {
+                        data : []
+                    } ]
+                });
+            console.log($("#tongji").highcharts());
+            $('#R0').on('change', function() {
+                $("#tongji").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji").highcharts().redraw(false);
+            });
+
+            $('#R1').on('change', function() {
+                $("#tongji").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html(
+                    $("#tongji").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html(
+                    $("#tongji").highcharts().options.chart.options3d.beta);
+            }
+
+            showValues();
+            $("#tongji").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji").highcharts().series[0].setData(data2);
+
+        }
+        /* 点赞*/
+        function zan(id,zanid) {
+            console.log(id+"-----------idididid");
+            if($("#zan"+id).hasClass("glyphicon glyphicon-heart-empty")){
+                var data = {"itemid":id,"itemtype":"tplan"};
+                $.ajax({
+                    url:"/tpraise/savetpraise",
+                    data: data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.code!='404'){
+                            $("#zan"+id).attr("class","glyphicon glyphicon-heart");
+                            var a =$("#zan1"+id).text();
+                            var num = parseInt(a)+1;
+                            $("#zan1"+id).text(num);
+                            $("#zan2"+id).attr("class","glyphicon glyphicon-heart");
+                            var a =$("#zan3"+id).text();
+                            var num = parseInt(a)+1;
+                            $("#zan3"+id).text(num);
+                        }else{
+                            alert(data.msg);
+                        }
+                    },
+                    error:function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+            }else {
+                var data = {"itemid":id};
+                $.ajax({
+                    url:"/tpraise/deleteIdTpraise",
+                    data: data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.code!='404'){
+                            $("#zan"+id).attr("class","glyphicon glyphicon-heart-empty");
+                            var a = $("#zan1"+id).text();
+                            var num = parseInt(a)-1;
+                            $("#zan1"+id).text(num);
+                            $("#zan2"+id).attr("class","glyphicon glyphicon-heart-empty");
+                            var a = $("#zan3"+id).text();
+                            var num = parseInt(a)-1;
+                            $("#zan3"+id).text(num);
+                        }else{
+                            alert(data.msg);
+                        }
+
+                    },
+                    error:function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+
+
+            }
+
+        }
+        /* 排名点赞*/
+        function zan2(id,zanid) {
+            if($("#zan2"+id).hasClass("glyphicon glyphicon-heart-empty")){
+                saveNews(zanid,"03","工作圈","",id);
+                var data = {"itemid":id,"itemtype":"tplan"};
+                $.ajax({
+                    url:"/tpraise/savetpraise",
+                    data: data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.code!='404'){
+                            $("#zan"+id).attr("class","glyphicon glyphicon-heart");
+                            var a =$("#zan1"+id).text();
+                            var num = parseInt(a)+1;
+                            $("#zan1"+id).text(num);
+                            $("#zan2"+id).attr("class","glyphicon glyphicon-heart");
+                            var a =$("#zan3"+id).text();
+                            var num = parseInt(a)+1;
+                            $("#zan3"+id).text(num);
+                        }else{
+                            alert(data.msg);
+                        }
+                    },
+                    error:function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+            }else {
+                var data = {"itemid":id};
+                $.ajax({
+                    url:"/tpraise/deleteIdTpraise",
+                    data: data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.code!='404'){
+                            $("#zan"+id).attr("class","glyphicon glyphicon-heart-empty");
+                            var a = $("#zan1"+id).text();
+                            var num = parseInt(a)-1;
+                            $("#zan1"+id).text(num);
+                            $("#zan2"+id).attr("class","glyphicon glyphicon-heart-empty");
+                            var a = $("#zan3"+id).text();
+                            var num = parseInt(a)-1;
+                            $("#zan3"+id).text(num);
+                        }else{
+                            alert(data.msg);
+                        }
+
+                    },
+                    error:function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+
+
+            }
+
+        }
+        /* 工作量排名和折线图*/
+        var datatable1;
+        //ajax 获取排序数据 传给datatable1
+        function list1(){
+            var Searchtime1 =$("#Searchtime").val();
+            var arr1 = Searchtime1.split('-');
+            var Searchtime ="";
+            var plantype = $("#type2").siblings().find(".filter-option-inner-inner").text();
+            if(plantype=="日计划"){
+                plantype="01";
+            }else if(plantype=='月计划'){
+                plantype='02';
+            }else{
+                plantype='03'
+            }
+            for(var i=0;i<arr1.length;i++){
+                Searchtime += arr1[i]+"/";
+            }
+            Searchtime = Searchtime.substr(0, Searchtime.length - 1);
+            var Cltype = '01';
+            var data = {"Begtime":Searchtime,"Endtime":Searchtime,"Cltype":Cltype,"sqtsgin":"sq","plantype":plantype};
+            $.ajax({
+                url:"/tplan/queryListTpraise",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    console.log("-------------排名表格");
+                    console.log(data);
+                    datatable1=data;
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+        //初始化图形#
+        function c(){
+            var data1=[];
+            var data2=[];
+            var month;
+            var day;
+            for(var i=pic3.length-1;i>=0;i--){
+                data1.push(pic3[i].username)
+                data2.push(parseInt(pic3[i].numworkhour));
+            }
+            $("#R0").val(10);
+            $("#R1").val(0);
+            var chart = new Highcharts.Chart({
+                chart: {
+//     		type:'column',
+                    //type:'spline',//曲线图
+                    type:'line',//折现图
+                    //type:'pie',//饼状图
+                    renderTo: 'paiming',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                    width : $(document).width()-70,
+                    height:$(document).height()*2/3,
+                    marginTop: 50,
+                    options3d: {
+                        enabled: true,//是否使用3D渲染图表功能
+                        alpha: 10,
+                        beta: 0,
+                        depth: 50,
+                        viewDistance: 25
+                    },
+                    plotBackgroundColor: null,    //绘图区的背景颜色
+                    plotBorderWidth: null,        //绘图区边框宽度
+                    plotShadow: false        //绘图区是否显示阴影
+                },
+
+                title: {
+                    text: '工作量(h)',
+                    align: 'left',
+                    y:20,
+                    x:10,
+                    style: {
+                        color: '#000',
+                        fontWeight: '100',
+                        fontSize: '12'
+                    }
+                },
+                xAxis: {
+                    categories: []
+                },
+                yAxis: {
+                   /* tickPositions: [0,20,40,60,80,100],*/
+                    min: 0,
+                    title : {
+                        text : ''
+                    },
+                },
+                legend: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false//去掉官网的超链接
+                },
+                exporting:{
+                    enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                lang:{
+                    printChart: "打印图片",
+                    downloadJPEG: "导出JPEG 图片",
+                    downloadPDF: "导出PDF 文档",
+                    downloadPNG: "导出PNG 图片",
+                    downloadSVG: "导出SVG 矢量图",
+                    contextButtonTitle: "导出"
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        return '<span style="color:{'+this.series.data+'}">工作量：'+this.y+'</span>'
+                    }
+                },
+
+                series:[{
+                    data:[]
+                }]
+            });
+
+            // Activate the sliders
+            $('#R0').on('change', function(){
+                $("#paiming").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#paiming").highcharts().redraw(false);
+            });
+            $('#R1').on('change', function(){
+                $("#paiming").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#paiming").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html($("#paiming").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html($("#paiming").highcharts().options.chart.options3d.beta);
+            }
+            showValues();
+            chart.xAxis[0].setCategories(data1);
+            chart.series[0].setData(data2);
+
+        }
+        //初始化表格
+        function table1() {
+            var id;
+            var name;
+            function operateFormatter(value, row, index) {
+                console.log(row)
+                console.log(row.dz);
+                if(row.dz=='0'||typeof(row.dz)=='undefined'){
+                    return [
+                        "<button  type='button' onclick=\"zan2('"+row.id+"','"+row.userid+"')\" class='RoleOfdelete btn btn-primary  btn-sm' style='background-color: #0099CC;width: 50.69px;height:30px;' ><i id='zan2"+row.id+"' class='glyphicon glyphicon-heart-empty' style='float:left;margin-left:7%;font-size:14px;'></i><p id='zan3"+row.id+"' style='float:left;margin-left:12%' >"+row.tpranum+"</p></button>"+
+                        "<button type='button' class='RoleOfdelete btn btn-primary  btn-sm' onclick=\"page('/plan/planMess?id="+row.id+"&number="+index+"&dz="+row.dz+"&temp=2','"+row.username+"')\" style='margin-left: 5px;width: 50.69px;height:30px;background-color: #0099CC;' ><i class='glyphicon glyphicon-comment' ></i><p id='pl3"+row.id+"' style='float:right;margin-left:11%'> "+row.comnum+"</p></button>"
+                    ].join('');
+                }else{
+                    return [
+                        "<button  type='button' onclick=\"zan2('"+row.id+"','"+row.userid+"')\" class='RoleOfdelete btn btn-primary  btn-sm' style='background-color: #0099CC;width: 50.69px;height:30px;' ><i id='zan2"+row.id+"' class='glyphicon glyphicon-heart' style='float:left;margin-left:7%;font-size:14px;'></i><p id='zan3"+row.id+"' style='float:left;margin-left:12%' >"+row.tpranum+"</p></button>"+
+                        "<button type='button' class='RoleOfdelete btn btn-primary  btn-sm' onclick=\"page('/plan/planMess?id="+row.id+"&number="+index+"&dz="+row.dz+"&temp=2','"+row.username+"')\" style='margin-left: 5px;width: 50.69px;height:30px;background-color: #0099CC;' ><i class='glyphicon glyphicon-comment' ></i><p id='pl3"+row.id+"' style='float:right;margin-left:11%'> "+row.comnum+"</p></button>"
+                    ].join('');
+                }
+            }
+            function aFormatter(value, row, index) {
+                return [
+                    /*'<a href="/mail_detail?id='+row.id+'  "style="color: black" class="J_menuTabs">'+row.id+'</a>'*/
+                    "<a class='J_menuItem'  data-index='0' onclick=\"page('/plan/planMess?id="+row.id+"&number="+index+"&dz="+row.dz+"&myid="+myinfo.id+"&messid="+row.userid+"&temp=2','"+row.username+"')\">"+row.username+"</a>"
+                ].join("")
+            }
+            function bFormatter(value, row, index) {
+                return [
+                    /*'<a href="/mail_detail?id='+row.id+'  "style="color: black" class="J_menuTabs">'+row.id+'</a>'*/
+                    "<a class='J_menuItem'  data-index='0' onclick=\"page('/plan/planMess?id="+row.id+"&number="+index+"&dz="+row.dz+"&myid="+myinfo.id+"&messid="+row.userid+"&temp=2','"+row.username+"')\"><img src="+row.ip+row.txfilename+" style='width:40%;border-radius:50%;'></a>"
+                ].join("")
+            }
+            window.operateEvents = {
+                'click .RoleOfdelete': function (e, value, row, index) {
+                    alert(row.dno);
+                },
+                'click .RoleOfedit': function (e, value, row, index) {
+                    $("#editModal").modal('show');
+
+                }
+            };
+
+            function formattext(value,row,index){
+                if(JSON.stringify(row.plantext)!="null" && row.plantext.length>40){
+                    var b =JSON.stringify(row.plantext);
+                    b = b.substr(1,b.length-2);
+                    b=b.replace(/\\r/g,"");
+                    return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/ig,"$1").replace(/<br>/ig,"").substr(0,20)+"...";
+                }else {
+                    var b =JSON.stringify(row.plantext);
+                    b = b.substr(1,b.length-2);
+                    b=b.replace(/\\r/g,"");
+                    return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/ig,"$1").replace(/<br>/ig,"");
+                }
+            }
+
+            $('#table1').bootstrapTable({
+                /*showToggle:!0,
+                showColumns:!0,*/
+                iconSize:"outline",
+                toolbar:"#exampleTableEventsToolbar",
+                /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                /*showRefresh:true,*/
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                pagination: true, // 在表格底部显示分页组件，默认false
+                pageList: [8,10, 20], // 设置页面可以显示的数据条数
+                pageSize: 8, // 页面数据条数
+                pageNumber: 1, // 首页页码
+                columns: [
+                    {
+                        field: 'number',
+                        title: '序号',
+                        width:'5px' ,
+                        align:'center',
+                        formatter: function (value,row,index){
+                            return index+1; //序号正序排序从1开始
+                        }
+                    },{
+                        field: 'username',
+                        title: '姓名',
+                        align:'center',
+                        width:'70px',
+                        formatter: aFormatter //添加超链接的方法
+                    },  {
+                        field: 'rtime',
+                        title: '发表日期',
+                        align:'center',
+                        width:'80px',
+                    }, {
+                        field: 'mtime',
+                        title: '发表时间',
+                        align:'center',
+                        width:'80px',
+                    },{
+                        field: 'workhour',
+                        title: '工作量',
+                        align:'center',
+                        width:'30px',
+                    },{
+                        field: 'workload',
+                        title: '计划量',
+                        align:'center',
+                        width:'30px',
+                    },  {
+                        field: 'plantext',
+                        title: '计划内容',
+                        align:'center',
+                        width:'300px',
+                        formatter: formattext
+                    },
+                    {
+                        field: 'price',
+                        title: '赞',
+                        align: 'center',
+                        width: '140px',
+                        formatter: operateFormatter
+
+                    }],
+                data: datatable1
+            });
+        }
+
+        //id -> 存放图片  width，height  存放图片尺寸宽高  id2 按钮  allMaxSize图片大小
+        function picUpload(id,width,height,id2,allMaxSize){
+            var flag = false;
+            var $ = jQuery;
+            $list = $(id);
+            // 优化retina, 在retina下这个值是2
+            ratio = window.devicePixelRatio || 1;
+            // 缩略图大小
+            thumbnailWidth = 80 * ratio;
+            thumbnailHeight = 80 * ratio;
+            allMaxSize = 8;//限制图片大小
+            // 当有文件添加进来的时候
+            uploader.on( 'fileQueued', function( file ) {
+                var $li = $(
+                    '<li id="' + file.id + '" class="file-item thumbnail" style="float:left;">' +
+                    '<div class="delete" style="overflow: hidden;height:0px;width: 80px;position: fixed;background-color: black;opacity: 0.6"><i class="iconfont icon-guanbi-copy" style="float: left;cursor: pointer;font-size: 53px;margin-top: -29px;margin-left: 32px;width: 39px;color:white">关闭</i></div>' +
+                    '<img>' +
+                    '<div class="info">' + file.name + '</div>' +
+                    '</li>'
+                    ),
+                    $img = $li.find('img');
+                $list.append( $li );
+                $(".uploader-list").css("border-top","1px solid #eaece7");
+                $(".uploader-list").css("padding","4px");
+                // 创建缩略图
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+
+                    //去掉默认的头像，清空图片名字的信息
+                    $('.webuploader-pick img').attr('src','')
+                    $('.file-item .info').empty();
+
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+
+                $li.on( 'mouseenter', function() {
+                    $(".delete").stop().animate({height: 15});
+                });
+
+                $li.on( 'mouseleave', function() {
+                    $(".delete").stop().animate({height: 0});
+                });
+
+                $li.on('click','.iconfont.icon-guanbi-copy' , function() {
+                    uploader.removeFile( file,true );
+                    num++;
+                    $li.remove();
+                    $(".delete").stop().animate({height: 0});
+                    if($(".fileList").size()<=0){
+                        $(".uploader-list").css("border-top","");
+                        $(".uploader-list").css("padding","");
+                    }
+                })
+            });
+
+
+            // 文件上传过程中创建进度条实时显示。
+            /* uploader.on( 'uploadProgress', function( file, percentage ) {
+                 var $li = $( '#'+file.id ),
+                     $percent = $li.find('.progress span');
+
+                 // 避免重复创建
+                 if ( !$percent.length ) {
+                     $percent = $('<p class="progress"><span></span></p>')
+                         .appendTo( $li )
+                         .find('span');
+                 }
+
+                 $percent.css( 'width', percentage * 100 + '%' );
+             });*/
+
+            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+            uploader.on( 'uploadSuccess', function( file ) {
+                $( '#'+file.id ).addClass('upload-state-done');
+                /*uploader.removeFile(uploader.getFiles(),true);*/
+
+                flag = true;
+            });
+
+            // 文件上传失败，现实上传出错。
+            uploader.on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+
+                // 避免重复创建
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+
+                //$error.text('上传失败');
+
+            });
+
+            // 完成上传完了，成功或者失败，先删除进度条。
+            uploader.on( 'uploadComplete', function( file ) {
+                num++;
+                if(num==uploader.getFiles().length){
+                    $("#reset1").trigger("click");
+                }
+                $( '#'+file.id ).find('.progress').remove();
+
+            });
+
+            //  验证大小
+            uploader.on("error",function (type){
+
+                if(type == "Q_EXCEED_SIZE_LIMIT"){
+                    window.alert("系统提示:所选图片总大小不可超过" + allMaxSize + "个哦！");
+                }
+
+                // 判断传入的是不是函数
+                /*  if( jQuery.isFunction(sideFun) ){
+                 sideFun(type,allMaxSize);
+                 }else {
+                 //不是函数
+                 console.log(2)
+                 return false;
+                 }*/
+                /*  if(sideFun === 'undefined'){
+                 return true;
+                 }else{
+                 sideFun(type,allMaxSize);
+                 }
+                 */
+            });
+
+            //绑定提交事件
+            $("#reset1").click(function() {
+                console.log($("#fileList").html());
+                if($("#fileList").html()!=""){
+                    alert($("#fileList").html());
+                    console.log("上传...");
+                    uploader.option('server','/file/saveFileupload');
+                    uploader.option('formData',{'itemtype':'tplan','itemid':plan_id,'attfrom':"01"});
+                    uploader.upload();   //执行手动提交
+                    console.log("上传成功");
+
+                }
+                $("#fileList").html("");
+
+
+            });
+
+            if(flag){
+                alert("发布成功！");
+            }
+        }
+        function textInit(e) {
+            e.preventDefault();//阻止默认事件
+            var text;
+            var clp = (e.originalEvent || e).clipboardData;
+            if (clp === undefined || clp === null) {
+                text = window.clipboardData.getData("text") || "";
+                if (text !== "") {
+                    if (window.getSelection) {
+                        var newNode = document.createElement("span");
+                        newNode.innerHTML = text;
+                        window.getSelection().getRangeAt(0).insertNode(newNode);
+                    } else {
+                        document.selection.createRange().pasteHTML(text);
+                    }
+                }
+            } else {
+                text = clp.getData('text/plain') || "";
+                if (text !== "") {
+                    var qutext = text
+                    var span=/<span\s*[^>]*>(.*?)<\/span>/ig;
+                    var div =/<div\s*[^>]*>(.*?)<\/div>/ig;
+                    var a = /<a\s*[^>]*>(.*?)<\/a>/ig;
+                    var p = /<p\s*[^>]*>(.*?)<\/p>/ig;
+                    qutext = qutext.replace(span,"$1");
+                    qutext = qutext.replace(a,"$1");
+                    qutext = qutext.replace(div,"$1");
+                    qutext = qutext.replace(p,"$1");
+                    document.execCommand('insertText', false, qutext);
+                }
+            }
+        }
+        $( document ).on( "paste", "#plan", function(e) {
+            //去除复制样式
+            textInit(e);
+        });
+        //人员选择
+        //初始化树形结构
+        function tree() {
+            $.ajax({
+                url:"/Tdepartmentinfo/querySXJGTdepartmentinfo",
+                data:{},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    data.splice(0,0,{'text':'全部','nodeid':'01'});
+                    $('#tree').treeview({
+                        data: data,         // 数据源
+                        collapseIcon:"iconfont icon-xiangshangjiantou",
+                        expandIcon:"iconfont icon-iconset0417",
+                        color:"#000000",
+                        backColor:"#FFFFFF",
+                        href:"#node-1",
+                        selectable:true,
+                        state: {
+                            checked:true,
+                            disabled:true,
+                            expanded:true,
+                            selected:true
+                        },
+                        tags: ['available'],
+                        onNodeChecked: function (event,data) {
+                            alert(data.nodeid);
+                        },
+                        onNodeSelected: function (event, data) {
+                            num2=data.nodeid;
+                            name2=data.text;
+                            $.ajax({
+                                url:"/Tdepartmentinfo/queryTdepartmentTuser",
+                                data:{"id":data.nodeid},
+                                async:false,
+                                dataType:"json",
+                                type:"post",
+                                success:function (data) {
+                                    table2();
+                                    $('#table2').bootstrapTable('load',data);
+                                    $("#tree").siblings().find(".pull-left.pagination-detail").css("left","19%");
+                                    $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                    /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                },
+                                error:function (error) {
+                                    alert("数据丢失了，刷新下试试吧" + error.status);
+                                }
+                            });
+                            $("#search").click(function () {
+                                $.ajax({
+                                    url:"/Tdepartmentinfo/queryTdepartmentTuser",
+                                    data:{"id":data.nodeid,"username":$("#key").val()},
+                                    async:false,
+                                    dataType:"json",
+                                    type:"post",
+                                    success:function (data) {
+                                        table2();
+                                        $('#table2').bootstrapTable('load',data);
+                                        $("#tree").siblings().find(".pull-left.pagination-detail").css("left","19%");
+                                        $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                        /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                    },
+                                    error:function (error) {
+                                        alert("数据丢失了，刷新下试试吧" + error.status);
+                                    }
+                                });
+                            })
+                        }
+                    });
+                    $('#tree').treeview('collapseAll', { silent: true });
+                    $('#tree').find("ul li:first").click();
+                },
+                error:function (error) {
+                    alert("数据丢失了，刷新下试试吧" + error.status);
+                }
+            });
+
+
+        }
+        //初始化人员表格
+        function table2() {
+            $('#table2').bootstrapTable('destroy').bootstrapTable({
+                /*showToggle:!0,
+            showColumns:!0,*/
+                iconSize: "outline",
+                toolbar: "#exampleTableEventsToolbar",
+                /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                //url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                /*showRefresh:true,*/
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                checkboxHeader:0,
+                singleSelect : true, // 单选checkbox
+                columns: [
+                    {
+                        field: "state",
+                        checkbox: true,
+                        align: 'center',
+                    }, {
+                        field: 'usernumber',
+                        title: '姓名',
+                        align: 'center',
+                        width: '25%',
+                    },{
+                        field: 'username',
+                        title: '姓名',
+                        align: 'center',
+                        width: '25%',
+                    }, {
+                        field: 'sex',
+                        title: '性别',
+                        align: 'center',
+                        width: '10%',
+                    }, {
+                        field: 'age',
+                        title: '年龄',
+                        align: 'center',
+                        width: '28%',
+                    }, {
+                        field: 'phone1',
+                        title: '联系电话',
+                        align: 'center',
+                        width: '30%',
+                    }],
+                data: []
+            });
+        }
+        //人员选择确认
+        function chose() {
+            var selectContent = $('#table2').bootstrapTable('getSelections');
+            if(selectContent.length ==1){
+                var num1 = selectContent[0].id;
+                var name1 = selectContent[0].username;
+                $('.searchable-select-holder').html(name1);
+                $('.searchable-select-holderappend').html(num1);
+            }else{
+                alert("请选择人员");
+                return false;
+            }
+            $("#personselect").modal('hide');
+        }
+    </script>
+</head>
+
+<body >
+<div class="gray-bg" >
+    <div id="donghua" class="col-sm-12" style="height:100%;">
+        <div class="ibox ">
+            <div class="ibox-content">
+                <div class="spiner-example" style="padding-top: 210px;">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="big" class="col-sm-12" style="display: none">
+
+        <!-- Example Events -->
+        <div class="example-wrap"  style="margin-top: 25px;">
+            <!-- 排名表搜索框-->
+            <div id="toolbar2" style="width: 88%;overflow: hidden;margin-bottom: 14px;float:left;">
+                <div class="my-container">
+                    <label class="myLabel-content">查询日期：</label>
+                    <div class="myText-content">
+                        <input id="Searchtime" class="com laydate-icon form-control layer-date" placeholder="查询日期">
+                    </div>
+                </div>
+                <div class="myText-content" >
+                    <select name="select" id="type2" style="height:33px;line-height: 35px;border: solid 1px #e5e6e7;">
+                        <option value="01">日计划</option>
+                        <option value="02">周计划</option>
+                        <option value="03">月计划</option>
+                    </select>
+                </div>
+                <div class="myBtn-content" style="margin-top: 0.2%;margin-left: 10%">
+                    <button id="search2" type="button" class="btn btn-primary" style="background-color:#0099CC">搜索</button>
+                    <button id="reset2" type="button" class="btn btn-default" >重置</button>
+                </div>
+            </div>
+            <!-- 个人统计图搜索框-->
+            <div id="toolbar1" style="width: 88%;overflow: hidden;margin-bottom: 14px;float:left;">
+                <div class="my-container">
+                    <label class="myLabel-content">姓名:</label>
+                    <div class="myText-content" style="width: 100px;">
+                        <select id="name1" data-placeholder="选择用户..." class="chosen-select" style="width:350px;" tabindex="2">
+                        </select>
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">开始日期：</label>
+                    <div class="myText-content">
+                        <input id="Begtime" class="com laydate-icon form-control layer-date" placeholder="开始日期">
+                    </div>
+
+                </div>
+                <div class="my-container" style="margin-left: 1%;"> <label class="myLabel-content">至</label></div>
+                <div class="my-container">
+                    <label class="myLabel-content"></label>
+                    <div class="myText-content">
+                        <input id="Endtime" class="com laydate-icon form-control layer-date" placeholder="结束日期">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">类型：</label>
+                    <div class="myText-content" >
+                            <select name="select" id="type" style="height:33px;line-height: 35px;border: solid 1px #e5e6e7;">
+                                <option value="01">日计划</option>
+                                <option value="02">周计划</option>
+                                <option value="03">月计划</option>
+                            </select>
+                    </div>
+                </div>
+                <div class="myBtn-content" style="margin-left: 10%;margin-top: 0.2%;">
+                    <button id="search1" type="button" class="btn btn-primary" style="background-color:#0099CC">搜索</button>
+                    <button id="reset1" type="button" class="btn btn-default" >重置</button>
+                </div>
+            </div>
+            <!-- 个人表格搜索框-->
+
+            <div class="btn-group hidden-xs" style="float: right">
+                <a style="border-right: 0px;" data-toggle="modal" data-trigger="hover" data-placement="bottom" title="发布计划" class="btn btn-outline btn-default" href="#modal-form" onclick="questionPublish()"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                <!--<button type="button" class="btn btn-outline btn-default">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </button>-->
+                <button style="border-right: 0px;" type="button" data-trigger="hover" data-placement="bottom" title="个人计划" class="btn btn-outline btn-default" onclick="tab();">
+                    <i class="glyphicon glyphicon-align-justify" aria-hidden="true"></i>
+                </button>
+                <button type="button" data-trigger="hover" data-placement="bottom" title="团队信息" class="btn btn-outline btn-default" onclick="paiming();">
+                    <i class="glyphicon glyphicon-stats" aria-hidden="true"></i>
+                </button>
+            </div>
+            <!-- 个人表格-->
+            <div class="example" id="example" >
+                <table id="table" ></table>
+                <script>
+
+                </script>
+            </div>
+            <!-- 个人统计-->
+            
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB; " id="tongji">
+         
+            </div>
+
+            <!-- 排名-->
+            <div class="col-sm-12" style="border: 1px solid #E1E6EB;" id="paiming" aria-hidden="true" ></div>
+            <div id="sliders" align="center" style="width: 100%; height: 30px; margin: 5px; float: left; border: 0px solid">
+            </div>
+            <table id="tongjitable" align="center" style="clear: both;width: 30%">
+                <tbody><tr>
+                    <td style="width: 10%">α角</td>
+                    <td style="width: 40%;"><input class="range" id="R0" type="range" min="0" max="45" value="" style="float: left;"> <span id="R0-value" class="value">10</span></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="width: 10%">β角</td>
+                    <td style="width: 40%;"><input class="range" id="R1" type="range" min="0" max="45" value="" style="float:left;"> <span id="R1-value" class="value">5</span></td>
+                </tr>
+                </tbody></table>
+            <!-- 排名列表-->
+            <div class="example" id="paimingtable" >
+                <table id="table1" ></table>
+                <script>
+
+                </script>
+            </div>
+
+        </div>
+        <!-- End Example Events -->
+    </div>
+    <!-- 发布签到弹出框 -->
+    <div id="modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: #FFFFFF;margin-top: 80px;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <h3 class="m-t-none m-b" style="font-family: FangSong;font-weight: 800;font-size: 15px;">发布计划</h3>
+                            <div class="plan" style="background-color: #FBFBFB;position:relative;border: 1px solid #e7eaec;overflow: hidden;padding: 0 0 15px;">
+                                <div class="work-hour"  style="padding-left: 1%;float: left;font-size: 13px;font-weight:500;color:#0099cc;margin-left: 4px;width:50%;line-height: 29px;" readonly="true" > 工作量（h）:<input id="hours" type="text" name="hours" style="background-color: #FBFBFB;outline: none;border-bottom: 1px solid #000;width: 43%;height:24px;border: none;">
+                                </div>
+                                <div class="work-hour"  style="float: left;font-size: 13px;font-weight:500;color:#0099cc;margin-left: 4px;width:47%;line-height: 29px;" readonly="true" > 计划量（h）:<input id="hourss" type="text" name="hours" style="background-color: #FBFBFB;outline: none;border-bottom: 1px solid #000;width: 42%;height:24px;border: none;">
+                                </div>
+                                <div id="plan" contenteditable="true" style="clear: both;padding: 8px 8px 0;min-height: 100px;" onfocus="if(this.innerText=='记录您工作计划...')this.innerText=''" onblur="if(this.innerText=='')this.innerText='记录您工作计划...'">记录您工作计划...</div>
+                                <div style="position:absolute;bottom: 0px;width: 100%">
+                                    <select name="select" id="type3" style="margin-left: 4px;color:#000000;background-color:#FBFBFB;outline: none;height:26px;line-height: 35px;border: none;float: left;">
+                                        <option value="01">日计划</option>
+                                        <option value="02">周计划</option>
+                                        <option value="03">月计划</option>
+                                    </select>
+                                    <div class="tongji" style="float: right;font-size: 20px;margin-right: 10px;">
+                                        <div id="filePicker" style="font-size:14px;margin-top: 4px; "><span style="font-size: 13px;float: right;margin-top: 3px;">上传图片</span></div>
+                                    </div>
+                                </div>
+                                <div  class="uploader-list">
+                                    <ul id="fileList" style="padding-left: 17px;list-style:none;overflow: hidden;margin-bottom: 15px;"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div >
+                            <button id="closed" style="color:#73777A;background-color: #F5F5F6;margin-right: 15px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="closePage();" value="取消">取消</button>
+                            <button id="commit" style="margin-right:3px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="plan();" value="发布">发布</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="personselect" class="modal fade" aria-hidden="true" style="overflow-y: hidden" >
+        <div class="modal-dialog">
+            <div class="modal-content" style="margin-left: 220px;width:800px;background-color: #FFFFFF;">
+                <div class="modal-body">
+                    <div class="row" >
+                        <div id="tree" class="col-sm-4" style="overflow-y: scroll;overflow-x: hidden;width: 30%"></div>
+                        <div class="col-sm-8" style="width: 70%">
+                            <div class="myText-content" style="margin-left: 0;width:100%;margin-bottom: 10px">
+                                <input id="key" type="text" style="outline: none;float: left;height:33px;width: 78%;" class="form-control" placeholder="请输入要搜索的姓名或员工编号">
+                                <button id="search" type="button" class="btn btn-primary" style="line-height: 19px;border-radius: 0;width: 20%;background-color:#0099CC">搜索</button>
+                            </div>
+                            <div id="table2"></div>
+                        </div>
+                        <div style="overflow: hidden;width: 200px;position: absolute;top: 85%;left: 70%;">
+                            <button style="color:#73777A;background-color: #F5F5F6;margin-right: 15px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="closePage();" value="取消">取消</button>
+                            <button style="margin-right:3px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose();" value="发布">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+
+
+
+</script>
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:02 GMT -->
+</html>

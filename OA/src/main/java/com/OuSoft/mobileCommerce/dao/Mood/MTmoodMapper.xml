@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.mobileCommerce.dao.Mood.MTmoodDao">
+
+
+
+	<!-- 接收 项目id  响应：username:姓名 tprausername点赞人 tprafilename点赞头像 -->
+	<!-- 点赞详情 -->
+	<select id="queryDzTmoodListsDao"  parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood">
+		SELECT 
+		tpra.id as tpraid, 
+		tutsi.username as username,
+		tutpra.username as tprausername,
+		tpra.userid as tprauserid,
+		ta.filename as txfilename,
+		tat.filename as tprafilename
+		FROM
+			tmood tmo
+		LEFT JOIN tpraise tpra ON tpra.itemid = tmo.id  
+		LEFT JOIN tuser tutpra on tutpra.id = tpra.userid
+		LEFT JOIN tuser tutsi ON tutsi.id = tmo.userid
+		left join tatt ta on ta.itemid = tmo.userid
+		LEFT JOIN tatt tat on tat.itemid = tpra.userid
+		WHERE
+			tmo.id = #{id}
+	</select>
+	
+	
+	
+	<!-- 参数，项目itemid   响应：username:评论人姓名，husername:回复人姓名，txfilename：姓名头像，hfilename,回复头像 -->
+	<!-- 评论详情 -->
+	<select id="queryPlTmoodDao"  parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood" >
+		SELECT
+		tc.*, tu.username AS pusername,
+		ta.filename AS txfilename,
+		tcomme.userid AS userid,
+		tcomme.commentid AS tcommentid,
+		tus.username AS husername,
+		tah.filename as hfilename
+		FROM
+			tcomment tc
+		LEFT JOIN (
+			SELECT
+				tcom.id AS id,
+				tcom.commenttime AS commenttime
+			FROM
+				tcomment tcom
+			WHERE
+				tcom.itemid = tcom.commentid
+			ORDER BY
+				tcom.commenttime
+		) tcomm ON tcomm.id = tc.commentid
+		LEFT JOIN tuser tu ON tu.id = tc.userid
+		LEFT JOIN tatt ta ON ta.itemid = tc.userid
+		LEFT JOIN tcomment tcomme ON tcomme.commentid = tc.id
+		LEFT JOIN tuser tus ON tus.id = tcomme.userid
+		LEFT JOIN tatt tah on tah.itemid = tus.id
+		WHERE	1 = 1
+		AND tc.itemid = #{itemid}
+		AND tc.itemtype = 'tmood'
+		ORDER BY
+		tc.commenttime,
+		tcomm.commenttime DESC
+	</select>
+	
+	
+	
+	
+
+	<!-- 心情图表所有人 --> 
+	<!-- 接收：必填begtime,endtime :年月日   响应：username用户姓名 tpranum点赞数 time年月日 times时分秒 dz是否点赞 tpranum点赞总数  LIMIT 分页  -->
+	<select id="queryQBTmoodListDao" parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood">
+			SELECT
+			tm.*, substr(tm.mocreatetime, 1, 10) AS time,
+			substr(tm.mocreatetime, 11, 9) AS times,
+			tu.username AS username,
+			ifnull(tpra.num, 0) AS tpranum,
+			taip.ip,
+			IFNULL(tp.id, 0) AS dz
+			FROM
+				tmood tm
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tmood'
+				GROUP BY
+					t.itemid
+			) tpra ON tm.id = tpra.itemid
+			LEFT JOIN tuser tu ON tu.id = tm.userid
+			LEFT JOIN tpraise tp ON tp.userid = #{dzuserid} AND tp.itemid = tm.id
+			LEFT JOIN tattip taip on taip.id = '1'
+			<where>
+				1 = 1
+				<if test="begtime != null and begtime != '' ">
+					and  SUBSTR(tm.mocreatetime, 1, 10) &gt;= #{begtime} 
+				</if>
+				<if test="endtime != null and endtime != '' ">
+					and SUBSTR(tm.mocreatetime, 1, 10) &lt;= #{endtime}
+				</if>
+				ORDER BY tm.monumber DESC,  times  
+				LIMIT ${pagenum}, ${pagesize}
+			</where>
+	</select>
+	
+	
+	<!-- -接收：pagenum:pagesize   响应：username用户姓名 tpranum点赞数 time年月日 times时分秒 dz是否点赞 tpranum点赞总数  LIMIT 分页  -->
+	<!-- 心情个人图表 -->
+	
+	<select id="queryGrTmoodListDao" parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood" >
+			SELECT
+			tm.*, substr(tm.mocreatetime, 1, 10) AS time,
+			substr(tm.mocreatetime, 11, 9) AS times,
+			tu.username AS username,
+			ifnull(tpra.num, 0) AS tpranum,
+			IFNULL(tp.id, 0) AS dz
+			FROM
+				tmood tm
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tmood'
+				GROUP BY
+					t.itemid
+			) tpra ON tm.id = tpra.itemid
+			LEFT JOIN tuser tu ON tu.id = tm.userid
+			LEFT JOIN tpraise tp ON tp.userid = #{dzuserid} AND tp.itemid = tm.id
+			<where>
+				1 = 1
+				<if test="begtime != null and begtime != '' ">
+					 and substr(tm.mocreatetime, 1, 10) &gt;= #{begtime}
+				</if>
+				<if test="endtime != null and endtime != '' ">
+					and substr(tm.mocreatetime, 1, 10) &gt;= #{endtime}
+				</if>
+				 and tm.userid = #{userid}
+				ORDER BY tm.mocreatetime DESC
+				LIMIT ${pagenum}, ${pagesize}
+			</where>
+				
+			
+			
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+</mapper>

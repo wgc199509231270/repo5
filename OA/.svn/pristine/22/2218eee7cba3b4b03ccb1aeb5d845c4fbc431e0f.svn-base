@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>rankMess</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <!--<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet"  href="/static/js/plugins/webuploader/webuploader.css">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script>
+
+
+
+    </script>
+</head>
+<style>
+    .edui-editor-body .edui-body-container {
+        outline: none;
+        padding: 0 0 0 10px;
+        word-wrap: break-word;
+        font-size: 20px;
+    }
+   .edui-container .edui-editor-body.body-container-focus {
+        border-color: #5c9dff;
+    }
+
+    /*滚动条样式*/
+    .edui-editor-body::-webkit-scrollbar {/*滚动条整体样式*/
+        width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+        height: 4px;
+    }
+    .edui-editor-body::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        background: rgba(0,0,0,0.2);
+    }
+    .edui-editor-body::-webkit-scrollbar-track {/*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        border-radius: 0;
+        background: rgba(0,0,0,0.1);
+    }
+    .edui-editor-body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        border: 1px solid #ccc;
+        border-left-color: #9a9a9a;
+        border-top-color: #9a9a9a;
+        background-color: #fff;
+    }
+    ul, li {
+        margin: 0;
+        padding: 0;
+    }
+    ul, ol, li {
+        list-style: none;
+    }
+    .p_author .icon .icon_relative {
+        margin-top: 0;
+    }
+    .l_post_bright .d_nameplate {
+        margin-bottom: 8px;
+    }
+    .p_author .d_nameplate {
+        margin-top: -2px;
+    }
+    .l_post_bright .d_name {
+        padding: 0;
+    }
+    .d_name {
+        padding: 4px 0 7px;
+        letter-spacing: -3px;
+    }
+    .d_name .p_author_name {
+        letter-spacing: normal;
+    }
+    .l_post_bright .d_icons {
+        margin-top: 8px;
+    }
+    .d_author .d_pb_icons {
+        overflow: hidden;
+        width: 80px;
+        margin: 0 auto 5px;
+        float: none;
+        padding: 0 0 3px 3px;
+        background-color: #fff;
+        border: 1px solid #e6e6e6;
+        border-radius: 1px;
+        display: block;
+    }
+    .l_badge {
+        display: none;
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 9px;
+    }
+    .d_post_content_main {
+        position: relative;
+        float: left;
+        width: 588px;
+        padding: 0 0 8px 20px;
+        background: #fff;
+    }
+    .l_post_bright .d_post_content_main .p_content {
+        height: auto!important;
+        height: 170px;
+        min-height: 170px;
+    }
+
+    .edui-btn-toolbar .edui-btn {
+        font-size: 30px;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: auto;
+        margin-right: 11px;
+        padding: 1px 7px 1px 1px;
+        border: 0;
+        background: url(//tb2.bdstatic.com/tb/static-common/img/rich_editor/separator_97ec61b.png) right center no-repeat;
+    }
+    .old_style_wrapper {
+        width: 100%;
+        padding:13px 20px 13px;
+        border: 1px solid #dfdfdf;
+        background: #fafafa;
+    }
+    ueditor_replace :active{
+
+    }
+    tb_poster_placeholder{
+        display: none;
+    }
+
+
+</style>
+<body class="gray-bg" id="body_wrap">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12 animated fadeInRight">
+                <div class="mail-box-header" style="height:240px">
+                    <h2 style="float:left;">
+                            <a href="/sign"> <img id="tx" src="/static/achievement/img/a1.jpg" style="border-radius: 50%;width: 50px;margin-top: 5px;"></a>
+                    </h2>
+                        <h5 style="float:left;margin-left: 10px;margin-top: 10px;">
+                            <span id="username" class="font-noraml" style="font-size: 17px;">花花-技术部</span>
+                            <br>
+	                        <br>
+	                        <br>
+	                        <span id="username" class="font-noraml" style="font-size: 13px;">业 绩 量 ： 320h</span>
+							<br>
+							<br>
+							<span id="username" class="font-noraml" style="font-size: 13px;">效       率 ： 1.1</span>
+							<br>
+							<br>
+							<span id="username" class="font-noraml" style="font-size: 13px;">工作时长 ： 300h</span>
+                       		<br>
+							<br>
+							<span id="username" class="font-noraml" style="font-size: 13px;">开始时间 ：2018-10-01</span>
+							<br>
+							<br>
+							<span id="username" class="font-noraml" style="font-size: 13px;">结束时间 ：2018-11-01</span>
+                        </h5>
+                </div>
+                <div class="mail-box">
+
+
+                    <div class="mail-body" style="overflow: hidden;padding-left: 100px;">
+                        <div id="type1" style="height: 25px;width: 161px;overflow: hidden;float: right;font-size: 20px;padding-right: 15px;">
+                            <i id="zan" onclick="temp()" class="glyphicon glyphicon-heart-empty"></i> <h7>赞</h7>
+                            <i id="pl" class="glyphicon glyphicon-comment"></i> <h7>评论</h7>
+                        </div>
+                    </div>
+
+                    <div class="mail-body tooltip-demo" style="padding: 10px">
+                        <div class="zan" style="margin-left: 20px;padding-bottom:5px;background-color:#fafafa;height:60px;">
+                             </br>
+                             <i id="zan" onclick="temp()" class="glyphicon glyphicon-heart-empty" style="margin-left:20px;margin-right:10px;"></i>
+                             <span>aaa、</span>
+                             <span>bbb、</span>
+                             <span>ccc</span>
+                        </div>
+                        <div id="pinlun" class="pinlun" style="margin-left: 20px;background-color:#fafafa;height:260px;border-top:1px white solid;">
+                       		 </br>
+                       		  <i id="pl" class="glyphicon glyphicon-comment" style="margin-left:20px;margin-right:10px;"></i>
+                       		  	<div style="margin-left:85px; margin-top: 5px;">
+                       		  	<img id="tx" src="/static/achievement/img/a1.jpg" style="border-radius: 50%;width: 30px;margin-top: 5px;">
+                       		  	<div style="margin-left:45px;margin-top:-30px;"> <span>aaa</span>    <p>真好~</p></div>
+                       		    </div>
+                       		    
+                       		    <div style="margin-left:85px; margin-top: 5px;">
+                       		  	<img id="tx" src="/static/achievement/img/a1.jpg" style="border-radius: 50%;width: 30px;margin-top: 5px;">
+                       		  	<div style="margin-left:45px;margin-top:-30px;"> <span>aaa</span>    <p>真好~</p></div>
+                       		    </div>
+                        </div>
+                    </div>
+
+                    <div class="reply" style="border-top: 1px solid #e7eaec;">
+                        <div id="tb_rich_poster" class="tb_rich_poster  ">
+                            <div class="j_bubble_container"></div>
+                            <div class="poster_head clearfix">
+                                <div class="poster_body editor_wrapper"><div class="poster_component editor_content_wrapper ueditor_container">
+                                    <div class="old_style_wrapper"><div class="edui-container" style="width: 100%;position: relative;"><div class="tb_poster_placeholder" id="p" style="display: block; left: 15px; position: absolute;"><p  style="width:565px;line-height:25px;">说点什么吧...</p></div>
+                                        <div id="edui-editor-body" class="edui-editor-body" data-id="true" style="height: 170px; overflow: hidden auto;"><div class="edui-editor-top"></div><div class="edui-editor-middle">
+                                            <div style="width: 100%;  z-index: 0;height:168px;padding: 0 !important;" class=" edui-body-container" >
+                                                <p id="reply_head"  contenteditable="false" style="float:left;"></p>
+                                                <div  id="ueditor_replace" style="min-height:168px;outline:none" contenteditable="true">
+                                                    <span  id="talk" style="white-space: pre-wrap;"><br></span>
+
+                                                </div>
+                                                <ul id="fileList" style="list-style:none;margin-left: 10px;"></ul>
+                                            </div>
+                                            <div id="filePicker" style="font-size:24px;margin-top:5px;position:absolute;left: 96%;top: 74%; "></div>
+                                        </div></div></div></div></div><div class="poster_error j_error"></div></div>                <div class="j_poster_signature poster_signature" style="display: none;"><label><input type="checkbox" class="j_use_signature">使用签名档</label>&nbsp;<span class="j_signature_wrapper signature_wrapper"><select name="sign_id" class="j_sign_id"></select>&nbsp;<a style="color:#0449BE" target="_blank" href="/i/sys/jump?type=signsetting">查看全部</a></span></div>                <div class="poster_component editor_bottom_panel clearfix">
+                                <div class="j_floating" style="padding: 10px;float: right;margin-right: 30px;"><a id="commit" onclick="post();" class="btn btn-primary" title="Ctrl+Enter快捷发表"><span><em>发 表</em></span></a>                        <span class="poster_posting_status j_posting_status"></span><div class="poster-right-area"></div></div></div></div></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script>
+        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
+    </script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+
+</html>
+

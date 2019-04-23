@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.mobileCommerce.dao.Tplan.MTplanDao">
+ 
+	
+	<!-- 计划所有人图表列表 -->
+	<!-- 接收pagenum页,pagesize一页的数 begtime开始时间年月日,endtime结束时间年月日 响应：times年月日，time时分秒，username:姓名，ip，txfilename头像 ,plantype:01/02/03:日/周/月-->
+	<select id="queryQBTplanListDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan" >
+			SELECT
+			tpl.*,
+			ta.filename AS txfilename, 
+			substr(tpl.createtime , 1, 10 ) as times,
+			substr(tpl.createtime , 11, 9 ) as time,
+			tu.username AS username,
+			IfNULL(tpra.num, 0) AS tpranum,
+			IfNULL(tmoo.tmonum, 0) AS comnum,
+			ip.ip as ip,
+			IFNULL(tp.id,0) as dz
+			FROM
+				tplan tpl
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM tpraise t
+				where t.itemtype = 'tplan'
+				GROUP BY
+					t.itemid
+			) tpra ON tpl.id = tpra.itemid
+			LEFT JOIN 
+			(
+			SELECT  tmo.commentid as commentid, 
+			count(tmo.commentid) as tmonum 
+			from tcomment tmo 
+			WHERE tmo.itemtype = 'tplan' GROUP BY tmo.commentid
+			) tmoo on tmoo.commentid = tpl.id
+			
+			LEFT JOIN tuser tu ON tu.id = tpl.userid
+			LEFT JOIN tatt ta ON ta.itemid = tpl.userid 
+			left JOIN tattip ip on ip.id = '1'  
+			left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tpl.id
+			<where>
+				 1=1 
+				 <if test="begtime != null and begtime != '' ">
+					and substr(tpl.createtime , 1, 10 ) &gt;= #{begtime}
+				 </if>
+				 <if test="endtime != null and endtime != '' ">
+					and substr(tpl.createtime , 1, 10 ) &lt;= #{endtime} 
+				 </if>
+				 <if test="plantype != null and plantype != '' ">
+				 	and tpl.plantype = #{plantype}
+				 </if>
+					ORDER BY
+					tpl.workhour desc ,tpl.createtime desc
+					limit ${pagenum} , ${pagesize}
+			</where>
+	</select>
+	
+	
+	<!-- 计划个人图表列表 -->
+	<!-- 接收pagenum页,pagesize一页的数 begtime开始时间年月日,endtime结束时间年月日  响应：times年月日，time时分秒，username:姓名，ip，txfilename头像 ,plantype:01/02/03:日/周/月-->
+	<select id="queryGrTplanListDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan" >
+		SELECT
+		tpl.*,
+		ta.filename AS txfilename, 
+		substr(tpl.createtime , 1, 10 ) as times,
+		substr(tpl.createtime , 11, 9 ) as time,
+		tu.username AS username,
+		IfNULL(tpra.num, 0) AS tpranum,
+		IfNULL(tmoo.tmonum, 0) AS comnum,
+		ip.ip as ip,
+		IFNULL(tp.id,0) as dz
+		FROM
+			tplan tpl
+		LEFT JOIN (
+			SELECT
+				t.itemid AS itemid,
+				count(t.itemid) AS num
+			FROM tpraise t
+			where t.itemtype = 'tplan'
+			GROUP BY
+				t.itemid
+		) tpra ON tpl.id = tpra.itemid
+		LEFT JOIN 
+		(
+		SELECT  tmo.commentid as commentid, 
+		count(tmo.commentid) as tmonum 
+		from tcomment tmo 
+		WHERE tmo.itemtype = 'tplan' GROUP BY tmo.commentid
+		) tmoo on tmoo.commentid = tpl.id
+		
+		LEFT JOIN tuser tu ON tu.id = tpl.userid
+		LEFT JOIN tatt ta ON ta.itemid = tpl.userid 
+		left JOIN tattip ip on ip.id = '1'  
+		left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tpl.id
+		<where>
+			1=1 and tpl.userid = #{userid}
+			<if test="begtime != null and begtime != '' ">
+				and substr(tpl.createtime , 1, 10 ) &gt;= #{begtime}
+			 </if>
+			 <if test="endtime != null and endtime != '' ">
+				and substr(tpl.createtime , 1, 10 ) &lt;= #{endtime} 
+			 </if>
+			 <if test="plantype != null and plantype != '' ">
+				 	and tpl.plantype = #{plantype}
+			 </if>
+				ORDER BY tpl.createtime desc 
+				limit ${pagenum} , ${pagesize}
+		</where>
+	</select>
+	
+	
+	<!-- 计划点赞 -->
+	<!-- 接收项目id  响应 tprausername:点赞人   tprafilename:点赞人头像 -->
+	<select id="queryDzTplanListDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan" >
+		SELECT 
+		  tpra.id as tpraid,
+			tpl.*,
+			tutsi.username as username,
+		  tutpra.username as tprausername,
+		  tpra.userid as tprauserid,
+		  ta.filename as txfilename,
+		  tat.filename as tprafilename,
+		  taip.ip as ip 
+		FROM
+			tplan tpl
+		LEFT JOIN tpraise tpra ON tpra.itemid = tpl.id
+		LEFT JOIN tuser tutpra on tutpra.id = tpra.userid
+		LEFT JOIN tuser tutsi ON tutsi.id = tpl.userid
+		left join tatt ta on ta.itemid = tpl.userid
+		LEFT JOIN tatt tat on tat.itemid = tpra.userid
+		LEFT JOIN tattip taip on taip.id = '1' 
+		WHERE
+			tpl.id = #{id}
+	</select>
+	
+	
+	<!-- 计划评论 -->
+	<!-- 参数，项目itemid   响应：pusername:评论人姓名 txfilename：评论人头像，husername:回复人姓名，txfilename：姓名头像，hfilename,回复头像 -->
+	<select id="queryPlTplanListDao" parameterType="com.OuSoft.system.entity.Plan" resultType="com.OuSoft.system.entity.Plan" >
+				SELECT
+				tc.*, tu.username AS pusername,
+				ta.filename AS txfilename,
+				tcomme.userid AS userid,
+				tcomme.commentid AS tcommentid,
+				tus.username AS husername,
+				tah.filename as hfilename,
+				taip.ip as ip
+			FROM
+				tcomment tc
+			LEFT JOIN (
+				SELECT
+					tcom.id AS id,
+					tcom.commenttime AS commenttime
+				FROM
+					tcomment tcom
+				WHERE
+					tcom.itemid = tcom.commentid
+				ORDER BY
+					tcom.commenttime
+			) tcomm ON tcomm.id = tc.commentid
+			LEFT JOIN tuser tu ON tu.id = tc.userid
+			LEFT JOIN tatt ta ON ta.itemid = tc.userid
+			LEFT JOIN tcomment tcomme ON tcomme.commentid = tc.id
+			LEFT JOIN tuser tus ON tus.id = tcomme.userid
+			LEFT JOIN tatt tah on tah.itemid = tus.id
+			LEFT JOIN tattip taip on taip.id = '1'
+			WHERE
+				1 = 1
+			AND tc.itemid = #{itemid}
+			AND tc.itemtype = 'tplan'
+			ORDER BY
+				tc.commenttime,
+				tcomm.commenttime DESC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+</mapper>

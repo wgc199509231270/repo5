@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:16:41 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>OuSoft Offifce Automation</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/iconfont.css" rel="stylesheet">
+    <link href="/static/css/ch/iconfont.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/static/js/plugins/layer/layer.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <style>
+        .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            margin:28px;
+        }
+
+        .fileinput-button input{
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+        }
+    </style>
+    <script>
+        var myself="";
+        $(function(){ getMyinfo();logout()})
+        function getMyinfo(){
+            $.ajax({
+                url:"/tuser/queryIdTuser",
+                type:"post",
+                dataType:'json',
+                success:function(data){
+                    myself=data.id;
+                    if(data.txfilename==null){
+                        $("#tx").attr("src",data.ip+"a1.jpg");
+                        $("#tx1").attr("src",data.ip+"a1.jpg");
+                        $("#tx2").attr("src",data.ip+"a1.jpg");
+                    }else{
+                        $("#tx").attr("src",data.ip+data.txfilename);
+                        $("#tx1").attr("src",data.ip+data.txfilename);
+                        $("#tx2").attr("src",data.ip+data.txfilename);
+                    }
+                }
+            });
+        }
+
+        function getTopMenu(){
+            $.ajax({
+                url:"/getMenu",
+                type:"post",
+                dataType:'json',
+                success:function(data){
+                    var menu1 = [];
+                    var menu2 = [];
+                    menu1 = data;
+                    var str ="";
+
+                    for(var i=0;i<menu1.length;i++) {
+                        var menu1name = menu1[i].menu.title;
+                        var menu1href = menu1[i].menu.url;
+                        str += '<li >' ;
+                        if(menu1href=="") {
+                            str += '<a href="#">';
+                        }else {
+                            str += "<a href=\""+menu1href+"\">";
+                        }
+                        str += "<i class=\"fa fa-home\"></i>" +
+                            "<span class=\"nav-label\">" +menu1name+ "</span>" +
+                            "<span class=\"fa arrow\"></span>" +
+                            "</a>";
+                        menu2 = menu1[i].menu2;
+                        for(var j=0;j<menu2.length;j++) {
+                            var tt = menu2[j].title;
+                            var url2 = menu2[j].url;
+                            str += " <ul class=\"nav nav-second-level \">" +
+                                "<li>" +
+                                "<a class=\"J_menuItem\" href=\"" + url2 + "\" data-index=\"0\">" + tt + "</a>" +
+                                "</li>" +
+                                "</ul>" ;
+                        }
+                        str += "</li>";
+                    }
+                    $("#side-menu").append(str);
+                    $("#side-menu").on("click",function () {
+                        SmoothlyMenu();
+                    });
+                }
+            });
+        }
+
+        function logout(){
+            $("#logout").click(function () {
+                $.cookie("rmbUser", "false", { expire: -1 });
+                $.cookie("username", "", { expires: -1 });
+                $.cookie("password", "", { expires: -1 });
+                $.ajax({
+                    url:"/out/yess",
+                    type:"post",
+                    dataType:'json',
+                    success:function(data){
+                        if(data.code!=404){
+                            window.location.href = "/OA2";
+                        }
+                    }
+                });
+            })
+        }
+    </script>
+    <script>
+        window.onresize = function (ev) {
+            console.log($(document).width()-$("#mess").width());
+            $("#mess").css("left",$("#wrapper").width()-$("#mess").width()-15);
+        }
+        window.onload = function(){
+            $("#leftTab1").show();
+            $("#yeji").trigger("click");
+            $/*("#onLeftTab").mouseover(function(){
+                $(this).stop().animate({
+                    width:'180px',
+                    speed:'fast',
+                })
+                $(this).css("z-index","9999");
+                $("#leftTab2").css("z-index","99");
+            })
+            $("#onLeftTab").mouseout(function(){
+                $(this).stop().animate({
+                    width:'50px',
+                    speed:'fast'
+                })
+            })*/
+            $("#leftTabF").click(function(){
+                $("#leftTab1").hide();
+                $("#leftTab").show();
+                $("#leftTab3").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").hide();
+                $("#leftTab7").hide();
+                $("#leftTab9").hide();
+                $("#leftTab8").hide();
+                $("#leftTab6").hide();
+            })
+            $("#onLeftTab").hover(function () {
+                if($("#onLeftTab").css("width")=="50px"){
+                    $("#onLeftTab").addClass("x");
+                }
+            })
+
+            $("#onLeftTab").find(".nav").find("a").click(function () {
+                $("#onLeftTab").removeClass("x");
+            })
+
+            $("#yejizhushou").click(function () {
+                $("#leftTab1").show();
+                $("#leftTab").hide();
+                $("#leftTab3").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").hide();
+                $("#leftTab7").hide();
+                $("#leftTab8").hide();
+                $("#leftTab9").hide();
+                $("#leftTab6").hide();
+                $("#onLeftTab").css("width","50 !important");
+            });
+            $("#leftTab08").click(function () {
+                $("#leftTab1").hide();
+                $("#leftTab").hide();
+                $("#leftTab3").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").hide();
+                $("#leftTab7").hide();
+                $("#leftTab8").show();
+                $("#leftTab9").hide();
+                $("#leftTab6").hide();
+                $("#onLeftTab").css("width","50 !important");
+            });
+            $("#kaoqin").click(function () {
+                $("#leftTab1").hide();
+                $("#leftTab").hide();
+                $("#leftTab3").hide();
+                $("#leftTab4").show();
+                $("#leftTab5").hide();
+                $("#leftTab7").hide();
+                $("#leftTab9").hide();
+                $("#leftTab8").hide();
+                $("#leftTab6").hide();
+                $("#onLeftTab").css("width","50 !important");
+            });
+            $("#xiaoxi").click(function () {
+                $("#leftTab1").hide();
+                $("#leftTab").hide();
+                $("#leftTab3").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").show();
+                $("#leftTab7").hide();
+                $("#leftTab8").hide();
+                $("#leftTab9").hide();
+                $("#leftTab6").hide();
+                $("#onLeftTab").css("width","50 !important");
+            });
+            $("#xinchou").click(function () {
+                $("#leftTab3").hide();
+                $("#leftTab").hide();
+                $("#leftTab1").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").hide();
+                $("#leftTab6").hide();
+                $("#leftTab7").show();
+                $("#leftTab8").hide();
+                $("#leftTab9").hide();
+            });
+            $("#qiandao").click(function () {
+                $("#leftTab8").show();
+                $("#leftTab1").hide();
+                $("#leftTab").hide();
+                $("#leftTab3").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").hide();
+                $("#leftTab7").hide();
+                $("#leftTab9").hide();
+                $("#leftTab6").hide();
+            });
+            $("#renyuan").click(function () {
+                $("#leftTab9").show();
+                $("#leftTab8").hide();
+                $("#leftTab1").hide();
+                $("#leftTab").hide();
+                $("#leftTab3").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").hide();
+                $("#leftTab7").hide();
+                $("#leftTab6").hide();
+
+            });
+            //系统管理
+            $("#system").click(function(){
+                $("#leftTab6").show()
+                $("#leftTab9").hide();
+                $("#leftTab8").hide();
+                $("#leftTab1").hide();
+                $("#leftTab").hide();
+                $("#leftTab3").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").hide();
+                $("#leftTab7").hide();
+            });
+            $("#basicInformation").click(function () {
+                $("#leftTab3").show();
+                $("#leftTab").hide();
+                $("#leftTab1").hide();
+                $("#leftTab4").hide();
+                $("#leftTab5").hide();
+                $("#leftTab6").hide();
+                $("#leftTab7").hide();
+                $("#leftTab8").hide();
+                $("#leftTab9").hide();
+            })
+            $("#side-menu").find("li").click(function () {
+                $(this).find("a").css("background-color", "#00C1DE");
+                $(this).find("a").css("color", "white");
+                $(this).siblings().find("a").css("background-color", "transparent");
+                $(this).siblings().find("a").css("color", "#a7b1c2");
+            });
+            $(".nav.nav-second-level").find("a").click(function () {
+                $(this).css("background-color", "white");
+                $(this).parent().parent().siblings().find("a").css("background-color", "#F5F6FA");
+            })
+            $("#btn").click(function(){
+                if(!$("#leftTab2").is(":hidden")) {
+                    $("#leftTab2").fadeOut(200);
+                    $("#btnfather").stop().animate({
+                        marginLeft:'50px',
+                        speed:200,
+                    })
+                    $("#btn").attr("src","/static/img/shouhui-.png")
+                    /*.stop().animate({
+                        width: '0px',
+                        speed: 'normal',
+                    })*/
+                }else{
+                    $("#leftTab2").fadeIn(500);
+                    $("#btnfather").stop().animate({
+                        marginLeft:'164px',
+                        speed:200,
+                    })
+                    $("#btn").attr("src","/static/img/zhankai.png")
+                    /*.stop().animate({
+                        width: '180px',
+                        speed: 'normal',
+                    })*/
+                }
+            });
+            $("#tx").on("click", function(e){
+                $("#mess").css("left",$(document).width()-$("#mess").width()-15);
+                if($("#mess").is(":hidden")){
+                    $("#mess").show();
+                }else{
+                    $("#mess").hide();
+                }
+                var ifrs = document.getElementsByTagName('iframe');
+                for (var i = 0; i < ifrs.length; i++) {
+                        ifrs[i].contentWindow.document.onclick = (function (ifr) {
+                            return function () {
+                                $("#mess").hide();
+                            }
+                        })(ifrs[i]);
+                };
+                $(document).on("click", function(){
+                    if (window.self != window.top) {
+                        alert('在iframe中');
+                    }
+                    $("#mess").hide();
+                });
+
+                e.stopPropagation();
+            });
+            $("#mess").on("click", function(e){
+                e.stopPropagation();
+            });
+        }
+    </script>
+    <script src="/static/js/hplus.min.js?v=4.1.0"></script>
+    <script type="text/javascript" src="/static/js/contabs.min.js"></script>
+    <script src="/static/js/plugins/pace/pace.min.js"></script>
+    <style>
+        .nav1>li{
+            float: right;
+            margin-right: 10px;
+        }
+        .nav1>li>a{
+            color: white;
+            font-weight: 600;
+            font-size:14px;
+            margin-right:10px;
+        }
+        .nav>li>a:hover,.nav>li>a:focus{
+            background-color:white ;
+        }
+        .nav1>li>a>i{
+            margin-top: 5px;
+            font-size:20px;
+        }
+        .navbar-default.navbar-static-side.x:hover{
+            width: 180px !important;
+            transition: width 0.3s;
+            -moz-transition: width 0.3s; /* Firefox 4 */
+            -webkit-transition: width 0.3s; /* Safari 和 Chrome */
+            -o-transition: width 0.3s; /* Opera */
+        }
+
+        .navbar-default .navbar-static-side .x {
+            width: 50px !important;
+            transition: width 0.3s;
+            -moz-transition: width 0.3s; /* Firefox 4 */
+            -webkit-transition: width 0.3s; /* Safari 和 Chrome */
+            -o-transition: width 0.3s; /* Opera */
+        }
+        body{
+            width: 100%;
+            scrollbar-base-color: transparent;
+            scrollbar-darkshadow-color: transparent;
+            scrollbar-highlight-color: transparent;
+            scrollbar-face-color: transparent;
+        }
+        .Popover-arrow--bottom {
+            width: 32px;
+            height: 16px;
+            -webkit-transform: translate(-50%,-100%);
+            transform: translate(-50%,-100%);
+        }
+        .Popover-arrow {
+            position: absolute;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .Popover-arrow:after {
+            content: "";
+            position: absolute;
+            box-sizing: border-box;
+            width: 24px;
+            height: 24px;
+            margin: -12px;
+            border: 1px solid #ebebeb;
+            background: #fff;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            pointer-events: auto;
+        }
+        .Popover-arrow--bottom:after {
+            left: 50%;
+            bottom: -8px;
+        }
+        .Popover-content--fixed {
+            position: fixed;
+        }
+        .Popover-content {
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ebebeb;
+            border-radius: 4px;
+            box-shadow: 0 5px 20px rgba(26,26,26,.1);
+            z-index: 203;
+        }
+        .Menu-item {
+            display: block;
+            width: 100%;
+            padding: 10px 20px;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow-x:auto;overflow-y: hidden; min-width: 1366px;">
+<div id="wrapper" style="background-color: #f3f3f4;overflow:hidden;">
+    <!-- 头部-->
+    <div class="col-sm-12" style="padding: 0px 8px;background-color: #252A2F;height:40px;">
+        <img src="/static/img/QQ图片20181019184823.png" style="margin-left: 4px;margin-top:3px;width: 25px;float: left;"><div style=";font-size:17px;color: white;width: 6%;float: left;margin-top: 9px;margin-left: 12px;">凡宇小a</div>
+            <ul class="nav1" style="list-style: none;float: right;margin-top: 5px;">
+                <li >
+                    <a>
+                        <img id="tx" style="width: 30px;height: 30px;border-radius: 50%"  src="" >
+                    </a>
+                </li>
+                <li >
+                    <a>
+                        <i class="fa fa-cog" style="float:left;"></i>
+                        <span style="float:left;margin-top: 5px;margin-left: 2px;">自定义</span>
+                    </a>
+                </li>
+                <li >
+                    <a>
+                        <i class="fa fa-envelope-o" style="font-size: 17px"></i>
+                    </a>
+                </li>
+                <li >
+                    <a>
+                        <i class="fa fa-bell-o" style="font-size: 17px"></i>
+                    </a>
+                </li>
+                <li style="margin-right: 20px;">
+                        <div  style="width:168px;height:27px;background: #3F4448;border:none;margin-top: 1px;">
+                            <input type="text" style="border:none;width: 83%;background: #3F4448;height:100%;color:white" placeholder=" 搜索";>
+                            <span class="fa fa-search" style="float: right;padding:3px;font-size:20px;"></span>
+                            <div style="border-left: 1px solid #828383 ;width: 1px;height:22px;float: right;margin-top: 3px;"></div>
+                        </div >
+                </li>
+            </ul>
+    </div>
+    <!--左侧导航开始-->
+    <nav id="onLeftTab" class="navbar-default navbar-static-side x" role="navigation" style="overflow: hidden;width: 50px;margin-top: 40px;">
+        <div class="nav-close"><i class="fa fa-times-circle"></i>
+        </div>
+        <div class="sidebar-collapse" style="width: 180px;height:100%" >
+            <ul class="nav" id="my-information">
+            </ul>
+            <ul class="nav" id="side-menu" style="width: 220px;" >
+                <li ><a id="leftTabF"  href="#" style="cursor: pointer;overflow: hidden;height:50px;padding: 0 27px"><i class="iconfont icon-yingyong" style="font-size:22px;margin-top: 11px;float:left;margin-left: -34px;width: 40px;"></i><div  class="nav-label" style="cursor: pointer;height:50px;padding-left: 3px;float: left;line-height: 52px;width: 120px;">工作圈</div></a>
+                <li ><a id="yejizhushou"  href="#" style="cursor: pointer;overflow:hidden;height:50px;padding: 0 27px"><i class="iconfont icon-renwu5" style="font-size:22px;margin-top: 11px;float:left;margin-left: -14px;"></i><div class="nav-label" style="cursor: pointer;height:50px;margin-left: 2px;float: left;line-height: 52px;width: 120px;">业绩助手</div></a>
+                <li ><a id="kaoqin"  href="#" style="cursor: pointer;overflow:hidden;height:50px;padding: 0 27px"><i class="iconfonts icon-kaoqin" style="font-size:22px;margin-top: 11px;float:left;margin-left: -14px;"></i><div class="nav-label" style="cursor: pointer;height:50px;margin-left: 2px;float: left;line-height: 52px;width: 120px;">考勤管理</div></a>
+                <li ><a id="xiaoxi"  href="#" style="cursor: pointer;overflow: hidden;height:50px;padding: 0 27px"><i class="iconfonts  icon-xiaoxi" style="font-size:22px;margin-top: 11px;float:left;margin-left: -14px;"></i><div  class="nav-label" style="cursor: pointer;height:50px;padding-left: 3px;float: left;line-height: 52px;width: 120px;">消息</div></a>
+                <li ><a id="xinchou"  href="#" style="cursor: pointer;overflow:hidden;height:50px;padding: 0 27px"><i class="iconfonts icon-xinchou" style="font-size:18px;margin-top: 11px;float:left;margin-left: -14px;"></i><div class="nav-label" style="cursor: pointer;height:50px;margin-left: 2px;float: left;line-height: 52px;width: 120px;">薪酬管理</div></a></li>
+                <li ><a id="qiandao"  href="#" style="cursor: pointer;overflow:hidden;height:50px;padding: 0 27px"><i class="iconfont icon-renwu5" style="font-size:22px;margin-top: 11px;float:left;margin-left: -14px;"></i><div class="nav-label" style="cursor: pointer;height:50px;margin-left: 2px;float: left;line-height: 52px;width: 120px;">签到</div></a></li>
+                <li ><a id="system"  href="#" style="cursor: pointer;overflow:hidden;height:50px;padding: 0 27px"><i class="iconfont icon-renwu5" style="font-size:22px;margin-top: 11px;float:left;margin-left: -14px;"></i><div class="nav-label" style="cursor: pointer;height:50px;margin-left: 2px;float: left;line-height: 52px;width: 120px;">系统管理</div></a></li>
+                <li id="renyuan1"  style="display: none;"><a id="renyuan"  href="#" style="cursor: pointer;overflow:hidden;height:50px;padding: 0 27px"><i class="iconfonts icon-sc-" style="font-size:22px;margin-top: 11px;float:left;margin-left: -14px;"></i><div class="nav-label" style="cursor: pointer;height:50px;margin-left: 2px;float: left;line-height: 52px;width: 120px;">人员管理</div></a></li>
+            </ul>
+        </div>
+
+    </nav>
+    <div id="leftTab2" style="width: 140px; height: 100%;position: absolute;top:40px;left:40px;color:#000000;background-color:#D9DEE4;overflow: hidden" >
+        <div id="leftTab" style="display: none;width: 180px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color: #F5F6FA;overflow: hidden" >
+        <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong" >工作动态</h2></li></ul>
+        <ul id="leftTab08" class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="" data-index="0">签到</a></li></ul>
+        <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="/xinqingqiang" data-index="0">心情</a></li></ul>
+        <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="/wendaqu" data-index="0">问答</a></li></ul>
+        <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="conference" data-index="0">会议</a></li></ul>
+        <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="/zhishiqu" data-index="0">知识</a></li></ul>
+        <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="jinrizongjie.html" data-index="0">总结</a></li></ul>
+        <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="/activity" data-index="0">活动</a></li></ul>
+         <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="/elegant" data-index="0">风采</a></li></ul>
+        
+        </div>
+        <div id="leftTab1" style="display: none;width: 140px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color:#F5F6FA;overflow: hidden" >
+            <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong">业绩</h2></li></ul>
+            <ul class="nav nav-second-level"><li><a style="margin-top: 10px;font-size: 14px;font-family: STSong;font-weight: 400;" id="yeji" class="J_menuItem" href="/rank"  data-index="0">业绩排名</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/manage">业绩管理</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;"  class="J_menuItem" href="/parse" data-index="0">业绩分析</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0"  href="/warning">业绩助手</a></li></ul>
+        </div>
+        <div id="leftTab4" style="display: none;width: 140px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color:#F5F6FA;overflow: hidden" >
+            <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong">考勤管理</h2></li></ul>
+            <ul class="nav nav-second-level"><li><a style="margin-top: 10px;font-size: 14px;font-family: STSong;font-weight: 400;"  class="J_menuItem" href="/timeOff"  data-index="0">请假管理</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/checkOn">考勤统计</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/calendar2">考勤日历</a></li></ul>
+        </div>
+
+        <div id="leftTab3" style="display: none;width: 140px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color:#F5F6FA;overflow: hidden" >
+            <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong">信息中心</h2></li></ul>
+            <img id="tx1" src="" style="width: 50%;border-radius: 50%;margin:10% 25%;">
+           <!-- <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;color:#66C5FF" class="J_menuItem" data-index="0" onclick="updateimg">修改头像</a></li></ul>-->
+
+            <ul class="nav nav-second-level"><li> <span class="btn btn-success fileinput-button">
+               <form id="uploadForm" enctype="multipart/form-data">
+             修改头像<input id="file" type="file" name="file"/>
+       </form>
+            </span></li></ul>
+
+           <!-- <input type="button" onclick="cancleUploadFile()" value="取消" />-->
+            <!--<ul class="nav nav-second-level" style="margin-top: 15%;"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="/basicInfomation" data-index="0">基本信息</a></li></ul>-->
+            <ul class="nav nav-second-level" style="margin-top: 15%;"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem" href="/basicinformation" data-index="0">信息中心</a></li></ul>
+        </div>
+        <div id="leftTab5" style="display: none;width: 140px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color:#F5F6FA;overflow: hidden" >
+            <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong">消息管理</h2></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/news">消息</a></li></ul>
+        </div>
+        <div id="leftTab7" style="display: none;width: 140px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color:#F5F6FA;overflow: hidden" >
+            <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong">薪酬管理</h2></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/compensationRule">薪资规则</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/salarylist">薪资列表</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/Payrecordhtml">调薪记录</a></li></ul>
+            <!--<ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/wagea">调薪申请</a></li></ul>-->
+            <!--<ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/checkOn">薪资助手</a></li></ul>-->
+        </div>
+        <div id="leftTab6" style="display: none;width: 140px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color:#F5F6FA;overflow: hidden" >
+            <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong">系统管理</h2></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/account">账号管理</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/role">角色管理</a></li></ul>
+                <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/post">岗位管理</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/department">部门管理</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/company">公司管理</a></li></ul>
+        </div>
+        <div id="leftTab8" style="display: none;width: 140px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color:#F5F6FA;overflow: hidden" >
+            <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong">签到管理</h2></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/planRules">计划动态</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/planmanagement">计划管理</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/Projectanalysis">计划分析</a></li></ul>
+        </div>
+
+        <div id="leftTab9" style="display: none;width: 140px; height: 100%;position: absolute;z-index: 1;color:#000000;background-color:#F5F6FA;overflow: hidden" >
+            <ul class="nav nav-second-level" style="border-bottom: 1px solid white;background-color: #F5F6FA;"><li style="height:29px;"><h2 style="font-weight:bold;margin-top: 25px;margin-left: 20%;font-size:16px;color:#333333;font-family: STSong">人员管理</h2></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/satff">员工管理</a></li></ul>
+            <ul class="nav nav-second-level"><li><a style="font-size: 14px;font-family: STSong;font-weight: 400;" class="J_menuItem"  data-index="0" href="/contract">合同管理</a></li></ul>
+
+        </div>
+</div>
+    <div id="btnfather" style="width: 20px;height: 60px;overflow: hidden;position: absolute;z-index: 222;margin-left: 164px;margin-top: 315px;"><img class="navbar-minimalize minimalize-styl-2" id="btn" src="/static/img/zhankai.png"></div>
+
+    <!--左侧导航结束-->
+    <!--右侧部分开始-->
+    <div id="page-wrapper" class="gray-bg dashbard-1" style="margin-top: 40px;">
+        <div class="row content-tabs" style="padding: 20px 0 45px;">
+            <button class="roll-nav roll-left J_tabLeft" style="color:#D8D9DA;margin-top: 20px;"><i class="fa fa-backward"></i>
+            </button>
+            <nav class="page-tabs J_menuTabs">
+                <div class="page-tabs-content" id="page-tabs-contenti">
+                </div>
+            </nav>
+            <button class="roll-nav roll-right J_tabRight" style="width: 20px;right:48px;padding:4px;margin-top: 20px;"><i class="fa fa-forward" style="color: #D8D9DA"></i>
+            </button>
+            <div class="btn-group roll-nav roll-right" style="height:27px;line-height: 21px;padding-right: 48px;width: 20px;margin-top: 17px;">
+                <button style="width: 25px;border-left: 1px solid #eee;padding: 0;text-align: left;line-height: 18px;" class="dropdown J_tabClose"  data-toggle="dropdown"><span style="padding-left:6px;margin-top: -6px;float:left;;width: 20px;font-size:22px;color:#D8D9DA" class="fa fa-sort-desc"></span>
+
+                </button>
+                <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                    <li class="J_tabShowActive"><a>定位当前选项卡</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                    </li>
+                    <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="row J_mainContent" id="content-main">
+
+            <iframe class="J_iframe" name="iframe1" width="100%" height="100%" src="" frameborder="0" data-id="" seamless></iframe>
+        </div>
+    </div>
+    <!--右侧部分结束-->
+    <!--个人信息开始-->
+    <div id="mess" class="Popover-content Popover-content--bottom Popover-content--fixed Popover-content--arrowed" style="position:absolute;top:45px;width: 122px;display: none;">
+        <span class="Popover-arrow Popover-arrow--bottom" style="right:-4px"></span>
+        <div class="Menu" >
+            <ul style="list-style: none;padding:0">
+                <li><img id="tx2" src="" style="width: 50%;border-radius: 50%;margin:10% 25%;">
+                    <span id="username"></span>
+                    <span id="jobname" style="font-size: 12px;color: #8590a6;"></span>
+                    <span id="depname" style="font-size: 12px;color: #8590a6;"></span>
+                </li>
+                <li><a id="basicInformation" class="Menu-item" style="overflow: hidden;;padding-left:  10px;font-size: 14px;color:#8590a6;"><i class="iconfont icon-icon-person-info" style="font-size: 20px;float:left;"></i><span style="float:left;line-height: 28px;margin-left: 10px;">信息中心</span></a></li>
+                <li><a id="logout" class="Menu-item" style="overflow: hidden;padding-left:  10px;font-size: 14px;color:#8590a6;"><i class="iconfont icon-tuichudenglu" style="font-size: 18px;float: left;width: 20px"></i><span style="float:left;line-height: 28px;margin-left: 10px;">退出登录</span></a></li>
+            </ul>
+
+
+        </div>
+    </div>
+
+
+</div>
+<script>
+    var userid;
+    getjob();
+    var jobname ="";
+    var aa ;
+    $(function () {
+        $("#file").change(function () {
+            var formData = new FormData($('#uploadForm')[0]);
+            formData.append("itemid",myself);
+            formData.append("itemtype","tuser")
+            $.ajax({
+                type: 'post',
+                url: "/file/saveFileupload", //上传文件的请求路径必须是绝对路径
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+            }).success(function (data) {
+                alert("修改成功");
+                getMyinfo();
+            }).error(function () {
+                alert("修改失败，请重试");
+            });
+        });
+    });
+    function getjob() {
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            async:false,
+            success: function (data) {
+                console.log(data)
+                userid = data.id;
+            }
+        })
+        $.ajax({
+            url: "/Tjobinfo/queryTuserByIdTjobinfo",
+            type: "post",
+            dataType: 'json',
+            async:false,
+            data:{"userid":userid},
+            success: function (data) {
+                $("#jobname").html(data[0].jobname);
+                  jobname = data[0].jobname;
+
+                if(jobname == "董事长"){
+                    document.getElementById("renyuan1").style.display = "block";
+                }
+                if(jobname == "总经理"){
+                    document.getElementById("renyuan1").style.display = "block";
+                }
+
+            }
+        })
+
+    }
+
+    $.ajax({
+        url: "/Tdepartmentinfo/queryTuserByIdTdepartmentinfo",
+        type: "post",
+        dataType: 'json',
+        async:false,
+        success: function (data) {
+            $("#depname").html(data[0].deparname)
+        }
+    })
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            async:false,
+            success: function (data) {
+                $("#username").html(data.username);
+            }
+        })
+</script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
+</html>

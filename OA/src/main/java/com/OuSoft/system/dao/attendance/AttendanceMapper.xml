@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.attendance.AttendanceDao">
+
+	 
+	 <!-- 请假详情 接收请假id : id -->
+	 <select id="queryXQAttendanceDao"  parameterType="com.OuSoft.system.entity.Attendance" resultType="com.OuSoft.system.entity.Attendance" >
+		
+		SELECT   TRUNCATE((te.duration/8),1) as duration, tu.username as username , tt.filename as txfilename , taip.ip ,
+		tuz.username as zusername, tn.username as nucleusname,
+		te.* from attendance te
+		LEFT JOIN tuser tu on tu.id = te.userid
+		LEFT JOIN tatt tt on tt.itemid = te.userid
+		LEFT JOIN tattip taip on taip.id = '1'
+		LEFT JOIN tuser tuz on tuz.id = te.groupuserid
+		LEFT JOIN tuser tn on tn.id = te.nucleususerid
+		where te.id = #{id}
+		and tu.`status` != '02' and tu.`status` != '03'
+	 
+	 </select>
+	 <!--根据id查询请假-->
+	<select id="queryAttendanceByIdDao" parameterType="com.OuSoft.system.entity.Attendance" resultType="com.OuSoft.system.entity.Attendance">
+		SELECT * FROM attendance WHERE id=#{id}
+	</select>
+	 <!-- 请假列表 -->
+	 <select id="queryDao" parameterType="com.OuSoft.system.entity.Attendance" resultType="com.OuSoft.system.entity.Attendance">
+	 	
+	 	SELECT * from attendance   
+	 
+	 </select>
+	 
+	 <!-- 请假管理  ：选项  type : 01 申请
+	 我的请假申请列表     
+	 	请假类型:01事，02病，03产，04婚，05丧，06年休     最终审批状态，01通过，02驳回、03审核中
+	 	接收 ：  userid 请假人id , atype 请假类型 ，  astate 最终审批状态 ，开始时间，结束时间 astarttime aendtime
+	 	返回：  请假人姓名 username  请假事由  text 请假类型 atype 审批状态  astate 请假时长 duration  根据时间类型timetype(01天 02时，)  
+	 	-->
+	 <select id="queryWdAttendanceDao" parameterType="com.OuSoft.system.entity.Attendance" resultType="com.OuSoft.system.entity.Attendance">
+				 	
+			SELECT 
+				tn.username as nucleusname, 
+				tu.username AS username,
+				t.filename as txfilename,
+				tip.ip as ip,	
+				tuz.username as zusername , 
+				 		
+				 ae.*
+			FROM
+				attendance ae
+			LEFT JOIN tuser tu ON tu.id = ae.userid
+						
+			LEFT JOIN tatt t on t.itemid = ae.userid
+			
+			LEFT JOIN tattip tip on tip.id = '1' 
+						
+			LEFT JOIN tuser tuz on tuz.id = ae.groupuserid
+			
+		    LEFT JOIN tuser tn on tn.id = ae.nucleususerid
+
+			<where>
+					tu.`status` != '02' and tu.`status` != '03'
+				<if test="userid != null and userid != '' ">
+					and ae.userid = #{userid}
+				</if>
+				<if test="atype != null and atype != '' ">
+					AND ae.atype = #{atype}
+				</if>
+				<if test="state != null and state != '' ">
+					AND ae.state = #{state}
+				</if>
+				<if test="astarttime != null and astarttime != '' ">
+					and  substr(ae.astarttime,1,10) &gt;= #{astarttime}
+				</if>
+				<if test="aendtime != null and aendtime != '' ">
+					and  substr(ae.aendtime,1,10) &lt;= #{aendtime}
+				</if>
+				<if test=" type == '02' ">
+					and ae.nucleususerid = #{groupuserid}
+				</if>
+					ORDER BY ae.astarttime desc
+			</where>
+	 
+	 </select>
+	 <!--查询请假-->
+	<select id="queryUserAttendanceDao" parameterType="com.OuSoft.system.entity.Attendance" resultType="com.OuSoft.system.entity.Attendance">
+		SELECT
+		ae.*
+		FROM
+		attendance ae
+		<where>
+			ae.state ='01'
+			<if test="userid != null and userid != '' ">
+				and ae.userid = #{userid}
+			</if>
+			<if test="astarttime != null and astarttime != '' ">
+				and  substr(ae.astarttime,1,10) &gt;= #{astarttime}
+			</if>
+			<if test="aendtime != null and aendtime != '' ">
+				and  substr(ae.aendtime,1,10) &lt;= #{aendtime}
+			</if>
+			ORDER BY ae.astarttime desc
+		</where>
+
+	</select>
+	<!-- 请假新增
+	后台获取当前用户上一级领导的id,
+	接收： ;userid:提交人id.后台获取 
+	atype;  //请假类型:01事，02病，03产，04婚，05丧，06年休
+	astarttime;//开始时间
+	aendtime;//结束时间
+	timetype;//时间类型/01天/02时
+	duration;///01天/02时，根据时间类型分辨是天还是时
+	text;//请假事由  
+	filetext;//附件说明
+	 -->
+	<insert id="saveAttendanceDao" parameterType="com.OuSoft.system.entity.Attendance" >
+		insert into attendance
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="userid != null">
+		        userid,
+		      </if>
+		      <if test="atype != null">
+		        atype,
+		      </if>
+		      <if test="astarttime != null">  
+		        astarttime,
+		      </if>
+		      <if test="aendtime != null">
+		        aendtime,
+		      </if>
+		      <if test="timetype != null">
+		        timetype,
+		      </if>
+		      <if test="duration != null">
+		        duration,
+		      </if>
+		      <if test="text != null">
+		        text,
+		      </if>
+		      <if test="state != null">
+		        state,
+		      </if>
+		      <if test="filetext != null">
+		        filetext,
+		      </if>
+		      <if test="groupuserid != null">
+		        groupuserid,
+		      </if>
+		      <if test="groupstate != null">
+		        groupstate,
+		      </if>
+		      <if test="grouptext != null">
+		        grouptext,
+		      </if>
+		      <if test="partuserid != null">
+		        partuserid,
+		      </if>
+		      <if test="partstate != null">
+		        partstate,
+		      </if>
+		      <if test="parttext != null">
+		        parttext,
+		      </if>
+		      <if test="totalmanagerid != null">
+		        totalmanagerid,
+		      </if>
+		      <if test="totalmanagertext != null">
+		        totalmanagertext,
+		      </if>
+		      <if test="createtime != null">
+		        createtime,
+		      </if>
+		      <if test="nucleususerid != null">
+		        nucleususerid,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="userid != null">
+		        #{userid,jdbcType=DATE},
+		      </if>
+		      <if test="atype != null ">
+		        #{atype,jdbcType=DATE},
+		      </if>
+		      <if test="astarttime != null">
+		        #{astarttime,jdbcType=TIMESTAMP},
+		      </if>
+		      <if test="aendtime != null">
+		        #{aendtime,jdbcType=TIMESTAMP},
+		      </if>
+		      <if test="timetype != null">
+		        #{timetype,jdbcType=VARCHAR},
+		      </if>
+		      <if test="duration != null">
+		        #{duration,jdbcType=VARCHAR},
+		      </if>
+		      <if test="text != null">
+		        #{text,jdbcType=VARCHAR},
+		      </if>
+		      <if test="state != null">
+		        #{state,jdbcType=VARCHAR},
+		      </if>
+		      <if test="filetext != null">
+		        #{filetext,jdbcType=VARCHAR},
+		      </if>
+		      <if test="groupuserid != null">
+		        #{groupuserid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="groupstate != null">
+		        #{groupstate,jdbcType=VARCHAR},
+		      </if>
+		      <if test="grouptext != null">
+		        #{grouptext,jdbcType=VARCHAR},
+		      </if>
+		      <if test="partuserid != null">
+		        #{partuserid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="partstate != null">
+		        #{partstate,jdbcType=VARCHAR},
+		      </if>
+		      <if test="parttext != null">
+		        #{parttext,jdbcType=VARCHAR},
+		      </if>
+		      <if test="totalmanagerid != null">
+		        #{totalmanagerid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="totalmanagertext != null">
+		        #{totalmanagertext,jdbcType=VARCHAR},
+		      </if>
+		      <if test="createtime != null">
+		        #{createtime,jdbcType=TIMESTAMP},
+		      </if>
+		      <if test="nucleususerid != null">
+		        #{nucleususerid,jdbcType=TIMESTAMP},
+		      </if>
+		    </trim>
+	</insert>
+
+
+	<!-- 
+	修改请假信息。
+	接收：
+	id 请假id 
+	userid : 请假人id
+	statetype : 审批状态 ：01已通过，02未通过、 
+	timetype 类型 时间类型/01天/02时
+	duration 时长,时 天，根据时间类型分辨是天还是时
+	groupuserid 组长id
+	partuserid 部门经理id
+	totalmanagerid 总经理id
+	 -->
+	<update id="updateAttendacneDao" parameterType="com.OuSoft.system.entity.Attendance" >
+			UPDATE attendance
+				<set>
+					<if test="userid != null and userid != '' ">
+						userid = #{userid},
+					</if>
+					<if test="atype != null and atype != '' ">
+						atype = #{atype},
+					</if>
+					<if test="astarttime != null and astarttime != '' ">
+						astarttime = #{astarttime},
+					</if>
+					<if test="aendtime != null and aendtime != '' ">
+						aendtime = #{aendtime},
+					</if>
+					<if test="timetype != null and timetype != '' ">
+						timetype = #{timetype},
+					</if>
+					<if test="duration != null and duration != '' ">
+						duration = #{duration},
+					</if>
+					<if test="text != null and text != '' ">
+						text = #{text},
+					</if>
+					<if test="state != null and state != '' ">
+						state = #{state},
+					</if>
+					<if test="filetext != null and filetext != '' ">
+						filetext = #{filetext},
+					</if>
+					<if test="groupuserid != null and groupuserid != '' ">
+						groupuserid = #{groupuserid},
+					</if>
+					<if test="groupstate != null and groupstate != '' ">
+						groupstate = #{groupstate},
+					</if>
+					<if test="grouptext != null and grouptext != '' ">
+						grouptext = #{grouptext},
+					</if>
+					<if test="partuserid != null and partuserid != '' ">
+						partuserid = #{partuserid},
+					</if>
+					<if test="partstate != null and partstate != '' ">
+						partstate = #{partstate},
+					</if>
+					<if test="parttext != null and parttext != '' ">
+						parttext = #{parttext},
+					</if>
+					<if test="totalmanagerid != null and totalmanagerid != '' ">
+						totalmanagerid = #{totalmanagerid},
+					</if>
+					<if test="totalmanagertext != null and totalmanagertext != '' ">
+						totalmanagertext = #{totalmanagertext},
+					</if>
+					<if test="createtime != null and createtime != '' ">
+						createtime = #{createtime},
+					</if>
+					<if test="nucleususerid != null and nucleususerid != '' ">
+						nucleususerid = #{nucleususerid},
+					</if>
+				</set>
+				WHERE id = #{id}
+	</update>	
+	
+	<!-- 删除一条数据。接收id -->
+	<delete id="deAttendanceDao" parameterType="com.OuSoft.system.entity.Attendance">
+		DELETE from attendance where id = #{id}
+	</delete>
+	
+						<!--	     	             请假设计表            	           -->	
+
+	<!-- 查询请假设计表 -->
+	<select id="queryAttendancedesignDao" resultType="com.OuSoft.system.entity.AttendanceDesign" >
+		SELECT
+			*
+		FROM
+			`attendancedesign`
+		ORDER BY
+			number, createtime  
+	</select>
+	
+	<!-- 修改请假设计表
+		修改时：不能修改等级number,只能修改天数，并且天数需要判断：同一行前不能大于后，上一行不能大于下一行。
+	 -->
+	<update id="upAttendancedesignDao" parameterType="com.OuSoft.system.entity.AttendanceDesign" >
+		UPDATE attendancedesign
+				<set>
+<!-- 					<if test="number != null and number != '' "> -->
+<!-- 						number = #{number}, -->
+<!-- 					</if> -->
+					<if test="startday != null and startday != '' ">
+						startday = #{startday},
+					</if>
+					<if test="endday != null and endday != '' ">
+						endday = #{endday},
+					</if>
+					<if test="remark != null and remark != '' ">
+						remark = #{remark},
+					</if>
+					<if test="pid != null and pid != '' ">
+						pid = #{pid},
+					</if>
+				</set>
+				WHERE id = #{id}
+	</update>
+	
+	
+	
+	<!-- 删除请假设计表 
+		删除时：只能从最后一行（也就是最下面一行开始删除，不能中间删除）
+	-->
+	<delete id="deAttendancedesignDao" parameterType="com.OuSoft.system.entity.AttendanceDesign" >
+		DELETE from attendancedesign where id = #{id}
+	</delete>
+	
+	
+	<!-- 新增请假设计表
+	-->
+	<insert id="saveAttendancedesignDao" parameterType="com.OuSoft.system.entity.AttendanceDesign">
+	insert into attendancedesign
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="createtime != null">
+		        createtime,
+		      </if>
+		      <if test="number != null">
+		        number,
+		      </if>
+		      <if test="startday != null">
+		        startday,
+		      </if>
+		      <if test="endday != null">
+		        endday,
+		      </if>
+		      <if test="remark != null">
+		        remark,
+		      </if>
+		      <if test="pid != null">
+		        pid,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="createtime != null">
+		        #{createtime,jdbcType=TIMESTAMP},
+		      </if>
+		      <if test="number != null ">
+		      	#{number,jdbcType=VARCHAR},
+		      </if>
+		      <if test="startday != null ">
+		      	#{startday,jdbcType=VARCHAR},
+		      </if>
+		      <if test="endday != null ">
+		      	#{endday,jdbcType=VARCHAR},
+		      </if>
+		      <if test="remark != null ">
+		      	#{remark,jdbcType=VARCHAR},
+		      </if>
+		      <if test="pid != null ">
+		      	#{pid,jdbcType=VARCHAR},
+		      </if>
+		    </trim>
+	</insert>
+	
+	
+</mapper>

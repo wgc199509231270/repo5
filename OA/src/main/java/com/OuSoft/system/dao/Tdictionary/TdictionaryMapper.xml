@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tdictionary.TdictionaryDao">
+
+ 
+	<!-- 字典表，新增:dpid:必传 -->
+	<insert id="saveTdictionaryDao" parameterType="com.OuSoft.system.entity.Tdictionary" >
+		insert into tdictionary
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="dtype != null">
+		        dtype,
+		      </if>
+		      <if test="dkey != null">  
+		        dkey,
+		      </if>
+		      <if test="dvalue != null">
+		        dvalue,
+		      </if>
+		      <if test="remark != null">
+		        remark,
+		      </if>
+		      <if test="dpid != null">
+		        dpid,
+		      </if>
+		      <if test="jobrank != null">
+		        jobrank,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="dtype != null">
+		        #{dtype,jdbcType=VARCHAR},
+		      </if>
+		      <if test="dkey != null ">
+		        #{dkey,jdbcType=VARCHAR},
+		      </if>
+		      <if test="dvalue != null">
+		        #{dvalue,jdbcType=VARCHAR},
+		      </if>
+		      <if test="remark != null">
+		        #{remark,jdbcType=VARCHAR},
+		      </if>
+		      <if test="dpid != null">
+		        #{dpid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="jobrank != null">
+		        #{jobrank,jdbcType=VARCHAR},
+		      </if>
+		    </trim>
+	</insert>
+
+ 	
+ 	<!-- 根据dtype，查询需要的数据， start=01时间排序 =02 是dke排序，-->
+	<!-- 查询字典表 ：只有平台管理有会有这个菜单，所以全查-->
+	<select id="queryTdictionaryDao" parameterType="com.OuSoft.system.entity.Tdictionary" resultType="com.OuSoft.system.entity.Tdictionary">
+		SELECT * FROM tdictionary
+		where 1=1 
+		<if test="dpid != null and dpid != '' ">
+			and dpid = #{dpid}
+		</if>
+		<if test="dtype != null and dtype != '' ">
+			and dtype = #{dtype}
+		</if>
+		<if test="start == '01' ">
+			ORDER BY dtime
+		</if>
+		<if test="start == '02' ">
+			ORDER BY dkey desc
+		</if>
+	</select>
+
+
+	<!-- 删除字典表 -->
+	<delete id="deleteTdictionaryDao" parameterType="com.OuSoft.system.entity.Tdictionary" >
+		DELETE FROM tdictionary where id = #{id}
+	</delete>
+
+
+</mapper>

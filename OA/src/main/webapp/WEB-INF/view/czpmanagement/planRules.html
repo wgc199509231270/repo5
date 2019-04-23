@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>manage.html</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+          rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <script src="/static/js/news.js"></script>
+    <script src="/static/js/clock/echarts.min.js"></script>
+    <style>
+        input[type=range] {
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none; /*清除系统默认样式*/
+            width: 80% !important;
+            background: #e7eaec;
+            height: 3px; /*横条的高度*/
+        }
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background: #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+        /* .my-container {
+             float: left;
+             display: inline-block;
+         }*/
+        .centerfont{
+            text-align: center;
+            height: 41px;
+            font-size: 28px;
+            margin-left: 6%;
+            margin-top: 10%;
+        }
+        .myLabel-content, .myText-content, .myBtn-content {
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+        }
+        .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+        {
+            height: 30px;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+
+        #fbyjbox  tr{
+            margin-top:10px;
+        }
+        .com {
+            cursor: pointer;
+            width: 316px;
+            background-repeat: no-repeat;
+            background-position: 99% center;
+            background-size: 18px;
+        }
+        /* 进度条 */
+        .progress{position: relative; width:300px;margin:100px auto;}
+        .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+        .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+        .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+            left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+        .progress_btn:hover{border-color:#F7B824;}
+        ::-ms-browse, [type='file'] {
+            padding: .4em;
+            line-height: 10px;
+            border: 1px solid #D9D9D9;
+            background: #f0f3f9;
+            color: rgba(88,88,88,1);
+        }
+        ::-webkit-file-upload-button {
+            padding: .4em;
+            line-height: 10px;
+            border: 1px solid #D9D9D9;
+            background: #f0f3f9;
+            color: rgba(88,88,88,1);
+        }
+        /* 分页 */
+        .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+            margin-left: 2%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div style="float: left;width: 60%;margin-left: 15px;">
+    <div>
+        <div style="text-align: center;width: 35%;float: left">
+            <span>业绩效率</span>
+            <select id="realycient" onchange="getRealycient()" style="float: right">
+                <option value="02">周</option>
+                <option value="03">月</option>
+                <option value="04">年</option>
+            </select>
+            <div class="centerfont" id="reaval"></div>
+        </div>
+        <div style="text-align: center;width: 35%;float: left">
+            <span>业绩进度</span>
+            <select id="planplan" onchange="getPlanPlan()" style="float: right">
+                <option value="02">周</option>
+                <option value="03">月</option>
+                <option value="04">年</option>
+            </select>
+            <div class="centerfont" id="planval" style="margin-left: 18%;"></div>
+        </div>
+    </div>
+
+<div id="main" style="width: 300px;height:200px;float: left"></div>
+<div id="main2" style="width: 300px;height:200px;float: left"></div>
+</div>
+<div id="ranking" style="float: right;width: 35%;margin-right: 15px;">
+    <div>
+        <span>排行榜</span>
+        <select onchange="getClockRank()" id="deprank">
+            <option value="01">部门排名</option>
+            <option value="02">公司排名</option>
+        </select>
+        <select onchange="getClockRank()" id="clockrank">
+            <option value="01">签到时间排名</option>
+            <option value="02">计划业绩排名</option>
+            <option value="03">计划用时排名</option>
+            <option value="04">完成业绩排名</option>
+            <option value="05">完成用时排名</option>
+        </select>
+        <select onchange="getClockRank()" id="timerank">
+            <option value="01">日</option>
+            <option value="02">周</option>
+            <option value="03">月</option>
+            <option value="04">年</option>
+        </select>
+    </div>
+    <div id="clockrankList" style="width: 300px;height:200px;float: left"></div>
+</div>
+<div class="example" id="paimingtable" style="    width: 60%;
+    float: left;margin-left: 15px;">
+    <div style="text-align: center;">
+        <span>计划</span>
+        <span onclick="goToPlan()" style="float: right">更多</span>
+    </div>
+    <table id="table1"></table>
+</div>
+<div style="float: right;width: 35%;margin-right: 15px;">
+    <div style="text-align: center;">
+        <select id="peo" style="float: left;">
+            <option value="01">个人</option>
+        </select>
+        <span>计划提醒</span>
+        <span onclick="goToNews()" style="float: right">更多</span>
+    </div>
+    <table id="table2"></table>
+</div>
+</body>
+<!-- js初始化 -->
+<script>
+    //如需刷新iframe，则只需把window替换为响应的iframe的 属性值或ID属性值
+    $(function () {
+        $("#example").hide();
+        getPlan();
+        getNews();
+        table();
+        table2();
+        getPlanPlan();
+        getRealycient();
+        getClockRank();
+    });
+    var datatable=[];
+    var datatable2=[];
+    //表格代码
+    function table(){
+        $('#table1').bootstrapTable({
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: false, // 在表格底部显示分页组件，默认false
+            pageList: [6], // 设置页面可以显示的数据条数
+            pageSize: 6, // 页面数据条数
+            pageNumber: 1, // 首页页码
+            columns: [
+                {
+                    field: 'number',
+                    title: '序号',
+                    width:'4%' ,
+                    align:'center',
+                    formatter: function (value,row,index){
+                        return index+1;
+                    }
+                },
+                {
+                    field: 'username',
+                    width:'7%' ,
+                    title: '姓名',
+                    align:'center',
+                }, {
+                    field: 'deparname',
+                    width:'7%',
+                    title: '部门',
+                    align:'center',
+                    formatter:function (value,row,index){
+                        return row.deparname;
+                    }
+                },{
+                    field: 'plantext',
+                    title: '内容',
+                    width:'20%' ,
+                    align: 'center',
+                    formatter:function (value,row,index){
+                        if(row.plantext!=""&&row.plantext!=null){
+                            if(JSON.stringify(row.pfmtext)!="null" && row.plantext.length>15){
+                                var b =JSON.stringify(row.plantext);
+                                b = b.substr(1,b.length-2);
+                                b=b.replace("\r","");
+                                return value =b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"").substr(0,15)+"..."
+                            }else {
+                                var b =JSON.stringify(row.plantext);
+                                b = b.substr(1,b.length-2);
+                                b=b.replace("\r","");
+                                return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"");
+
+                            }
+                        }else{
+                            return "-";
+                        }
+                       }
+                },{
+                    field: 'starttime',
+                    title: '时间',
+                    width:'8%' ,
+                    align: 'center',
+                }
+            ] ,
+            data:datatable
+        });
+    };
+    function table2(){
+        $('#table2').bootstrapTable({
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: false, // 在表格底部显示分页组件，默认false
+            pageList: [6], // 设置页面可以显示的数据条数
+            pageSize: 6, // 页面数据条数
+            pageNumber: 1, // 首页页码
+            columns: [
+               {
+                    field: 'plantext',
+                    title: '计划内容',
+                    width:'20%' ,
+                    align: 'center',
+                    formatter:function (value,row,index){
+                        if(row.plantext!=""&&row.plantext!=null){
+                            if(JSON.stringify(row.pfmtext)!="null" && row.plantext.length>15){
+                                var b =JSON.stringify(row.plantext);
+                                b = b.substr(1,b.length-2);
+                                b=b.replace("\r","");
+                                return value =b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"").substr(0,15)+"..."
+                            }else {
+                                var b =JSON.stringify(row.plantext);
+                                b = b.substr(1,b.length-2);
+                                b=b.replace("\r","");
+                                return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"");
+
+                            }
+                        }else{
+                            return "-";
+                        }
+                    }
+                },{
+                    field: 'times',
+                    title: '时间',
+                    width:'14%' ,
+                    align: 'center',
+                },{
+                    field: 'status',
+                    title: '状态',
+                    width:'4%' ,
+                    align: 'center',
+                    formatter:function (value,row,index){
+                        if(row.ntype=="01"||row.ntype=="02"){
+                            if(row.status=="01"){
+                                return "已发布";
+                            }else if(row.status=="02"){
+                                return "未通过";
+                            }else if(row.status=="03"){
+                                return "已完成";
+                            }else if(row.status=="04"){
+                                return "已通过";
+                            }else if(row.status=="05"){
+                                return "已总结";
+                            }else{
+                                return "-";
+                            }
+                        }else if(row.ntype=="03"){
+                            return '<i class="iconfont icon-buoumaotubiao15" style="font-size: 15px;"></i>';
+                        }else if(row.ntype=="04"){
+                            return '<i class="iconfont icon-pinglun4" style="font-size: 15px;"></i>';
+                        }
+                }
+                }
+            ] ,
+            data:datatable2
+        });
+    };
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var myChart2 = echarts.init(document.getElementById('main2'));
+    // 指定图表的配置项和数据
+    var option = {
+       /* title: {
+            text: parseInt(realycient), //标题文本内容
+        },*/
+        /*toolbox: { //可视化的工具箱
+            show: true,
+            feature: {
+                restore: { //重置
+                    show: true
+                },
+                saveAsImage: {//保存图片
+                    show: true
+                }
+            }
+        },*/
+        tooltip: { //弹窗组件
+            formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [{
+            name: '业绩效率',
+            type: 'gauge',
+            detail: {//formatter:'{value}%'
+                show:false },
+            data: [{value: 0, name: '效率'}],
+            axisLine: {            // 坐标轴线
+                show:true,
+            },
+            splitLine:{
+                show:false,
+            },
+            axisTick:{
+                show:false,
+            },
+            axisLabel:{
+                show:false,
+            },
+            pointer:{
+                length:'60px',
+                width:'3px',
+            },
+        }]
+
+    };
+    var option2 = {
+       /* title: {
+            text: parseInt(planplan), //标题文本内容
+        },*/
+        /*toolbox: { //可视化的工具箱
+            show: true,
+            feature: {
+                restore: { //重置
+                    show: true
+                },
+                saveAsImage: {//保存图片
+                    show: true
+                }
+            }
+        },*/
+        tooltip: { //弹窗组件
+            formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [{
+            name: '业绩进度',
+            type: 'gauge',
+            detail: {
+                //formatter:'{value}%',
+                show: false,
+                offsetCenter: [0, '-10%'],
+                width:10,
+                height:10,
+                textStyle: {
+                    fontSize: 0
+                }},
+            data: [{value: 0, name: '进度'}],
+            axisLine: {            // 坐标轴线
+                show:true,
+            },
+            splitLine:{
+                show:false,
+            },
+            axisTick:{
+                show:false,
+            },
+            axisLabel:{
+                show:false,
+            },
+            pointer:{
+                length:'60px',
+                width:'3px',
+            },
+        }]
+
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    myChart2.setOption(option2);
+    setInterval(function(){//把option.series[0].data[0].value的值使用random()方法获取一个随机数
+        option.series[0].data[0].value = (parseFloat(realycient)).toFixed(2) - 0;
+        myChart.setOption(option, true);
+        option2.series[0].data[0].value = (parseFloat(planplan)).toFixed(2) - 0;
+        myChart2.setOption(option2, true);
+    }, 2000);
+    //查询计划
+    function getPlan() {
+        $.ajax({
+            url:"/tplan/QueryAllPlan",
+            data:{"limit":6},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable=data;
+                console.log(data)
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    }
+    function getNews() {
+        $.ajax({
+            url:"/tnews/queryPlanTnews",
+            data:{"limit":6},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable2=data;
+                console.log(data)
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    }
+    var realycient;
+    var planplan;
+    //查询效率
+    function getRealycient() {
+        var data={"plantype":$("#realycient").val()}
+        $.ajax({
+            url:"/tplan/queryRealycient",
+            data:data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                if(data[0].realycient!=null&&data[0].realycient!=""&&data[0].realycient!=NaN){
+                    realycient=data[0].realycient;
+                }else{
+                    realycient="0";
+                }
+                $("#reaval").html(realycient);
+
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    }
+    //查询进度
+    function getPlanPlan() {
+        var data={"plantype":$("#planplan").val()}
+        $.ajax({
+            url:"/tplan/queryPlanPlan",
+            data:data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                console.log(data)
+                if(data[0].sche!=null&&data[0].sche!=""&&data[0].sche!=NaN){
+                    planplan=parseFloat(data[0].sche)/parseFloat(data[0].workhour)*100;
+                }else{
+                    planplan="0.0";
+                }
+                var workhours=data[0].sche;
+                var workhour=data[0].workhour;
+                $("#planval").html(workhours+"/"+workhour);
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    }
+    //查询排名
+    function getClockRank() {
+        var data={"plantype":$("#timerank").val(),"depyesno":$("#deprank").val(),"clockrank":$("#clockrank").val(),"limit":4}
+        $.ajax({
+            url:"/tplan/queryClockRank",
+            data:data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                var app="";
+                for(var i=0;i<data.length;i++){
+                    app+='<div style="margin-top: 6%;width: 100%;height: 50px">\n' +
+                        '   <img style="float: left;width:50px;height: 50px; " src="'+data[i].ip+data[i].txfilename+'">\n' +
+                        '    <div style="float: left">\n' +
+                        '        <div>'+data[i].username+'</div>\n' +
+                        '        <div>'+data[i].deparname+' '+data[i].jobname+'</div>\n' +
+                        '    </div>\n' +
+                        '    <div style="float: left;"><div style="float: left;width: 50px;">'+data[i].clocktime.substr(0,5)+'</div><div style="float: left;">'+(i+1)+'</div></div>\n' +
+                        '</div>';
+                }
+                $("#clockrankList").html(app)
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    }
+    function goToPlan() {
+        page('/planmanagement','计划管理');
+    }
+    function goToNews() {
+        page('/news','计划提醒');
+    }
+    //选项卡设置
+    function page(url, title) {
+        var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+        $(window.top.document).find('.J_mainContent').find("iframe").hide();
+        var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+            + '" seamless="" style="display: inline;"></iframe>';
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+            ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+        $(window.top.document).find('.J_mainContent').append(iframe);
+    }
+</script>
+</html>

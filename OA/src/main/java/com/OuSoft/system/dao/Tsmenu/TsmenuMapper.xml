@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tsmenu.Tsmenus">
+
+	<select id="QueryTsmenuList" resultType="com.OuSoft.system.entity.Tsmenu">
+		select * from Tsmenu where 1=1
+	</select>
+
+	<delete id="DelTsmenu" parameterType="int">
+		DELETE FROM Tsmenu where 1=1 AND whetherpublic='${whetherpublic}'
+	</delete>
+
+	<select id="QueryTsmenuByid" resultType="com.OuSoft.system.entity.Tsmenu">
+		select * from Tsmenu where 1=1 and whetherpublic='${whetherpublic}'
+	</select>
+
+	<update id="UpdateTsmenuByid" parameterType="com.OuSoft.system.entity.Tsmenu">
+		Update Tsmenu set
+			id='${model.id}',
+			title='${model.title}',
+			url='${model.url}',
+			ordernum='${model.ordernum}',
+			remark='${model.remark}',
+			pid='${model.pid}',
+			whetherpublic='${model.whetherpublic}',
+			image='${model.image}',
+			actiontype='${model.actiontype}',
+			menutype='${model.menutype}',
+			menucode='${model.menucode}',
+			id='${model.id}',
+			title='${model.title}',
+			url='${model.url}',
+			ordernum='${model.ordernum}',
+			remark='${model.remark}',
+			pid='${model.pid}',
+			whetherpublic='${model.whetherpublic}',
+			image='${model.image}',
+			actiontype='${model.actiontype}',
+			menutype='${model.menutype}',
+			menucode='${model.menucode'
+		where 1=1 and whetherpublic='${whetherpublic}'
+	</update>
+
+<insert id="InsertTsuser" parameterType="com.OuSoft.system.entity.Tsmenu">
+	INSERT INTO Tsmenu VALUES ('${model.id}','${model.title}','${model.url}','${model.ordernum}','${model.remark}','${model.pid}','${model.whetherpublic}','${model.image}','${model.actiontype}','${model.menutype}','${model.menucode}','${model.id}','${model.title}','${model.url}','${model.ordernum}','${model.remark}','${model.pid}','${model.whetherpublic}','${model.image}','${model.actiontype}','${model.menutype}','${model.menucode}')
+</insert>
+
+</mapper>

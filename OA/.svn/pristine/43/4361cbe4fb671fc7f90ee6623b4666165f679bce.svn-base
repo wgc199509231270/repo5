@@ -1,0 +1,2593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>manage.html</title>
+<meta charset="utf-8">
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
+<link rel="shortcut icon" href="favicon.ico">
+<link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+<link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+	rel="stylesheet">
+<link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+	rel="stylesheet">
+<link href="/static/css/animate.min.css" rel="stylesheet">
+<link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+<link rel="stylesheet" href="/static/js/plugins/webuploader/webuploader.css">
+<link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+<script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+<link rel="stylesheet" href="/static/achievement/webuploader/webuploader.css">
+<script src="/static/achievement/webuploader/webuploader.js"></script>
+<link rel="stylesheet" href="/static/css/jquery.searchableSelectparse.css">
+<link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+<link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+<link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/static/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script
+	src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script
+	src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/static/17com/js/echarts.js"></script>
+<script src="/static/js/plugins/laydate/laydate.js"></script>
+<script src="/static/js/jquery.searchableSelectparse.js"></script>
+<script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+<script src="/static/js/highcharts-3d.js"></script>
+<script src="/static/js/jedate.js"></script>
+<link href="/static/css/skin/jedate.css" rel="stylesheet">
+<link href="/static/css/achievement/manage.css" rel="stylesheet">
+<script src="/static/layui/layui.js" charset="utf-8"></script>
+<script src="/static/js/bootstrap-select.min.js"></script>
+<script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+<script src="/static/js/news.js"></script>
+<style>
+input[type=range] {
+	margin-top: 8px;
+	outline: none;
+	-webkit-appearance: none; /*清除系统默认样式*/
+	width: 80% !important;
+	background: #e7eaec;
+	height: 3px; /*横条的高度*/
+}
+/*拖动块的样式*/
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none; /*清除系统默认样式*/
+	height: 16px; /*拖动块高度*/
+	width: 16px; /*拖动块宽度*/
+	background: #0099CC; /*拖动块背景*/
+	border-radius: 50%; /*外观设置为圆形*/
+	border: solid 1px #ddd
+}
+
+#text {
+	white-space: normal;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+.czbtn{
+    cursor:default;
+}
+.czbtn2{
+    cursor:pointer;
+}
+.my-container {
+	 float: left;
+	display: inline-block;
+}
+
+.myLabel-content, .myText-content, .myBtn-content {
+	 float: left;
+	display: inline-block;
+	line-height: 30px;
+
+}
+
+.myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+	{
+	height: 30px;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.myBtn-content .btn {
+	margin-bottom: 10px;
+}
+
+/* 模态框 */
+
+.hourdiv {
+	width: 138px;
+}
+#fbyjbox  tr{
+	margin-top:10px;
+}
+.yjbox{
+	width: 181px;
+	height: 32px;
+	line-height:32px;
+	border: 1px solid #D9D9D9;
+	float:left;
+	padding-left: 12px;
+}
+.yeji {
+    font-family: FangSong;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(88,88,88,1);
+    height: 32px;
+    line-height: 32px;
+    width: 67px;
+    float: left;
+    margin-left: 15px;
+    /* margin-left: -21px; */
+}
+.yeji2 {
+    font-family: FangSong;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(88,88,88,1);
+    height: 32px;
+    line-height: 32px;
+    width: 67px;
+    float: left;
+    margin-left: 32px;
+    /* margin-left: -21px; */
+}
+
+.yejibigtext {
+    width: 461px;
+    height: 99px;
+   float: left;
+    border: 1px solid #D9D9D9;
+   padding-left: 15px;
+    padding-top: 3px;
+}
+.yejibigtextyjnr {
+    padding-top: 3px;
+    padding-left: 5px;
+    width: 461px;
+    height: 99px;
+    margin-left: -16px;
+    margin-top: -4px;
+    border: 1px solid #D9D9D9;
+}
+.yjtext {
+    width: 136px;
+    height: 23px;
+    margin-left: 8px;
+    margin-top: 4px;
+    font-size: 14px;
+    font-family: FangSong;
+    font-weight: 400;
+    color: rgba(124,124,124,1);
+    line-height: 19px;
+}
+
+.gzsc {
+    margin-left: 4%;
+}
+
+.yejimidtext {
+    width: 461px;
+    height: 32px;
+    border: 1px solid #D9D9D9;
+}
+.fbsmbox{
+    width: 461px;
+    height: 44px;
+    border: 1px solid #D9D9D9;
+        float: left;
+        padding-left: 12px;
+}
+/* 按钮 */
+.btnn {
+	width: 59px;
+	height: 31px;
+	/* border-radius: 10px; */
+	background-color: #F5F5F6;
+	float: left;
+	margin-left:10px;
+	color:#73777A;
+	outline:none;
+	text-align:center;
+	font-family: cursive;
+	line-height:31px;
+}
+/* 按钮点击事件 */
+.btnn:link{
+background-color: #0099CC;
+	color:white;
+}
+.btnn:hover{
+background-color: #0099CC;
+	color:white;
+}
+.btnn:active{
+	background-color: #0099CC;
+	color:white;
+}
+.btnn:visited{
+background-color: #0099CC;
+	color:white;
+}
+
+.btndiv {
+    position: relative;
+    left: 72%;
+    top: -10%;
+    float: left;
+}
+.btndiv2 {
+    position: relative;
+    left: 63%;
+    top: 2%;
+    float: left;
+}
+.btndiv3 {
+    position: relative;
+    left: 63%;
+    top: 2%;
+    float: left;
+}
+.btndiv4 {
+    position: relative;
+    left: 63%;
+    top: 2%;
+    float: left;
+}
+.hour1 {
+    font-size: 15px;
+    width: 7%;
+    color: #D9D9D9;
+    float:right;
+}
+.hoursh {
+    font-size: 15px;
+    position: absolute;
+    left: 40.5%;
+    top: 12%;
+    width: 7%;
+    color: #D9D9D9;
+}
+.hoursh2 {
+    font-size: 15px;
+    position: absolute;
+    left: 86.5%;
+    top: 12%;
+    width: 9%;
+    color: #D9D9D9;
+}
+.hour {
+    width: 18px;
+    float: left;
+    margin-left: -21px;
+    margin-top: 8px;
+}
+.tjfj11{
+
+}
+.fb {
+    font-family: FangSong;
+    margin-left: -6px;
+    /* margin-top: 10px; */
+    margin-bottom: 8px;
+    color: rgba(51,51,51,1);
+    font-weight: 400;
+    border-bottom: 1px solid #E5E5E5;
+    width: 581px;
+    height: 26px;
+}
+.qr {
+	margin-left: -2.77%;
+	/* margin-bottom: 11px; */
+	border-bottom: 1px solid #E5E5E5;
+	width: 105.4%;
+	height: 10px;
+	font-size: 8px;
+	font-family: FangSong;
+	font-weight: 400;
+	color: rgba(51,51,51,1);
+}
+
+
+.hour2 {
+    font-size: 15px;
+    float:right;
+    width: 9%;
+    color: #D9D9D9;
+}
+
+.everydiv{
+	margin-top:10px;
+}
+.com {
+    cursor: pointer;
+    width: 316px;
+    background-repeat: no-repeat;
+    background-position: 99% center;
+    background-size: 18px;
+}
+.com2 {
+    cursor: pointer;
+    width: 316px;
+    background-repeat: no-repeat;
+    background-position: 93% center;
+    background-size: 18px;
+}
+
+/* 确认业绩 */
+.qrdiv {
+    margin-left: -2.77%;
+    /* margin-bottom: 11px; */
+    border-bottom: 1px solid #E5E5E5;
+    width: 105.4%;
+    height: 17px;
+    font-size: 17px;
+    font-family: FangSong;
+    font-weight: 400;
+    color: rgba(51,51,51,1);
+}
+.modal-contentqryj {
+   /*  margin-left: 420px;
+    margin-top: -10px; */
+    width: 591px;
+    background-clip: padding-box;
+    background-color: #FFF;
+    border: 1px solid rgba(0,0,0,0);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    outline: 0 none;
+}
+.qryj{
+	float:left;
+}
+.qryjbigbox {
+    width: 557px;
+    height: 233px;
+    background: rgba(244,251,255,1);
+    box-shadow: 0px 1px 15px 0px rgba(231,231,231,0.88);
+    /*margin-left: -14px;*/
+    margin-top: 15px;
+}
+
+.qryjbigbox2{
+	/* border: 1px red solid;  */
+	width: 613px;
+	height:172px;
+	margin-left: -15px;
+}
+.qryjbox {
+  /*  border: 1px red solid;  */
+    width: 77%;
+    /* margin-top: 6%; */
+    margin-top: 4px;
+    height: 45px;
+   margin-left: 10px;
+}
+.qryjbox2{
+
+}
+.yqryjword {
+    margin-left: 23px;
+    height: 12px;
+    line-height: 26px;
+}
+.qryjword {
+    font-family: FangSong;
+    font-size: 14.5px;
+    font-weight: 400;
+    color: rgba(159,159,159,1);
+    width: 79px;
+    float: left;
+    height: 12px;
+    line-height: 26px;
+    margin-left: 2px;
+}
+.qryjword1{
+	font-family: FangSong;
+    font-size: 14.5px;
+    font-weight: 400;
+    color:rgba(159,159,159,1);
+    line-height:31px;
+	width: 79px;
+	float:left;
+	    margin-left: 2px;
+}
+.shortdiv {
+    width: 174px;
+    height: 29px;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    border: 1px solid rgba(217,217,217,1);
+    border-radius: 1px;
+    font-family: FangSong;
+    padding-left: 12px;
+}
+.longdiv {
+    width: 300px;
+    height: 35px;
+   border:1px solid rgba(217,217,217,1);
+	border-radius:1px;
+    float: right;
+    margin-right: -123px;
+}
+.llongdiv {
+    width: 454px;
+    height: 30px;
+    line-height: 35px;
+    border: 1px solid #D9D9D9;
+    float: right;
+    margin-right: -107px;
+    font-family: FangSong;
+    padding-left: 12px;
+}
+.timecom{
+	    cursor: pointer;
+    width: 171px;
+    height: 35px;
+    background-repeat: no-repeat;
+    background-position: 99% center;
+    background-size: 18px;
+     border: 1px solid #ccc;
+   /*  background-image: url(icon.png); */
+}
+/* 完成业绩css */
+.wcqryjword {
+    font-family: FangSong;
+    font-size: 14.5px;
+    font-weight: 400;
+    font-weight: 400;
+    color: rgba(0,0,0,1);
+    width: 79px;
+    float: left;
+    height: 12px;
+    line-height: 26px;
+}
+.wcyjbox {
+  /*  border: 1px red solid;  */
+    width: 77%;
+    /* margin-top: 6%; */
+    margin-top: 4px;
+    height: 38px;
+   margin-left: 10px;
+}
+.shyjbox{
+	    /* border: 1px red solid; */
+    width: 77%;
+    /* margin-top: 6%; */
+    margin-top: 4px;
+    height: 41px;
+    margin-left: 10px;
+}
+.divleft{
+	float: left;
+}
+.divright{
+	margin-left: 9%;
+	float: left;
+}
+/* 进度条 */
+ .progress{position: relative; width:300px;margin:100px auto;}
+        .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+        .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+        .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+        left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+        .progress_btn:hover{border-color:#F7B824;}
+/* 审核业绩 */
+.divrightsh{
+	margin-left: 10%;
+	float: left;
+}
+::-ms-browse, [type='file'] {
+    padding: .4em;
+    line-height: 10px;
+    border: 1px solid #D9D9D9;
+    background: #f0f3f9;
+    color: rgba(88,88,88,1);
+}
+::-webkit-file-upload-button {
+    padding: .4em;
+    line-height: 10px;
+    border: 1px solid #D9D9D9;
+    background: #f0f3f9;
+    color: rgba(88,88,88,1);
+}
+
+/* 发布业绩 */
+.everybox{
+	width:100%;
+	/* border:1px red solid; */
+	height:36px;
+	margin-top: 11px;
+}
+
+.everybox2{
+	width:100%;
+	/* border:1px red solid; */
+	height:100px;
+	    margin-top: 6px;
+}
+
+/* 业绩完成 */
+.layui-input{
+    padding-left: 4px;
+}
+
+/* 所属部门 */
+.filter-option-inner-inner{
+    font-family: fangsong;
+}
+/* 分页 */
+.fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+    margin-left: 2%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.layui-slider {
+	height: 4px;
+	background: #e2e2e2;
+	border-radius: 3px;
+	position: relative;
+	cursor: pointer;
+	margin-right: 90px !important;
+}
+</style>
+
+
+</head>
+
+<body>
+	<div id="big" class="col-sm-12" style="display: none">
+		<div class="example-wrap" style="margin-top: 25px;">
+
+			<!-- 顶部筛选框 -->
+			<div id="toolbar1"
+				style="width: 100%; overflow: hidden; margin-bottom: 14px; float: left;">
+				<div class="myText-content" style="float: left;width: 11%;cursor:pointer;">
+					<label class="myLabel-content">类型:&nbsp;&nbsp;&nbsp;</label>
+					<select
+						name="select" id="sxlx"
+						style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;;">
+						<option value="01">业绩</option>
+						<option value="02">审核</option>
+					</select>
+				</div>
+
+				<div class="myText-content" style="float: left;width: 12%;">
+					<label class="myLabel-content">对象:&nbsp;&nbsp;&nbsp;</label>
+					<input type="hidden" value="" id="dxid">
+					<select name="select" id="sxry" class="chosen-select" data-placeholder="选择用户..." style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                        <option part='01' value='全部' id="qb">全部</option>
+					</select>
+				</div>
+
+				<div class="myText-content" style="float: left;width: 13%;cursor:pointer;">
+					<label class="myLabel-content">状态:&nbsp;&nbsp;&nbsp;</label> <select
+						name="select" id="sxzt"
+						style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+						<option value="00">全部</option>
+						<option value="01">未确认</option>
+						<option value="02">未通过</option>
+						<option value="03">已通过</option>
+						<option value="04">已完成</option>
+						<option value="05">已审核</option>
+					</select>
+				</div>
+
+				<div class="myText-content" style="float: left;width: 13%;">
+					<label class="myLabel-content">业绩部门:&nbsp;&nbsp;&nbsp;</label>
+					<select
+						name="select" id="sxbm" class="chosen-select" data-placeholder="选择部门..."
+						style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+					</select>
+				</div>
+
+
+				<div class="my-container"
+					style="display: block;float: left;">
+					<label class="myLabel-content" style="">日期：</label>
+					<div class="myText-content" style="">
+						<input id="Begtime0"
+							class="com laydate-icon form-control layer-date"
+							placeholder="开始日期" style="width: 119px;margin-right: 10px;">
+					</div>
+
+				</div>
+				<div class="my-container"
+					style="display: block;float: left;">
+					<label class="myLabel-content">至</label>
+				</div>
+				<div class="my-container"
+					style="display: block;  float: left;">
+					<label class="myLabel-content"></label>
+					<div class="myText-content" style="margin-left: 10px;">
+						<input id="Endtime0"
+							class="com laydate-icon form-control layer-date"
+							placeholder="结束日期" style="width: 119px;">
+					</div>
+				</div>
+				<div class="myBtn-content"
+					style="float: left;margin-left: 2%;">
+					<button id="search1" type="button" class="btn btn-primary"
+						style="background-color: #0099CC;border-color: #0099CC;color: #FFF;" onclick="chaxunn()">查询</button>
+					<button id="reset1" type="button" class="btn btn-default"
+						style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;" onclick="chongzhii()">重置</button>
+				</div>
+
+				<div id="fabu"
+				style="float: right;width:76px;height:30px;background-color:#0099CC;margin-right: 10px;cursor:pointer;"
+				onclick="fabu()">
+					<i class="iconfont icon-fabu"style="position: relative;top: 7px;left: 14px;color: white;" ><font style="font-size:10px;position: relative;top: -1px;left: 2px;">发布</font></i>
+				</div>
+				<!-- <img id="fabu" src="/static/img/fabu.png"
+					> -->
+			</div>
+
+
+
+
+
+			<!-- 业绩管理列表 -->
+			<div class="example" id="paimingtable">
+				<table id="table1"></table>
+			</div>
+
+
+
+			<!-- 发布业绩-->
+			<div id="modal-form" class="modal fade" aria-hidden="true">
+				<div class="modal-dialog" style=" margin-left: -2%;">
+					<div class="modal-content"  style="height: 471px;width:583px;">
+						<div class="modal-body" style="height: 471px;width: 627px;margin-left: -9px;margin-top: -5px;">
+
+						<div class="fb">
+								<p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">业绩发布</p>
+						</div>
+						<div style="width:100%;height:3px;"></div>
+							<div class="everybox"  id="fbyjbox" style="">
+								<div class="yeji">
+									计划业绩:
+								</div>
+								<div id="fbjhyj" class="yjbox" contenteditable="true" style="font-family: FangSong;" ></div>
+								<div class="hour">(h)</div>
+
+								<div class="yeji2" style="">
+									计划用时:
+								</div>
+								<div id="fbjhys" class="yjbox" contenteditable="true" style="
+									    width: 181px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+								<div class="hour">(h)</div>
+
+							</div>
+							<div style="width:100%;height:3px;"></div>
+							<div class="everybox2">
+								<div class="yeji ">业绩内容:</div>
+								<div  style="" class="yejibigtext" >
+									<div id="yjnr" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+									onfocus="if(this.innerText=='添加您的业绩内容...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='添加您的业绩内容...'">添加您的业绩内容...</div>
+									<!-- <div class="tjfj" style="width: 20%;">
+											    <input class="change" type="file" multiple="multiple"
+											    style="
+												    position: absolute;
+												    left: 18.8%;
+    												top: 38%;font-family: fangsong;
+												" />
+									</div> -->
+								</div>
+							</div>
+							<div style="width:100%;height:2px;"></div>
+							<div class="everybox">
+								<div class="yeji ">所属业绩:</div>
+								<div class="">
+									<select id="ssyj" class="form-control yeji yejimidtext" style="margin-top: 0%;font-family: FangSong;margin-left: -0.5px;">
+									</select>
+								</div>
+							</div>
+							<div style="width:100%;height:1px;"></div>
+							<div class="everybox">
+								<div class="yeji">业绩类型:</div>
+								<div class="">
+									<select id="yjlx" class="form-control  "
+									style="width: 181px;height:32px;float: left;font-family: FangSong;">
+									<option>项目开发</option>
+									<option>需求分析</option>
+									<option>页面设计</option>
+									<option>前端开发</option>
+									<option>后台开发</option>
+									<option>前端测试</option>
+									<option>后端测试</option>
+									<option>数据库设计</option>
+									<option>市场调研</option>
+									</select>
+								</div>
+								<div class="yeji2 ">所属部门:</div>
+								<div class="">
+									<select id="ssbm" class="form-control selectpicker"  data-live-search="true" data-placeholder="选择部门..."
+									style="width: 181px;height:32px;font-family: FangSong;">
+								</select>
+								</div>
+							</div>
+							<div style="width:100%;height:0px;"></div>
+							<div class="everybox">
+								<div class="yeji ">开始时间:</div>
+								<div class="">
+									<div class="my-container ">
+									<div class="myText-content" style=" ">
+										<input id="Searchtime"
+											class="com laydate-icon form-control layer-date"
+											placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+									</div>
+									</div>
+								</div>
+								<div class="yeji2 ">结束时间:</div>
+								<div class="">
+									<div class="my-container ">
+									<div class="myText-content" style="">
+										<input id="Endtime"
+											class="com laydate-icon form-control layer-date"
+											placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+									</div>
+								</div>
+								</div>
+							</div>
+							<div style="width:100%;height:5px;"></div>
+							<div class="everybox2">
+								<div class="yeji ">发布说明:</div>
+								<div id="fbsm" class="fbsmbox" contenteditable="true" style="font-family: FangSong;"></div>
+							</div>
+						<div class="btndiv">
+								<div class="btnn" style="background-color:#0099CC;color:white;cursor:pointer;" onclick="fbyj()">发布</div>
+								<div onclick="fbyjqx()" class="btnn" style=" border: 1px solid #EEEEEF;cursor:pointer;">取消</div>
+								<div></div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<!-- 业绩确认-->
+			<div id="modal-form1" class="modal fade" aria-hidden="true"
+				style="">
+				<div class="modal-dialog" style="display: block;margin: 9px auto;width: 658px;height: 300px;">
+					<div class="modal-contentqryj" style="height: 502px;">
+						<div class="modal-body" style="">
+							<div class="qrdiv">
+								    <p style="float: left;margin-top: -9px;margin-left: 3%;color: rgba(51,51,51,1);font-weight: 400;">业绩确认</p>
+							</div>
+						<div class="qryjbigbox" style="height:233px;">
+							<div style="height:12px;width:300px;"></div>
+							<div class="wcyjbox">
+									<input id="qrid" type="hidden" value="">
+									<div class="qryjword ">
+										计划业绩：
+									</div>
+									<div id="qrjhyj" class="shortdiv " contenteditable="false" style="font-family: FangSong;">
+										<p style="position:relative;width: 23px;left: 149px;top: 0px;
+										    font-family: FangSong;
+										    font-size: 14.5px;
+										    font-weight: 400;
+										    color: rgba(88,88,88,1);">(h)</p>
+									</div>
+									<div class="qryjword yqryjword" style="
+										    margin-left: 26px;
+										">
+										计划用时：
+									</div>
+									<div id="qrjhys" class="shortdiv yshortdiv" contenteditable="false" style="
+										    float: right;
+										    margin-right: -106px;font-family: FangSong;
+									 ">
+										<p style="position:relative;width: 23px;left: 149px;top: 0px;
+										font-family: FangSong;
+										    font-size: 14.5px;
+										    font-weight: 400;
+										    color: rgba(88,88,88,1);">(h)</p>
+									</div>
+							</div>
+							<div class="wcyjbox">
+									<div class="qryjword1 ">业绩内容：</div>
+									<div id="qryjnr" class="llongdiv" contenteditable="false" style="font-family: FangSong;"></div>
+							</div>
+							<div class="wcyjbox">
+									<div class="qryjword1">所属业绩：</div>
+										<div id="qrssyj" class="llongdiv" contenteditable="false" style="
+										    float: right;
+										font-family: FangSong;"></div>
+							</div>
+							<div class="wcyjbox">
+									<div class="qryjword">业绩类型：</div>
+										<div id="qryjlx" class="shortdiv  " contenteditable="false" style="font-family: FangSong;"></div>
+									<div class="qryjword yqryjword" style="
+										    margin-left: 26px;
+										">所属部门：</div>
+										<div id="qrssbm" class="shortdiv yshortdiv " contenteditable="false" style="float: right;
+									    margin-right: -108px;font-family: FangSong;"></div>
+							</div>
+							<div class="wcyjbox">
+									<div class="qryjword" style="float:left; ">开始时间：</div>
+										<div class="my-containerq " style="float:left; ">
+											<div class="myText-contentq" >
+												<input id="qrSearchtime" disabled="true" class="com laydate-icon form-control layer-date" placeholder="" style="background: rgba(244,251,255,1);font-family: FangSong;width: 174px;height: 30px;">
+											</div>
+										</div>
+									<div class="qryjword yshortdiv" style="float: left;margin-left:26px;margin-top: 5px;">结束时间：</div>
+										<div class="my-containerq " style=" " >
+											<div class="myText-contentq" style="  ">
+												<input id="qrEndtime" disabled="true" class="com laydate-icon form-control layer-date" placeholder="" style="font-family: FangSong;background: rgba(244,251,255,1);margin-right: -108px;float: right;width: 174px;margin-top: 1px;height: 30px;">
+											</div>
+										</div>
+									</div>
+
+
+							</div>
+							<div style="height:12px;width: 598px;text-align:center;font-size:12px;
+									font-family:FangSong;
+									font-weight:400;
+									color:rgba(0,0,0,1);
+									line-height:48px;
+									opacity:0.4;"></div>
+
+						<div class="qryjbigbox2" style="height: 229px;">
+						<div style="height:14px;width:300px;"></div>
+						<div style="width:100%;height:63px;margin-left: 4%;">
+							<div class="wcqryjword" style="float:left;">确认业绩:</div>
+							<div class="">
+								<select id="qryjtg" class="form-control  "
+								style="width: 181px;height:32px;float: left;font-family: FangSong;">
+								<option value="03">通过</option>
+								<option value="02">未通过</option>
+								</select>
+							</div>
+
+
+
+							<input id="qrid" type="hidden" value="">
+						</div>
+							<div style="width:300px;"></div>
+								<p class="wcqryjword" style="float: left;margin-left: 23px;">确认说明：</p>
+								<div id="qrms" contenteditable="true" onfocus="if(this.innerText=='请输入确认描述...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='请输入确认描述...'" style="    float: right;
+								    float: right;
+								    margin-right: 50px;
+								    height: 51px;
+								    width: 461px;
+								    border: 1px solid #999999;padding-left: 16px;
+    								padding-top: 6px;
+								    border-radius: 1px;font-family: FangSong;">请输入确认描述...</div>
+								<div class="btndiv4" style="
+								    position: relative;
+								    left: 69%;
+								    top: 10%;
+								    float: left;
+								" >
+								<div onclick="qrbtn()" class="btnn" style="background-color:#0099CC;color:white;cursor:pointer;">确认</div>
+								<div onclick="qrqxbtn()" class="btnn" style=" border: 1px solid #EEEEEF;cursor:pointer;">取消</div>
+								<div></div>
+							</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<!-- 业绩完成-->
+			<div id="modal-form2" class="modal fade" aria-hidden="true"
+				style="">
+				<div class="modal-dialog" style="display: block;margin: 9px auto;width: 577px;height: 300px;">
+					<div class="modal-contentqryj">
+						<div class="modal-body" style="">
+							<div class="qr">
+								    <p style="float: left;font-size:16px;margin-top: -2%;margin-left: 3%;color: rgba(51,51,51,1);font-weight: 400;">业绩完成</p>
+							</div>
+						<div class="qryjbigbox" style="height:233px;">
+							<div style="height:12px;width:300px;"></div>
+							<div class="wcyjbox">
+									<div class="qryjword ">
+										计划业绩：
+									</div>
+									<div id="wcjhyj" class="shortdiv " contenteditable="false" style="font-family: FangSong;">
+										<p style="position:relative;width: 23px;left: 149px;top: 0px;
+										    font-family: FangSong;
+										    font-size: 14.5px;
+										    font-weight: 400;
+										    color: rgba(88,88,88,1);">(h)</p>
+									</div>
+									<div class="qryjword yqryjword" style="
+										    margin-left: 26px;
+										">
+										计划用时：
+									</div>
+									<div id="wcjhys" class="shortdiv yshortdiv" contenteditable="false" style="
+										    float: right;
+										    margin-right: -106px;
+									 ">
+										<p style="position:relative;width: 23px;left: 149px;top: 0px;
+										font-family: FangSong;
+										    font-size: 14.5px;
+										    font-weight: 400;
+										    color: rgba(88,88,88,1);">(h)</p>
+									</div>
+							</div>
+							<div class="wcyjbox">
+									<div class="qryjword1 ">业绩内容：</div>
+									<div id="wcyjnr" class="llongdiv" contenteditable="false" style=""></div>
+							</div>
+<!-- 							<div class="wcyjbox">
+									<div class="qryjword1">上传附件：</div>
+									<div id="wcscfj" class="llongdiv" contenteditable="true" style=""></div>
+							</div>
+ -->							<div class="wcyjbox">
+									<div class="qryjword1">所属业绩：</div>
+										<div id="wcssyj" class="llongdiv" contenteditable="false" style="
+										    float: right;
+										"></div>
+							</div>
+							<div class="wcyjbox">
+									<div class="qryjword">业绩类型：</div>
+										<div id="wcyjlx" class="shortdiv  " contenteditable="false" style=""></div>
+									<div class="qryjword yqryjword" style="
+										    margin-left: 26px;
+										">所属部门：</div>
+										<div id="wcssbm" class="shortdiv yshortdiv " contenteditable="false" style="float: right;
+									    margin-right: -108px;"></div>
+							</div>
+							<div class="wcyjbox">
+									<div class="qryjword" style="float:left; ">开始时间：</div>
+										<div class="my-containerq " style="float:left; ">
+											<div class="myText-contentq" >
+												<input id="wcSearchtime3" disabled="true" class="timecom laydate-icon form-control layer-date" placeholder="" style="background: rgba(244,251,255,1);width: 174px;height: 30px;">
+											</div>
+										</div>
+									<div class="qryjword yshortdiv" style="float: left;margin-left:26px;margin-top: 5px;">结束时间：</div>
+										<div class="my-containerq " style=" ">
+											<div class="myText-contentq" style="  ">
+												<input id="wcEndtime3" disabled="true" class="timecom laydate-icon form-control layer-date" placeholder="" style="background: rgba(244,251,255,1);margin-right: -108px;float: right;width: 174px;margin-top: 1px;height: 30px;">
+											</div>
+										</div>
+									</div>
+
+
+							</div>
+							<div style="height:12px;width: 598px;text-align:center;font-size:12px;
+									font-family:FangSong;
+									font-weight:400;
+									color:rgba(0,0,0,1);
+									line-height:48px;
+									opacity:0.4;"></div>
+
+						<div class="qryjbigbox2" style="height: 229px;">
+						<div style="height:9px;width:300px;"></div>
+							<div style="
+								    margin-left: 4%;
+								    height:45px;
+								">
+								<p class="wcqryjword" style="float:left;">完成进度:</p>
+								<!-- <div id="slideTest8" class="demo-slider"
+								style="position: relative;width: 484px;float: left;margin-left: 1px;margin-top: 15px;line-height: 45p;"></div> -->
+								<div id="slideTest8" class="demo-slider" style="position: relative;width: 484px;float: left;margin-left: 1px;margin-top: 15px;line-height: 40px;">
+								</div>
+								<input type="hidden" value="" id="wcjd">
+							</div>
+							<div style="width:100%;height:45px;margin-left: 4%;">
+									<div class="wcqryjword" style="float:left;">完成业绩:</div>
+									<div style="width:29%;height:36px;float:left;">
+										<div id="wcwcyj" class="shortdiv " contenteditable="true"
+										style="float:right;border:1px solid #999999;float:left;">
+										</div>
+										<div style="width: 23px;
+												    font-family: FangSong;
+												    font-size: 14.5px;
+												    font-weight: 400;
+												    float:left;
+												    margin-left: -26px;
+    												margin-top: 8px;
+											     color: rgba(88,88,88,1);">(h)</div>
+									</div>
+
+									<div class="wcqryjword" style="float:left;  margin-left: 26px;">实际用时:</div>
+									<div style="width:29%;float:left;height:36px;">
+										<div id="wcsjys" class="shortdiv " contenteditable="true"
+										style="float:left;border:1px solid #999999;">
+										</div>
+										<div style="width: 23px;
+												float:left;
+											    font-family: FangSong;
+											    font-size: 14.5px;
+											    font-weight: 400;
+											    margin-left: -26px;
+    											margin-top: 8px;
+											    color: rgba(88,88,88,1);">(h)</div>
+									</div>
+								</div>
+
+
+							<div style="width:100%;height:45px;margin-left: 4%;">
+									<div class="wcqryjword" style="float:left;">实际开始:</div>
+									<div class="my-containerwc " style="float:left; ">
+											<div class="myText-contentq" >
+												<input id="wcSearchtime2"
+													class="timecom com laydate-icon form-control layer-date"
+													placeholder="" style="width: 174px;height:30px;border:1px solid #999999;margin-left: -1px;">
+											</div>
+									</div>
+									<div class="wcqryjword" style="float:left;    margin-left: 31px;">实际结束:</div>
+									<div class="my-containerwc " style="float:left; ">
+											<div class="myText-contentq" >
+												<input id="wcEndtime2"
+													class="timecom com laydate-icon form-control layer-date"
+													placeholder="" style="width: 174px;height:30px;border:1px solid #999999;margin-left: 0px;">
+											</div>
+									</div>
+							</div>
+								<input id="wcid" type="hidden" value="">
+
+							<div style="width:300px;"></div>
+								<p class="wcqryjword" style="float: left;margin-left: 23px;">完成说明：</p>
+								<div id="wcwcsm" contenteditable="true" onfocus="if(this.innerText=='请输入完成描述...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='请输入完成描述...'" style="    float: right;
+								    float: right;
+								    margin-right: 50px;
+								    height: 51px;
+								    width: 461px;
+								    border: 1px solid #999999;
+								    border-radius: 1px;
+								    padding-left: 12px;
+								    padding-top: 4px;
+								    font-family: fangsong;
+													">请输入完成描述...</div>
+								<div class="btndiv4" style="
+								    position: relative;
+								    left: 69%;
+								    top: 6%;
+								    float: left;
+								" >
+								<div onclick="wcbtn()" class="btnn" style="background-color:#0099CC;color:white;cursor:pointer;">完成</div>
+								<div onclick="wcqxbtn()" class="btnn" style="border: 1px solid #EEEEEF;cursor:pointer;">取消</div>
+								<div></div>
+							</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 业绩审核-->
+			<div id="modal-form3" class="modal fade" aria-hidden="true"
+				style="">
+				<div class="modal-dialog" style="display: block;margin: 9px auto;width: 658px;height: 300px;">
+					<div class="modal-contentqryj" style=" height: 559px;">
+						<div class="modal-body" style="">
+							<div class="qrdiv">
+								    <p style="float: left;font-size:16px;margin-top: -9px;margin-left: 3%;color: rgba(51,51,51,1);font-weight: 400;">业绩审核</p>
+							</div>
+						<div class="qryjbigbox" style="height: 284px;">
+							<div style="height:12px;width:300px;"></div>
+							<div class="shyjbox">
+									<div class="qryjword ">
+										计划业绩：
+									</div>
+									<div id="shjhyj" class="shortdiv " contenteditable="false" style="">
+										<p style="position:relative;width: 23px;left: 149px;top: 0px;
+										    font-family: FangSong;
+										    font-size: 14.5px;
+										    font-weight: 400;
+										    color: rgba(88,88,88,1);">(h)</p>
+									</div>
+									<div class="qryjword yqryjword" style="
+										    margin-left: 26px;
+										">
+										计划用时：
+									</div>
+									<div id="shjhys" class="shortdiv yshortdiv" contenteditable="false" style="
+										    float: right;
+										    margin-right: -106px;
+									 ">
+										<p style="position:relative;width: 23px;left: 149px;top: 0px;
+										font-family: FangSong;
+										    font-size: 14.5px;
+										    font-weight: 400;
+										    color: rgba(88,88,88,1);">(h)</p>
+									</div>
+							</div>
+							<div class="shyjbox">
+									<div class="qryjword1 ">业绩内容：</div>
+									<div id="shyjnr" class="llongdiv" contenteditable="false" style=""></div>
+							</div>
+							<div class="wcyjbox">
+									<div class="qryjword1">所属业绩：</div>
+										<div id="shssyj" class="llongdiv" contenteditable="false" style="
+										    float: right;
+										"></div>
+							</div>
+							<div class="shyjbox">
+									<div class="qryjword ">
+										完成业绩：
+									</div>
+									<div id="shwcyj" class="shortdiv " contenteditable="false" style="">
+										<p style="position:relative;width: 23px;left: 149px;top: 0px;
+										    font-family: FangSong;
+										    font-size: 14.5px;
+										    font-weight: 400;
+										    color: rgba(88,88,88,1);">(h)</p>
+									</div>
+									<div class="qryjword yqryjword" style="
+										    margin-left: 26px;
+										">
+										实际用时：
+									</div>
+									<div id="shsjys" class="shortdiv yshortdiv" contenteditable="false" style="
+										    float: right;
+										    margin-right: -106px;
+									 ">
+										<p style="position:relative;width: 23px;left: 149px;top: 0px;
+										font-family: FangSong;
+										    font-size: 14.5px;
+										    font-weight: 400;
+										    color: rgba(88,88,88,1);">(h)</p>
+									</div>
+							</div>
+							<div class="shyjbox">
+									<div class="qryjword" style="float:left; ">实际开始：</div>
+										<div class="my-containerq " style="float:left; ">
+											<div class="myText-contentq" >
+												<input id="shSearchtime"
+                                                       disabled="true" class="timecom laydate-icon form-control layer-date"
+													placeholder="" style="background: rgba(244,251,255,1);width: 174px;height: 30px;">
+											</div>
+										</div>
+									<div class="qryjword yshortdiv" style="float: left;margin-left:26px;margin-top: 5px;">实际结束：</div>
+										<div class="my-containerq " style=" ">
+											<div class="myText-contentq" style="  ">
+												<input id="shEndtime"
+                                                       disabled="true" class="timecom laydate-icon form-control layer-date"
+													placeholder="" style="background: rgba(244,251,255,1);margin-right: -108px;float: right;width: 174px;margin-top: 1px;height: 30px;">
+											</div>
+										</div>
+										<input id="wcid" type="hidden" value="">
+									</div>
+									<div class="shyjbox">
+									<div class="qryjword ">完成说明：</div>
+									<div id="shwcsm" class="llongdiv" contenteditable="false" style=""></div>
+							</div>
+
+							</div>
+							<div style="height:12px;width: 598px;text-align:center;font-size:12px;
+									font-family:FangSong;
+									font-weight:400;
+									color:rgba(0,0,0,1);
+									line-height:48px;
+									opacity:0.4;"></div>
+
+						<div class="qryjbigbox2" style="height: 229px;">
+						<div style="height:14px;width:300px;"></div>
+							<div style="width:100%;height:63px;margin-left: 4%;">
+									<div class="wcqryjword" style="float:left;">审核业绩:</div>
+										<div id="shyj" class="yjbox" contenteditable="true" style=""></div>
+										<div class="hour">(h)</div>
+							</div>
+							<div style="width:300px;"></div>
+								<p class="wcqryjword" style="float: left;margin-left: 23px;">审核说明：</p>
+								<div id="shsm" contenteditable="true" onfocus="if(this.innerText=='请输入审核描述...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='请输入审核描述...'" style="    float: right;
+								    float: right;
+								    margin-right: 50px;
+								    height: 51px;
+								    font-family: fangsong;
+								    padding-top: 3px;
+								    padding-left: 12px;
+								    width: 461px;
+								    border: 1px solid #999999;
+								    border-radius: 1px;">请输入审核描述...</div>
+								<div class="btndiv4" style="
+								    position: relative;
+								    left: 69%;
+								    top: 10%;
+								    float: left;
+								" >
+								<div onclick="shbtn()" class="btnn" style="background-color:#0099CC;color:white;cursor:pointer;">确认</div>
+								<div onclick="shqxbtn()" class="btnn" style="border: 1px solid #EEEEEF;cursor:pointer;">取消</div>
+								<div></div>
+							</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+    <!-- 名字选择模态框部分-->
+    <div id="personselect" class="modal fade" aria-hidden="true" style="overflow-y: hidden" >
+        <div class="modal-dialog">
+            <div class="modal-content" style="margin-left: -113px;width:800px;background-color: #FFFFFF;">
+                <div class="modal-body">
+                    <div class="row" >
+                        <div id="tree" class="col-sm-4" style="overflow-y: scroll;overflow-x: hidden;width: 30%"></div>
+                        <div class="col-sm-8" style="width: 70%">
+                            <div class="myText-content" style="margin-left: 0;width:100%;margin-bottom: 10px">
+                                <input id="key" type="text" style="outline: none;float: left;height:33px;width: 78%;" class="form-control" placeholder="请输入要搜索的姓名或员工编号">
+                                <button id="search" type="button" class="btn btn-primary" style="line-height: 19px;border-radius: 0;width: 20%;background-color:#0099CC">搜索</button>
+                            </div>
+                            <div id="table2"></div>
+                        </div>
+                        <div style="overflow: hidden;width: 200px;position: absolute;top: 85%;left: 70%;">
+                            <button id="closed" style="color:#73777A;background-color: #F5F5F6;margin-right: 15px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="closePage();" value="取消">取消</button>
+                            <button id="commit" style="margin-right:3px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose();" value="发布">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+<!-- js初始化 -->
+<script>
+    //如需刷新iframe，则只需把window替换为响应的iframe的 属性值或ID属性值
+        $(function () {
+            var Request = new Object();
+
+            var opstatus;
+            $("#kntype").val("01");
+            $("a").tooltip();
+            $(":button").tooltip();
+            $("#top").click(function () {
+                var speed=200;//滑动的速度
+                $('body,html').animate({ scrollTop: 0 }, speed);
+                return false;
+            });
+
+           // $(".modal-dialog").hide();
+
+            $("#big").show();
+            $("#example").hide();
+
+            now();
+            before();
+            yhmess();
+            yjgltable();//业绩管理表格数据初始化
+            table();//业绩管理表格
+            //ssyj();
+            $("#paimingtable").show();
+           // renyuan();
+            //selectone();
+         //   $("#sxry").searchableSelect();
+
+            // 初始化下拉框
+            //名字选择框 copy开始  确保选择框名字正确
+            $("#sxry").searchableSelect({width:85});
+            $(".searchable-select").click(function () {
+                $("#personselect").modal('show');
+               // $(".modal-dialog").modal('show');
+            });
+            $("#personselect").find(".row").height($(document).height()-100);
+            $('#table2').height($("#personselect").find(".row").height()-100);
+            tree();
+            $("#tree").height($(document).height()-110);
+            //名字选择框 copy结束
+        });
+
+<!-- 接口对接 -->
+//所属业绩接口
+function ssyj(){
+	$.ajax({
+            url:"/performance/manage/queryTopAll",
+            //data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+            	 $("#ssyj").html("");
+            	 for(var i=0;i<data.length;i++){
+            		 //alert("所有业绩=="+data[i].pfmtext);
+            		 $("#ssyj").append('<option  value="'+data[i].id+'">'+data[i].pfmtext+'</option>');
+            	 }
+            	 $('#table1').bootstrapTable('load',datatable);
+                 },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+};
+
+
+//业绩发布接口
+        function fbyj(){
+            var pfmnumber;
+            pfmnumber = $('#fbjhyj').html();
+            if(parseInt(pfmnumber)<10){
+                pfmnumber="0"+pfmnumber;
+			}
+	            if(!(/^\d+(\.\d+)?$/.test(pfmnumber))){
+	                alert("请以数字形式填写计划业绩");
+	                return false;
+	             }else{
+	            	 var pfmnumber2 =  $('#fbjhyj').html();
+	             }
+            var pfmworkhours =  $("#fbjhys").html();
+            if(parseInt(pfmworkhours)<10){
+                pfmworkhours="0"+pfmworkhours;
+            }
+	            if(!(/^\d+(\.\d+)?$/.test(pfmworkhours))){
+	                alert("请以数字形式填写计划用时");
+	                return false;
+	             }else{
+	            	 var pfmworkhours2 =  $('#fbjhys').html();
+	             }
+
+            var pfmtype = $("#yjlx").find("option:selected").text();
+            //var pfmdepartmentid = $(":button").find(".filter-option-inner-inner").text();
+            var pfmdepartmentid =$("#ssbm").find("option:selected").attr("part");
+            var pfmstarttime = $("#Searchtime").val();
+            var pfmendtime = $("#Endtime").val();
+            var d1 = new Date(pfmstarttime.replace(/\-/g, "\/"));
+            var d2 = new Date(pfmendtime.replace(/\-/g, "\/"));
+	            if(pfmstarttime!=""&&pfmendtime!=""&&d1 >d2){
+	              alert("开始时间不能大于结束时间！");
+	              return false;
+	            }
+            var pfmpid =$("#ssyj").find("option:selected").val();
+            var pfmdowntext = $("#ssyj").find("option:selected").html()
+            //alert("所属部门"+pfmdepartmentid);
+            var pfmissuerpublish ;
+            if($("#fbsm").html() == ""){
+            	pfmissuerpublish= "";
+            }else{
+            	pfmissuerpublish= $("#fbsm").html();
+            }
+            var pfmtext ;
+	            if($("#yjnr").html()!="添加您的业绩内容..."){
+	            	pfmtext = $("#yjnr").html() ;
+	            };
+           // alert("所属部门"+pfmdepartmentid);
+
+            if(pfmnumber2 == null|| pfmworkhours2 == null || pfmtext== null || pfmtype== null|| pfmdepartmentid== null|| pfmstarttime== ""|| pfmendtime== "" || pfmissuerpublish== "" ){
+         	   alert("温馨提示：请把其他项全部填写完毕！")
+            }else {
+            	var data = {"pfmnumber":pfmnumber2,"pfmworkhours":pfmworkhours2,"pfmtext":pfmtext,
+                   		"pfmtype":pfmtype,"pfmdepartmentid":pfmdepartmentid,"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,
+                   		"pfmpid":pfmpid,"pfmissuerpublish":pfmissuerpublish,"pfmdowntext":pfmdowntext};
+                var userid1;
+        	   $.ajax({
+                   url:"/performance/manage/insertPfmm",
+                   data: data,
+                   async:false,
+                   dataType:"json",
+                   type:"post",
+                   success:function (data) {
+                       if(data.code!=404){
+						   var data1={"id":pfmpid}
+						   $.ajax({
+							   url:"/performance/manage/selectPerformanceList",
+							   data: data1,
+							   async:false,
+							   dataType:"json",
+							   type:"post",
+							   success:function (data) {
+								   console.log(data)
+								   saveNews(data[0].userid,"02","业绩管理",pfmtext,data[0].id);
+							   }
+						   })
+                       	alert("发布成功");
+                       	$("#modal-form").modal('hide');
+                       	yjgltable();
+                       	table();
+                       	$('#table1').bootstrapTable('load',datatable);
+
+                       	 $("#yjl").html("");
+                        	$("#fbjhyj").html("");
+                        	$("#fbjhys").html("");
+                             $("#gzsc").html("");
+                             $("#Searchtime").val("");
+                             $("#Endtime").val("");
+                             $("#yjnr").html("添加您的业绩内容...");
+                             $("#fbsm").html("");
+                             ssyj();
+                       }else{
+                           alert(data.msg);
+                       }
+                   },
+                   error:function (error) {
+                       alert("网络状况不佳，用户登录失败！" + error.status);
+                   }
+               });
+           }
+           };
+
+
+
+        function fbyjqx(){
+        	$("#yjl").html("");
+        	$("#fbjhyj").html("");
+           	$("#fbjhys").html("");
+            $("#gzsc").html("");
+            $("#Searchtime").val("");
+            $("#Endtime").val("");
+            $("#yjnr").html("添加您的业绩内容...");
+        	$("#modal-form").modal('hide');
+        	$("#fbsm").html("");
+        }
+ // 个人详情接口
+        var yhid;
+        var userpid;
+        function yhmess(){
+
+    		var datatableyh;
+    		$.ajax({
+                url:"/tuser/queryIdTuser",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                	yhid=data.id;
+                    userpid = data.userpid;
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+    	};
+/* 业绩管理列表接口 */
+		var datatable;
+        //ajax获取个人签到数据 传给datatable
+//格式化现在日期
+        function now() {
+            // 给input  date设置默认值
+            var now = new Date();
+            //格式化日，如果小于9，前面补0
+            var day = "01";
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 2)).slice(-2);
+            var year =now.getFullYear();
+            if(month >12){ month ="01"; year = now.getFullYear()+1};
+            //拼装完整日期格式
+            var today = year+"/"+(month)+"/"+(day) ;
+            //完成赋值
+            $('#Endtime0').val(today);
+        }
+//格式化15天前的日期
+        function before() {
+            //十五天毫秒值：1209600000
+            var date = new Date();
+            var times = date.getTime();
+            var now = new Date(times);
+            //格式化日，如果小于9，前面补0
+            var day = "01";
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear()+"/"+(month)+"/"+(day) ;
+            //完成赋值
+            $('#Begtime0').val(today);
+        }
+//表格接口
+    	//var bgyhid =[];
+		var deparepid ="";
+    //表格接口
+    //var bgyhid =[];
+    function yjgltable(){
+        var data;
+        var pfmstarttime = $('#Begtime0').val();
+        var pfmendtime = $('#Endtime0').val();
+
+        Request = GetRequest();
+        //业绩排名列表进来
+        var starttime = Request["starttime"];
+        var endtime = Request["endtime"];
+        var userid = Request["userid"];
+        var name = Request["name"];
+        var zdeparid = Request["zdeparid"];
+        var bdeparid = Request["bdeparid"];
+
+        //业绩分析进来
+        var starttimefx = Request["starttimefx"];
+        var endtimefx = Request["endtimefx"];
+        var useridfx = Request["useridfx"];
+        var namefx = Request["namefx"];
+
+        //alert(starttimefx+"----"+endtimefx+"-----"+namefx+"-----yh"+useridfx+"-----xz"+zdeparid+"-----bm"+bdeparid+"-----");
+        //alert(starttimefx+"----"+endtimefx+"-----"+namefx+"-----yh"+useridfx);
+        if(starttime !=null && endtime !=null && userid !=null && name != null ){
+            $('#Begtime0').val(starttime);
+            $('#Endtime0').val(endtime);
+            $("#qb").html(name);
+            $("#sxry").siblings().find('.searchable-select-holder').html(name);
+            $("#sxry").siblings().find('.searchable-select-holderappend').html(userid);
+            data={"pfmstarttime":starttime,"pfmendtime":endtime,"state":"01","id":userid,"type":"01"};
+        }else if(starttime !=null && endtime !=null && zdeparid !=null && name != null){
+            $('#Begtime0').val(starttime);
+            $('#Endtime0').val(endtime);
+            $("#qb").html(name);
+            $("#sxry").siblings().find('.searchable-select-holder').html(name);
+            $("#sxry").siblings().find('.searchable-select-holderappend').html(zdeparid);
+            data={"pfmstarttime":starttime,"pfmendtime":endtime,"state":"01","grzdeparid":zdeparid,"type":"02"};
+        }else if(starttime !=null && endtime !=null && bdeparid !=null && name != null){
+            $('#Begtime0').val(starttime);
+            $('#Endtime0').val(endtime);
+            $("#qb").html(name);
+            $("#sxry").siblings().find('.searchable-select-holder').html(name);
+            $("#sxry").siblings().find('.searchable-select-holderappend').html(bdeparid);
+            data={"pfmstarttime":starttime,"pfmendtime":endtime,"state":"01","grbdeparid":bdeparid,"type":"03"};
+        }else if(starttime == null && endtime == null && userid == null && zdeparid == null && bdeparid == null && name == null &&
+            starttimefx == null && endtimefx == null && useridfx == null && namefx == null ){
+            data={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"state":"01"};
+        };
+
+        if(starttimefx !=null && endtimefx !=null && useridfx !=null && namefx !=null){
+            $("#qb").html(namefx);
+            $("#sxry").siblings().find('.searchable-select-holder').html(namefx);
+            $("#sxry").siblings().find('.searchable-select-holderappend').html(useridfx);
+            var arr = starttimefx.split('-');
+            var arr1 = endtimefx.split('-');
+            var Begtime ="";
+            var Endtime ="";
+            for(var i=0;i<arr.length;i++){
+                Begtime += arr[i]+"/";
+            }
+            Begtime = Begtime.substr(0, Begtime.length - 1);
+            for(var i=0;i<arr1.length;i++){
+                Endtime += arr1[i]+"/";
+            }
+            Endtime = Endtime.substr(0, Endtime.length - 1);
+            $('#Begtime0').val(Begtime);
+            $('#Endtime0').val(Endtime);
+            data={"pfmstarttime":Begtime,"pfmendtime":Endtime,"state":"01","id":useridfx,"type":"01"};
+        }
+
+        $.ajax({
+            url:"/performance/manage/querySHTperfromance",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                console.log("-------------业绩管理表格");
+                console.log(data);
+                datatable=data;
+            }
+        });
+    };
+
+//表格操作权限
+        function operate(value,row,index){
+
+
+ 		   if( $("#sxlx").find("option:selected").val() =="01" && row.userid == yhid){
+ 			   //alert("opstatus ==01 && row.userrid == yhid");
+	         	   if(row.pfmstate=="01"  ){
+	         		return "<a href='javascript:void(0);' class='czbtn' style='color:#595959;'>确认</a>"
+	         	   }else if(row.pfmstate=="02"  ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959;'>确认</a>"
+	         	   }else if(row.pfmstate=="03" ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn2' style='color:#0099CC;' onclick=\"finish('"+row.id+"')\">完成</a>"
+	         	   } else if(row.pfmstate=="04" ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959;'>审核</a>"
+	         	   }else if(row.pfmstate=="05"){
+	         		   return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959;' >已审核</a>"
+	         	   }
+         }else if( $("#sxlx").find("option:selected").val() =="01" && row.userid != yhid ){
+        	  //alert("opstatus ==01 && row.userrid != yhid");
+         			if(row.pfmstate=="01"){
+	         		return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>确认</a>"
+	         	   }else if(row.pfmstate=="02"  ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>确认</a>"
+	         	   }else if(row.pfmstate=="03" ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>完成</a>"
+	         	   } else if(row.pfmstate=="04" ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>审核</a>"
+	         	   }else if(row.pfmstate=="05"){
+	         		   return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>已审核</a>"
+	         	   }
+         };
+ 		   if($("#sxlx").find("option:selected").val() =="02"){
+        	      if(row.pfmstate=="01"  ){
+	         		return "<a href='javascript:void(0);'  class='czbtn2' style='color:#0099CC;'>确认</a>"
+	         	   }else if(row.pfmstate=="02"  ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn2' style='color:#0099CC;'>确认</a>"
+	         	   }else if(row.pfmstate=="03" ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn' style='color:#595959'>完成</a>"
+	         	   } else if(row.pfmstate=="04" ){
+	         		   return "<a href='javascript:void(0);'  class='czbtn2' style='color:#0099CC;'>审核</a>"
+	         	   }else if(row.pfmstate=="05"){
+	         		   return "<a href='javascript:void(0);'  class='czbtn2' style='color:#0099CC;'>已审核</a>"
+	         	   }
+         }
+
+ 	   };
+
+
+//表格代码
+     function table(){
+    	 //alert("当前状态=="+$("#sxlx").find("option:selected").val());
+     $('#table1').bootstrapTable({
+        /*showToggle:!0,
+        showColumns:!0,*/
+        iconSize:"outline",
+        toolbar:"#exampleTableEventsToolbar",
+        /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+        url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+        /*showRefresh:true,*/
+        cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+        striped: true,  //表格显示条纹，默认为false
+        pagination: true, // 在表格底部显示分页组件，默认false
+        pageList: [5,10, 15], // 设置页面可以显示的数据条数
+        pageSize: 5, // 页面数据条数
+        pageNumber: 1, // 首页页码
+      /*   onClickRow: function (row, $element) {
+        	 //alert("业绩id"+field);
+
+
+         }, */
+         onClickCell:function(field, value, row, $element,event){
+        	    //alert(value);
+             if(field=="operate" && row.pfmstate=="03" && row.userid == yhid){
+            	 finish(row.id);
+             }else if(field=="operate" && row.pfmstate!="03" && $("#sxlx").find("option:selected").val() =="02"){
+            	 if(row.pfmstate=="01"){
+            		 queren(row.id);
+            	 }else if(row.pfmstate=="02"){
+            		 queren(row.id);
+            	 }else if(row.pfmstate=="04"){
+            		 shenhe(row.id);
+            	 }
+             }
+              else{
+            	 page('/manageMess?id='+row.id+"&messid="+row.userid,'业绩详情');
+             }
+        	 //alert(field +"，"+value+"，"+row.id);//value当前点击列所在行的内容，可以直接理解为单元格的内容，row为当前点击列所在行的所有数据
+         },
+        columns: [
+                  {
+                      field: 'number',
+                      title: '序号',
+                      width:'4%' ,
+                      align:'center',
+                      formatter: function (value,row,index){
+                          return index+1; //序号正序排序从1开始
+                      }
+                  },
+                  {
+                      field: 'username',
+                      width:'7%' ,
+                      title: '姓名',
+                      align:'center',
+                      /* formatter: function(value, row, index){
+		              	        return [
+		  					"<a class='J_menuItem' style='color:#0099CC' data-index='0' onclick=\"page('/manageMess?id="+row.id+"','业绩详情')\">"+row.username+"</a>"
+		  		        ].join("");
+                      }  */
+                  }, {
+                        field: 'grbdeparname',
+                        width:'10%',
+                        title: '部门',
+                        align:'center',
+                formatter:function (value,row,index){
+
+                    if(JSON.stringify(row.pfmtext)!="null" && row.grbdeparname.length>4){
+                        var b =JSON.stringify(row.grbdeparname);
+                        b = b.substr(1,b.length-2);
+                        b=b.replace("\r","");
+                        return value =b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"").substr(0,4)+"..."
+                    }else {
+                        var b =JSON.stringify(row.grbdeparname);
+                        b = b.substr(1,b.length-2);
+                        b=b.replace("\r","");
+                        return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"");
+
+                    }}
+                    },{
+                        field: 'grzdeparname',
+                        width:'9%' ,
+                        title: '小组',
+                        align:'center',
+                formatter:function (value,row,index){
+
+                    if(JSON.stringify(row.grzdeparname)!="null" && row.grzdeparname.length>5){
+                        var b =JSON.stringify(row.grzdeparname);
+                        b = b.substr(1,b.length-2);
+                        b=b.replace("\r","");
+                        return value =b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"").substr(0,4)+"..."
+                    }else {
+                        var b =JSON.stringify(row.grzdeparname);
+                        b = b.substr(1,b.length-2);
+                        b=b.replace("\r","");
+                        return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"");
+
+                    }}
+                    },{
+                      field: 'pername',
+                      width:'10%' ,
+                      title: '业绩部门',
+                      align:'center',
+                formatter:function (value,row,index){
+
+                    if(JSON.stringify(row.pername)!="null" && row.pername.length>4){
+                        var b =JSON.stringify(row.pername);
+                        b = b.substr(1,b.length-2);
+                        b=b.replace("\r","");
+                        return value =b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"").substr(0,4)+"..."
+                    }else {
+                        var b =JSON.stringify(row.pername);
+                        b = b.substr(1,b.length-2);
+                        b=b.replace("\r","");
+                        return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"");
+
+                    }}
+                  },{
+               	   width:'12%' ,
+                      field: 'pfmtext',
+                      title: '业绩内容',
+                      align:'center',
+                      formatter:function (value,row,index){
+
+                   	   if(JSON.stringify(row.pfmtext)!="null" && row.pfmtext.length>6){
+                              var b =JSON.stringify(row.pfmtext);
+                              b = b.substr(1,b.length-2);
+                              b=b.replace("\r","");
+                              return value =b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"").substr(0,6)+"..."
+                          }else {
+                              var b =JSON.stringify(row.pfmtext);
+                              b = b.substr(1,b.length-2);
+                              b=b.replace("\r","");
+                              return value = b.replace(/<div\s*[^>]*>(.*?)<\/div>/g,"$1").replace(/<br>/ig,"");
+
+                          }}
+                  },
+                  {
+                      field: 'pfmnumber',
+                      width:'4%' ,
+                      title: '业绩量',
+                      align:'center',
+                  },{
+                      field: 'pfmworkhours',
+                      width:'4%' ,
+                      title: '工作时长',
+                      align:'center',
+                  },{
+                      field: 'pfmstarttime',
+                      width:'10%' ,
+                      title: '开始时间',
+                      align:'center',
+                  },
+                  {
+                      field: 'pfmendtime',
+                      width:'10%' ,
+                      title: '结束时间',
+                  },
+                  {
+                      field: 'pfmstate',
+                      width:'5%' ,
+                      title: '业绩状态',
+                      align:'center',
+                      formatter: function (value,row,index){
+                   	   if(row.pfmstate=="01"){
+                   		   return "未确认";
+                   	   }else if(row.pfmstate=="02"){
+                   		   return "未通过";
+                   	   }else if(row.pfmstate=="03"){
+                   		   return "已通过";
+                   	   }else if(row.pfmstate=="04"){
+                   		   return "已完成 ";
+                   	   }else if(row.pfmstate=="05"){
+                   		   return "已审核";
+                   	   }
+                         }
+                  } , {
+                      field: 'praisenum',
+                      width:'4%' ,
+                      title: '点赞数',
+                      align: 'center',
+                      formatter: function (value,row,index){
+                          return '<i class="iconfont icon-buoumaotubiao15" style="font-size: 15px;">&nbsp;'+row.praisenum+'</i>';
+                              //序号正序排序从1开始
+                         }
+                  }
+                  , {
+                      field: 'commentnum',
+                      title: '评论数',
+                      width:'4%' ,
+                      align: 'center',
+                      formatter: function (value,row,index){
+                          return '<i class="iconfont icon-pinglun4" style="font-size: 15px;">&nbsp;'+row.commentnum+'</i>';
+                              //序号正序排序从1开始
+                         }
+                  },
+                  {
+                      field: 'operate',
+                      title: '操作',
+                      width:'10%' ,
+                      align: 'center',
+                      formatter: operate
+                     /*  events: {
+                          'click .say_hi': function(e, value, row, index) {
+                              alert(row.name + ' 你好');
+                          }
+                      } */
+
+                  }
+                  ] ,
+            data:datatable
+	       });
+	};
+	$(".fht-cell").remove();
+
+
+/* 查询 */
+	var epid ;
+
+        function chaxunn(){
+            //alert("------"+userpid);
+			var cxdata = null;
+			var datash=null;
+			var dxid =$("#dxid").val();
+		    var datatable1;
+			var pfmstarttime = $("#Begtime0").val();
+		    var pfmendtime = $("#Endtime0").val();
+		    var pfmstate;
+			 if($("#sxzt").find("option:selected").val()=="00"){
+				pfmstate="";
+			 }else{
+				pfmstate = $("#sxzt").find("option:selected").val();
+			 }
+                 var deparid ;
+	                 if($("#sxbm").siblings().find(".searchable-select-holder").html()=="全部"){
+	                	 deparid="";
+	                 }else{
+	                	 deparid = $("#sxbm").siblings().find(".searchable-select-holderappend").html();
+	                 }
+                // var sxlx = $("#sxlx").find("option:selected").html();
+                 //alert("人员id----"+id)
+                //alert("开始时间--"+pfmstarttime+"结束时间--"+pfmendtime+"业绩状态：--"+pfmstate+"部门id："+deparepid+"人员id："+userid);
+                 if($("#sxlx").find("option:selected").val() =="01" ){
+                     var num =(userpid.length+3);
+                     var num2 =(userpid.length+6);
+                 	if(dxid.length == num){
+						var ida = $("#sxry").siblings().find(".searchable-select-holderappend").html();
+						cxdata={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,"deparid":deparid,"grbdeparid":ida,"state":"01","type":"03"};
+					}else if(dxid.length == num2){
+						var idb = $("#sxry").siblings().find(".searchable-select-holderappend").html();
+						cxdata={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,"deparid":deparid,"grzdeparid":idb,"state":"01","type":"02"};
+						//alert(JSON.stringify(cxdata));
+                 	}else if(dxid.length==""){
+						var idc = $("#sxry").siblings().find(".searchable-select-holderappend").html();
+						cxdata={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,"deparid":deparid,"id":idc,"state":"01","type":"01"};
+					};
+                     if($("#sxry").siblings().find(".searchable-select-holderappend").html() == "01" ){
+                         cxdata={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,"deparid":deparid,"state":"01"};
+                     };
+                	 $.ajax({
+                         url:"/performance/manage/querySHTperfromance",
+                         data:cxdata,
+                         async:false,
+                         dataType:"json",
+                         type:"post",
+                         success:function (data) {
+                             console.log("-------------业绩管理表格");
+                             console.log(data);
+                             yjgltable();
+                             datatable1=data;
+                             table();
+                            $('#table1').bootstrapTable('load',datatable1);
+                         },
+                         error:function (error) {
+                             alert("网络状况不佳，用户登录失败！" + error.status);
+                         }
+                     });
+                 }else if($("#sxlx").find("option:selected").val() =="02"){
+
+                         var num =(userpid.length+3);
+                         var num2 =(userpid.length+6);
+                         if(dxid.length == num){
+                             var ida = $("#sxry").siblings().find(".searchable-select-holderappend").html();
+                             cxdata={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,"deparid":deparid,"grbdeparid":ida,"state":"02","type":"03"};
+                         }else if(dxid.length == num2){
+                             var idb = $("#sxry").siblings().find(".searchable-select-holderappend").html();
+                             cxdata={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,"deparid":deparid,"grzdeparid":idb,"state":"02","type":"02"};
+                             //alert(JSON.stringify(cxdata));
+                         }else if(dxid.length==""){
+                             var idc = $("#sxry").siblings().find(".searchable-select-holderappend").html();
+                             cxdata={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,"deparid":deparid,"id":idc,"state":"02","type":"01"};
+                         };
+                         if($("#sxry").siblings().find(".searchable-select-holderappend").html() == "01" ){
+                             cxdata={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,"deparid":deparid,"state":"02"};
+                         };
+                	 $.ajax({
+                         url:"/performance/manage/querySHTperfromance",
+                         data: cxdata,
+                         async:false,
+                         dataType:"json",
+                         type:"post",
+                         success:function (data) {
+                             console.log("-------------业绩管理表格");
+                             console.log(data);
+                            // yjgltable();
+                             datatable1=data;
+                             table();
+                            $('#table1').bootstrapTable('load',datatable1);
+                         },
+                         error:function (error) {
+                             alert("网络状况不佳，用户登录失败！" + error.status);
+                         }
+                     });
+                 }
+
+        };
+
+ /* 重置 */
+        function chongzhii(){
+        	 now();
+        	 before();
+             var data={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime};
+             if($("#sxzt").find("option:selected").html() != "全部"){
+            	 $("#sxzt option:first").prop("selected", 'selected');
+             };
+             if( $("#sxlx").find("option:selected").val() != "01"){
+            	 $("#sxlx option:first").prop("selected", 'selected');
+             };
+             //$("#sxzt").find("option:selected").html("全部");
+             //$("#sxlx").find("option:selected").val("业绩");
+            $("#sxbm").siblings().find(".searchable-select-holder").html("全部");
+			$("#sxry").siblings().find(".searchable-select-holder").html("全部");
+            $("#sxry").siblings().find(".searchable-select-holderappend").html("01");
+			var pfmstarttime = $('#Begtime0').val();
+            var pfmendtime = $('#Endtime0').val();
+			var pfmstate="";
+			var deparid="";
+			var id="";
+			var state="01";
+			var datatablecz;
+			 var data={"pfmstarttime":pfmstarttime,"pfmendtime":pfmendtime,"pfmstate":pfmstate,
+                      		"deparid":deparid,"id":id,"state":state};
+			 $.ajax({
+                 url:"/performance/manage/querySHTperfromance",
+                 data: data,
+                 async:false,
+                 dataType:"json",
+                 type:"post",
+                 success:function (data) {
+                	 datatablecz=data;
+                     //yjgltable();
+                     table();
+                     $('#table1').bootstrapTable('load',datatablecz);
+                 },
+                 error:function (error) {
+                     alert("网络状况不佳，用户登录失败！" + error.status);
+                 }
+             });
+        };
+
+//解析url参数
+		function GetRequest() {
+			var url = location.search; //获取url中"?"符后的字串
+			var theRequest = new Object();
+			if (url.indexOf("?") != -1) {
+				var str = url.substr(1);
+				strs = str.split("&");
+				for (var i = 0; i < strs.length; i++) {
+					theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+				}
+			}
+			return theRequest;
+		}
+
+
+/* 部门接口 */
+ 	var data ={"state":"01"};
+ 	$(function(){
+ 		  $.ajax({
+ 	            url:"/performance/manage/queryTsdepart",
+ 	            data: data,
+ 	            async:false,
+ 	            dataType:"json",
+ 	            type:"post",
+ 	            success:function (data) {
+ 	            	var a = "";
+ 	            	var b = "";
+ 	            	 a=a+"<option part='01' value='全部'>全部</option>";
+ 	            	for(var i=0;i<data.length;i++){
+
+ 	            		a = a+"<option part="+data[i].id+">"+data[i].deparname+"</option>";
+ 	            		b = b+"<option part="+data[i].id+">"+data[i].deparname+"</option>";
+ 	            	}
+ 	            	$("#sxbm").append(a);
+ 	            	$("#ssbm").append(b);
+ 	            	$("#ssbm").selectpicker({width : 181,noneSelectedText : '请选择'});
+ 	                $("#sxbm").searchableSelect();
+ 	            },
+ 	            error:function (error) {
+ 	                alert("网络状况不佳，用户登录失败！" + error.status);
+ 	            },
+ 	    })
+ 	});
+/* 删除业绩 */
+ 	function deleteyj(id){
+        var data;
+        data  = {"id":id};
+
+          $.ajax({
+            url:"/performance/manage/deletePerFor",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                if(data.code!=404){
+                	alert("已删除");
+                	$('#table1').bootstrapTable('load',datatable);
+                	yjgltable();
+                	table();
+            }},
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+    })
+};
+
+<!-- jeDate 插件 -->
+		jeDate("#Searchtime",{
+		    format:"YYYY/MM/DD",
+		    isTime:false,
+		    minDate:"2014/09/19 00:00:00"
+		});
+
+		jeDate("#Endtime",{
+		    format:"YYYY/MM/DD",
+		    isTime:false,
+		    minDate:"2014/09/19 00:00:00"
+		});
+		jeDate("#wcSearchtime2",{
+		    format:"YYYY/MM/DD",
+		    isTime:false,
+		    minDate:"2014/09/19 00:00:00"
+		});
+
+		jeDate("#wcEndtime2",{
+		    format:"YYYY/MM/DD",
+		    isTime:false,
+		    minDate:"2014/09/19 00:00:00"
+		});
+		jeDate("#Begtime0",{
+		    format:"YYYY/MM/DD",
+		    isTime:false,
+		    minDate:"2014/09/19 00:00:00"
+		});
+
+		jeDate("#Endtime0",{
+		    format:"YYYY/MM/DD",
+		    isTime:false,
+		    minDate:"2014/09/19 00:00:00"
+		});
+	//进度条
+		layui.use('slider', function(){
+			  var $ = layui.$
+			  ,slider = layui.slider;
+			  //默认滑块
+			  slider.render({
+			    elem: '#slideTest1',
+
+			  });
+			//开启输入框
+			  slider.render({
+			    elem: '#slideTest8'
+			    ,input: true //输入框
+			    , change: function(value){
+		    		    console.log(value); //动态获取滑块数值
+		    		    $("#wcjd").val(value);
+		    		  }
+			  });
+		});
+
+//选项卡设置
+        function page(url, title) {
+            var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+            $(window.top.document).find('.J_mainContent').find("iframe").hide();
+            var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+                + '" seamless="" style="display: inline;"></iframe>';
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+                ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+            $(window.top.document).find('.J_mainContent').append(iframe);
+        }
+/* 模态弹出框 */
+<!-- 发布业绩  -->
+        function fabu(){
+        	$("#modal-form").modal('show');
+        	$(".modal-dialog").show();
+        	 ssyj();
+        };
+
+ <!-- 业绩审核接口 -->
+         function shenhe(id){
+        	$("#modal-form3").modal('show');
+        	$(".modal-dialog").show();
+        	var data = {"id":id}
+       		 $.ajax({
+               url:"/performance/manage/queryJGLXQPfmmList",
+               data: data,
+               async:false,
+               dataType:"json",
+               type:"post",
+               success:function (data) {
+               	 for(var i=0;i<data.length;i++){
+               		 //alert("业绩详情=="+data[i].username);
+               		 $("#shjhyj").html(data[i].pfmnumber+"h");
+               		 $("#shjhys").html(data[i].pfmworkhours+"h");
+               		 $("#shyjnr").html(data[i].pfmtext);
+               		 $("#shssyj").html(data[i].pfmdowntext);
+               		 $("#shwcsm").html(data[i].pfmissuersuccess);
+               		 //$("#qryjlx").html("&nbsp;&nbsp;&nbsp;"+data[i].pfmtype);
+               		 $("#shwcyj").html(data[i].realitypfm+"h");
+               		 $("#shsjys").html(data[i].realityworkhours+"h");
+               		 $("#shSearchtime").val(data[i].pfmstarttime);
+               		 $("#shEndtime").val(data[i].pfmendtime);
+               		 $("#wcid").val(data[i].id);
+               	 }
+               	// $('#table1').bootstrapTable('load',datatable);
+                    },
+               error:function (error) {
+                   alert("网络状况不佳，用户登录失败！" + error.status);
+               }
+           })
+       };
+
+       function shbtn(){
+		   var id = $("#wcid").val();
+		   	//alert(id);
+		   	var pfmauditoraudit = $("#shsm").html();
+			var pfmauditoraudit2;
+		   	if($("#shsm").html() != "请输入审核描述..."){
+		   		pfmauditoraudit2 = $("#shsm").html();
+			}else{
+				pfmauditoraudit2 ="";
+			}
+   			var pfmauditresults = $("#shyj").html();
+           alert(pfmauditresults)
+		   console.log(pfmauditresults)
+		   	if(parseInt(pfmauditresults)<10){
+		   	    pfmauditresults="0"+pfmauditresults;
+		   	    alert(pfmauditresults+"55555")
+			}
+           alert(pfmauditresults)
+   			var pfmauditresults2;
+		   		 if(!(/^\d+(\.\d+)?$/.test(pfmauditresults))){
+		             alert("请以数字形式填写计划业绩");
+		             return false;
+		          }else{
+		        	  pfmauditresults2 =  $("#wcwcyj").html();
+		          }
+		  if(pfmauditoraudit2 =="" || pfmauditresults2== null){
+			  alert("温馨提示：请把其他项填写完整~")
+		  }else{
+	   	 var data = {"id":id,"pfmauditoraudit":pfmauditoraudit2,"pfmstate":"05","pfmauditresults":pfmauditresults2};
+	   	 $.ajax({
+	           url:"/performance/manage/updPfmm",
+	           data: data,
+	           async:false,
+	           dataType:"json",
+	           type:"post",
+	           success:function (data) {
+	           	  alert("审核成功");
+                   $("#modal-form3").modal('hide');
+                   chaxunn();
+                   $.ajax({
+                       url:"/performance/manage/selectPerformanceList",
+                       type:"post",
+                       dataType:'json',
+                       data:{"id":id},
+                       async:false,
+                       success:function(data){
+                           console.log(data)
+                           saveNews(data[0].userid,"01","业绩管理",pfmauditoraudit2,id)
+                       }
+                   })
+
+	           	 },
+	           error:function (error) {
+	               alert("网络状况不佳，用户登录失败！" + error.status);
+	           }
+	       })
+		  }
+	   };
+   function shqxbtn(){
+   	$("#modal-form3").modal('hide');
+
+   }        ;
+<!-- 业绩确认接口 -->
+        function queren(id){
+
+        	$("#modal-form1").modal('show');
+        	$(".modal-dialog").show();
+        	var data = {"id":id}
+        	 $.ajax({
+                url:"/performance/manage/queryJGLXQPfmmList",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                	 for(var i=0;i<data.length;i++){
+                		 //alert("业绩详情=="+data[i].username);
+                		 $("#qrjhyj").html(data[i].pfmnumber+"h");
+                		 $("#qrjhys").html(data[i].pfmworkhours+"h");
+                		 $("#qryjnr").html(data[i].pfmtext);
+                		 $("#qrssyj").html(data[i].pfmdowntext);
+                		 $("#qryjlx").html(data[i].pfmtype);
+                		 $("#qrssbm").html(data[i].userpartname);
+                		 $("#qrSearchtime").val(data[i].pfmstarttime);
+                		 $("#qrEndtime").val(data[i].pfmendtime);
+                		 $("#qrid").val(data[i].id);
+                	 }
+                	// $('#table1').bootstrapTable('load',datatable);
+                     },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            })
+
+        };
+
+function qrbtn(){
+    var datatablenew;
+        	var id = $("#qrid").val();
+        	//alert(id);
+        	var pfmauditoraffirm;
+        	 var pfmstate=$("#qryjtg").find("option:selected").val()
+
+        	 if($("#qrms").html() == "请输入确认描述..." ){
+         		alert("温馨提示：请把其他选项填写完整~");
+         	}else{
+         		if($("#qrms").html() != "请输入确认描述..."){
+            		pfmauditoraffirm = $("#qrms").html();
+            	}
+            	 var data = {"id":id,"pfmauditoraffirm":pfmauditoraffirm,"pfmstate":pfmstate};
+        	 $.ajax({
+                url:"/performance/manage/updPfmm",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                   // datatablenew = data;
+                	 $("#modal-form1").modal('hide');
+                    chaxunn();
+                    $.ajax({
+                        url:"/performance/manage/selectPerformanceList",
+                        type:"post",
+                        dataType:'json',
+                        data:{"id":id},
+                        async:false,
+                        success:function(data){
+                            saveNews(data[0].userid,"01","业绩管理",data[0].pfmtext,id)
+                        }
+                    })
+                    /*alert("------yjgltablesh");
+                    $('#table1').bootstrapTable('load',datatable);
+                    table();*/
+                	 },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            }) ;
+        	}
+        };
+        function qrqxbtn(){
+        	$("#modal-form1").modal('hide');
+        };
+<!-- 业绩完成接口-->
+function finish(id){
+	$("#modal-form2").modal('show');
+	$(".modal-dialog").show();
+	var data = {"id":id}
+	 $.ajax({
+        url:"/performance/manage/queryJGLXQPfmmList",
+        data: data,
+        async:false,
+        dataType:"json",
+        type:"post",
+        success:function (data) {
+        	 for(var i=0;i<data.length;i++){
+        		 //alert("业绩详情=="+data[i].username);
+        		 $("#wcjhyj").html(data[i].pfmnumber+"h");
+        		 $("#wcjhys").html(data[i].pfmworkhours+"h");
+        		 $("#wcyjnr").html(data[i].pfmtext);
+        		 $("#wcscfj").html();
+        		 $("#wcssyj").html(data[i].pfmdowntext);
+        		 $("#wcyjlx").html(data[i].pfmtype);
+
+        		 $("#wcssbm").html(data[i].userpartname);
+        		 $("#wcSearchtime3").val(data[i].pfmstarttime);
+        		 $("#wcEndtime3").val(data[i].pfmendtime);
+        		 $("#wcid").val(data[i].id);
+        	 }
+        	// $('#table1').bootstrapTable('load',datatable);
+             },
+        error:function (error) {
+            alert("网络状况不佳，用户登录失败！" + error.status);
+        }
+    })
+
+};
+
+function wcbtn(){
+
+		  var id = $("#wcid").val();
+		  var realitypfm = $("#wcwcyj").html();
+		  if(parseInt(realitypfm)<10){
+		      realitypfm="0"+realitypfm;
+		  }
+		  var realitypfm2;
+		  var realityworkhours = $("#wcsjys").html();
+    if(parseInt(realityworkhours)<10){
+        realityworkhours="0"+realityworkhours;
+    }
+		  var realityworkhours2;
+		  if(!(/^\d+(\.\d+)?$/.test(realitypfm))){
+              alert("请以数字形式填写计划业绩");
+              return false;
+           }else{
+          	  realitypfm2 =  $("#wcwcyj").html();
+           }
+		  if(!(/^\d+(\.\d+)?$/.test(realityworkhours))){
+              alert("请以数字形式填写计划业绩");
+              return false;
+           }else{
+          	 realityworkhours2 = $("#wcsjys").html();
+           }
+		  var pfmrealitystarttime = $("#wcSearchtime2").val();
+		  var pfmrealityendtime =  $("#wcEndtime2").val();
+		  var d1 = new Date(pfmrealitystarttime.replace(/\-/g, "\/"));
+          var d2 = new Date(pfmrealityendtime.replace(/\-/g, "\/"));
+	            if(pfmrealitystarttime!=""&&pfmrealityendtime!=""&&d1 >d2){
+	              alert("开始时间不能大于结束时间！");
+	              return false;
+	            }
+		  var pfmachieveplan=$("#wcjd").val();
+	            alert("您的工作进度为："+pfmachieveplan);
+		  var pfmissuersuccess;
+		if($("#wcwcsm").html() != "请输入完成描述..."){
+			pfmissuersuccess = $("#wcwcsm").html();
+		}else{
+			pfmissuersuccess ="";
+		}
+	   if(pfmissuersuccess == ""||realityworkhours2==null|| pfmachieveplan==null|| pfmrealityendtime==""|| pfmrealitystarttime==""|| realitypfm2==null){
+		   alert("温馨提示：请把其他选项填写完整~")
+	   }else{
+	 var data = {"id":id,"realitypfm":realitypfm2,"realityworkhours":realityworkhours2
+		 ,"pfmrealitystarttime":pfmrealitystarttime,"pfmrealityendtime":pfmrealityendtime,
+		 "pfmissuersuccess":pfmissuersuccess,"pfmstate":"04","pfmachieveplan":pfmachieveplan};
+
+	 $.ajax({
+        url:"/performance/manage/updPfmm",
+        data: data,
+        async:false,
+        dataType:"json",
+        type:"post",
+        success:function (data) {
+        	 alert("已完成");
+            $.ajax({
+                url:"/performance/manage/selectPerformanceList",
+                type:"post",
+                dataType:'json',
+                data:{"id":id},
+                async:false,
+                success:function(data){
+                    $.ajax({
+                        url: "/performance/manage/selectPerformanceList",
+                        type: "post",
+                        dataType: 'json',
+                        data: {"id": data[0].pfmpid},
+                        async: false,
+                        success: function (data) {
+                            saveNews(data[0].userid, "02", "业绩管理", pfmissuersuccess, id)
+                        }
+                    })
+                }
+            })
+        	 $("#modal-form2").modal('hide');
+        	 yjgltable();
+        	 table();
+        	 $('#table1').bootstrapTable('load',datatable);
+        	 $("#wcwcyj").html("");
+        	 $("#wcsjys").html("");
+        	 $("#wcSearchtime2").val("");
+        	 $("#wcEndtime2").val("");
+        	 $("#wcwcjd").html("");
+        	 if($("#wcwcsm").html() != "请输入完成描述..."){
+     		    $("#wcqrsm").html("请输入完成描述...");
+     		}
+
+        	 },
+        error:function (error) {
+            alert("网络状况不佳，用户登录失败！" + error.status);
+        }
+    })
+	   }
+};
+
+function wcqxbtn(){
+	$("#modal-form2").modal('hide');
+};
+
+
+//树形图
+            //关闭模态框
+            function closePage(){
+                $("#personselect").modal('hide');
+            };
+            //人员选择
+            //初始化树形结构
+            function tree() {
+                $.ajax({
+                    url: "/Tdepartmentinfo/querySXJGTdepartmentinfo",
+                    data: {},
+                    async: false,
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        data.splice(0, 0, {'text': '全部', 'nodeid': '01'});
+                        $('#tree').treeview({
+                            data: data,         // 数据源
+                            collapseIcon: "iconfont icon-xiangshangjiantou",
+                            expandIcon: "iconfont icon-iconset0417",
+                            checkedIcon:"glyphicon glyphicon-check",
+                            color: "#000000",
+                            backColor: "#FFFFFF",
+                            href: "#node-1",
+                            selectable: true,
+                            //showCheckbox:true,
+                            //multiSelect: false,    //多选
+                            singleSelect : true, // 单选checkbox
+                            state: {
+                                checked: true,
+                                disabled: true,
+                                expanded: true,
+                                selected: true
+                            },
+                            tags: ['available'],
+                            /*onNodeChecked: function (event, data) {
+								alert("onNodeChecked----"+data.nodeid);
+
+								//alert("deparepid"+data.deparepid);
+                            },*/
+                            onNodeSelected: function (event, data) {
+								$("#dxid").val(data.deparepid);
+                                num2 = data.nodeid;
+                                name2 = data.text;
+                                $.ajax({
+                                    url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                                    data: {"id": data.nodeid},
+                                    async: false,
+                                    dataType: "json",
+                                    type: "post",
+                                    success: function (data) {
+                                        table2();
+										//alert("deparepid"+deparepid);
+                                        $('#table2').bootstrapTable('load', data);
+                                        $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                        $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                        /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                    },
+                                    error: function (error) {
+                                        alert("数据丢失了，刷新下试试吧" + error.status);
+                                    }
+                                });
+                                $("#search").click(function () {
+                                    $.ajax({
+                                        url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                                        data: {"id": data.nodeid, "username": $("#key").val()},
+                                        async: false,
+                                        dataType: "json",
+                                        type: "post",
+                                        success: function (data) {
+                                            table2();
+                                            $('#table2').bootstrapTable('load', data);
+                                            $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                            $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                            /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                        },
+                                        error: function (error) {
+                                            alert("数据丢失了，刷新下试试吧" + error.status);
+                                        }
+                                    });
+                                })
+                            }
+                        });
+                        $('#tree').treeview('collapseAll', {silent: true});
+                        $('#tree').find("ul li:first").click();
+                    },
+                    error: function (error) {
+                        alert("数据丢失了，刷新下试试吧" + error.status);
+                    }
+                });
+
+            };
+            //初始化人员表格
+            function table2() {
+                $('#table2').bootstrapTable('destroy').bootstrapTable({
+                    /*showToggle:!0,
+                showColumns:!0,*/
+                    iconSize: "outline",
+                    toolbar: "#exampleTableEventsToolbar",
+                    /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                    //url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                    /*showRefresh:true,*/
+                    cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                    striped: true,  //表格显示条纹，默认为false
+                    checkboxHeader:0,
+                    singleSelect : true, // 单选checkbox
+                    columns: [
+                        {
+                            field: "state",
+                            checkbox: true,
+                            align: 'center',
+                        }, {
+                            field: 'usernumber',
+                            title: '姓名',
+                            align: 'center',
+                            width: '25%',
+                        },{
+                            field: 'username',
+                            title: '姓名',
+                            align: 'center',
+                            width: '25%',
+                        }, {
+                            field: 'sex',
+                            title: '性别',
+                            align: 'center',
+                            width: '10%',
+                        }, {
+                            field: 'age',
+                            title: '年龄',
+                            align: 'center',
+                            width: '28%',
+                        }, {
+                            field: 'phone1',
+                            title: '联系电话',
+                            align: 'center',
+                            width: '30%',
+                        }],
+                    data: []
+                });
+            };
+            //人员选择确认
+            function chose() {
+                var selectContent = $('#table2').bootstrapTable('getSelections');
+                if(selectContent.length ==1){
+                    var num1 = selectContent[0].id;
+                    var name1 = selectContent[0].username;
+                    //var
+                    $("#sxry").siblings().find('.searchable-select-holder').html(name1);
+					$("#sxry").siblings().find('.searchable-select-holderappend').html(num1);
+                }else{
+					$("#sxry").siblings().find('.searchable-select-holder').html(name2);
+					$("#sxry").siblings().find('.searchable-select-holderappend').html(num2);
+                }
+                $("#personselect").modal('hide');
+            };
+</script>
+</html>

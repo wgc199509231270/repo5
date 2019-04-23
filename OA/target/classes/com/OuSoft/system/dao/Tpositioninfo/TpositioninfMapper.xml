@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tpositioninfo.TpositioninfoDao">
+
+	<!-- 查询职位信息 -->
+	<select id="queryTpositioninfoDao" resultType="com.OuSoft.system.entity.Tpositioninfo" parameterType="java.lang.String">
+			SELECT position.* FROM tpositioninfo position where position.posipid=#{tcmid}
+	</select>
+ 
+ 	
+ 	<!-- 新增职位信息 -->
+ 	<insert id="insertTpositioninfoDao" parameterType="com.OuSoft.system.entity.Tpositioninfo">
+ 		INSERT INTO tpositioninfo (id,posiname,posiepid,posipid,remark,tpositime) values(#{id}, #{posiname}, #{posiepid}, #{posipid}, #{remark}, #{tpositime});
+ 	</insert>
+
+
+ 	<!-- 删除职位信息 -->
+ 	<delete id="deleteTpositioninfoDao" parameterType="com.OuSoft.system.entity.Tpositioninfo">
+ 		delete from tpositioninfo where id = #{id}
+ 	</delete>
+ 	
+ 	 
+ 	<!-- 查询用户职位信息.接收：用户id:userid.返回 id:职位id, posiname:职位名称，tpositime:时间，userid:用户id,posiid:职位id -->
+ 	<select id="queryTuserByIdTpositioninfoDao" parameterType="com.OuSoft.system.entity.Tpositioninfo" resultType="com.OuSoft.system.entity.Tpositioninfo" >
+		SELECT
+			tposi.*, tposiuser.userid AS userid,
+			tposiuser.posiid AS posiid
+		FROM
+			tpositioninfo tposi
+		LEFT JOIN tposituser tposiuser ON tposiuser.posiid = tposi.id
+		WHERE
+			1 = 1
+		AND tposiuser.userid = #{userid}
+ 	</select>
+ 	
+ 	
+	<!--  	新增用户职位信息 -->
+ 	<insert id="InsertTuserByIdTpositioninfoDao" parameterType="com.OuSoft.system.entity.Tpositioninfo"  >
+ 		INSERT INTO tposituser (id, userid, posiid) values(#{id},#{userid},#{posiid} )
+ 	</insert>
+ 	
+ 	
+	<!--  	删除用户职位信息 -->
+ 	<delete id="deleteTuserByIdTpositioninfoDao" parameterType="com.OuSoft.system.entity.Tpositioninfo" >
+		 		
+		DELETE tpouser
+		FROM
+			tposituser tpouser
+		WHERE 1 = 1
+		and tpouser.userid = #{userid}
+		AND tpouser.posiid = #{posiid}
+ 	</delete>
+
+
+</mapper>

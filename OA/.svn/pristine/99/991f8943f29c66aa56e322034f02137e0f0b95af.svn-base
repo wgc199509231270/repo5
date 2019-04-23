@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Remuneration.RemunerationflowDao">
+    <!--
+        查询调薪申请 可根据部门 审核状态 审批流程
+    -->
+    <select id="QueryRemunerationflowDao" parameterType="com.OuSoft.system.entity.Remunerationflow" resultType="com.OuSoft.system.entity.Remunerationflow">
+     select
+            poin.posiname as posiname,
+            ts.username AS username,
+            tdeinfo.deparname AS grzdeparnames,
+            ts.remuneration		AS remuneration,
+            ts.remuneration AS frontPay,
+            re.*
+             from
+            remunerationflow re
+
+             LEFT JOIN tuser ts  ON re.user_id = ts.id
+
+        LEFT JOIN tposituser potu on potu.userid = re.user_id
+
+        LEFT JOIN tpositioninfo poin on poin.id = potu.posiid
+        LEFT JOIN tdepartuser tdetu ON tdetu.userid = re.user_id
+        LEFT JOIN tdepartmentinfo tdeinfo ON tdeinfo.id = tdetu.deparid
+    </select>
+
+    <update id="UpdateRemunerationflowDao" parameterType="com.OuSoft.system.entity.Remunerationflow">
+        update remunerationflow
+        <set>
+            <if  test="department_id != '' and department_id != null">
+                department_id = #{departmentId}
+            </if>
+            <if test="status != '' and  status != null">
+               status = #{status}
+            </if>
+            <if test="grade != '' and grade != null">
+               grade = #{grade}
+            </if>
+        </set>
+        WHERE 1 = 1 and id = #{id}
+    </update>
+
+    <delete id="DelRemunerationflowDao" parameterType="com.OuSoft.system.entity.Remunerationflow">
+        delete from remunerationflow where id=#{id}
+    </delete>
+
+    <insert id="InsertRemunerationflowDao" parameterType="com.OuSoft.system.entity.Remunerationflow">
+          insert into remunerationflow value (#{id},#{userId},#{departmentId},#{Recommendsalary},#{status},#{rade},#{inputTime},#{approverId})
+    </insert>
+</mapper>

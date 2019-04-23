@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Mien.MienDao">
+
+	
+
+	<!-- 根据id,删除一条风采， -->
+	<delete id="deleteIdMienDao"
+		parameterType="java.lang.String">
+		delete from tmien where id = #{id}
+	</delete>
+	
+
+	<!-- 插入风采数据 -->
+	<insert id="insertMienDao"
+		parameterType="com.OuSoft.system.entity.Mien">
+		insert into tmien
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userid != null">
+				userId,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="mientext != null">
+				mientext,
+			</if>
+			<if test="mientitle != null">
+				mientitle,
+			</if>
+			
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=VARCHAR},
+			</if>
+			<if test="mientext != null">
+				#{mientext,jdbcType=VARCHAR},
+			</if>
+			<if test="mientitle != null">
+				#{mientitle,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+
+
+	
+	<!-- 风采列表 -->
+	<select id="queryAllListMienDao" 
+		parameterType="com.OuSoft.system.entity.Mien"
+		resultType="com.OuSoft.system.entity.Mien">
+		SELECT 
+			tm.*,
+			CONCAT(SUBSTR(tm.mienText,1,30),'...') as text,
+			tu.username AS username,
+			IfNULL(tpra.num, 0) AS tpranum,
+			IfNULL(tmoo.tmonum, 0) AS comnum,
+			ta.originalfilename AS userFileImage
+		FROM
+			tmien tm
+		LEFT JOIN
+			(
+			SELECT
+			t.itemid AS itemid,
+			count(t.itemid) AS num
+			FROM
+			tpraise t
+			WHERE
+			t.itemtype = 'tmien'
+			GROUP BY
+			t.itemid
+		) tpra ON tm.id = tpra.itemid
+		LEFT JOIN
+		(
+			SELECT tmo.commentid as commentid,
+			count(tmo.commentid) as tmonum
+			from tcomment tmo
+			WHERE tmo.itemtype = 'tmien' 
+			GROUP BY 
+			tmo.commentid
+		) tmoo ON tmoo.commentid = tm.id
+		LEFT JOIN 
+			tuser tu
+		ON
+			tu.id = tm.userid
+		LEFT JOIN tattip ip on ip.id = '1'
+		LEFT JOIN tatt ta on ta.itemid =tm.userid
+		<where>
+			1=1 AND tu.`status` != '02' AND tu.`status` != '03'
+			<if test="userid !=null and userid !=''">
+				and userid =#{userid}
+			</if>
+			<if test="begtime != null and begtime != '' ">
+				and SUBSTR(tm.createtime, 1, 10) &gt;= #{begtime} 
+			</if>
+			<if test="endtime != null and endtime != '' ">
+				and SUBSTR(tm.createtime, 1, 10) &lt;= #{endtime}
+			</if>
+			
+			<if test="mientitle != null and mientitle != ''">
+                and tm.mientitle LIKE CONCAT('%',#{mientitle,jdbcType=VARCHAR},'%')
+            </if>
+		</where>
+		ORDER BY SUBSTRING(tm.createtime,1,10) DESC,comnum desc limit
+		0,8	
+	</select>
+	
+	
+	<!-- 风采详情列表 -->
+	<select id="detailListMienDao"
+		parameterType="com.OuSoft.system.entity.Mien"
+		resultType="com.OuSoft.system.entity.Mien">
+		
+		SELECT 
+			tm.userid AS userid,
+			tm.mientext AS mientext,
+			tu.username AS username,
+			IfNULL(tpra.num, 0) AS tpranum,
+			ta.originalfilename AS userFileImage
+		FROM
+			tmien tm
+		LEFT JOIN
+			(
+			SELECT
+			t.itemid AS itemid,
+			count(t.itemid) AS num
+			FROM
+			tpraise t
+			WHERE
+			t.itemtype = 'tmien'
+			GROUP BY
+			t.itemid
+		) tpra ON tm.id = tpra.itemid
+		
+		LEFT JOIN 
+			tuser tu
+		ON
+			tu.id = tm.userid
+		LEFT JOIN tatt ta on ta.itemid =tm.userid
+		WHERE tm.id=#{id}
+		
+	</select>
+	<!-- 单条风采评论列表 -->
+	<select id="commentListMienDao"
+		parameterType="com.OuSoft.system.entity.Mien"
+		resultType="com.OuSoft.system.entity.Mien">
+		
+		SELECT
+			co.commenttext,
+			co.commenttime,
+			tu.loginname
+		FROM
+			tcomment co
+		LEFT JOIN
+			tuser tu
+		ON 
+			co.userid =tu.id
+		WHERE
+			co.itemid =#{itemid}
+	</select>
+	
+	<!-- 编辑风采内容  -->
+	<update id="updateIdMienDao"
+		parameterType="com.OuSoft.system.entity.Mien">
+		UPDATE
+			tmien
+		SET
+			mientext=#{mientext}
+		WHERE	
+		id=#{id}	
+			
+	</update>
+
+</mapper>
+
+
+		

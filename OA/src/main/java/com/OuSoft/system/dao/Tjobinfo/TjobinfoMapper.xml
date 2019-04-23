@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tjobinfo.TjobinfoDao">
+
+
+	<!-- 通过岗位id查询用户信息 -->
+	<select id="queryJobidTuserDao"  resultType="com.OuSoft.system.entity.Tsuser" parameterType="com.OuSoft.system.entity.Tsuser"  >
+		SELECT
+			taip.ip as ip , ta.filename as txfilename, t.*, tjob.*
+		FROM
+			tuser t
+		LEFT JOIN tjobtsuser tjob ON tjob.userid = t.id
+		LEFT JOIN tatt ta ON ta.itemid = t.id
+		LEFT JOIN tattip taip on taip.id = '1'
+		WHERE
+			tjob.jobid = #{jobid}
+	</select>
+	
+
+	<!-- 查询岗位信息 -->
+	<select id="queryTjobinfoDao" resultType="com.OuSoft.system.entity.Tjobinfo" parameterType="com.OuSoft.system.entity.Tjobinfo" >
+			SELECT
+				job.*
+			FROM
+				Tjobinfo job
+			<where>
+				1=1
+				<if test="deparid != null and deparid != '' ">
+					and deparid = #{deparid}
+				</if>
+				<if test="jobnum != null and jobnum != '' ">
+					and jobnum = #{jobnum}
+				</if>
+					ORDER BY  jobnum , jobtime DESC
+			</where>	
+				
+	</select>
+ 
+ 
+ 	<!-- 新增岗位信息 
+ 	岗位名称            公司id   备注            时间                    岗位增加在哪个部门下面			岗位等级
+ 	jobname ，jobpid，remark，jobtime  deparid                jobnum
+ 	
+ 	-->
+ 	<insert id="insertTjobinfoDao" parameterType="com.OuSoft.system.entity.Tjobinfo">
+ 		  INSERT INTO tjobinfo ( id, jobname, jobpid, remark, jobtime, jobrank, deparid, jobnum ) VALUES ( #{id},#{jobname},#{jobpid},#{remark},#{jobtime}, #{jobrank,} , #{deparid},#{jobnum})
+ 	</insert>
+
+
+ 	<!-- 删除岗位信息 -->
+ 	<delete id="deleteTjobinfoDao" parameterType="com.OuSoft.system.entity.Tjobinfo">
+ 		delete from tjobinfo where id = #{id}
+ 	</delete>
+ 	
+ 	 
+ 	<!-- 查询用户岗位信息.接收：用户id:userid.返回 id:岗位id, jobname:岗位名称，jobtime:时间，userid:用户id,jobid:岗位id -->
+ 	<select id="queryTuserByIdTjobinfoDao" parameterType="com.OuSoft.system.entity.Tjobinfo" resultType="com.OuSoft.system.entity.Tjobinfo" >
+			SELECT
+				tjob.*, tjobuser.userid AS userid,
+				tjobuser.jobid AS jobid
+			FROM
+				tjobinfo tjob
+			LEFT JOIN tjobtsuser tjobuser ON tjobuser.jobid = tjob.id
+			WHERE
+				1 = 1
+			AND tjobuser.userid = #{userid}
+			ORDER BY jobnum 
+ 	</select>
+ 	
+ 	
+	<!--  	新增用户岗位信息 -->
+ 	<insert id="InsertTuserByIdTjobinfoDao" parameterType="com.OuSoft.system.entity.Tjobinfo"  >
+			INSERT INTO tjobtsuser (id, userid, jobid) VALUES (#{id},#{userid},#{jobid})
+ 	</insert>
+
+	<!--修改用户岗位信息-->
+ 	<update id="updateTuserByIdTjobinfoDao" parameterType="com.OuSoft.system.entity.Tjobinfo">
+		UPDATE tjobtsuser
+		SET
+		<if test="jobid != null">
+			jobid = #{jobid}
+		</if>
+		WHERE userid=#{userid}
+	</update>
+ 	
+	<!--  	删除用户岗位信息:接收：userid,jobid -->
+ 	<delete id="deleteTuserByIdTjobinfoDao" parameterType="com.OuSoft.system.entity.Tjobinfo" >
+			DELETE tjobuser
+			FROM
+				tjobtsuser tjobuser
+			WHERE
+				1 = 1
+			AND tjobuser.userid = #{userid}
+			AND tjobuser.jobid = #{jobid}
+ 	</delete>
+	<!--获取上级id-->
+	<select id="queryOldUseridDao" parameterType="com.OuSoft.system.entity.Tjobinfo" resultType="com.OuSoft.system.entity.Tjobinfo">
+		SELECT userid FROM tjobtsuser where jobid=(SELECT
+		tj.id
+		FROM
+		tjobinfo tj
+		WHERE
+		deparid = (
+		SELECT
+		tji.deparid
+		FROM
+		tjobtsuser tju
+		LEFT JOIN tjobinfo tji ON tju.jobid = tji.id
+		WHERE
+		tju.userid = #{userid}
+		)
+		and jobnum &lt; (
+		SELECT
+		tji.jobnum
+		FROM
+		tjobtsuser tju
+		LEFT JOIN tjobinfo tji ON tju.jobid = tji.id
+		WHERE
+		tju.userid = #{userid}
+		) ORDER BY tj.jobnum desc LIMIT #{limit},1)
+	</select>
+
+	<select id="queryUseridDao" parameterType="com.OuSoft.system.entity.Tjobinfo" resultType="com.OuSoft.system.entity.Tjobinfo">
+		SELECT userid FROM tjobtsuser where
+		jobid in
+		(SELECT
+		tj.id
+		FROM
+		tjobinfo tj
+		WHERE
+		deparid = (
+		SELECT
+		tji.deparid
+		FROM
+		tjobtsuser tju
+		LEFT JOIN tjobinfo tji ON tju.jobid = tji.id
+		WHERE
+		tju.userid = #{userid}
+		)
+		and jobnum > (
+		SELECT
+		tji.jobnum
+		FROM
+		tjobtsuser tju
+		LEFT JOIN tjobinfo tji ON tju.jobid = tji.id
+		WHERE
+		tju.userid = #{userid}
+		) ORDER BY tj.jobnum)
+	</select>
+
+	<select id="queryOldDao" parameterType="com.OuSoft.system.entity.Tjobinfo" resultType="com.OuSoft.system.entity.Tjobinfo">
+				SELECT
+			userid
+		FROM
+			tjobtsuser
+		WHERE
+			jobid = (
+				SELECT
+					id
+				FROM
+					tjobinfo
+				WHERE
+					deparid = (
+						SELECT
+							deparid
+						FROM
+							tjobinfo
+						WHERE
+							jobname = '董事长'
+					)
+				ORDER BY
+					jobnum DESC
+				LIMIT #{limit},1)
+	</select>
+</mapper>

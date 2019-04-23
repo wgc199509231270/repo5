@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Mood.MoodDao">
+	
+	<!-- 心情图表个人 -->
+	<select id="queryGNumListTmoodDao" parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood">
+				SELECT
+					tmo.*, ROUND((SUM(tmo.monumber)), 0) AS nummonumber,
+					SUBSTR(tmo.mocreatetime ,1,10) as rtime, SUBSTR(tmo.mocreatetime ,11,20) as mtime
+				FROM
+					tmood tmo
+			<where>
+				1=1
+				<if test="userid != null">
+					and tmo.userid = #{userid}
+				</if>
+				<if test="begtime != null">
+					and  SUBSTR(tmo.mocreatetime, 1, 10) &gt;= #{begtime} 
+				</if>
+				<if test="endtime != null">
+					and SUBSTR(tmo.mocreatetime, 1, 10) &lt;= #{endtime}
+				</if>
+				<if test="loginname != null and loginname != '' ">
+					and tmo.userid = #{loginname}
+				</if>
+					GROUP BY SUBSTR(tmo.mocreatetime,1,10) ORDER BY tmo.mocreatetime desc
+			</where>
+	</select>
+
+	<!-- 心情图表全查 -->
+	<select id="queryNumListTmoodDao" parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood">
+				SELECT
+					tmo.*,tu.username as username, ROUND((SUM(tmo.monumber)), 0) AS nummonumber
+				FROM
+					tmood tmo
+				LEFT JOIN tuser tu on tu.id = tmo.userid and tu.userpid=#{tcmid}
+			<where>
+				1=1
+				<if test="userid != null">
+					and tmo.userid = #{userid}
+				</if>
+				<if test="begtime != null">
+					and  SUBSTR(tmo.mocreatetime, 1, 10) &gt;= #{begtime} 
+				</if>
+				<if test="endtime != null">
+					and SUBSTR(tmo.mocreatetime, 1, 10) &lt;= #{endtime}
+				</if>
+				<if test="loginname != null and loginname != '' ">
+					and tmo.userid = #{loginname}
+				</if>
+					GROUP BY tmo.userid ORDER BY nummonumber desc
+			</where>
+	</select>
+	
+	
+		
+	<!-- 查询心情列表 -->
+	<select id="queryListTmoodDao" parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood">
+			SELECT
+			tmo.*,SUBSTR(tmo.mocreatetime ,1,10) as rtime, SUBSTR(tmo.mocreatetime ,11,20) as mtime, 
+			CONCAT(SUBSTR(tmo.motext,1,30),'...') as text,
+			ta.filename AS txfilename, 
+			tu.username AS username,
+			IfNULL(tpra.num, 0) AS tpranum,
+			IfNULL(tmoo.tmonum, 0) AS comnum,
+			ip.ip as ip,
+				IFNULL(tp.id,0) as dz
+			FROM
+				tmood tmo
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tmood'
+				GROUP BY
+					t.itemid
+			) tpra ON tmo.id = tpra.itemid
+			LEFT JOIN 
+			(
+			SELECT  tmo.commentid as commentid, 
+			count(tmo.commentid) as tmonum 
+			from tcomment tmo 
+			where tmo.itemtype = 'tmood'
+			GROUP BY tmo.commentid
+			) tmoo on tmoo.commentid = tmo.id
+			LEFT JOIN tuser tu ON tu.id = tmo.userid and tu.userpid=#{tcmid}
+			LEFT JOIN tatt ta ON ta.itemid = tmo.userid 
+			left JOIN tattip ip on ip.id = '1' 
+			left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tmo.id
+			<where>
+				1=1
+				<if test="userid != null">
+					and tmo.userid = #{userid}
+				</if>
+				<if test="begtime != null">
+					and  SUBSTR(tmo.mocreatetime, 1, 10) &gt;= #{begtime} 
+				</if>
+				<if test="endtime != null">
+					and SUBSTR(tmo.mocreatetime, 1, 10) &lt;= #{endtime}
+				</if>
+				<if test="loginname != null and loginname != '' ">
+					and tmo.userid = #{loginname}
+				</if>
+				ORDER BY
+				tmo.mocreatetime desc, tmo.monumber desc
+			</where>
+			
+	</select>
+	
+	
+	
+	<!-- 查询心情点赞详情 -->
+	<select id="queryListTmoodTpraiseDao" parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood">
+			SELECT 
+			  tpra.id as tpraid,
+				tmo.*,
+				tutsi.username as username,
+			  tutpra.username as tprausername,
+			  tpra.userid as tprauserid,
+			  ta.filename as txfilename  , ip.ip as ip,
+			  IFNULL(tp.id,0) as dz
+			FROM
+				tmood tmo
+			LEFT JOIN tpraise tpra ON tpra.itemid = tmo.id  
+			LEFT JOIN tuser tutpra on tutpra.id = tpra.userid and tutpra.userpid=#{tcmid}
+			LEFT JOIN tuser tutsi ON tutsi.id = tmo.userid
+			left join tatt ta on ta.itemid = tmo.userid 
+			left JOIN tattip ip on ip.id = '1' 
+			left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tmo.id
+			WHERE 1=1
+			and	tmo.id = #{id}
+			order by tpra.praisetime
+	</select>
+
+	<!-- 根据条件插入心情 -->
+	<insert id="InsertMoodDao" parameterType="com.OuSoft.system.entity.Mood" >
+		 insert into tmood
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        id,
+	      </if>
+	      <if test="userid != null">
+	        userid,
+	      </if>
+	      <if test="motext != null">
+	        motext,
+	      </if>
+	      <if test="mocreatetime != null">
+	        mocreatetime,
+	      </if>
+	      <if test="monumber != null">
+	        monumber,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="userid != null">
+	        #{userid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="motext != null">
+	        #{motext,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mocreatetime != null">
+	        #{mocreatetime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="monumber != null">
+	        #{monumber,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+	</insert>
+	
+	
+	<!-- 根据id删除一条心情记录 -->
+	<delete id="deleteIdTplanDao" parameterType="java.lang.String">
+		delete from tmood where id = #{id}
+	</delete>
+	<!-- 根据id查询一条心情记录 -->
+	<select id="selectIdTplanDao" parameterType="com.OuSoft.system.entity.Mood" resultType="com.OuSoft.system.entity.Mood">
+		SELECT * from tmood where id = #{id}
+	</select>
+	<!-- 多表查询对应的返回 -->
+	<resultMap type="com.OuSoft.system.entity.Clock"  id="clock_user" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="userid" jdbcType="VARCHAR" property="userid" />
+        <result column="cltime" jdbcType="VARCHAR" property="cltime" />
+        <result column="clplace" jdbcType="VARCHAR" property="clplace" />
+        <result column="clform" jdbcType="VARCHAR" property="clform" />
+        <result column="clpcip" jdbcType="VARCHAR" property="clpcip" />
+        <result column="cltype" jdbcType="VARCHAR" property="cltype" />
+        <collection property="tsuser" javaType="list"  ofType="com.OuSoft.system.entity.Tsuser">
+        	 <id property="id" column="id"/>
+             <result property="username" column="username"/>
+        </collection>   
+   </resultMap>
+	
+	
+</mapper>

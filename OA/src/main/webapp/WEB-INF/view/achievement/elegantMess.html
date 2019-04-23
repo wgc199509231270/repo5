@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rankMess</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description"
+          content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min.css"
+          rel="stylesheet">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet"
+          href="/static/js/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelect.css">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <link rel="stylesheet"
+          href="http://localhost:8888/static/js/plugins/laydate/theme/default/laydate.css?v=5.0.9"
+          id="layuicss-laydate">
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+    <script src="/static/js/news.js"></script>
+</head>
+<!--刷新当前页面  -->
+<script type="text/javascript">
+    laydate.render({
+        elem: '#Begtime'
+    });
+    laydate.render({
+        elem: '#Endtime'
+    });
+</script>
+<!-- 接口对接 -->
+<script>
+    $(function () {
+        $("#p").click(function(ev){
+            var oEvent = ev || event;
+            oEvent.stopPropagation();
+            $("#p").css("display","none");
+        })
+        $(".edui-body-container").click(function () {
+            $("#ueditor_replace").focus();
+            $("#p").css("display","none");
+        })
+        $("#pl").click(function () {
+            var speed=200;//滑动的速度
+            var h = $(document).height()-$(window).height();
+            $(document).scrollTop(h);
+            $('body,html').animate({ scrollTop: h }, speed);
+            return false;
+        });
+        yhmess(); //用户信息初始化
+        mess();
+        commentmess();
+        tab();
+        pl();
+        dzr();
+        pinglun();
+        uploader = WebUploader.create({
+
+            // 自动上传。
+            auto: false,
+
+            // swf文件路径
+            swf: '/static/js/plugins/webuploader/Uploader.swf',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+            duplicate :true,//是否可以重复上传
+
+            fileSizeLimit: 10000*1024*1024, //限制图片大小，不可以超过
+
+            compress: null,
+
+            // 只允许选择文件，可选。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/jpg,image/jpeg,image/png'   //修改这行，加快上传文件框的打开速度
+            }
+        });
+        picUpload('#fileList',80,80,'#filePicker',10000);
+        setVal();
+    })
+    var personmess;
+    var commentid;
+    var num=0;
+    /* 查询详情信息 */
+    var elegantid;
+    var id;
+    var Request = new Object();
+    Request = GetRequest();
+    id= Request["id"];
+    commentid=id;
+    elegantid=id;
+    messid= Request["messid"];
+    var data;
+    data ={"id":elegantid}
+    var datatable;
+    var yhid ; //获取当前用户id
+    /* 个人详情接口 */
+    //获取头像
+    function yhmess(){
+        $.ajax({
+            url:"/tuser/queryIdTuser",
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                yhid=data.id;
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+        $.ajax({
+            url:"/tuser/queryIdTuser",
+            data:{"id":messid},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                $("#username").html(data.username)
+                if(data.txfilename==null){
+                    $("#tx").attr("src",data.ip+"a1.jpg");
+                }else{
+                    $("#tx").attr("src",data.ip+data.txfilename);
+                }
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+        $.ajax({
+            url: "/Tdepartmentinfo/queryTuserByIdTdepartmentinfo",
+            data: {"userid":messid},
+            type: "post",
+            dataType: 'json',
+            async:false,
+            success: function (data) {
+                $("#userdepart").html(data[0].deparname)
+            }
+        })
+    }
+
+    /* 风采接口 */
+    function mess(){
+        $.ajax({
+            url:"/telegant/queryDzTelegantuserRequest",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                personmess = data;
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+        $.ajax({
+            url:"/telegant/queryTuserByIdTelegant",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                console.log(data)
+                for(var i=0;i<data.length;i++){
+                    if(data[i].filename!=null && data[i].filename!=""){
+                        for(var j=0;j<data[i].filename.split(",").length;j++){
+                            $("#image").append('<img style="width: 50px;height: 50px;" src="'+data[i].ip+data[i].filename.split(",")[j]+'"></img>')
+                        }
+                    }
+                    $("#title").html(data[i].title);
+                    $("#text").html(data[i].text);
+                }
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+    }
+    //解析url参数
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    var comment;
+    function commentmess() {
+        $.ajax({
+            url:"/clock/queryListTcomment",
+            data: {"itemid":elegantid},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                comment=data;
+                console.log(comment);
+                console.log("comment+========================")
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    }
+    //点赞中间表 用于传递js中的id参数
+    function temp(){
+        zan1(elegantid);
+    }
+    //格式化日期
+    function dateformate(cltime) {
+        var date1 = cltime.substr(0,10).split("/");
+        return date1[0]+"年"+date1[1]+"月"+date1[2]+"日";
+    }
+    //jq写点赞
+    var dzrmess;
+    function dzr(){
+        $.ajax({
+            url:"/telegant/queryDzTelegantuserRequest",
+            data: {"id":elegantid},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                dzrmess=data;
+                zan();
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    };
+
+    function zan() {
+        $("#user-list").html("");
+        var userinfo = '<i class="iconfont icon-xin1" style="line-height: 15px;font-size: 17px;float:left;padding-right: 5px;"></i>';
+        for(var i=0;i<dzrmess.length;i++){
+            var userinfo = userinfo+'<a href="/sign/signMess?id="'+personmess[i].userid+' class="item q_namecard" target="_blank" link="nameCard_215790339 des_215790339">'+dzrmess[i].tprausername+'' +
+                '</a>'+'、'
+        }
+        userinfo.substr(0,userinfo.length-1);
+        if(JSON.stringify(dzrmess[0].tprausername) !='null'){
+            $("#user-list").html(userinfo.substr(0,userinfo.length-1));
+            $(".zan").show();
+        }else{
+            $(".zan").hide();
+        }
+    }
+    /* 点赞*/
+    function zan1(id) {
+        var Request = new Object();
+        Request = GetRequest();
+        var temp = Request["temp"];
+        if($("#zan").css("color")!="rgb(88, 108, 149)"){
+
+            var data = {"itemid":elegantid,"itemtype":"telegant"};
+            $.ajax({
+                url:"/tpraise/savetpraise",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    if(data.code!='404'){
+                        saveNews(messid,"03","工作圈","",id);
+                        dzr();
+                        mess();
+                        zan();
+                        $("#zan").css("color","#586c95");
+
+                        $(window.parent.document).find(".J_iframe[data-id='/elegant']").contents().find("#search1").trigger("click");
+                        //$(window.top.document).find(".J_menuTab.active").find(".iconfont.icon-guanbi-copy").trigger("click");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }else {
+
+            var data = {"itemid":elegantid};
+            $.ajax({
+                url:"/tpraise/deleteIdTpraise",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    if(data.code!='404'){
+                        dzr();
+                        mess();
+
+                        zan();
+
+                        $("#zan").css("color","#adb7cb");
+                        $(window.parent.document).find(".J_iframe[data-id='/elegant']").contents().find("#search1").trigger("click");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+
+
+        }
+
+    };
+    //jq写评论
+    function pinglun() {
+        $("#pinlun").html("");
+        var com = ' <i class="iconfont icon-pinglun2" style="float: left;width: 20px;height:50px;line-height: 50px;font-size: 20px;margin-left: 17px;"></i>';
+        for (var i = 0; i < comment.length; i++) {
+            var date = dateformate(comment[i].commenttime);
+            var time = comment[i].commenttime.substr(11, 5);
+            console.log(typeof(comment[i].pusername))
+            console.log(typeof(comment[i].husername))
+            console.log(typeof(comment[i].txfilename))
+            console.log(typeof(comment[i].id))
+            if (JSON.stringify(comment[i].pusername)=='null') {
+                var src = comment[i].ip + comment[i].filename;
+                var com = com + "<div onclick=\"control('" + comment[i].id + "','" + comment[i].username + "')\"  style='cursor: pointer;width: 100%;height:50px;padding-left: 50px;' data-id='" + comment[i].id + "'>" +
+                    '<img src="'+src+'" style="width: 30px;height:30px;margin-top: 11px;border-radius: 50%;float:left;">' +
+                    '<div class="comments-content" style="width: 94%;float: left;margin-top: 10px;margin-left: 5px;">' +
+                    '<a>' + comment[i].username + '</a>' +
+                    '<div class="comments-op">' +
+                    '<span class=" ui-mr10 state" style="float:left;">' + comment[i].commenttext + '</span>' +
+                    '<span class=" ui-mr10 state" style="float: right;">' + date + '&nbsp;' + time + '</span> </div> </div> </div>'
+            } else {
+                var src = comment[i].ip + comment[i].filename;
+                var com = com + "<div onclick=\"control('" + comment[i].id + "','" + comment[i].username + "')\"  style='cursor: pointer;width: 100%;height:50px;padding-left: 50px;' data-id='" + comment[i].id + "'>" +
+                    '<img src="'+src+'" style="width: 30px;height:30px;margin-top: 11px;border-radius: 50%;float:left;">' +
+                    '<div class="comments-content" style="width: 94%;float: left;margin-top: 10px;margin-left: 5px;">' +
+                    '<a>' + comment[i].username + '</a>回复<a>' + comment[i].pusername + '</a>' +
+                    '<div class="comments-op">' +
+                    '<span class=" ui-mr10 state" style="float:left;">' + comment[i].commenttext + '</span>' +
+                    '<span class=" ui-mr10 state" style="float: right;">' + date + '&nbsp;' + time + '</span> </div> </div> </div>'
+            }
+            com.substr(0, com.length - 1);
+            if (comment.length != 0) {
+                $("#pinlun").html(com);
+            }
+        }
+    };
+
+    //发表评论
+    function post(){
+        var commont =$("#ueditor_replace").children("span").html();
+        if(typeof($("#ueditor_replace").html())!='undefined'&&$("#ueditor_replace").children("span").size()<=0){
+            if(typeof(commont)!='undefined') {
+                commont = commont + $("#ueditor_replace").html();
+            }else {
+                commont = $("#ueditor_replace").html();
+            }
+        }else if(typeof(commont)!='undefined'){
+            commont=commont
+        }else {
+            alert("请输入内容");
+            return;
+        }
+        saveNews(messid,"04","工作圈",commont,id);
+        var data = {'itemtype':'telegant','itemid':elegantid,'commentid':commentid,'commenttext':commont};
+        $.ajax({
+            url:"/tcomment/savetcomment",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                $("#ueditor_replace").children("span").html("");
+                $("#ueditor_replace").html("");
+                commentmess();
+                pinglun();
+                $(window.parent.document).find(".J_iframe[data-id='/manage']").contents().find("#reset1").trigger("click");
+            },
+            error:function (error) {
+                alert("字数太多了!o(╥﹏╥)o");
+            }
+        });
+    };
+    //评论框相关
+    function control(id,name) {
+        commentid = id;
+        $("#ueditor_replace").click().focus();
+        $("#reply_head").html("回复" + name+":");
+        $("#reply_head").show();
+
+    };
+    //切换评论对象
+    function pl() {
+        $("#pl").click(function () {
+            commentid = id;
+            $("#ueditor_replace").click().focus();
+            $("#reply_head").hide();
+        })
+    };
+    //点赞评论按钮的显示
+    function tab(){
+        if(personmess[0].dz=='0'||typeof(personmess[0].dz)=='undefined'){
+            $("#zan").css("color","#adb7cb");
+        }else{
+            $("#zan").css("color","#586c95");
+        }
+    }
+
+
+    function textInit(e) {
+        e.preventDefault();//阻止默认事件
+        var text;
+        var clp = (e.originalEvent || e).clipboardData;
+        if (clp === undefined || clp === null) {
+            text = window.clipboardData.getData("text") || "";
+            if (text !== "") {
+                if (window.getSelection) {
+                    var newNode = document.createElement("span");
+                    newNode.innerHTML = text;
+                    window.getSelection().getRangeAt(0).insertNode(newNode);
+                } else {
+                    document.selection.createRange().pasteHTML(text);
+                }
+            }
+        } else {
+            text = clp.getData('text/plain') || "";
+            if (text !== "") {
+                /*document.execCommand('insertText', false, text);*/
+                var qutext = text
+                var span=/<span\s*[^>]*>(.*?)<\/span>/ig;
+                var div =/<div\s*[^>]*>(.*?)<\/div>/ig;
+                var a = /<a\s*[^>]*>(.*?)<\/a>/ig;
+                var p = /<p\s*[^>]*>(.*?)<\/p>/ig;
+                qutext = qutext.replace(span,"$1");
+                qutext = qutext.replace(a,"$1");
+                qutext = qutext.replace(div,"$1");
+                qutext = qutext.replace(p,"$1");
+                document.execCommand('insertText', false, qutext);
+            }
+        }
+    }
+    $( document ).on( "paste", "#ueditor_replace", function(e) {
+        //去除复制样式
+        textInit(e);
+    });
+
+    //id -> 存放图片  width，height  存放图片尺寸宽高  id2 按钮  allMaxSize图片大小
+    function picUpload(id,width,height,id2,allMaxSize){
+        var flag = false;
+        var $ = jQuery;
+        $list = $(id);
+        // 优化retina, 在retina下这个值是2
+        ratio = window.devicePixelRatio || 1;
+        // 缩略图大小
+        thumbnailWidth = 80 * ratio;
+        thumbnailHeight = 80 * ratio;
+        allMaxSize = 8;//限制图片大小
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+            console.log(file)
+            var $li = $(
+                '<li id="' + file.id + '" class="file-item thumbnail" style="float:left;">' +
+                '<div class="delete" style="overflow: hidden;height:0px;width: 80px;position: fixed;background-color: black;opacity: 0.6"><i class="iconfont icon-guanbi-copy" style="float: left;cursor: pointer;font-size: 53px;margin-top: -29px;margin-left: 32px;width: 39px;color:white">关闭</i></div>' +
+                '<img>' +
+                '<div class="info">' + file.name + '</div>' +
+                '</li>'
+                ),
+                $img = $li.find('img');
+            $list.append( $li );
+            $(".uploader-list").css("border-top","1px solid #eaece7");
+            $(".uploader-list").css("padding","4px");
+            // 创建缩略图
+            uploader.makeThumb( file, function( error, src ) {
+                if ( error ) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+
+                //去掉默认的头像，清空图片名字的信息
+                $('.webuploader-pick img').attr('src','')
+                $('.file-item .info').empty();
+
+                $img.attr( 'src', src );
+            }, thumbnailWidth, thumbnailHeight );
+
+            $li.on( 'mouseenter', function() {
+                $(".delete").stop().animate({height: 15});
+            });
+
+            $li.on( 'mouseleave', function() {
+                $(".delete").stop().animate({height: 0});
+            });
+
+            $li.on('click','.iconfont.icon-guanbi-copy' , function() {
+                uploader.removeFile( file,true );
+                num++;
+                $li.remove();
+                $(".delete").stop().animate({height: 0});
+                if($(".fileList").size()<=0){
+                    $(".uploader-list").css("border-top","");
+                    $(".uploader-list").css("padding","");
+                }
+            })
+        });
+
+
+        uploader.on( 'uploadSuccess', function( file ) {
+            $( '#'+file.id ).addClass('upload-state-done');
+            /*uploader.removeFile(uploader.getFiles(),true);*/
+
+            flag = true;
+        });
+
+        // 文件上传失败，现实上传出错。
+        uploader.on( 'uploadError', function( file ) {
+            var $li = $( '#'+file.id ),
+                $error = $li.find('div.error');
+
+            // 避免重复创建
+            if ( !$error.length ) {
+                $error = $('<div class="error"></div>').appendTo( $li );
+            }
+
+            //$error.text('上传失败');
+
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on( 'uploadComplete', function( file ) {
+            num++;
+            if(num==uploader.getFiles().length){
+                $("#reset1").trigger("click");
+            }
+            $( '#'+file.id ).find('.progress').remove();
+
+        });
+
+        //  验证大小
+        uploader.on("error",function (type){
+
+            if(type == "Q_EXCEED_SIZE_LIMIT"){
+                window.alert("系统提示:所选图片总大小不可超过" + allMaxSize + "个哦！");
+            }
+
+        });
+
+
+        if(flag){
+            alert("发布成功！");
+        }
+    }
+    function issue() {
+        var text=$("#yjnr").html();
+        var title=$("#elename").html();
+        var issueid=$("#issueid").val();
+        $.ajax({
+            url:"/telegant/updateTuserByIdTelegant",
+            data:{"title":title,"text":text,"id":elegantid},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                alert("修改成功");
+                cancal();
+                if($("#fileList").html()!=""){
+                    console.log("上传...");
+                    uploader.option('server','/file/saveFileupload');
+                    uploader.option('formData',{'itemtype':'telegant','itemid':data.id,'attfrom':"01"});
+                    uploader.upload();   //执行手动提交
+                    console.log("上传成功");
+                }
+                $("#fileList").html("");
+                mess();
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+        $("#issueid").val("");
+    }
+    /*风采编辑接口*/
+    function upadateplan() {
+        if(messid==yhid){
+            $("#modal-form").modal('show');
+            $(".modal-dialog").show();
+            $.ajax({
+                url:"/telegant/queryTuserByIdTelegant",
+                data: {"id":elegantid},
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    for(var i=0;i<data.length;i++){
+                        $("#elename").html(data[i].title);
+                        $("#yjnr").html(data[i].text);
+                        $("#issueid").val(data[i].id);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            })
+        }
+    }
+    //删除风采
+    function deleteplan() {
+        if(messid==yhid){
+            var msg = "是否删除风采？";
+            if (confirm(msg)==true) {
+                $.ajax({
+                    url: "/telegant/deleteTelegant",
+                    data: {"id": elegantid},
+                    async: false,
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        alert("删除成功");
+                        chaxunn();
+                    },
+                    error: function (error) {
+                        alert("网络状况不佳，用户登录失败！" + error.status);
+                    }
+                });
+            }
+        }
+
+    }
+    function cancal() {
+        $("#modal-form").modal('hide');
+        $("#yjnr").html("");
+        $("#elename").html("");
+        $("#issueid").val("");
+        $("#image").html("");
+    }
+    function setVal() {
+        if(messid==yhid){
+            $("#upp").text("编辑 ");
+            $("#dll").text(" 删除");
+        }
+    }
+
+</script>
+
+
+<style>
+    .edui-editor-body .edui-body-container {
+        outline: none;
+        padding: 0 0 0 10px;
+        word-wrap: break-word;
+        font-size: 20px;
+    }
+
+    .edui-container .edui-editor-body.body-container-focus {
+        border-color: #5c9dff;
+    }
+
+    /*滚动条样式*/
+    .edui-editor-body::-webkit-scrollbar { /*滚动条整体样式*/
+        width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+        height: 4px;
+    }
+
+    .edui-editor-body::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .edui-editor-body::-webkit-scrollbar-track { /*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 0;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .edui-editor-body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        border: 1px solid #ccc;
+        border-left-color: #9a9a9a;
+        border-top-color: #9a9a9a;
+        background-color: #fff;
+    }
+
+    ul, li {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul, ol, li {
+        list-style: none;
+    }
+
+    .p_author .icon .icon_relative {
+        margin-top: 0;
+    }
+
+    .l_post_bright .d_nameplate {
+        margin-bottom: 8px;
+    }
+
+    .p_author .d_nameplate {
+        margin-top: -2px;
+    }
+
+    .l_post_bright .d_name {
+        padding: 0;
+    }
+
+    .d_name {
+        padding: 4px 0 7px;
+        letter-spacing: -3px;
+    }
+
+    .d_name .p_author_name {
+        letter-spacing: normal;
+    }
+
+    .l_post_bright .d_icons {
+        margin-top: 8px;
+    }
+
+    .d_author .d_pb_icons {
+        overflow: hidden;
+        width: 80px;
+        margin: 0 auto 5px;
+        float: none;
+        padding: 0 0 3px 3px;
+        background-color: #fff;
+        border: 1px solid #e6e6e6;
+        border-radius: 1px;
+        display: block;
+    }
+
+    .l_badge {
+        display: none;
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 9px;
+    }
+
+    .d_post_content_main {
+        position: relative;
+        float: left;
+        width: 588px;
+        padding: 0 0 8px 20px;
+        background: #fff;
+    }
+
+    .l_post_bright .d_post_content_main .p_content {
+        height: auto !important;
+        height: 170px;
+        min-height: 170px;
+    }
+
+    .edui-btn-toolbar .edui-btn {
+        font-size: 30px;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: auto;
+        margin-right: 11px;
+        padding: 1px 7px 1px 1px;
+        border: 0;
+        background:
+                url(//tb2.bdstatic.com/tb/static-common/img/rich_editor/separator_97ec61b.png)
+                right center no-repeat;
+    }
+
+    .old_style_wrapper {
+        width: 100%;
+        padding: 13px 20px 13px;
+        border: 1px solid #dfdfdf;
+        background: #fafafa;
+    }
+
+    ueditor_replace :active {
+
+    }
+
+    tb_poster_placeholder {
+        display: none;
+    }
+
+    /* 表格信息 */
+    table {
+        border-collapse: collapse;
+        width: 65%;
+        position: absolute;
+        left: 12%;
+        top: 27%;
+    }
+
+    table tr {
+        border: 1px #B6D2ED solid;
+    }
+
+    .shorttd {
+        width: 10%;
+    }
+
+    .longtd {
+        width: 15%;
+    }
+
+    td {
+        color: white;
+        border-right: 1px #B6D2ED solid;
+        background-color: #5B9BD5;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .title {
+        background-color: #DEEBF7;
+        color: black;
+    }
+
+    .text {
+        background-color: white;
+        color: black;
+    }
+
+    /* 评论点赞 */
+    .mail-box {
+        background-color: #fff;
+        border: 1px solid #e7eaec;
+        border-top: 0;
+        padding: 0;
+        margin-top: -20%;
+    }
+
+    .mail-body {
+        border: none;
+        padding: 20px;
+    }
+
+    .zan {
+        margin-left: 20px;
+        padding-bottom: 5px;
+        background-color: #F5F6FA;
+        height: 60px;
+        border-bottom: 1px white solid;
+    }
+
+    .pinglun {
+        margin-left: 20px;
+        background-color: #F5F6FA;
+        height: 560px;
+        border-top: 1px white solid;
+    }
+
+    #say {
+        width: 85%;
+        height: 100px;
+        background-color: white;
+        position: absolute;
+        left: 7%;
+        top: 139%;
+    }
+    /* 按钮 */
+    .btn {
+        width: 59px;
+        height: 31px;
+        border-radius: 10px;
+        background-color: #0099CC;
+    }
+
+    .btndiv {
+        position: relative;
+        left: 80%;
+        top: -79px;
+    }
+
+    /* 编辑删除 */
+    .bjsc {
+        position: absolute;
+        left: 92%;
+        top: 10%;
+    }
+    .bjsc:hover{
+        cursor:pointer;
+    }
+</style>
+
+
+<style>
+    input[type=range] {
+        margin-top: 8px;
+        outline: none;
+        -webkit-appearance: none; /*清除系统默认样式*/
+        width: 80% !important;
+        background: #e7eaec;
+        height: 3px; /*横条的高度*/
+    }
+    /*拖动块的样式*/
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none; /*清除系统默认样式*/
+        height: 16px; /*拖动块高度*/
+        width: 16px; /*拖动块宽度*/
+        background: #0099CC; /*拖动块背景*/
+        border-radius: 50%; /*外观设置为圆形*/
+        border: solid 1px #ddd
+    }
+
+    #text {
+        white-space: normal;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .czbtn{
+        cursor:default;
+    }
+    .czbtn2{
+        cursor:pointer;
+    }
+    .my-container {
+        float: left;
+        display: inline-block;
+    }
+
+    .myLabel-content, .myText-content, .myBtn-content {
+        float: left;
+        display: inline-block;
+        line-height: 30px;
+
+    }
+
+    .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+    {
+        height: 30px;
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .myBtn-content .btn {
+        margin-bottom: 10px;
+    }
+
+    /* 模态框 */
+
+    .hourdiv {
+        width: 138px;
+    }
+    #fbyjbox  tr{
+        margin-top:10px;
+    }
+    #fbyjbox2  tr{
+        margin-top:10px;
+    }
+    #fbyjbox3  tr{
+        margin-top:10px;
+    }
+    .yjbox{
+        width: 181px;
+        height: 32px;
+        line-height:32px;
+        border: 1px solid #D9D9D9;
+        float:left;
+        padding-left: 12px;
+    }
+    .yeji {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 15px;
+        /* margin-left: -21px; */
+    }
+    .yeji2 {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 32px;
+        /* margin-left: -21px; */
+    }
+
+    .yejibigtext {
+        width: 461px;
+        height: 99px;
+        float: left;
+        border: 1px solid #D9D9D9;
+        padding-left: 15px;
+        padding-top: 3px;
+    }
+    .yejibigtextyjnr {
+        padding-top: 3px;
+        padding-left: 5px;
+        width: 461px;
+        height: 99px;
+        margin-left: -16px;
+        margin-top: -4px;
+        border: 1px solid #D9D9D9;
+    }
+    .yjtext {
+        width: 136px;
+        height: 23px;
+        margin-left: 8px;
+        margin-top: 4px;
+        font-size: 14px;
+        font-family: FangSong;
+        font-weight: 400;
+        color: rgba(124,124,124,1);
+        line-height: 19px;
+    }
+
+    .gzsc {
+        margin-left: 4%;
+    }
+
+    .yejimidtext {
+        width: 461px;
+        height: 32px;
+        border: 1px solid #D9D9D9;
+    }
+    .fbsmbox{
+        width: 461px;
+        height: 44px;
+        border: 1px solid #D9D9D9;
+        float: left;
+        padding-left: 12px;
+    }
+    /* 按钮 */
+    .btnn {
+        width: 59px;
+        height: 31px;
+        /* border-radius: 10px; */
+        background-color: #F5F5F6;
+        float: left;
+        margin-left:10px;
+        color:#73777A;
+        outline:none;
+        text-align:center;
+        font-family: cursive;
+        line-height:31px;
+    }
+    /* 按钮点击事件 */
+    .btnn:link{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:hover{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:active{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:visited{
+        background-color: #0099CC;
+        color:white;
+    }
+
+    .btndiv {
+        position: relative;
+        left: 72%;
+        top: -10%;
+        float: left;
+    }
+    .btndiv2 {
+        position: relative;
+        left: 63%;
+        top: 2%;
+        float: left;
+    }
+    .btndiv3 {
+        position: relative;
+        left: 63%;
+        top: 2%;
+        float: left;
+    }
+    .btndiv4 {
+        position: relative;
+        left: 63%;
+        top: 2%;
+        float: left;
+    }
+    .hour1 {
+        font-size: 15px;
+        width: 7%;
+        color: #D9D9D9;
+        float:right;
+    }
+    .hoursh {
+        font-size: 15px;
+        position: absolute;
+        left: 40.5%;
+        top: 12%;
+        width: 7%;
+        color: #D9D9D9;
+    }
+    .hoursh2 {
+        font-size: 15px;
+        position: absolute;
+        left: 86.5%;
+        top: 12%;
+        width: 9%;
+        color: #D9D9D9;
+    }
+    .hour {
+        width: 18px;
+        float: left;
+        margin-left: -21px;
+        margin-top: 8px;
+    }
+    .tjfj11{
+
+    }
+    .fb {
+        font-family: FangSong;
+        margin-left: -6px;
+        /* margin-top: 10px; */
+        margin-bottom: 8px;
+        color: rgba(51,51,51,1);
+        font-weight: 400;
+        border-bottom: 1px solid #E5E5E5;
+        width: 581px;
+        height: 26px;
+    }
+    .qr {
+        margin-left: -2.77%;
+        /* margin-bottom: 11px; */
+        border-bottom: 1px solid #E5E5E5;
+        width: 105.4%;
+        height: 10px;
+        font-size: 8px;
+        font-family: FangSong;
+        font-weight: 400;
+        color: rgba(51,51,51,1);
+    }
+
+
+    .hour2 {
+        font-size: 15px;
+        float:right;
+        width: 9%;
+        color: #D9D9D9;
+    }
+
+    .everydiv{
+        margin-top:10px;
+    }
+    .com {
+        cursor: pointer;
+        width: 316px;
+        background-repeat: no-repeat;
+        background-position: 99% center;
+        background-size: 18px;
+    }
+    .com2 {
+        cursor: pointer;
+        width: 316px;
+        background-repeat: no-repeat;
+        background-position: 93% center;
+        background-size: 18px;
+    }
+
+    /* 确认业绩 */
+    .qrdiv {
+        margin-left: -2.77%;
+        /* margin-bottom: 11px; */
+        border-bottom: 1px solid #E5E5E5;
+        width: 105.4%;
+        height: 17px;
+        font-size: 17px;
+        font-family: FangSong;
+        font-weight: 400;
+        color: rgba(51,51,51,1);
+    }
+    .modal-contentqryj {
+        /*  margin-left: 420px;
+         margin-top: -10px; */
+        width: 591px;
+        background-clip: padding-box;
+        background-color: #FFF;
+        border: 1px solid rgba(0,0,0,0);
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.3);
+        outline: 0 none;
+    }
+    .qryj{
+        float:left;
+    }
+    .qryjbigbox {
+        width: 557px;
+        height: 233px;
+        background: rgba(244,251,255,1);
+        box-shadow: 0px 1px 15px 0px rgba(231,231,231,0.88);
+        /*margin-left: -14px;*/
+        margin-top: 15px;
+    }
+
+    .qryjbigbox2{
+        /* border: 1px red solid;  */
+        width: 613px;
+        height:172px;
+        margin-left: -15px;
+    }
+    .qryjbox {
+        /*  border: 1px red solid;  */
+        width: 77%;
+        /* margin-top: 6%; */
+        margin-top: 4px;
+        height: 45px;
+        margin-left: 10px;
+    }
+    .qryjbox2{
+
+    }
+    .yqryjword {
+        margin-left: 23px;
+        height: 12px;
+        line-height: 26px;
+    }
+    .qryjword {
+        font-family: FangSong;
+        font-size: 14.5px;
+        font-weight: 400;
+        color: rgba(159,159,159,1);
+        width: 79px;
+        float: left;
+        height: 12px;
+        line-height: 26px;
+        margin-left: 2px;
+    }
+    .qryjword1{
+        font-family: FangSong;
+        font-size: 14.5px;
+        font-weight: 400;
+        color:rgba(159,159,159,1);
+        line-height:31px;
+        width: 79px;
+        float:left;
+        margin-left: 2px;
+    }
+    .shortdiv {
+        width: 174px;
+        height: 29px;
+        height: 30px;
+        line-height: 30px;
+        float: left;
+        border: 1px solid rgba(217,217,217,1);
+        border-radius: 1px;
+        font-family: FangSong;
+        padding-left: 12px;
+    }
+    .longdiv {
+        width: 300px;
+        height: 35px;
+        border:1px solid rgba(217,217,217,1);
+        border-radius:1px;
+        float: right;
+        margin-right: -123px;
+    }
+    .llongdiv {
+        width: 454px;
+        height: 30px;
+        line-height: 35px;
+        border: 1px solid #D9D9D9;
+        float: right;
+        margin-right: -107px;
+        font-family: FangSong;
+        padding-left: 12px;
+    }
+    .timecom{
+        cursor: pointer;
+        width: 171px;
+        height: 35px;
+        background-repeat: no-repeat;
+        background-position: 99% center;
+        background-size: 18px;
+        border: 1px solid #ccc;
+        /*  background-image: url(icon.png); */
+    }
+    /* 完成业绩css */
+    .wcqryjword {
+        font-family: FangSong;
+        font-size: 14.5px;
+        font-weight: 400;
+        font-weight: 400;
+        color: rgba(0,0,0,1);
+        width: 79px;
+        float: left;
+        height: 12px;
+        line-height: 26px;
+    }
+    .wcyjbox {
+        /*  border: 1px red solid;  */
+        width: 77%;
+        /* margin-top: 6%; */
+        margin-top: 4px;
+        height: 38px;
+        margin-left: 10px;
+    }
+    .shyjbox{
+        /* border: 1px red solid; */
+        width: 77%;
+        /* margin-top: 6%; */
+        margin-top: 4px;
+        height: 41px;
+        margin-left: 10px;
+    }
+    .divleft{
+        float: left;
+    }
+    .divright{
+        margin-left: 9%;
+        float: left;
+    }
+    /* 进度条 */
+    .progress{position: relative; width:300px;margin:100px auto;}
+    .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+    .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+    .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+        left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+    .progress_btn:hover{border-color:#F7B824;}
+    /* 审核业绩 */
+    .divrightsh{
+        margin-left: 10%;
+        float: left;
+    }
+    ::-ms-browse, [type='file'] {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+    ::-webkit-file-upload-button {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+
+    /* 发布业绩 */
+    .everybox{
+        width:100%;
+        /* border:1px red solid; */
+        height:36px;
+        margin-top: 11px;
+    }
+
+    .everybox2{
+        width:100%;
+        /* border:1px red solid; */
+        height:100px;
+        margin-top: 6px;
+    }
+
+    /* 业绩完成 */
+    .layui-input{
+        padding-left: 4px;
+    }
+
+    /* 所属部门 */
+    .filter-option-inner-inner{
+        font-family: fangsong;
+    }
+    /* 分页 */
+    .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+        margin-left: 2%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .layui-slider {
+        height: 4px;
+        background: #e2e2e2;
+        border-radius: 3px;
+        position: relative;
+        cursor: pointer;
+        margin-right: 90px !important;
+    }
+</style>
+
+<body class="gray-bg" id="body_wrap">
+<div class="bjsc">
+</div>
+<!-- 头像姓名 -->
+<div class="mail-box-header" style="height: 150%">
+    <h2 style="float: left; margin-left: 3%;">
+        <a href="/sign"> <img id="tx" src="/static/img/a1.jpg"
+                              style="width: 50px;height: 50px;border-radius: 50%"></a>
+    </h2>
+    <h5 style="float: left; margin-left: 4%; margin-top: 2%;">
+        <span id="username" class="font-noraml" style="font-size: 17px;"></span>
+        —<span id="userdepart" class="font-noraml" style="font-size: 17px;"></span>
+        <br> <br> <span id="time" class="font-noraml"
+                        style="font-size: 13px;"></span><a id="upp" href='javascript:void(0);'  class='czbtn2' style='color:#0099CC;' onclick='upadateplan()'>  </a><a id="dll" href='javascript:void(0);'  class='czbtn2' style='color:#0099CC;' onclick='deleteplan()'> </a> <br>
+    </h5>
+</div>
+<!-- 列表信息-->
+<table id="borderinfo">
+    <tr class="one" style="height: 40px;">
+        <td class="shorttd">标题</td>
+        <td class="longtd" id="title">
+    </tr>
+    <tr class="one" style="height: 40px;">
+        <td class="shorttd title" rowspan="2">风采内容</td>
+        <td id="text" class="longtd text" rowspan="2" colspan="5"></td>
+    </tr>
+</table>
+<div id="image" style="height: 100px;width: 65%;top: 658px;left: 145px;position: absolute;"></div>
+<!-- 评论点赞发表内容-->
+<div class="mail-box">
+    <!-- logo -->
+    <div class="mail-body" style="overflow: hidden; padding-left: 100px;">
+        <div id="type1"
+             style="height: 30px; width: 144px; overflow: hidden; float: right; font-size: 20px; padding-right: 15px;">
+            <i id="zan" onclick="temp()" class="iconfont icon-zan"
+               style="color: #adb7cb; float: left;"></i><span
+                style="font-size: 15px; float: left; margin-top: 1px; margin-left: 5px;">
+					赞</span> <i id="pl" class="iconfont icon-pinglun3"
+                                style="color: #adb7cb; float: left; margin-left: 15px; margin-top: -3px; cursor: pointer; font-size: 21px;"></i><span
+                style="font-size: 15px; float: left; margin-top: 2px; margin-left: 5px;">
+					评论</span>
+        </div>
+    </div>
+    <!-- text -->
+    <div class="mail-body tooltip-demo" style="padding: 10px">
+        <div class="zan"
+             style="margin-right: 20px; padding-left: 18px; margin-left: 20px; padding-bottom: 5px; padding-top: 10px; background: #F5F6FA;">
+            <div class="f-like-list f-like _likeInfo" likeinfo="34">
+                <div class="icon-btn">
+                    <a href="javascript:;" data-islike="0" data-likecnt="34"
+                       data-showcount="34"
+                       data-unikey="http://user.qzone.qq.com/912924973/mood/2d216a368d60985bdfa60200"
+                       data-curkey="http://user.qzone.qq.com/912924973/mood/2d216a368d60985bdfa60200"
+                       data-clicklog="like" class="praise qz_like_prase"><i
+                            class="fui-icon icon-list-praise"></i></a>
+                    <div class="bubble" style="display: none;">
+                        <div class="bd">+1</div>
+                        <b class="arrow arrow-down"></b>
+                    </div>
+                </div>
+                <div id="user-list" class="user-list" style="text-align: left">
+                </div>
+            </div>
+        </div>
+        <div id="pinlun" class="pinlun"
+             style="overflow: hidden; margin-right: 20px; background: #F5F6FA; margin-left: 20px;">
+        </div>
+    </div>
+
+    <div class="reply"
+         style="border-top: 1px solid #e7eaec; margin-left: 1.7%; width: 97%;">
+        <div id="tb_rich_poster" class="tb_rich_poster  ">
+            <div class="j_bubble_container"></div>
+            <div class="poster_head clearfix">
+                <div class="poster_body editor_wrapper">
+                    <div
+                            class="poster_component editor_content_wrapper ueditor_container">
+                        <div class="old_style_wrapper">
+                            <div class="edui-container"
+                                 style="width: 100%; position: relative;">
+                                <div class="tb_poster_placeholder" id="p"
+                                     style="display: block; left: 15px; position: absolute;">
+                                    <p style="width: 565px; line-height: 25px;">说点什么吧...</p>
+                                </div>
+                                <div id="edui-editor-body" class="edui-editor-body"
+                                     data-id="true" style="height: 170px; overflow: hidden auto;">
+                                    <div class="edui-editor-top"></div>
+                                    <div class="edui-editor-middle">
+                                        <div
+                                                style="width: 100%; z-index: 0; height: 168px; padding: 0 !important;"
+                                                class=" edui-body-container">
+                                            <p id="reply_head" contenteditable="false"
+                                               style="margin: 0; float: left;"></p>
+                                            <div id="ueditor_replace"
+                                                 style="min-height: 168px; outline: none"
+                                                 contenteditable="true">
+                                                <span id="talk" style="white-space: pre-wrap;"><br></span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="poster_error j_error"></div>
+                </div>
+                <div class="j_poster_signature poster_signature"
+                     style="display: none;">
+                    <label><input type="checkbox" class="j_use_signature">使用签名档</label>&nbsp;<span
+                        class="j_signature_wrapper signature_wrapper"><select
+                        name="sign_id" class="j_sign_id"></select>&nbsp;<a
+                        style="color: #0449BE" target="_blank"
+                        href="/i/sys/jump?type=signsetting">查看全部</a></span>
+                </div>
+                <div class="poster_component editor_bottom_panel clearfix">
+                    <div class="j_floating"
+                         style="padding: 10px; float: right; margin-right: 30px;">
+                        <a id="commit" onclick="post()" class="btn btn-primary"
+                           title="Ctrl+Enter快捷发表"><span>发 表</span></a> <span
+                            class="poster_posting_status j_posting_status"></span>
+                        <div class="poster-right-area"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 修改风采-->
+<div id="modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="width:583px;">
+            <div class="modal-body" style="width:583px;;margin-left: -9px;margin-top: -5px;padding:15px">
+
+                <div class="fb">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">修改风采</p>
+                </div>
+                <input type="hidden" id="issueid" value=""/>
+                <div style="width:100%;height:3px;"></div>
+                <div class="everybox">
+                    <div class="yeji ">风采名称:</div>
+                    <div id="elename" class="yejibigtext" contenteditable="true" style="
+									    width: 181px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;padding-left: 5px;
+    padding-top: 0px;"></div>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+                <div class="everybox2">
+                    <div class="yeji ">风采内容:</div>
+                    <div  style="" class="yejibigtext" >
+                        <div id="yjnr" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                             onfocus="if(this.innerText=='添加您的风采内容...')this.innerText=''"
+                             onblur="if(this.innerText=='')this.innerText='添加您的风采内容...'">添加您的风采内容...</div>
+                        <div class="tongji" style="float: right;font-size: 20px;margin-right: 10px;margin-top: -35px;">
+                            <div id="filePicker" style="font-size:14px;margin-top: 4px; "><span style="font-size: 13px;float: right;margin-top: 3px;">上传图片</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="uploader-list" style="margin-left: 58px;">
+                    <ul id="fileList" style="padding-left: 17px;list-style:none;overflow: hidden;margin-bottom: 15px;"></ul>
+                </div>
+                <div style="width:100%;height:2px;"></div>
+                <div class="btndiv" style="    height: 30px;
+    float: none;">
+                    <div class="btnn" id="issue"  style="background-color:#0099CC;color:white;cursor:pointer;" onclick="issue()">修改</div>
+                    <div onclick="cancal()" class="btnn" style=" border: 1px solid #EEEEEF;cursor:pointer;">取消</div>
+                    <div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

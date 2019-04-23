@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+          rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="/static/js/plugins/webuploader/webuploader.css">
+    <link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <link rel="stylesheet" href="/static/achievement/webuploader/webuploader.css">
+    <script src="/static/achievement/webuploader/webuploader.js"></script>
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelectparse.css">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/achievement/manage.css" rel="stylesheet">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+</head>
+<style>
+    input[type=range] {
+        margin-top: 8px;
+        outline: none;
+        -webkit-appearance: none; /*清除系统默认样式*/
+        width: 80% !important;
+        background: #e7eaec;
+        height: 3px; /*横条的高度*/
+    }
+    /*拖动块的样式*/
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none; /*清除系统默认样式*/
+        height: 16px; /*拖动块高度*/
+        width: 16px; /*拖动块宽度*/
+        background: #0099CC; /*拖动块背景*/
+        border-radius: 50%; /*外观设置为圆形*/
+        border: solid 1px #ddd
+    }
+
+    #text {
+        white-space: normal;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .czbtn{
+        cursor: default;
+    }
+    .my-container {
+        float: left;
+        display: inline-block;
+    }
+
+    .myLabel-content, .myText-content, .myBtn-content {
+        float: left;
+        display: inline-block;
+        line-height: 30px;
+
+    }
+
+    .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+    {
+        height: 30px;
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .myBtn-content .btn {
+        margin-bottom: 10px;
+    }
+    ::-ms-browse, [type='file'] {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+    ::-webkit-file-upload-button {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+</style>
+
+<script>
+    $(function(){
+        table();//表格
+        $("#big").show();
+        $("#example").hide();
+        $("#paimingtable").show();
+
+
+
+        //格式化现在日期
+        function now() {
+            // 给input  date设置默认值
+            var now = new Date();
+            //格式化日，如果小于9，前面补0
+            var day = "01";
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 2)).slice(-2);
+            var year =now.getFullYear();
+            if(month >12){ month ="01"; year = now.getFullYear()+1};
+            //拼装完整日期格式
+            var today = year+"/"+(month)+"/"+(day) ;
+            //完成赋值
+            $('#Endtime0').val(today);
+        };
+//格式化15天前的日期
+        function before() {
+            //十五天毫秒值：1209600000
+            var date = new Date();
+            var times = date.getTime();
+            var now = new Date(times);
+            //格式化日，如果小于9，前面补0
+            var day = "01";
+            //格式化月，如果小于9，前面补0
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //拼装完整日期格式
+            var today = now.getFullYear()+"/"+(month)+"/"+(day) ;
+            //完成赋值
+            $('#Begtime0').val(today);
+        };
+
+
+        <!-- jeDate 插件 -->
+        jeDate("#Begtime0",{
+            format:"YYYY/MM/DD",
+            isTime:false,
+            minDate:"2014/09/19 00:00:00"
+        });
+
+        jeDate("#Endtime0",{
+            format:"YYYY/MM/DD",
+            isTime:false,
+            minDate:"2014/09/19 00:00:00"
+        });
+    });
+
+
+
+    //表格代码
+    function table(){
+        var datatable;
+        $.ajax({
+            url:"/attendance/queryWdAttendance",
+            //data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable=data;
+            }
+        });
+        //alert("当前状态=="+$("#sxlx").find("option:selected").val());
+        $('#table1').bootstrapTable({
+            showToggle:!0,
+            showColumns:!0,
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            showRefresh:true,
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: true, // 在表格底部显示分页组件，默认false
+            pageList: [5,10, 15], // 设置页面可以显示的数据条数
+            pageSize: 5, // 页面数据条数
+            pageNumber: 1, // 首页页码
+            onClickRow: function (row, $element) {
+                //alert("业绩id"+field);
+
+
+            },
+            onClickCell:function(field, value, row, $element,event){
+                //alert(value);
+                if(field=="operate" && row.pfmstate=="03" && row.userid == yhid){
+                    finish(row.id);
+                }else if(field=="operate" && row.pfmstate!="03" && $("#sxlx").find("option:selected").val() =="02"){
+                    if(row.pfmstate=="01"){
+                        queren(row.id);
+                    }else if(row.pfmstate=="02"){
+                        queren(row.id);
+                    }else if(row.pfmstate=="04"){
+                        shenhe(row.id);
+                    }
+                }
+                else{
+                    page('/manageMess?id='+row.id,'业绩详情');
+                }
+                //alert(field +"，"+value+"，"+row.id);//value当前点击列所在行的内容，可以直接理解为单元格的内容，row为当前点击列所在行的所有数据
+            },
+            columns: [
+                {
+                    field: 'username',
+                    title: '请假人',
+                    width:'5%' ,
+                    align:'center',
+                    formatter: function (value,row,index){
+                        return index+1; //序号正序排序从1开始
+                    }
+                },
+                {
+                    field: 'text',
+                    width:'7%' ,
+                    title: '请假事由',
+                    align:'center',
+                    /* formatter: function(value, row, index){
+                                return [
+                            "<a class='J_menuItem' style='color:#0099CC' data-index='0' onclick=\"page('/manageMess?id="+row.id+"','业绩详情')\">"+row.username+"</a>"
+                        ].join("");
+                    }*/
+                }, {
+                    field: 'timetype',
+                    width:'10%' ,
+                    title: '请假类型',
+                    align:'center',
+                },{
+                    field: 'astarttime',
+                    width:'10%' ,
+                    title: '开始时间',
+                    align:'center',
+                },{
+                    field: 'aendtime',
+                    width:'10%' ,
+                    title: '结束时间',
+                    align:'center',
+
+                },{
+                    width:'10%' ,
+                    field: 'duration',
+                    title: '请假时长',
+                    align:'center',
+                },
+                {
+                    field: 'atype',
+                    width:'6%' ,
+                    title: '请假状态',
+                    align:'center',
+                },
+
+            ] ,
+            data:datatable
+        });
+    };
+    $(".fht-cell").remove();
+
+    /* 模态弹出框 */
+    <!-- 请假  -->
+    function qingjia(){
+        $("#modal-form").modal('show');
+        $(".modal-dialog").show();
+        ssyj();
+    };
+
+</script>
+<body>
+<div id="big" class="col-sm-12" style="display: none">
+    <div class="example-wrap" style="margin-top: 25px;">
+        <div id="toolbar1"
+             style="width: 100%; overflow: hidden; margin-bottom: 14px; float: left;">
+            <div class="myText-content" style="float: left;width: 11%;cursor:pointer;">
+                <label class="myLabel-content">选项:&nbsp;&nbsp;&nbsp;</label>
+                <select
+                        name="select" id="sxxx"
+                        style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                    <option value="01">申请</option>
+                    <option value="02">审批</option>
+                </select>
+            </div>
+
+
+            <div class="myText-content" style="float: left;width: 13%;cursor:pointer;">
+                <label class="myLabel-content">状态:&nbsp;&nbsp;&nbsp;</label> <select
+                    name="select" id="sxzt" style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                <option value="00">全部</option>
+                <option value="01">已通过</option>
+                <option value="02">未通过</option>
+                <option value="03">未审核</option>
+                <option value="04">审核中</option>
+            </select>
+            </div>
+
+            <div class="myText-content" style="float: left;width: 13%;">
+                <label class="myLabel-content">类型:&nbsp;&nbsp;&nbsp;</label>
+                <select
+                        name="select" id="sxlx"  style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                    <option value="00">全部</option>
+                    <option value="01">病假</option>
+                    <option value="02">丧假</option>
+                    <option value="03">事假</option>
+                    <option value="04">产假</option>
+                    <option value="04">婚假</option>
+                    <option value="04">零星假</option>
+
+                </select>
+            </div>
+
+
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content" style="">日期：</label>
+                <div class="myText-content" style="">
+                    <input id="Begtime0"
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="开始日期" style="width: 119px;margin-right: 10px;">
+                </div>
+
+            </div>
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content">至</label>
+            </div>
+            <div class="my-container"
+                 style="display: block;  float: left;">
+                <label class="myLabel-content"></label>
+                <div class="myText-content" style="margin-left: 10px;">
+                    <input id="Endtime0"
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="结束日期" style="width: 119px;">
+                </div>
+            </div>
+
+            <div class="myBtn-content"
+                 style="float: left;margin-left: 2%;">
+                <button id="search1" type="button" class="btn btn-primary"
+                        style="background-color: #0099CC;border-color: #0099CC;color: #FFF;" onclick="chaxunn()">查询</button>
+                <button id="reset1" type="button" class="btn btn-default"
+                        style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;" onclick="chongzhii()">情空</button>
+            </div>
+
+            <div id="fabu"
+                 style="float: right;width:76px;height:30px;background-color:#0099CC;margin-right: 10px;cursor:pointer;"
+                 onclick="qingjia()">
+                <i class="iconfont icon-fabu"style="position: relative;top: 7px;left: 14px;color: white;" ><font style="font-size:10px;position: relative;top: -1px;left: 2px;">请假</font></i>
+            </div>
+
+            <div class="example" id="paimingtable">
+                <table id="table1"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 请假-->
+<div id="modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="height: 471px;width:583px;">
+            <div class="modal-body" style="height: 471px;width: 627px;margin-left: -9px;margin-top: -5px;">
+
+                <div class="fb">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">请假申请</p>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+                <div class="everybox">
+                    <div class="yeji">请假类型:</div>
+                    <div class="">
+                        <select id="yjlx" class="form-control  "
+                                style="width: 461px;height:32px;float: left;font-family: FangSong;">
+                            <option>项目开发</option>
+                            <option>需求分析</option>
+                            <option>页面设计</option>
+                            <option>前端开发</option>
+                            <option>后台开发</option>
+                            <option>前端测试</option>
+                            <option>后端测试</option>
+                            <option>数据库设计</option>
+                            <option>市场调研</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="width:100%;height:0px;"></div>
+                <div class="everybox">
+                    <div class="yeji ">开始时间:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style=" ">
+                                <input id="Searchtime"
+                                       class="com laydate-icon form-control layer-date"
+                                       placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="yeji2 ">结束时间:</div>
+                    <div class="">
+                        <div class="my-container ">
+                            <div class="myText-content" style="">
+                                <input id="Endtime"
+                                       class="com laydate-icon form-control layer-date"
+                                       placeholder="" value="" style="width:181px;height:32px;font-family: FangSong;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:100%;height:2px;"></div>
+                <div class="everybox">
+                    <div class="yeji ">请假时长:</div>
+                    <div class="">
+                        <select id="ssyj" class="form-control yeji yejimidtext" style="margin-top: 0%;font-family: FangSong;margin-left: -0.5px;">
+                        </select>
+                    </div>
+                </div>
+                <div style="width:100%;height:1px;"></div>
+
+
+                <div style="width:100%;height:5px;"></div>
+                <div class="everybox2">
+                    <div class="yeji ">请假事由:</div>
+                    <div  style="" class="yejibigtext" >
+                        <div id="yjnr" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                             onfocus="if(this.innerText=='请输入请假的原因...')this.innerText=''"
+                             onblur="if(this.innerText=='')this.innerText='请输入请假的原因...'">请输入请假的原因...</div>
+                        <!-- <div class="tjfj" style="width: 20%;">
+                                    <input class="change" type="file" multiple="multiple"
+                                    style="
+                                        position: absolute;
+                                        left: 18.8%;
+                                        top: 38%;font-family: fangsong;
+                                    " />
+                        </div> -->
+                    </div>
+                </div>
+                <div style="width:100%;height:5px;"></div>
+                <div class="everybox">
+                    <div class="yeji ">附件申明（最多可添加6张）</div></br>
+                    <div class="">
+
+                    </div>
+                </div>
+                <div class="btndiv">
+                    <div class="btnn" style="background-color:#0099CC;color:white;" onclick="fbyj()">确认</div>
+                    <div onclick="fbyjqx()" class="btnn" style="
+								    border: 1px solid #EEEEEF;
+								">取消</div>
+                    <div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

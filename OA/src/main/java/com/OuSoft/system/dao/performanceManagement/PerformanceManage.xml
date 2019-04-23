@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.performanceManagement.PerformanceManageDao">
+
+	<!-- 业绩管理 -->
+	<!-- 业绩管理（下拉选业绩和审核列表） -->
+
+	<!--获取业绩信息-->
+	<select id="queryUserTperfromanceDao" resultType="com.OuSoft.system.entity.performance" parameterType="com.OuSoft.system.entity.performance">
+		SELECT
+		tpf.*
+		FROM
+		tperformance tpf
+		WHERE
+		<if test="userid != null and userid != '' ">
+			 tpf.userid = #{userid}
+		</if>
+		<if test="pfmtype != null and pfmtype != '' ">
+			and tpf.pfmtype = #{pfmtype}
+		</if>
+		<if test="pfmtext != null and pfmtext != '' ">
+			and tpf.pfmtext = #{pfmtext}
+		</if>
+		<if test="pfmstarttime != null and pfmstarttime != '' ">
+			and SUBSTR(tpf.pfmstarttime ,1,10) &gt;= #{pfmstarttime}
+		</if>
+		<if test="pfmendtime != null and pfmendtime != '' ">
+			and SUBSTR(tpf.pfmendtime ,1,10) &lt;= #{pfmendtime}
+		</if>
+	</select>
+	<!-- 
+	业绩  type;// 01 个人，02小组，03部门 : 用户id :id ,小组id：grzdeparid  部门id:grbdeparid
+	筛选条件：id:用户id人员，pfmstate:状态，deparid:部门，日期，开始时间：pfmstarttime,结束时间pfmendtime
+	返回:tpranum:点赞数，comnum评论数，dz自己是否点赞，deparname:部门名称，username：此数据姓名
+	pfmstate：状态，开始时间：pfmstarttime,结束时间pfmendtime，内容：pfmtext,pfmnumber:工作业绩 ,pfmworkhours:工作时长
+	 -->
+	<select id="queryYJTperfromanceDao"  resultType="com.OuSoft.system.entity.performance" parameterType="com.OuSoft.system.entity.performance"  >
+			SELECT
+			tdeinfo.id as grzdeparid,  tdeinfo.deparname as grzdeparname, 
+			dein.id as grbdeparid, dein.deparname as grbdeparname,  
+			deinfo.deparepid as deinfoepid,
+			SUBSTR(deinfo.deparepid, 1, 6) as epid,
+			deinfo.deparname as deinfoname,
+			depar.deparepid,
+				tu.username as username ,
+				depar.deparname as pername,depar.id as deparid,
+				IfNULL(tpra.num, 0) AS praisenum,
+				IFNULL(tmoo.tmonum, 0) AS commentnum,
+				IFNULL(tp.userid, 0) AS dz,
+			tpf.* 
+			FROM
+				tperformance tpf
+			LEFT JOIN tuser tu on tu.id = tpf.userid 
+			LEFT JOIN tdepartmentinfo depar on depar.id = tpf.pfmdepartmentid
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tperformance'
+				GROUP BY
+					t.itemid
+			) tpra ON tpf.id = tpra.itemid
+			LEFT JOIN (
+				SELECT
+					tmo.commentid AS commentid,
+					count(tmo.commentid) AS tmonum
+				FROM
+					tcomment tmo
+				WHERE
+					tmo.itemtype = 'tperformance'
+				GROUP BY
+					tmo.commentid
+			) tmoo ON tmoo.commentid = tpf.id
+			LEFT JOIN tpraise tp ON tp.userid = #{userid} AND tp.itemid = tpf.id
+			
+			LEFT JOIN tdepartuser detu on detu.userid = tpf.userid
+			LEFT JOIN tdepartmentinfo deinfo on deinfo.id = detu.deparid
+			<!--  查用户所属小组id，部门id -->
+			 LEFT JOIN tdepartuser tdetu on tdetu.userid = tpf.userid
+			 LEFT JOIN tdepartmentinfo tdeinfo on tdeinfo.id = tdetu.deparid
+			<!--  查用户所属部门id  -->
+			LEFT JOIN tdepartmentinfo dein on dein.deparepid = SUBSTR(deinfo.deparepid, 1, 6)
+			<where>
+				1=1  and tu.status != '02' and tu.status != '03' 
+				<if test=" deparepid != null and deparepid != '' ">
+					AND SUBSTR(deinfo.deparepid, 1, 6) = #{deparepid}
+				</if>
+				<!-- type;// 01 个人，02小组，03部门         用户id:id, grzdeparid;// 组id,grbdeparid;// 部门id  -->
+				<if test="type == '01' ">
+					and tu.id = #{id}
+				</if>
+				<if test="type == '02' ">
+					and tdeinfo.id = #{grzdeparid}
+				</if>
+				<if test="type == '03' ">
+					and dein.id = #{grbdeparid}
+				</if>
+
+				<if test="pfmstate != null and pfmstate != '' ">
+					and tpf.pfmstate = #{pfmstate}
+				</if>
+				<if test=" deparid != null and deparid != '' ">
+					and depar.id =  #{deparid}
+				</if>
+				<if test="pfmstarttime != null and pfmstarttime != '' ">
+					and SUBSTR(tpf.pfmstarttime ,1,10) &gt;= #{pfmstarttime}
+				</if>
+				<if test="pfmendtime != null and pfmendtime != '' ">
+					and SUBSTR(tpf.pfmendtime ,1,10) &lt;= #{pfmendtime}
+				</if>
+					GROUP BY tpf.createtime
+				 ORDER BY tpf.createtime desc
+			</where>
+	</select>
+
+	<!-- 业绩管理
+	审核：
+	筛选条件：id:用户id人员，pfmstate:状态，deparid:部门，日期，开始时间：pfmstarttime,结束时间pfmendtime
+	返回:tpranum:点赞数，comnum评论数，dz自己是否点赞，deparname:部门名称，username：此数据姓名
+	pfmstate：状态，开始时间：pfmstarttime,结束时间pfmendtime，内容：pfmtext,pfmnumber:工作业绩 ,pfmworkhours:工作时长
+	 -->
+	<select id="querySHTperfromanceDao"  resultType="com.OuSoft.system.entity.performance" parameterType="com.OuSoft.system.entity.performance"  >
+			SELECT
+			tdeinfo.id as grzdeparid,  tdeinfo.deparname as grzdeparname, 
+			dein.id as grbdeparid, dein.deparname as grbdeparname,  
+			deinfo.deparepid as deinfoepid,
+			SUBSTR(deinfo.deparepid, 1, 6) as epid,
+			deinfo.deparname as deinfoname,
+			depar.deparepid,
+				tu.username as username ,
+				depar.deparname as pername,depar.id as deparid,
+				IfNULL(tpra.num, 0) AS praisenum,
+				IFNULL(tmoo.tmonum, 0) AS commentnum,
+				IFNULL(tp.userid, 0) AS dz,
+			tpfid.*
+			FROM
+				tperformance tpf
+			INNER JOIN tperformance tpfid on tpfid.pfmpid = tpf.id
+			LEFT JOIN tuser tu on tu.id = tpfid.userid
+			LEFT JOIN tdepartmentinfo depar on depar.id = tpfid.pfmdepartmentid
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tperformance'
+				GROUP BY
+					t.itemid
+			) tpra ON tpfid.id = tpra.itemid
+			LEFT JOIN (
+				SELECT
+					tmo.commentid AS commentid,
+					count(tmo.commentid) AS tmonum
+				FROM
+					tcomment tmo
+				WHERE
+					tmo.itemtype = 'tperformance'
+				GROUP BY
+					tmo.commentid
+			) tmoo ON tmoo.commentid = tpfid.id
+			LEFT JOIN tpraise tp ON tp.userid = #{userid} AND tp.itemid = tpfid.id
+			
+			LEFT JOIN tdepartuser detu on detu.userid = tpf.userid
+			LEFT JOIN tdepartmentinfo deinfo on deinfo.id = detu.deparid
+			<!--  查用户所属小组id，部门id -->
+			 LEFT JOIN tdepartuser tdetu on tdetu.userid = tpf.userid
+			 LEFT JOIN tdepartmentinfo tdeinfo on tdeinfo.id = tdetu.deparid
+			<!--  查用户所属部门id  -->
+			LEFT JOIN tdepartmentinfo dein on dein.deparepid = SUBSTR(deinfo.deparepid, 1, 6)
+			<where>
+				tu.status != '02' and tu.status != '03'
+				and tpf.userid = #{userid}
+				and tpfid.userid != #{userid}
+				<!-- type;// 01 个人，02小组，03部门         用户id:id, grzdeparid;// 组id,grbdeparid;// 部门id  -->
+				<if test="type == '01' ">
+					and tu.id = #{id}
+				</if>
+				<if test="type == '02' ">
+					and tdeinfo.id = #{grzdeparid}
+				</if>
+				<if test="type == '03' ">
+					and dein.id = #{grbdeparid}
+				</if>
+				<if test="pfmstate != null and pfmstate != '' ">
+					and tpfid.pfmstate = #{pfmstate}
+				</if>
+				<if test=" deparid != null and deparid != '' ">
+					and depar.id =  #{deparid}
+				</if>
+				<if test="pfmstarttime != null and pfmstarttime != '' ">
+					and SUBSTR(tpfid.pfmstarttime ,1,10) &gt;= #{pfmstarttime}
+				</if>
+				<if test="pfmendtime != null and pfmendtime != '' ">
+					and SUBSTR(tpfid.pfmstarttime ,1,10) &lt;= #{pfmendtime}
+				</if>
+				 ORDER BY tpfid.pfmstarttime
+			</where>
+	</select>
+
+
+ 	<!-- 发布业绩 -->
+	<insert id="insertpfmm" parameterType="com.OuSoft.system.entity.performance">
+		insert into tperformance
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		 <if test="id != null">
+		 	id,
+		 </if>
+		 <if test="userid != null">
+		 	userid,
+		 </if>
+		 <if test="pfmnumber != null">
+		 	pfmnumber,
+		 </if>
+		 <if test="pfmworkhours != null">
+		 	pfmworkhours,
+		 </if>
+		 <if test="pfmtext != null">
+		 	pfmtext,
+		 </if>
+		 <if test="pfmtype != null">
+		 	pfmtype,
+		 </if>
+		 <if test="pfmdepartmentid != null">
+		 	pfmdepartmentid,
+		 </if>
+		  <if test="pfmstarttime != null">
+		 	pfmstarttime,
+		 </if>
+		  <if test="pfmendtime != null">
+		 	pfmendtime,
+		 </if>
+		  <if test="pfmissuerpublish != null">
+		 	pfmissuerpublish,
+		 </if>
+		  <if test="pfmdowntext != null">
+		 	pfmdowntext,
+		 </if>
+		  <if test="pfmpid != null">
+		 	pfmpid,
+		 </if>
+		  <if test="pfmstate != null">
+		 	pfmstate,
+		 </if>
+		   <if test="pfmachieveplan != null">
+		 	pfmachieveplan,
+		 </if>
+		   <if test="remark != null">
+		 	remark,
+		 </if>
+		 <if test="createtime != null">
+		 createtime,
+		 </if>
+		 </trim>
+		  <trim prefix="values (" suffix=")" suffixOverrides=",">
+		 	 <if test="id != null">
+		 	  #{id,jdbcType=VARCHAR},
+		 </if>
+		 <if test="userid != null">
+		 	#{userid,jdbcType=VARCHAR},
+		 </if>
+		 <if test="pfmnumber != null">
+		 	#{pfmnumber,jdbcType=VARCHAR},
+		 </if>
+		 <if test="pfmworkhours != null">
+		 	#{pfmworkhours,jdbcType=VARCHAR},
+		 </if>
+		 <if test="pfmtext != null">
+		 	#{pfmtext,jdbcType=VARCHAR},
+		 </if>
+		 <if test="pfmtype != null">
+		 	#{pfmtype,jdbcType=VARCHAR},
+		 </if>
+		 <if test="pfmdepartmentid != null">
+		 	#{pfmdepartmentid,jdbcType=VARCHAR},
+		 </if>
+		  <if test="pfmstarttime != null">
+		 	#{pfmstarttime,jdbcType=VARCHAR},
+		 </if>
+		  <if test="pfmendtime != null">
+		 	#{pfmendtime,jdbcType=VARCHAR},
+		 </if>
+		  <if test="pfmissuerpublish != null">
+		 	#{pfmissuerpublish,jdbcType=VARCHAR},
+		 </if>
+		  <if test="pfmdowntext != null">
+		 	#{pfmdowntext,jdbcType=VARCHAR},
+		 </if>
+		  <if test="pfmpid != null">
+		 	#{pfmpid,jdbcType=VARCHAR},
+		 </if>
+		  <if test="pfmstate != null">
+		 	#{pfmstate,jdbcType=VARCHAR},
+		 </if>
+		   <if test="pfmachieveplan != null">
+		 	#{pfmachieveplan,jdbcType=VARCHAR},
+		 </if>
+		   <if test="remark != null">
+		 	#{remark,jdbcType=VARCHAR},
+		 </if>
+		 <if test="createtime != null">
+		 	#{createtime,jdbcType=VARCHAR},
+		 </if>
+		 </trim>
+	</insert>
+
+
+	<!-- 查询业绩列表 -->
+	<select id="queryPfmmList" parameterType="com.OuSoft.system.entity.Performanceparm" resultType="com.OuSoft.system.entity.Performanceparm">
+				select
+				 (n.pfmnumber/n.pfmworkhours) as jhxl,
+				tude.username as shrusername,
+<!-- 				tpfmc.pfmtext as pfmdowntext,  -->
+				n.*,tf.deparname as userpartname  , COUNT(DISTINCT n.createtime)  from (
+				SELECT
+					tpf.*,tu.username,tdp.deparname,tdpi.deparname as pername,tdp.deparepid,(select count(*) from tcomment tc where tpf.id=tc.itemid) as commentnum,(select count(*) from tpraise tp where tp.itemid=tpf.id) as praisenum,
+					IFNULL(tp.id,0) as dz
+				 FROM
+					tperformance tpf
+				LEFT JOIN tuser tu ON tu.id = tpf.userid and tu.status ='01'
+				LEFT JOIN tdepartuser tdu ON tpf.userid = tdu.userid
+				left join tdepartmentinfo tdp on tdp.id=tdu.deparid
+				left join tdepartmentinfo tdpi on tpf.pfmdepartmentid=tdpi.id
+				left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tpf.id
+				where tdp.deparpid=#{tcmid}
+				) n left join tdepartmentinfo tf on SUBSTR(n.deparepid FROM 1 FOR 6) = tf.deparepid
+				LEFT JOIN tuser tude on tude.id = n.pfmauditid
+<!-- 				INNER JOIN tperformance tpfmc on tpfmc.id = n.pfmpid -->
+		<where>
+		     1=1
+			<if test="id != '' and id!=null">
+			</if>
+			<if test="pfmstarttime != null and pfmstarttime!=''">
+				and SUBSTR(n.pfmstarttime, 1, 10) &gt;= #{pfmstarttime}
+			</if>
+			<if test="pfmendtime != null and pfmendtime !=''">
+				and SUBSTR(n.pfmendtime, 1, 10) &lt;= #{pfmendtime}
+			</if>
+			<if test="pfmdepartmentid != null and pfmdepartmentid != ''">
+				and n.deparepid like '${pfmdepartmentid}%'
+			</if>
+			<if test="userid != null and userid != ''">
+				and n.userid = #{userid}
+			</if>
+			<if test="pfmstate != null and pfmstate !=''">
+				and n.pfmstate = #{pfmstate}
+			</if>
+			<if test="pfmtype != null and pfmtype!=''">
+				and n.pfmtype = #{pfmtype}
+			</if>
+		</where>
+			order BY n.createtime desc
+	</select>
+
+	<!-- 查询业绩列表的详情：详情
+	不同的是列表没有有所属业绩，详情有所属业绩 -->
+	<select id="queryPfmmListDao" parameterType="com.OuSoft.system.entity.Performanceparm" resultType="com.OuSoft.system.entity.Performanceparm">
+				select
+				 (n.pfmnumber/n.pfmworkhours) as jhxl,
+				tude.username as shrusername,
+ 				tpfmc.pfmtext as pfmdowntext,
+				n.*,tf.deparname as userpartname from (
+				SELECT
+					tpf.*,tu.username,tdp.deparname,tdpi.deparname as pername,tdp.deparepid,(select count(*) from tcomment tc where tpf.id=tc.itemid) as commentnum,(select count(*) from tpraise tp where tp.itemid=tpf.id) as praisenum,
+					IFNULL(tp.id,0) as dz
+				 FROM
+					tperformance tpf
+				LEFT JOIN tuser tu ON tu.id = tpf.userid and tu.status ='01'
+				LEFT JOIN tdepartuser tdu ON tpf.userid = tdu.userid
+				left join tdepartmentinfo tdp on tdp.id=tdu.deparid
+				left join tdepartmentinfo tdpi on tpf.pfmdepartmentid=tdpi.id
+				left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tpf.id
+				where tdp.deparpid=#{tcmid}
+				) n left join tdepartmentinfo tf on SUBSTR(n.deparepid FROM 1 FOR 6) = tf.deparepid
+				LEFT JOIN tuser tude on tude.id = n.pfmauditid
+ 				INNER JOIN tperformance tpfmc on tpfmc.id = n.pfmpid
+		<where>
+			1=1
+			<if test="id != '' and id!=null">
+				and n.id = #{id}
+			</if>
+			<if test="pfmstarttime != null and pfmstarttime!=''">
+				and SUBSTR(n.pfmstarttime, 1, 10) &gt;= #{pfmstarttime}
+			</if>
+			<if test="pfmendtime != null and pfmendtime !=''">
+				and SUBSTR(n.pfmendtime, 1, 10) &lt;= #{pfmendtime}
+			</if>
+			<if test="pfmdepartmentid != null and pfmdepartmentid != ''">
+				and n.deparepid like '${pfmdepartmentid}%'
+			</if>
+			<if test="userid != null and userid != ''">
+				and n.userid = #{userid}
+			</if>
+			<if test="pfmstate != null and pfmstate !=''">
+				and n.pfmstate = #{pfmstate}
+			</if>
+			<if test="pfmtype != null and pfmtype!=''">
+				and n.pfmtype = #{pfmtype}
+			</if>
+		</where>
+			order BY n.createtime desc
+	</select>
+
+	<!-- 修改业绩状态 -->
+	<update id="updpfmm" parameterType="com.OuSoft.system.entity.Performanceparm">
+		update tperformance
+		<trim prefix="set" suffixOverrides=",">
+		<if test="pfmstate != null">
+			pfmstate = #{pfmstate},
+		</if>
+		<if test="pfmissuersuccess != null">
+			pfmissuersuccess = #{pfmissuersuccess},
+		</if>
+		<if test="pfmaffirmtime != null">
+			pfmaffirmtime = #{pfmaffirmtime},
+		</if>
+		<if test="pfmaudittime !=null">
+			pfmaudittime = #{pfmaudittime},
+		</if>
+		<if test="pfmauditoraffirm != null">
+			pfmauditoraffirm = #{pfmauditoraffirm},
+		</if>
+		<if test="pfmauditoraudit != null">
+			pfmauditoraudit = #{pfmauditoraudit},
+		</if>
+		<if test="pfmachieveplan != null">
+			pfmachieveplan = #{pfmachieveplan},
+		</if>
+		<if test="pfmrealitystarttime != null">
+			pfmrealitystarttime = #{pfmrealitystarttime},
+		</if>
+		<if test="pfmrealityendtime != null">
+			pfmrealityendtime = #{pfmrealityendtime},
+		</if>
+		<if test="realitypfm != null">
+			realitypfm = #{realitypfm},
+		</if>
+		<if test="realityworkhours != null">
+			realityworkhours = #{realityworkhours},
+		</if>
+		<if test="realityefficient != null">
+			realityefficient = #{realityefficient},
+		</if>
+		<if test="pfmauditid != null">
+			pfmauditid = #{pfmauditid},
+		</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<select id="queryTsdepart" resultType="com.OuSoft.system.entity.Tdepartmentinfo" parameterType="java.lang.String">
+		select
+			id,deparname,deparepid,departime,deparpid,remark
+		 from tdepartmentinfo where 1=1
+		<if test="state == '01'"> and length(deparepid)=6 </if>
+		<if test="state == '02'"> and length(deparepid)=9 and deparepid like '${id}%'</if>
+		and deparpid=#{tcmid}
+	</select>
+	<select id="queryTopAll" resultType="com.OuSoft.system.entity.performance" parameterType="java.lang.String" >
+		select tpf.* from tperformance tpf
+		left join tuser tu on tu.id=tpf.userid
+		and tu.userpid=#{tcmid}
+		where 1=1  and tu.status = '01'
+		<if test="id != null and id != '' ">
+			and id=#{id}
+		</if>
+		 ORDER BY tpf.createtime
+	</select>
+	<delete id="deletePerFor" parameterType="java.lang.String">
+		delete from tperformance where id=#{id}
+	</delete>
+
+	<select id="queryuserList" resultType="com.OuSoft.system.entity.queryusermodel" parameterType="java.lang.String">
+		SELECT
+	tp.id as deparepid,tp.username
+FROM
+	tdepartmentinfo tu
+LEFT JOIN tdepartuser tdp ON tu.id = tdp.deparid
+LEFT JOIN tuser tp on tp.id=tdp.userid
+where tu.deparpid=#{tcmid} and  tu.deparepid like '${id}%' and  and tp.`status`='01'
+	</select>
+	<select id="querydepartuser" resultType="com.OuSoft.system.entity.Tsuser" parameterType="java.lang.String">
+		SELECT
+			DISTINCT tp.id ,tp.*
+		FROM
+			tdepartmentinfo tu
+		LEFT JOIN tdepartuser tdp ON tu.id = tdp.deparid
+		LEFT JOIN tuser tp on tp.id=tdp.userid
+		where tu.deparpid=#{tcmid} and tu.deparepid like '${id}%'
+		and tp.id != ''  and tp.`status`='01'
+	</select>
+
+	<!--查询业绩-->
+	<select id="selectPerformanceListDao" resultType="com.OuSoft.system.entity.Performanceparm" parameterType="com.OuSoft.system.entity.Performanceparm">
+		select * from tperformance where id=#{id}
+	</select>
+</mapper>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.performanceManagement.PerformanceRankingDao">
+
+	
+	<!-- 业绩排名==红色字体提示 -->
+<!-- 	<select id="queryByTparformanceDao"> -->
+		
+		
+		
+		
+<!-- 	</select> -->
+	
+	<select id="queryDzParformanceRequestDao"  parameterType="com.OuSoft.system.entity.parformanceRequest" resultType="com.OuSoft.system.entity.performanceRank" >
+		SELECT 
+			  tpra.id as tpraid, 
+				tutsi.username as username,
+			  tutpra.username as tprausername,
+			  tpra.userid as tprauserid,
+			  ta.filename as txfilename ,ip.ip as ip,
+			  IFNULL(tp.id,0) as dz
+			FROM
+				tperformance tper
+			LEFT JOIN tpraise tpra ON tpra.itemid = tper.id and tpra.itemtype = 'tperformance'
+			LEFT JOIN tuser tutpra on tutpra.id = tpra.userid and tutpra.userpid='001'
+			LEFT JOIN tuser tutsi ON tutsi.id = tper.userid and tutsi.userpid='001'
+			left join tatt ta on ta.itemid = tper.userid 
+			left JOIN tattip ip on ip.id = '1' 
+			left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tper.id
+			WHERE 1=1 
+			 and tper.id = #{id}
+			order by tpra.praisetime
+	</select>
+ 
+	
+	<!-- 业绩排名列表w -->
+	<select id="queryPfmr" parameterType="com.OuSoft.system.entity.parformanceRequest" resultType="com.OuSoft.system.entity.performanceRank" >
+			SELECT
+			n.*,
+			@a := @a + 1 AS RANK, n.planhours - n.realyhours AS hoursbias,
+			n.planefficiency - n.realycient AS efficiencybias,
+			n.planpernum - n.realynum as pernum
+			FROM
+			(
+			SELECT
+			tu.id, tdp.deparname as deparname,tdpar.deparname as deparbname, SUBSTR(tdpar.deparepid,1,6) as deparepids,
+			tu.id as userid,
+			tu.username as name,
+			<if test="type=='01'">
+			sum(tpf.pfmauditresults) AS valuenum,
+			</if>
+			<if test="type=='02'">
+			sum(tpf.realityworkhours) AS valuenum,
+			</if>
+			<if test="type=='03'">
+			sum(tpf.realityefficient) AS valuenum,
+			</if>
+			(select count(*) from tpraise tp where tp.itemid=tu.id) praisenum,
+			(select count(*) from tcomment tc where tc.itemid=tu.id) commentnum,
+			sum(tpf.pfmnumber) AS planpernum,
+			sum(tpf.realitypfm) AS realynum,
+			sum(tpf.pfmworkhours) AS planhours,
+			sum(tpf.realityworkhours) AS realyhours,
+			sum(tpf.realityefficient) AS realycient,
+			sum(tpf.pfmworkhours) / sum(tpf.pfmnumber) AS planefficiency
+		FROM
+			tuser tu
+		LEFT JOIN tdepartuser tpu ON tu.id = tpu.userid
+		LEFT JOIN tdepartmentinfo tdp ON tdp.id = tpu.deparid
+		LEFT JOIN tperformance tpf ON tu.id = tpf.userid
+		LEFT JOIN tdepartmentinfo tdpar ON tdpar.deparepid  =  SUBSTR(tdp.deparepid,1,6)
+		where 1=1 and  tdp.deparpid=#{tcmid}
+			<if test="starttime != null and starttime != '' ">
+				and tpf.pfmstarttime &gt;= #{starttime}
+			</if>
+			<if test="endtime != null and endtime != '' ">
+				and tpf.pfmendtime &lt;= #{endtime}
+			</if>
+			<if test="userid == null">
+				and tpf.userid = #{userid}
+			</if>
+			<if test="state == 01">
+				and tdp.deparepid = #{deparepid}
+				and LENGTH(tdp.deparepid)=9
+			</if>
+			<if test="state == 02">
+<!-- 				and tdp.deparepid like'${deparepid}%'  -->
+				and tdp.deparepid like '${deparepid}%'
+				and LENGTH(tdp.deparepid)=9
+			</if>
+				GROUP BY tu.id ORDER BY
+			<if test="type=='01'">
+				sum(tpf.realitypfm)
+			</if>
+			<if test="type=='02'">
+				sum(tpf.realityworkhours)
+			</if>
+			<if test="type=='03'">
+				sum(tpf.realityefficient)
+			</if>
+				DESC  ) n, 	(SELECT @a := 0) r
+	</select>
+	
+	<select id="querytdepart" parameterType="java.lang.String" resultType="com.OuSoft.system.entity.tdepartType">
+			SELECT
+			tdp.id,
+			tdp.username AS NAME,
+			tu.deparepid,
+			tu.deparname
+		FROM
+			tuser tdp
+		LEFT JOIN tdepartuser tdu ON tdp.id = tdu.userid
+		LEFT JOIN tdepartmentinfo tu ON tu.id = tdu.deparid
+		WHERE tu.deparpid=#{tcmid} and 
+		tdp.id=#{userid} 
+		ORDER BY deparepid
+	</select>
+	
+	
+	<select id="querygroupList" parameterType="com.OuSoft.system.entity.parformanceRequest" resultType="com.OuSoft.system.entity.performanceRank">
+					select 
+					n.zdeparid as zdeparid, 
+					n.*,@rownum := @rownum + 1 as RANK,
+					n.planhours - n.realyhours AS hoursbias,
+					n.planefficiency - n.realycient AS efficiencybias,
+					n.planpernum - n.realynum as pernum
+					 from ( SELECT tpf.id,<if test="type=='01'">
+					sum(tpf.realitypfm) AS valuenum,
+					</if>
+					<if test="type=='02'">
+					sum(tpf.realityworkhours) AS valuenum,
+					</if>
+					<if test="type=='03'">
+					sum(tpf.realityefficient) AS valuenum,
+					</if>
+					tdp.id as zdeparid,
+					tdp.deparname as name,
+					(select count(*) from tpraise tp where tp.itemid=tdp.id) praisenum,
+					(select count(*) from tcomment tc where tc.itemid=tdp.id) commentnum,
+						sum(tpf.pfmnumber) AS planpernum,
+					sum(tpf.realitypfm) AS realynum,
+					sum(tpf.pfmworkhours) AS planhours,
+					sum(tpf.realityworkhours) AS realyhours,
+					sum(tpf.realityefficient) AS realycient,
+					sum(tpf.pfmworkhours) / sum(tpf.pfmnumber) AS planefficiency
+					FROM
+						tdepartmentinfo tdp
+					LEFT JOIN tdepartuser tdu ON tdp.id = tdu.deparid
+					LEFT JOIN tuser tu ON tu.id=tdu.userid
+					left join tperformance tpf on tpf.userid=tu.id
+					where 1=1 and tdp.deparpid=#{tcmid} and LENGTH(tdp.deparepid) = 9
+					<if test="state=='01'">
+					and tdp.deparepid like  '${deparepid}%'
+					</if>
+					<if test="starttime != null and starttime != '' ">
+						and tpf.pfmstarttime &gt;= #{starttime}
+					</if>
+					<if test="endtime != null and endtime != '' ">
+						and tpf.pfmendtime &lt;= #{endtime}
+					</if>
+					GROUP BY tdp.id) n,(SELECT @rownum := 0) r 
+					ORDER BY n.valuenum DESC
+	</select>
+	
+	<select id="querypartList" parameterType="com.OuSoft.system.entity.parformanceRequest" resultType="com.OuSoft.system.entity.performanceRank">
+					SELECT
+					n.id,
+					sum(n.valuenum) AS realynum,  		<!--  valuenum 业绩 -->
+					sum(n.realycient) AS realycient , 	<!--  realycient 效率 -->
+					sum(n.realyhours) AS realyhours ,  	<!--  realyhours   时长 -->
+					sum(n.valuenum) AS valuenum,
+					t.id as bdeparid,
+					t.deparname AS NAME,
+					@a := @a + 1 as RANK,
+					n.praisenum,
+					n.commentnum,
+					n.planhours - n.realyhours AS hoursbias,
+						n.planefficiency - n.realycient AS efficiencybias,
+						n.planpernum - n.realynum as pernum
+						FROM ( 	SELECT
+						tdp.id,
+						tdp.id as zdeparid,	
+						tdp.deparname AS NAME,
+						sum(tpf.pfmnumber) AS valuenum,
+						tdp.deparepid,
+						(select count(*) from tpraise tp where tp.itemid=tdp.id) praisenum,
+						(select count(*) from tcomment tc where tc.itemid=tdp.id) commentnum,
+							sum(tpf.pfmnumber) AS planpernum,
+						sum(tpf.realitypfm) AS realynum,
+						sum(tpf.pfmworkhours) AS planhours,
+						sum(tpf.realityworkhours) AS realyhours,
+						sum(tpf.realityefficient) AS realycient,
+						sum(tpf.pfmworkhours) / sum(tpf.pfmnumber) AS planefficiency
+					FROM
+						tdepartmentinfo tdp
+					LEFT JOIN tdepartuser tdu ON tdp.id = tdu.deparid
+					LEFT JOIN tuser tu ON tu.id = tdu.userid
+					LEFT JOIN tperformance tpf ON tpf.userid = tu.id
+					WHERE tdp.deparpid=#{tcmid} and 
+					LENGTH(tdp.deparepid) = 9
+					<if test="starttime != null and starttime != '' ">
+						and tpf.pfmstarttime &gt;= #{starttime}
+					</if>
+					<if test="endtime != null and endtime != '' ">
+						and tpf.pfmendtime &lt;= #{endtime}
+					</if>
+					GROUP BY
+						tdp.id
+				) n
+			LEFT JOIN tdepartmentinfo t ON t.deparepid = SUBSTR(n.deparepid FROM 1 FOR 6),
+			 (SELECT @a := 0) r
+			WHERE
+				t.deparpid=#{tcmid} and 
+				LENGTH(t.deparepid) = 6
+			GROUP BY
+				t.deparepid
+			ORDER BY
+				sum(n.valuenum) DESC
+				
+	</select>
+</mapper>

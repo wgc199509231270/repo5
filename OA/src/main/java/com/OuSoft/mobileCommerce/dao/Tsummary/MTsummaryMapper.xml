@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.mobileCommerce.dao.Tsummary.MTsummaryDao">
+ 
+	
+	<!-- 总结所有人图表列表 -->
+	<!-- 
+		接收：pagenum:页pagesize:一页几条数据，（begtime:开始年月日，endtime:结束年月日（默认当天））
+		 响应：username:姓名，txfilename：头像,ip:ip，sutext:内容time:年月日 times:时分秒
+		sucompany：公司 sumanage：管理 suwork：工作 suhygienism：卫生 
+	-->
+	<select id="queryQBTsummaryListsDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary" >
+			SELECT
+			tsu.*,taip.ip as ip,
+		    substr(tsu.sucreatetime,1,10) as time,
+		    substr(tsu.sucreatetime,11,9) as times,
+			ta.filename AS txfilename, 
+			tu.username AS username,
+			tsu.sucompany+tsu.sumanage+tsu.suhygienism+tsu.suwork as counts,
+			IfNULL(tpra.num, 0) AS tpranum,
+			IfNULL(tmoo.tmonum, 0) AS comnum,
+			IFNULL(tp.id,0) as dz
+			FROM
+				tsummary tsu
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tsummary'
+				GROUP BY
+					t.itemid
+			) tpra ON tsu.id = tpra.itemid
+			LEFT JOIN 
+			(
+			SELECT  tmo.commentid as commentid, 
+			count(tmo.commentid) as tmonum 
+			from tcomment tmo 
+			WHERE tmo.itemtype = 'tsummary' GROUP BY tmo.commentid
+			) tmoo on tmoo.commentid = tsu.id
+			
+			LEFT JOIN tuser tu ON tu.id = tsu.userid
+			LEFT JOIN tatt ta ON ta.itemid = tsu.userid 
+			LEFT JOIN tattip taip on taip.id = '1' 
+			left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tsu.id
+			<where>
+				 1=1 
+				 <if test="begtime != null and begtime != '' ">
+					and SUBSTR(tsu.sucreatetime, 1, 10) &gt;= #{begtime}
+				 </if>
+				 <if test="endtime != null and endtime != '' ">
+					and SUBSTR(tsu.sucreatetime, 1, 10) &lt;= #{endtime} 
+				 </if>
+					 ORDER BY counts desc, tsu.sucreatetime desc
+					 limit ${pagenum} , ${pagesize}
+			</where>
+	</select>
+	
+	
+	<!-- 总结个人图表列表 -->
+	<!--   
+		接收：pagenum:页pagesize:一页几条数据，begtime:开始年月日，endtime:结束年月日
+		响应：username:姓名，txfilename：头像,ip:ip，sutext:内容time:年月日 times:时分秒
+		sucompany：公司 sumanage：管理 suwork：工作 suhygienism：卫生
+	-->
+	<select id="queryGrTsummaryListsDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary" >
+				SELECT
+				tsu.*, ta.filename AS txfilename,
+			 	 substr(tsu.sucreatetime,1,10) as time,
+			 	 substr(tsu.sucreatetime,11,9) as times,
+				tu.username AS username,
+				tsu.sucompany + tsu.sumanage + tsu.suhygienism + tsu.suwork AS counts,
+				IfNULL(tpra.num, 0) AS tpranum,
+				IfNULL(tmoo.tmonum, 0) AS comnum,
+				IFNULL(tp.id,0) as dz
+			FROM
+				tsummary tsu
+			LEFT JOIN (
+				SELECT
+					t.itemid AS itemid,
+					count(t.itemid) AS num
+				FROM
+					tpraise t
+				WHERE
+					t.itemtype = 'tsummary'
+				GROUP BY
+					t.itemid
+			) tpra ON tsu.id = tpra.itemid
+			LEFT JOIN (
+				SELECT
+					tmo.commentid AS commentid,
+					count(tmo.commentid) AS tmonum
+				FROM
+					tcomment tmo
+				WHERE
+					tmo.itemtype = 'tsummary'
+				GROUP BY
+					tmo.commentid
+			) tmoo ON tmoo.commentid = tsu.id
+			LEFT JOIN tuser tu ON tu.id = tsu.userid
+			LEFT JOIN tatt ta ON ta.itemid = tsu.userid
+			left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tsu.id
+		<where>
+			1=1
+			<if test="userid != null and userid != '' ">
+				and tsu.userid = #{userid}
+			</if>
+			<if test="begtime != null and begtime != '' ">
+				and SUBSTR(tsu.sucreatetime, 1, 10) &gt;= #{begtime}
+			 </if>
+			 <if test="endtime != null and endtime != '' ">
+				and SUBSTR(tsu.sucreatetime, 1, 10) &lt;= #{endtime} 
+			 </if>
+				ORDER BY tsu.sucreatetime  desc
+				limit ${pagenum} , ${pagesize}
+		</where>
+	</select>
+	
+	
+	<!-- 总结点赞 -->
+	<!-- 接收项目id  响应：tprausername:点赞人，tprafilename:点赞头像， time:年与日 times:时分秒 -->
+	<select id="queryDzTsummaryListsDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary" >
+			SELECT 
+		  tpra.id as tpraid,
+			tsu.*,
+		  substr(tsu.sucreatetime,1,10) as time,
+		  substr(tsu.sucreatetime,11,9) as times,
+			tutsi.username as username,
+		  tutpra.username as tprausername,
+		  tpra.userid as tprauserid,
+		  ta.filename as txfilename,
+			tatp.filename as tprafilename,
+			IFNULL(tp.id,0) as dz
+		  
+		FROM
+			tsummary tsu
+		LEFT JOIN tpraise tpra ON tpra.itemid = tsu.id
+		LEFT JOIN tuser tutpra on tutpra.id = tpra.userid
+		LEFT JOIN tuser tutsi ON tutsi.id = tsu.userid
+		left join tatt ta on ta.itemid = tsu.userid 
+		LEFT JOIN tatt tatp on tatp.itemid = tpra.userid
+		left join tpraise tp on tp.userid = #{dzuserid} and tp.itemid = tsu.id
+		WHERE
+			tsu.id = #{id}
+	</select>
+	
+	
+	<!-- 总结评论 -->
+	<!-- 项目itemid， 响应：pusername:评论人姓名，txfilename：姓名头像，hfilename,回复头像 husername:回复人姓名， commenttime:时间 -->
+	<select id="queryPlTsummaryListsDao" parameterType="com.OuSoft.system.entity.Tsummary" resultType="com.OuSoft.system.entity.Tsummary" >
+			SELECT
+			tc.*, tu.username AS pusername,
+			ta.filename AS txfilename,
+			tcomme.userid AS userid,
+			tcomme.commentid AS tcommentid,
+			tus.username AS husername,
+			tah.filename as hfilename
+			FROM
+				tcomment tc
+			LEFT JOIN (
+				SELECT
+					tcom.id AS id,
+					tcom.commenttime AS commenttime
+				FROM
+					tcomment tcom
+				WHERE
+					tcom.itemid = tcom.commentid
+				ORDER BY
+					tcom.commenttime
+			) tcomm ON tcomm.id = tc.commentid
+			LEFT JOIN tuser tu ON tu.id = tc.userid
+			LEFT JOIN tatt ta ON ta.itemid = tc.userid
+			LEFT JOIN tcomment tcomme ON tcomme.commentid = tc.id
+			LEFT JOIN tuser tus ON tus.id = tcomme.userid
+			LEFT JOIN tatt tah on tah.itemid = tus.id
+			WHERE
+				1 = 1
+			AND tc.itemid = #{itemid}
+			AND tc.itemtype = 'tsummary'
+			ORDER BY tc.commenttime, tcomm.commenttime DESC
+	</select>
+	
+	
+	
+
+</mapper>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tcompany.TcompanyDao">
+	
+	 
+	 <!-- 公司信息 -->
+	 
+	 
+	 <!-- 添加公司信息
+	 	分公司创建，参数： 
+	  		 公司等级编码   : splitnamecode
+			 总公司id : totalcompanyid
+		新公司创建，参数：
+			totalname：公司名称 
+			remark 备注
+			ctype 公司类型
+			cdescribe ：公司描述
+			crange ：公司经营范围
+			cscale ：公司规模
+			verbstate ：公司运营状态	
+			methodusername ：公司法人姓名
+			methoduserphone 法人手机号
+	  -->
+	 <insert id="saveTcompanyDao" parameterType="com.OuSoft.system.entity.Tcompany" >
+	 	insert into tcompany
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="totalname != null">
+		        totalname,
+		      </if>
+		      <if test="splitname != null">  
+		        splitname,
+		      </if>
+		      <if test="splitnamecode != null">
+		        splitnamecode,
+		      </if>
+		      <if test="tcompanycreatetime != null">
+		        tcompanycreatetime,
+		      </if>
+		      <if test="remark != null">
+		        remark,
+		      </if>
+		      <if test="totalcompanyid != null">
+		        totalcompanyid,
+		      </if>
+		      <if test="ctype != null">
+		        ctype,
+		      </if>
+		      <if test="cdescribe != null">
+		        cdescribe,
+		      </if>
+		      <if test="crange != null">
+		        crange,
+		      </if>
+		      <if test="createtime != null">
+		        createtime,
+		      </if>
+		      <if test="cscale != null">
+		        cscale,
+		      </if>
+		      <if test="createuserid != null">
+		        createuserid,
+		      </if>
+		      <if test="verbstate != null">
+		        verbstate,
+		      </if>
+		      <if test="methodusername != null">
+		        methodusername,
+		      </if>
+		      <if test="methoduserphone != null">
+		        fixedphone,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="totalname != null">
+		        #{totalname,jdbcType=VARCHAR},
+		      </if>
+		      <if test="splitname != null ">
+		        #{splitname,jdbcType=VARCHAR},
+		      </if>
+		      <if test="splitnamecode != null">
+		        #{splitnamecode,jdbcType=VARCHAR},
+		      </if>
+		      <if test="tcompanycreatetime != null">
+		        #{tcompanycreatetime,jdbcType=VARCHAR},
+		      </if>
+		      <if test="remark != null">
+		        #{remark,jdbcType=VARCHAR},
+		      </if>
+		      
+		      <if test="totalcompanyid != null">
+		        #{totalcompanyid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="ctype != null">
+		        #{ctype,jdbcType=VARCHAR},
+		      </if>
+		      <if test="cdescribe != null">
+		        #{cdescribe,jdbcType=VARCHAR},
+		      </if>
+		      <if test="createtime != null">
+		        #{createtime,jdbcType=TIMESTAMP},
+		      </if>
+		      <if test="cscale != null">
+		        #{cscale,jdbcType=VARCHAR},
+		      </if>
+		      <if test="createuserid != null">
+		        #{createuserid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="verbstate != null">
+		        #{verbstate,jdbcType=VARCHAR},
+		      </if>
+		      <if test="methodusername != null">
+		        #{methodusername,jdbcType=VARCHAR},
+		      </if>
+		      <if test="methoduserphone != null">
+		        #{methoduserphone,jdbcType=VARCHAR},
+		      </if>
+		      <if test="fixedphone != null">
+		        #{fixedphone,jdbcType=VARCHAR},
+		      </if>
+		    </trim>
+	 </insert>
+	 
+	 
+	 <!-- 查询公司列表 ， 
+	 查询所有公司信息：等级编码：splitnamecode
+	 查询公司下级公司的所有信息： 后台给等级编码位数num,总公司id:totalcompanyid，上级公司等级编码：splitnamecode
+		 
+	 		      
+	 -->
+	 <select id="queryTcompanyDao" parameterType="com.OuSoft.system.entity.Tcompany" resultType="com.OuSoft.system.entity.Tcompany">
+			select * from tcompany t
+			<where>
+				<if test="totalcompanyid != null and totalcompanyid != '' ">
+					t.totalcompanyid = #{totalcompanyid}
+				</if>
+				<if test="splitnamecode != null and splitnamecode != '' ">
+					and splitnamecode like '%${splitnamecode}%'
+				</if>
+				<if test="num != null and num ! = '' ">
+					and LENGTH(splitnamecode) = #{num}
+				</if>
+					ORDER BY t.createtime desc
+			</where>
+	 </select>
+	
+
+	<!-- 删除公司信息 -->
+	<delete id="deleteTcompanyDao" parameterType="com.OuSoft.system.entity.Tcompany" >
+		delete from tcompany where id = #{id}
+	</delete>
+
+
+
+</mapper>

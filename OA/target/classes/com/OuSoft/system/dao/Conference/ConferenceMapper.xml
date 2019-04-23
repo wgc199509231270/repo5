@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Conference.ConferenceDao">
+	<select id="queryConferenceonifolist" parameterType="com.OuSoft.system.entity.Conferenceonifo" resultType="com.OuSoft.system.entity.Conferenceonifo">
+		SELECT * from conferenceonifo
+			WHERE 1=1
+			<if test="conferencename != '' and conferencename != null">
+				and  conferencename LIKE '%'#{conferencename}'%'
+			</if>
+			<if test="issuer != '' and issuer != null">
+				and  issuer = #{issuer}
+			</if>
+			<if test="conferenceLevel != '' and conferenceLevel != null">
+				and conferenceLevel = #{conferenceLevel}
+			</if>
+			<if test="conferenceType !='' and conferenceType != null">
+				and conferenceType = #{conferenceType}
+			</if>
+		<if test="manage !='' and manage != null">
+			<if test="manage == 01">
+				and issuer = #{userid}
+			</if>
+			<if test="manage == 02">
+				and id in (#{list,jdbcType=VARCHAR})
+			</if>
+			<if test="manage == 03">
+				and manage = #{manage}
+			</if>
+
+		</if>
+			<if test="sessionState !='' and sessionState != null"  >
+				and sessionState = #{sessionState}
+			</if>
+			<if test="startTime != '' and startTime != null">
+				and #{startTime} &gt;= startTime
+			</if>
+			<if test="endTime != '' and endTime !=null">
+				and endTime &gt;= #{endTime}
+			</if>
+	</select>
+
+	<insert id="InsertConference" parameterType="com.OuSoft.system.entity.Conferenceonifo">
+		insert  into  conferenceonifo (id,conferencename,conferenceType,conferenceLevel,conferenceDate,startTime,endTime,sessionState,meetingPlace,compere,issuer,releaseTime,remark,audit,auditRemark,conferenceRemark) value (#{id},#{conferencename},#{conferenceType},#{conferenceLevel},#{conferenceDate},#{startTime},#{endTime},#{sessionState},#{meetingPlace},#{compere},#{issuer},#{releaseTime},#{remark},#{audit},#{auditRemark},#{conferenceRemark})
+	</insert>
+
+	<update id="UpdateConference" parameterType="com.OuSoft.system.entity.Conferenceonifo">
+		update conferenceonifo
+		<set>
+			<if test="conferenceRemark != '' and conferenceRemark != null" >
+				conferenceRemark = #{conferenceRemark}
+			</if>
+			<if test="conferencename != '' and conferencename != null">
+				conferencename = #{conferencename}
+			</if>
+			<if test="conferenceType !='' and conferenceType != null">
+				conferenceType = #{conferenceType}
+			</if>
+			<if test="conferenceLevel !='' and conferenceLevel != null">
+				conferenceLevel = #{conferenceLevel}
+			</if>
+			<if test="conferenceDate !='' and conferenceDate != null">
+				conferenceDate = #{conferenceDate}
+			</if>
+			<if test="startTime !='' and startTime != null">
+				startTime = #{startTime}
+			</if>
+			<if test="endTime !='' and endTime != null">
+				endTime = #{endTime}
+			</if>
+			<if test="sessionState !='' and sessionState != null">
+				sessionState = #{sessionState}
+			</if>
+			<if test="meetingPlace !='' and meetingPlace != null">
+				meetingPlace = #{meetingPlace}
+			</if>
+			<if test="compere !='' and compere != null">
+				compere = #{compere}
+			</if>
+			<if test="issuer !='' and issuer != null">
+				issuer = #{issuer}
+			</if>
+			<if test="remark !='' and remark != null">
+				remark = #{remark}
+			</if>
+			<if test="audit !='' and audit != null">
+				audit = #{audit}
+			</if>
+			<if test="auditRemark !='' and auditRemark != null">
+				auditRemark = #{auditRemark}
+			</if>
+		</set>
+			where id=#{id}
+	</update>
+
+	<delete id="DelConference" parameterType="java.lang.String">
+		delete  from conferenceonifo where id = #{id}
+	</delete>
+</mapper>

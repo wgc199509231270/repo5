@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tdepartmentinfo.TdepartmentinfoDao">
+
+
+	<!-- 部门等级编码使用查询 -->
+	<select id="queryDepartmentDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo" resultType="com.OuSoft.system.entity.Tdepartmentinfo" >
+		SELECT
+			*
+		FROM
+			tdepartmentinfo
+		<where>
+		 	deparpid = #{deparpid}
+		 	<if test="deparepid != null and deparepid != '' ">
+			 	and deparepid like '%${deparepid}%'
+		 	</if>
+		 	<if test="deparepid != null and deparepid != '' ">
+			 	AND LENGTH(deparepid) = '9'
+		 	</if>
+		 	<if test="deparepid == null || deparepid == '' ">
+				AND LENGTH(deparepid) = '6'
+		 	</if>
+				ORDER BY  departime desc
+		</where>
+		
+	</select>
+
+
+	<!-- 通过deparepid查询部门id , 请假模块使用  -->
+	<select id="queryDeparepidDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo" resultType="com.OuSoft.system.entity.Tdepartmentinfo">
+		SELECT
+			*
+		FROM
+			tdepartmentinfo
+		WHERE
+			deparepid = #{deparepid} 
+	</select>
+	<!-- 通过id查询部门 , 计划模块使用  -->
+	<select id="queryIdDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo" resultType="com.OuSoft.system.entity.Tdepartmentinfo">
+		SELECT
+		*
+		FROM
+		tdepartmentinfo
+		WHERE
+		id = #{id}
+	</select>
+
+	<!-- 查询部门下的人员有哪些 ,deparepid:部门编号 --> 
+	<select id="queryBMTdepartmentTuserDao" parameterType="com.OuSoft.system.entity.Tsuser" resultType="com.OuSoft.system.entity.Tsuser" >
+			SELECT t.* from tuser t
+			LEFT JOIN tdepartuser detu on t.id =  detu.userid
+			LEFT JOIN tdepartmentinfo de on de.id = detu.deparid 
+			where 1=1 
+			and t.`status` != '02' and t.`status` != '03'
+			and de.id in
+			(
+			SELECT
+			tt.id
+			 from tdepartmentinfo tt
+			where 1=1 
+			and tt.deparepid  like '${deparepid}%'
+			and LENGTH(tt.deparepid) &gt; 6 
+			and LENGTH(tt.deparepid) &lt; 10
+			)	
+	</select>
+	
+	
+	<!-- 查询小组下的人员有哪些
+	status:01是查询所有人的
+	username : 姓名
+	usernumber:编号
+	id:小组id -->
+	<select id="queryTdepartmentTuserDao"  parameterType="com.OuSoft.system.entity.Tsuser" resultType="com.OuSoft.system.entity.Tsuser" >
+			select tuser.*,tdep.deparname,tt.deparname as bm from tuser
+			LEFT JOIN tdepartuser tde ON tde.userid = tuser.id
+			LEFT JOIN tdepartmentinfo tdep ON tde.deparid = tdep.id
+			LEFT JOIN tdepartmentinfo tt ON substr(tdep.deparepid,1,6)= tt.deparepid
+			<where>
+				 	1=1 and tuser.status != '02' and tuser.status != '03'
+				<if test="id != '01' ">
+					 AND (tdep.id=#{id} OR tt.id = #{id} )
+				</if>
+				<if test="username != null and username != '' ">
+					and tuser.username like '%${username}%' or tuser.usernumber like '%${username}%'
+				 </if>
+			</where>
+	</select>
+
+	<!--  树形结构，部门6 -->
+	<select id="querySXJGBMTdepartmentinfoDao"  parameterType="com.OuSoft.system.entity.Tdepartmentinfo" resultType="com.OuSoft.system.entity.Tdepartmentinfo" >
+				SELECT
+				tde.*
+			FROM
+				tdepartmentinfo tde  
+			WHERE
+				1 = 1 and tde.deparpid = #{deparpid}
+			AND LENGTH(tde.deparepid) = '6'
+			ORDER BY tde.departime
+	</select>
+	
+	
+	<!--  树形结构，小组9-->
+	<select id="querySXJGXZTdepartmentinfoDao"  parameterType="com.OuSoft.system.entity.Tdepartmentinfo" resultType="com.OuSoft.system.entity.Tdepartmentinfo">
+				SELECT
+				tde.*
+			FROM
+				tdepartmentinfo tde  
+			WHERE
+				1 = 1 and tde.deparpid = #{deparpid}
+			AND LENGTH(tde.deparepid) = '9'
+			ORDER BY tde.departime
+	</select>
+
+
+	<!-- 查询部门信息 -->
+	<select id="queryTdepartmentinfoDao" resultType="com.OuSoft.system.entity.Tdepartmentinfo" parameterType="java.lang.String">
+			SELECT * FROM tdepartmentinfo where deparpid=#{tcmid} and LENGTH(deparepid) = '6' ORDER BY deparepid , departime  
+	</select>
+
+
+	<!-- 新增部门信息 -->
+ 	<insert id="insertTdepartmentinfoDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo">
+ 		  INSERT INTO tdepartmentinfo (id,deparname,deparepid,departime,deparpid,remark) values (#{id},#{deparname},#{deparepid},#{departime},#{deparpid},#{remark});
+ 	</insert>
+
+
+ 	<!-- 删除部门信息 -->
+ 	<delete id="deleteTdepartmentinfoDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo">
+ 		delete from tdepartmentinfo where id = #{id}
+ 	</delete>
+ 	
+ 	 
+ 	<!-- 查询用户部门信息.接收：用户id:userid.返回 id:部门id, deparname:部门名称，departime:时间，userid:用户id,deparid:部门id -->
+ 	<select id="queryTuserByIdTdepartmentinfoDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo" resultType="com.OuSoft.system.entity.Tdepartmentinfo" >
+			SELECT
+				tdepar.*, tdepuser.userid AS userid,
+				tdepuser.deparid AS deparid
+			FROM
+				tdepartmentinfo tdepar
+			LEFT JOIN tdepartuser tdepuser ON tdepuser.deparid = tdepar.id
+			WHERE
+				1 = 1
+			AND tdepuser.userid = #{userid}
+ 	</select>
+ 	
+ 	
+	<!--  	新增用户部门信息 -->
+ 	<insert id="InsertTuserByIdTdepartmentinfoDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo"  >
+ 		INSERT INTO tdepartuser (id, userid, deparid,createtime) VALUES ( #{id},#{userid},#{deparid} ,#{createtime})
+ 	</insert>
+ 	
+ 	<!--修改用户部门信息-->
+	<update id="updateTuserByIdTdepartmentinfoDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo">
+		UPDATE tdepartuser
+		SET
+		<if test="deparid != null">
+			deparid = #{deparid}
+		</if>
+		WHERE userid=#{userid}
+	</update>
+	<!--  	删除用户部门信息 -->
+ 	<delete id="deleteTuserByIdTdepartmentinfoDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo" >
+		DELETE tdeparuser
+		FROM tdepartuser tdeparuser
+		where 1 = 1
+		and tdeparuser.userid = #{userid}
+		and tdeparuser.deparid = #{deparid}
+ 	</delete>
+	
+	<!-- 修改用户分配的小组信息userid:用户id
+		deparid:小组id
+		id：修改那条数据的id -->
+	<update id="updateTdeparinfoByIdDao" parameterType="com.OuSoft.system.entity.Tdepartmentinfo" >
+		update tdepartuser set userid = #{userid}, deparid = #{deparid}	,createtime = #{createtime }where id=#{id}
+	</update>
+
+
+
+
+
+
+</mapper>

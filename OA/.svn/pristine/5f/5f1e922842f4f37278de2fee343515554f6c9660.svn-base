@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Remuneration.CompensationRulesDao">
+    <!-- 查询全部-->
+    <select id="QueryCompensationRulesList" parameterType="com.OuSoft.system.entity.CompensationRules" resultType="com.OuSoft.system.entity.CompensationRules">
+        select * from performancelevel ORDER BY CONVERT (rank using gbk)
+    </select>
+    <!-- 修改薪资规则 -->
+    <update id="UpdateCr" parameterType="com.OuSoft.system.entity.CompensationRules" >
+        update
+          performancelevel
+          <set>
+              <if test="rank != null and rank != ''">
+                  rank=#{rank},
+              </if>
+              <if test="minimum != null and minimum != ''">
+                  minimum=#{minimum},
+              </if>
+              <if test="thehighest != null and thehighest != ''">
+                  thehighest=#{thehighest},
+              </if>
+              <if test="meritpay != null and meritpay != ''">
+                  meritpay=#{meritpay},
+              </if>
+              <if test="userId != null and userId != ''">
+                  user_id=#{userId},
+              </if>
+              <if test="inputTime != null and inputTime != ''">
+                  input_time=#{inputTime},
+              </if>
+          </set>
+        WHERE 1 = 1 and rank = #{rank}
+    </update>
+    <!-- 根据id删除规则 -->
+    <delete id="DelCr" parameterType="java.lang.String">
+        delete from performancelevel  where id=#{id}
+    </delete>
+    <insert id="InsertCr" parameterType="com.OuSoft.system.entity.CompensationRules" >
+        insert into performancelevel (id,rank,minimum,thehighest,meritpay,user_id,input_time) value(#{id},#{rank},#{minimum},#{thehighest},#{meritpay},#{userId},#{inputTime})
+    </insert>
+    <select id="QueryCr" parameterType="java.lang.String" resultType="com.OuSoft.system.entity.CompensationRules">
+        select * from performancelevel where  rank=#{rank}
+    </select>
+    <select id="Querycompendao" parameterType="com.OuSoft.system.entity.performance" resultType="com.OuSoft.system.entity.performance">
+        SELECT
+       poin.posiname as posiname,
+        ts.username AS username,
+        tdeinfo.deparname AS grzdeparnames,
+		ts.remuneration		AS remuneration,
+        tp.*
+        ,ts.*
+        from
+        tperformance tp
+
+        LEFT JOIN tuser ts  ON tp.userid = ts.id
+
+        LEFT JOIN tposituser potu on potu.userid = tp.userid
+
+        LEFT JOIN tpositioninfo poin on poin.id = potu.posiid
+        LEFT JOIN tdepartuser tdetu ON tdetu.userid = tp.userid
+        LEFT JOIN tdepartmentinfo tdeinfo ON tdeinfo.id = tdetu.deparid
+        WHERE  ts.status = "01"
+        <if test="GetDateGY3 != null and GetDateGY3 != ''">
+
+        and   tp.createtime>=#{GetDateGY3}
+        </if>
+        <if test="currentMonthStartTime != null and currentMonthStartTime != ''">
+         AND  #{currentMonthStartTime} > tp.createtime
+        </if>
+        <if test="id != null and id != ''">
+            AND 	tp.userid = #{id}
+        </if>
+    </select>
+
+    <select id="QueryCompensationRulesMeritpay" parameterType="int" resultType="com.OuSoft.system.entity.CompensationRules">
+        SELECT * FROM performancelevel where #{num}>minimum and thehighest>#{num}
+    </select>
+</mapper>

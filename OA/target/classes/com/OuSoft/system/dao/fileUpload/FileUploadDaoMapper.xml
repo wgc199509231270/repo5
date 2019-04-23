@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.fileUpload.FileUploadDao">
+
+    <!-- 查询tatt表中的图片 -->
+    <select id="queryFileUploadDao" parameterType="com.OuSoft.system.entity.Tatt" resultType="com.OuSoft.system.entity.Tatt">
+			SELECT ta.*,taip.ip as ip
+			FROM tatt ta
+			LEFT JOIN tattip taip ON taip.id = '1'
+			WHERE  ta.itemid = #{itemid}
+    </select>
+    
+	<!-- 删除图片  -->
+    <insert id="deleteIdTattDao" parameterType="com.OuSoft.system.entity.Tatt" >
+		DELETE 	FROM
+			tatt
+		WHERE
+			itemid = #{itemid}
+		AND filename = #{filename} and itemtype = #{itemtype}
+    </insert>
+	<!-- 删除头像  -->
+	<insert id="deletImgTattDao" parameterType="com.OuSoft.system.entity.Tatt" >
+		DELETE 	FROM
+		tatt
+		WHERE
+		itemid = #{itemid}
+		 AND itemtype = #{itemtype}
+	</insert>
+    
+    <!-- 图片数据tatt -->
+	<insert id="insertTattDao" parameterType="com.OuSoft.system.entity.Tatt">
+		 insert into tatt
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        id,
+	      </if>
+	      <if test="itemid != null">
+	        itemid,
+	      </if>
+	      <if test="itemtype != null">
+	        itemtype,
+	      </if>
+	      <if test="filetype != null">
+	        filetype,
+	      </if> 
+	      <if test="filename != null">
+	        filename,
+	      </if>
+	      <if test="originalfilename != null">
+	        originalfilename,
+	      </if>
+	      <if test="customname != null">
+	        customname,
+	      </if>
+	      <if test="creattime != null">
+	        creattime,
+	      </if>
+	      <if test="remark != null">
+	        remark,
+	      </if>
+	      <if test="attfrom != null">
+	        attfrom,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="itemid != null">
+	        #{itemid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="itemtype != null">
+	        #{itemtype,jdbcType=VARCHAR},
+	      </if>
+	      <if test="filetype != null">
+	        #{filetype,jdbcType=VARCHAR},
+	      </if>
+	      <if test="filename != null">
+	        #{filename,jdbcType=VARCHAR},
+	      </if>
+	      <if test="originalfilename != null">
+	        #{originalfilename,jdbcType=VARCHAR},
+	      </if>
+	      <if test="customname != null">
+	        #{customname,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creattime != null">
+	        #{creattime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="remark != null">
+	        #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="attfrom != null">
+	        #{attfrom,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+	</insert>
+    
+
+ 	<!-- tatt表中插入数据 -->
+	<insert id="setFileUploadDao" parameterType="com.OuSoft.system.entity.Tatt">
+		 insert into tatt
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        id,
+	      </if>
+	      <if test="itemid != null">
+	        itemid,
+	      </if>
+	      <if test="itemtype != null">
+	        itemtype,
+	      </if>
+	      <if test="filetype != null">
+	        filetype,
+	      </if> 
+	      <if test="filename != null">
+	        filename,
+	      </if>
+	      <if test="originalfilename != null">
+	        originalfilename,
+	      </if>
+	      <if test="customname != null">
+	        customname,
+	      </if>
+	      <if test="creattime != null">
+	        creattime,
+	      </if>
+	      <if test="remark != null">
+	        remark,
+	      </if>
+	      <if test="attfrom != null">
+	        attfrom,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="itemid != null">
+	        #{itemid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="itemtype != null">
+	        #{itemtype,jdbcType=VARCHAR},
+	      </if>
+	      <if test="filetype != null">
+	        #{filetype,jdbcType=VARCHAR},
+	      </if>
+	      <if test="filename != null">
+	        #{filename,jdbcType=VARCHAR},
+	      </if>
+	      <if test="originalfilename != null">
+	        #{originalfilename,jdbcType=VARCHAR},
+	      </if>
+	      <if test="customname != null">
+	        #{customname,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creattime != null">
+	        #{creattime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="remark != null">
+	        #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="attfrom != null">
+	        #{attfrom,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+	</insert>
+	
+
+
+</mapper>

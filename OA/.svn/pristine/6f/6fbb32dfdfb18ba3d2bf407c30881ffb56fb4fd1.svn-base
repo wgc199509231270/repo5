@@ -1,0 +1,60 @@
+server:
+   port: 8888
+
+spring:
+  datasource:
+    url: jdbc:mysql://123.57.28.18:3306/OuSoftOAOnline?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&allowMultiQueries=true
+    username: root
+    password: OuSoft2014
+    driver-class-name: com.mysql.jdbc.Driver
+
+    tomcat:
+      max-active: 10
+      max-idle: 5
+      min-idle: 0
+
+#mvc start
+#  mvc:
+#    view:
+#      prefix: classpath:/static/
+#      suffix: .html
+#   static-path-pattern: /static/**
+#mvc end
+
+
+#thymeleaf start
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+    prefix: classpath:/WEB-INF/view/
+    suffix: .html
+#
+    enabled: true
+#thymeleaf end
+
+mybatis:
+  mapper-locations: classpath:com/OuSoft/*/dao/*/*.xml
+  type-aliases-package: com.example.OuSoft.dto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl 
+#excluded-view-names: classpath:/static/**
+cas:
+    server-url-prefix: http://192.168.99.100:9090/cas
+    server-login-url: http://192.168.99.100:9090/cas/login
+    client-host-url: http://localhost:8080
+    validation-type: CAS
+
+logging:
+  path: /user/local/log
+  level: debug
+ 
+ 
+
+
+
+
+
+
+

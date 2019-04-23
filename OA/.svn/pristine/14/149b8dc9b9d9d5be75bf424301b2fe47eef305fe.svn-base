@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc" xmlns="http://www.w3.org/1999/html">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:59 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title></title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术"><link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/jedate.js"></script>
+    <!--刷新当前页面  -->
+</head>
+<style>
+    .my-container {
+        float: left;
+        display: inline-block;
+        width: 100%;
+        padding-left: 5%;
+        margin-top: 5%;
+    }
+
+    .myLabel-content ,.myText-content,.myBtn-content{
+        float: left;
+        display: inline-block;
+        line-height: 28px;
+        margin-left: 2%;
+    }
+    .myLabel-content,.myText-content input[type='text'],.myBtn-content .btn {
+        height: 30px;
+        font-size: 12px;
+        width: 18%;
+        text-align: right;
+    }
+    .myBtn-content .btn {
+        margin-bottom: 10px;
+    }
+    input{
+        border:1px solid rgba(220,220,220,1);
+        outline: none;
+        padding-left: 10px;
+    }
+    .time {
+        width: 249px;
+        height: 15px;
+        float: left;
+        line-height: 15px;
+        padding: 6px 0 6px 10px;
+        border: 1px solid #C1C1C1;
+    }
+    .jedate .jedate-content .daystable th {
+        width: 8%;
+        height: 27px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        font-size: 12px;
+        font-weight: 400;
+    }
+    .jedate {
+        height: auto;
+        font-family: 'PingFangSC-Light','PingFang SC','Segoe UI','Lucida Grande','NotoSansHans-Light','Microsoft YaHei', '\5FAE\8F6F\96C5\9ED1', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;
+        font-size: 12px;
+        cursor: default;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        border-radius: 4px;
+        display: inline-block;
+        border: 1px solid #e2e2e2;
+        box-shadow: 0 1px 6px rgba(0,0,0,.15);
+        background-color: #fff;
+        width: 23.5%;
+    }
+    .jedate .jedate-pane {
+        width: 100%;
+        float: left;
+        overflow: hidden;
+    }
+</style>
+<script>
+    $(function () {
+        jeDate("#dateofbirth",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"1900-01-01 00:00:00"
+        });
+        jeDate("#graduationtime",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate:"1900-01-01 00:00:00"
+        });
+
+    })
+</script>
+<body>
+<div class="gray-bg" >
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4" >
+            <div class="basicinfo" style="overflow: hidden">
+                <div style="background-image: url('/static/img/icon-yindao.png');width: 35%;height: 28px;background-repeat: no-repeat;background-size: 100% 100%;color:white;text-align: center;line-height: 29px;margin-top: 5%;">在职信息</div>
+               <!-- <div class="my-container">
+                    <label class="myLabel-content">公司名称</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="company" style="width: 100%;" placeholder="请输入公司名称">
+                    </div>
+                </div>-->
+                <div class="my-container">
+                    <label class="myLabel-content">部门</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <select id="selectdep" style="float: left; width: 100%; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;;"></select>
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">岗位</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <select id="selectjob" style="float: left; width: 100%; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;;"></select>
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">员工编号</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="usernumber" style="width: 100%;" placeholder="员工编号">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">在职状态</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <select
+                                name="select" id="status"  style="float: left; width:100%; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                            <option value="01" >正式</option>
+                            <option value="02" >离岗</option>
+                            <option value="03" >离职</option>
+                            <option value="04" >试岗</option>
+                            <option value="05" >实习</option>
+                        </select>
+                    </div>
+                </div>
+                <div><button id="commit" style="margin-top: 15px;width: 57px;float: right;display:none" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose(1);" value="保存">保存</button></div>
+            </div>
+            <div class="basicinfo" style="overflow: hidden">
+            <div style="background-image: url('/static/img/icon-yindao.png');width: 35%;height: 28px;background-repeat: no-repeat;background-size: 100% 100%;color:white;text-align: center;line-height: 29px;margin-top: 5%;">基本信息</div>
+                <div class="my-container">
+                    <label class="myLabel-content">姓名</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="username" style="width: 100%;" placeholder="请填写你的姓名">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">性别</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <label class="radio-inline">
+                            <input type="radio" checked="checked" name="inlineRadioOptions" id="inlineRadio1" value="男" style="margin-top: 7px;">男
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="女" style="margin-top: 7px;">女
+                        </label>
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">出生日期</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="dateofbirth" style="width: 100%;" placeholder="请填写你的出生日期" readonly>
+                    </div>
+                </div>
+                <!--<div class="my-container">
+                    <label class="myLabel-content">年龄</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="age" style="width: 100%;" placeholder="请填写你的年龄" readonly>
+                    </div>
+                </div>-->
+                <div class="my-container">
+                    <label class="myLabel-content">民族</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="nations" style="width: 100%;" placeholder="请填写你的民族">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">身份证号</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="idcard" style="width: 100%;" placeholder="请填写你的身份证号">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">政治面貌</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="political" style="width: 100%;" placeholder="请填写你的政治面貌">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">户口所在地</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="residence" style="width: 100%;" placeholder="请填写你的户口所在地">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">户口性质</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="residencetype" style="width: 100%;" placeholder="户口性质">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">婚姻状况</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="maritalstatus" style="width: 100%;" placeholder="请填写你的婚姻状况">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">现住址</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="address" style="width: 100%;" placeholder="请填写你的现住址">
+                    </div>
+                </div>
+                <div><button id="commit1" style="margin-top: 15px;width: 57px;float: right;display:none" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose(2);" value="保存">保存</button></div>
+            </div>
+            <div class="education_experience" style="overflow: hidden;">
+                <div style="background-image: url('/static/img/icon-yindao.png');width: 35%;height: 28px;background-repeat: no-repeat;background-size: 100% 100%;color:white;text-align: center;line-height: 29px;margin-top: 5%;">教育经历</div>
+                <div class="my-container">
+                    <label class="myLabel-content">最高学历</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="schooling" style="width: 100%;" placeholder="请填写你的最高学历">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">毕业时间</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="graduationtime" style="width: 100%;" placeholder="请填写你的毕业时间" readonly>
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">毕业院校</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="school" style="width: 100%;" placeholder="请填写你的毕业学校">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">所学专业</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="professional" style="width: 100%;" placeholder="请填写你的所学专业">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">技能证书</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="certificate" style="width: 100%;" placeholder="请填写你的专业技能证书">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">职称</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="qualification" style="width: 100%;" placeholder="请填写你的职称">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">计算机等级</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="computer" style="width: 100%;" placeholder="请填写你的计算机等级">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">艺术特长</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="specialityinarts" style="width: 100%;" placeholder="请填写你的艺术特长">
+                    </div>
+                </div>
+                <div><button id="commit3" style="margin-top: 15px;width: 57px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose(3);" value="保存">保存</button></div>
+        </div>
+            <div class="education_experience" style="overflow: hidden;">
+                <div style="background-image: url('/static/img/icon-yindao.png');width: 35%;height: 28px;background-repeat: no-repeat;background-size: 100% 100%;color:white;text-align: center;line-height: 29px;margin-top: 5%;">联系方式</div>
+                <div class="my-container">
+                    <label class="myLabel-content">联系电话1</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="phone1" style="width: 100%;" placeholder="请填写你的联系电话">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">联系电话2</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="phone2" style="width: 100%;" placeholder="请填写你的联系电话">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">联系电话3</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="phone3" style="width: 100%;" placeholder="请填写你的联系电话">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">其他联系人</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="linkman" style="width: 100%;" placeholder="请填写其他联系人">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">工作邮箱</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="email" style="width: 100%;" placeholder="请填写你的邮箱">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">微信</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="wechat" style="width: 100%;" placeholder="请填写你的微信账号">
+                    </div>
+                </div>
+                <div class="my-container">
+                    <label class="myLabel-content">QQ</label>
+                    <div class="myText-content" style="width: 78%;">
+                        <input id="qq" style="width: 100%;" placeholder="请填写你的QQ号码">
+                    </div>
+                </div>
+                <div><button id="commit2" style="margin-top: 15px;width: 57px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose(4);" value="保存">保存</button></div>
+            </div>
+    </div>
+    </div>
+    <!-- End Example Events -->
+</div>
+</body>
+<script>
+    var userid=""
+    var jobid=""
+    var depid=""
+    queryUser()
+    queryJob()
+    queryDep()
+    //查询所有岗位
+    function queryJob() {
+        $.ajax({
+            url:"/Tjobinfo/queryTjobinfo",
+            type:"post",
+            dataType:'json',
+            success:function(data){
+                var selector=$("#selectjob");
+                for(var i=0;i<data.length;i++){
+                    selector.append('<option value="'+data[i].id+'">'+data[i].jobname+'</option>');
+                }
+                //查询个人岗位
+                $.ajax({
+                    url:"/Tjobinfo/queryTuserByIdTjobinfo",
+                    type:"post",
+                    dataType:'json',
+                    data:{"userid":userid},
+                    success:function(data){
+                        console.log(data)
+                        $("#selectjob").val(data[0].id);
+                        jobid=data[0].id;
+                    }
+                })
+            }
+        })
+
+    }
+    //查询所有部门
+    function queryDep() {
+        $.ajax({
+            url:"/Tdepartmentinfo/queryTdepartmentinfo",
+            type:"post",
+            dataType:'json',
+            success:function(data){
+                var selector=$("#selectdep");
+                for(var i=0;i<data.length;i++){
+                    selector.append('<option value="'+data[i].id+'">'+data[i].deparname+'</option>');
+                }
+                //查询个人部门
+                $.ajax({
+                    url:"/Tdepartmentinfo/queryTuserByIdTdepartmentinfo",
+                    type:"post",
+                    dataType:'json',
+                    success:function(data){
+                        console.log(data)
+                        $("#selectdep").val(data[0].id);
+                        depid=data[0].id;
+                    }
+                })
+            }
+        })
+
+    }
+    //查询用户信息
+    function queryUser() {
+        $.ajax({
+            url:"/tuser/queryIdTuser",
+            type:"post",
+            dataType:'json',
+            success:function(data){
+                console.log(data)
+                userid=data.id;
+                $("#username").val(data.username);
+                $("#idcard").val(data.idcard);
+                $("#phone1").val(data.phone1);
+                $("#phone2").val(data.phone2);
+                $("#phone3").val(data.phone3);
+                $("#school").val(data.school);
+                $("#graduationtime").val(data.graduationtime);
+                $("#schooling").val(data.schooling);
+                $("#residencetype").val(data.residencetype);
+                $("#residence").val(data.residence);
+                $("#computer").val(data.computer);
+                $("#professional").val(data.professional);
+                $("#qualification").val(data.qualification);
+                $("#usernumber").val(data.usernumber);
+                $("#status").val(data.status)
+                $("#nations").val(data.nations)
+                $("#political").val(data.political)
+                $("#address").val(data.address)
+                $("#dateofbirth").val(data.dateofbirth)
+                $("#certificate").val(data.certificate)
+                $("#specialityinarts").val(data.specialityinarts)
+                $("#maritalstatus").val(data.maritalstatus)
+                $("#linkman").val(data.linkman)
+                $("#age").val(data.age)
+                $("#wechat").val(data.wechat)
+                $("#qq").val(data.qq)
+                $("#email").val(data.email)
+                if(data.sex=="男"){
+                    $("input[name='inlineRadioOptions'][value=男]").attr("checked",true);
+                }else{
+                    $("input[name='inlineRadioOptions'][value=女]").attr("checked",true);
+                }
+            }
+        });
+        setQuanx()
+    }
+    function updateequjob() {
+        if(jobid==null||jobid==""){
+            $.ajax({
+                url:"/Tjobinfo/InsertTuserByIdTjobinfo",
+                type:"post",
+                dataType:'json',
+                data:{"userid":userid,"id":generateUUID(),"jobid":$("#selectjob").val()},
+                success:function(data){
+                    console.log(data)
+                }
+            })
+        }else{
+            $.ajax({
+                url:"/Tjobinfo/updateTuserByIdTjobinfo",
+                type:"post",
+                dataType:'json',
+                data:{"userid":userid,"jobid":$("#selectjob").val()},
+                success:function(data){
+                    console.log(data)
+                }
+            })
+        }
+        if(depid==null||depid==""){
+            $.ajax({
+                url:"/Tdepartmentinfo/InsertTuserByIdTdepartmentinfo",
+                type:"post",
+                dataType:'json',
+                data:{"userid":userid,"id":generateUUID(),"deparid":$("#selectdep").val()},
+                success:function(data){
+                    console.log(data)
+                }
+            })
+        }else{
+            $.ajax({
+                url:"/Tdepartmentinfo/updateTuserByIdTdepartmentinfo",
+                type:"post",
+                dataType:'json',
+                data:{"userid":userid,"deparid":$("#selectdep").val()},
+                success:function(data){
+                    console.log(data)
+                }
+            })
+        }
+    }
+    function setQuanx() {
+        var sta=true;
+        $.ajax({
+            url: "/Tjobinfo/queryTuserByIdTjobinfo",
+            type: "post",
+            dataType: 'json',
+            async:false,
+            data:{"userid":userid},
+            success: function (data) {
+                $("#jobname").html(data[0].jobname);
+                var jobname = data[0].jobname;
+                console.log(jobname)
+                if(jobname === "董事长"||jobname === "总经理"){
+                    $("#commit").css("display","block");
+                    $("#commit1").css("display","block");
+                }else{
+                    sta=false;
+                }
+            }
+        })
+        return sta;
+    }
+    function  getAge() {
+        var bir=$("#dateofbirth").val();
+        if(bir!=""&&bir!=null){
+            var date=new Date().getFullYear()-parseInt(bir.split("-")[0]);
+            console.log(bir+","+new Date().getFullYear())
+            console.log(date)
+            if(date<0){
+                return null;
+            }else{
+                    $("#age").val(date)
+                    return date;
+            }
+        }else{
+            return null;
+        }
+    }
+    function chose(a) {
+        if(a==1){
+            if(setQuanx()){
+                var data1={"id":userid,"usernumber":$("#usernumber").val(),"status":$("#status").find("option:selected").val()};
+                $.ajax({
+                    url:"/tuser/updateIdTuserInfo",
+                    type:"post",
+                    dataType:'json',
+                    data:data1,
+                    success:function(data){
+                        console.log(data)
+                        alert("修改成功")
+                    }
+                });
+                updateequjob();
+            }
+        }
+        if(a==2){
+            if(setQuanx()) {
+                var data1 = {
+                    "username": $("#username").val(),
+                    "sex": $("input[name='inlineRadioOptions']:checked").val(),
+                    "dateofbirth": $("#dateofbirth").val(),
+                    "age": getAge(),
+                    "nations": $("#nations").val(),
+                    "political": $("#political").val(),
+                    "idcard": $("#idcard").val(),
+                    "residence": $("#residence").val(),
+                    "residencetype": $("#residencetype").val(),
+                    "maritalstatus": $("#maritalstatus").val(),
+                    "address": $("#address").val(),
+                    "id": userid
+                };
+                $.ajax({
+                    url: "/tuser/updateIdTuserInfo",
+                    type: "post",
+                    dataType: 'json',
+                    data: data1,
+                    success: function (data) {
+                        console.log(data)
+                        alert("修改成功")
+                    }
+                });
+            }
+        }
+        if(a==3){
+            var data1={"schooling":$("#schooling").val(),"graduationtime":$("#graduationtime").val(),"school":$("#school").val(),"qualification":$("#qualification").val(),"professional":$("#professional").val(),"certificate":$("#certificate").val(),"computer":$("#computer").val(),"specialityinarts":$("#specialityinarts").val(),"id":userid};
+            $.ajax({
+                url:"/tuser/updateIdTuserInfo",
+                type:"post",
+                dataType:'json',
+                data:data1,
+                success:function(data){
+                    console.log(data)
+                    alert("修改成功")
+                }
+            });
+        }
+        if(a==4){
+            var data1={"phone1":$("#phone1").val(),"phone2":$("#phone2").val(),"phone3":$("#phone3").val(),"linkman":$("#linkman").val(),"email":$("#email").val(),"wechat":$("#wechat").val(),"id":userid,"qq":$("#qq").val()};
+            $.ajax({
+                url:"/tuser/updateIdTuserInfo",
+                type:"post",
+                dataType:'json',
+                data:data1,
+                success:function(data){
+                    console.log(data)
+                    alert("修改成功")
+                }
+            });
+        }
+
+
+    }
+    //生成一个uuid
+    function generateUUID() {
+        var d = new Date().getTime();
+        if (window.performance && typeof window.performance.now === "function") {
+            d += performance.now(); //use high-precision timer if available
+        }
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
+    }
+</script>
+</html>

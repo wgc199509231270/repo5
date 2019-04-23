@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Achievements.AchievementsDao">
+
+	
+	
+	<!-- 条件查询+业绩列表排行榜  -->
+    <select id="QueryAchievementsListRowNum" parameterType="com.OuSoft.system.entity.AchievementsRequestParamModel" resultType="com.OuSoft.system.dao.Achievements.AchievementRowNum">
+		SET @row_number = 0;
+		SELECT
+			(@row_number :=@row_number + 1) AS num,
+			userid,username,sum_acs_actual_workload,corpname,sum_like,sum_commentnum
+		FROM
+			(
+			SELECT
+				tr.id as userid,
+				tr.username,
+				SUM(acs.acs_actual_workload) AS sum_acs_actual_workload,tp.corpname,
+				COUNT(te.id) as sum_like,COUNT(tt.id) as sum_commentnum
+			FROM
+				achievements acs
+			LEFT JOIN tuser tr ON tr.id = acs.acs_receiver 
+			LEFT JOIN tscorp tp on tp.id = acs.acs_corp
+			LEFT JOIN tslike te on te.itemid = acs.acs_id 
+			<if test='liketype != null'>
+            	and te.itemtype = #{liketype}
+        	</if>
+        	<if test='likecorp != null'>
+            	and te.corpid = #{likecorp}
+        	</if>
+			LEFT JOIN tscomment tt on tt.itemid = acs.acs_id 
+			<if test='commenttype != null'>
+            	and tt.itemtype = #{commenttype}
+        	</if>
+        	<if test='commentcorp != null'>
+            	and tt.corpid = #{commentcorp}
+        	</if>
+			WHERE
+				1 = 1
+			AND acs.acs_state = '01'
+			and acs.acs_done = '01'
+       		<if test="acs_id != null">
+       			and acs.acs_id = #{acs_id}
+       		</if>
+       		<if test="acs_title != null">
+       			and acs.acs_title = #{acs_title}
+       		</if>
+       		<if test="acs_workload != null">
+       			and acs.acs_workload = #{acs_workload} 
+       		</if>
+       		<if test="acs_actual_workload != null">
+       			and acs.acs_actual_workload = #{acs_actual_workload} 
+       		</if>
+       		<if test="acs_content != null">
+       			and acs.acs_content = #{acs_content} 
+       		</if>
+       		<if test="acs_type != null">
+       			and acs.acs_type = #{acs_type} 
+       		</if>
+       		<if test="acs_starttime != null">
+       			and acs.acs_starttime >= #{acs_starttime} 
+       		</if>
+       		<if test="acs_endtime != null">
+       			and #{acs_endtime}  >= acs.acs_endtime
+       		</if>
+       		<if test="acs_code != null">
+       			and acs.acs_code = #{acs_code} 
+       		</if>
+       		<if test="acs_state_comment != null">
+       			and acs.acs_state_comment = #{acs_state_comment} 
+       		</if>
+       		<if test="acs_corp != null">
+       			and acs.acs_corp = #{acs_corp} 
+       		</if>
+       		<if test="acs_tab != null">
+       			and acs.acs_tab = #{acs_tab} 
+       		</if>
+       		<if test="acs_assessor != null">
+       			and acs.acs_assessor = #{acs_assessor} 
+       		</if>
+       		<if test="acs_receiver != null">
+       			and acs.acs_receiver = #{acs_receiver} 
+       		</if>
+			GROUP BY
+				acs.acs_receiver
+			ORDER BY
+			<if test="Topofworkload != null">
+       			sum_acs_actual_workload,
+       		</if>
+       		<if test="Topoflike != null">
+       			sum_like,
+       		</if>
+       		<if test="Topofcomment != null">
+       			sum_comment,
+       		</if>
+       		tr.username
+       		DESC
+		) a 
+<!-- 		ORDER BY -->
+<!-- 			acs_statetime DESC -->
+		<if test="page != null">
+			<if test="pageSize != null">
+				limit #{page} , #{pageSize}
+			</if>
+     	</if>
+     	
+    </select>
+    
+    <!-- 统计已完成/未完成数量  -->
+    <select id="QueryAchievementsListByState" parameterType="com.OuSoft.system.entity.AchievementsRequestParamModel" resultType="com.OuSoft.system.dao.Achievements.AchievementSumWorkload">
+        SELECT
+			tr.username,tp.corpname,
+			sum(if(acs.acs_done=1 and acs.acs_state=1,acs.acs_actual_workload,0))as sum_acs_actual_workload,
+			sum(if(acs.acs_state!=1,acs.acs_actual_workload,0))as sum_undone_acs_actual_workload,
+			sum(if(acs.acs_state=1,1,0)) as acs_state_num,
+			sum(if(acs.acs_state=1,0,1)) as acs_undone_state_num,
+			sum(IF(acs.acs_statetime>acs.acs_endtime and acs.acs_state = 1,1,0)) as sum_late_work_num,
+			sum(IF(acs.acs_statetime>acs.acs_endtime and acs.acs_state != 1,1,0)) as sum_undone_work_num,
+			sum(IF(acs.acs_endtime>acs.acs_statetime and acs.acs_state = 1,1,0)) as sum_done_work_num,
+			sum(IF(acs.acs_endtime>acs.acs_statetime and acs.acs_state != 1,1,0)) as sum_unlate_undone_work_num
+		FROM
+			achievements acs
+       	<where>
+       		<if test="acs_id != null">
+       			and acs.acs_id = #{acs_id}
+       		</if>
+       		<if test="acs_title != null">
+       			and acs.acs_title = #{acs_title} 
+       		</if>
+       		<if test="acs_workload != null">
+       			and acs.acs_workload = #{acs_workload} 
+       		</if>
+       		<if test="acs_actual_workload != null">
+       			and acs.acs_actual_workload = #{acs_actual_workload} 
+       		</if>
+       		<if test="acs_content != null">
+       			and acs.acs_content = #{acs_content} 
+       		</if>
+       		<if test="acs_type != null">
+       			and acs.acs_type = #{acs_type} 
+       		</if>
+       		<if test="acs_starttime != null">
+       			and acs.acs_starttime >= #{acs_starttime} 
+       		</if>
+       		<if test="acs_endtime != null">
+       			and #{acs_endtime}  >= acs.acs_endtime
+       		</if>
+       		<if test="acs_code != null">
+       			and acs.acs_code = #{acs_code} 
+       		</if>
+       		<if test="acs_state != null">
+       			and acs.acs_state = #{acs_state} 
+       		</if>
+       		<if test="acs_assessor != null">
+       			and acs.acs_assessor = #{acs_assessor} 
+       		</if>
+<!--        		<if test="acs_statetime != null"> -->
+<!--        			and acs.acs_statetime = #{acs_statetime}  -->
+<!--        		</if> -->
+       		<if test="acs_state_comment != null">
+       			and acs.acs_state_comment = #{acs_state_comment} 
+       		</if>
+       		<if test="acs_corp != null">
+       			and acs.acs_corp = #{acs_corp} 
+       		</if>
+       		<if test="acs_tab != null">
+       			and acs.acs_tab = #{acs_tab} 
+       		</if>
+       		<if test="acs_receiver != null">
+       			and acs.acs_receiver = #{acs_receiver} 
+       		</if>
+       		<if test="acs_done != null">
+       			and acs.acs_done = #{acs_done} 
+       		</if>
+       	</where>
+       	LEFT JOIN tuser tr on tr.id = acs.acs_receiver
+       	left join tscorp tp on tp.id = acs.acs_corp
+		GROUP BY 
+		<if test="acs_corp != null">
+       			acs.acs_corp,
+   		</if>
+		acs.acs_receiver
+    </select>
+    
+   <!--  消息通知——业绩审核失败统计 -->
+    <select id="Countstatenums" resultType="java.lang.String"> 
+    	SELECT count(a.*) FROM achievements a left join tuser tu on tu.id=a.acs_receiver WHERE a.acs_state = '0' and tu.userpid=#{tcmid}
+    </select>
+    
+    
+    <!-- 条件查询业绩列表(个人/全部)  -->
+    <select id="QueryAchievementsList" parameterType="com.OuSoft.system.entity.AchievementsRequestParamModel" resultType="com.OuSoft.system.dao.Achievements.AchievementsModel">
+        SELECT 
+        	tp.corpname, tr.username, trs.username AS assessor, acs.* 
+        FROM 
+        	achievements acs 
+        LEFT JOIN tscorp tp ON tp.id = acs.acs_corp 
+        LEFT JOIN tuser tr ON tr.id = acs.acs_receiver and tr.userpid=#{tcmid}
+        LEFT JOIN tuser trs ON trs.id = acs.acs_assessor and trs.userpid=#{tcmid}
+       	<where>
+       	1=1 
+       		<if test="acs_id != null">
+       			and acs.acs_id = #{acs_id}
+       		</if>
+       		<if test="acs_title != null">
+       			and acs.acs_title = #{acs_title} 
+       		</if>
+       		<if test="acs_workload != null">
+       			and acs.acs_workload = #{acs_workload} 
+       		</if>
+       		<if test="acs_actual_workload != null">
+       			and acs.acs_actual_workload = #{acs_actual_workload} 
+       		</if>
+       		<if test="acs_content != null">
+       			and acs.acs_content = #{acs_content} 
+       		</if>
+       		<if test="acs_type != null">
+       			and acs.acs_type = #{acs_type} 
+       		</if>
+       		<if test="acs_starttime != null">
+       			and acs.acs_starttime >= #{acs_starttime} 
+       		</if>
+       		<if test="acs_endtime != null">
+       			and #{acs_endtime}  >= acs.acs_endtime
+       		</if>
+       		<if test="acs_code != null">
+       			and acs.acs_code = #{acs_code} 
+       		</if>
+       		<if test="acs_state != null">
+       			and acs.acs_state = #{acs_state} 
+       		</if>
+       		<if test="acs_assessor != null">
+       			and acs.acs_assessor = #{acs_assessor} 
+       		</if>
+<!--        		<if test="acs_statetime != null"> -->
+<!--        			and acs.acs_statetime = #{acs_statetime}  -->
+<!--        		</if> -->
+       		<if test="acs_state_comment != null">
+       			and acs.acs_state_comment = #{acs_state_comment} 
+       		</if>
+       		<if test="acs_corp != null">
+       			and acs.acs_corp = #{acs_corp} 
+       		</if>
+       		<if test="acs_tab != null">
+       			and acs.acs_tab = #{acs_tab} 
+       		</if>
+       		<if test="acs_receiver != null">
+       			and acs.acs_receiver = #{acs_receiver} 
+       		</if>
+       		<if test="acs_done != null">
+       			and acs.acs_done = #{acs_done} 
+       		</if>
+       	</where>
+       	
+       	limit #{page} , #{pageSize}
+    </select>
+
+ 	<!-- 添加绩效 -->
+	<insert id="insertAchievements" parameterType="com.OuSoft.system.entity.Achievements">
+		 insert into achievements
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="acs_id != null">
+	        acs_id,
+	      </if>
+	      <if test="acs_title != null">
+	        acs_title,
+	      </if>
+	      <if test="acs_workload != null">
+	        acs_workload,
+	      </if>
+	      <if test="acs_actual_workload != null">
+	        acs_actual_workload,
+	      </if>
+	      <if test="acs_content != null">
+	        acs_content,
+	      </if>
+	      <if test="acs_type != null">
+	        acs_type,
+	      </if>
+	      <if test="acs_starttime != null">
+	        acs_starttime,
+	      </if>
+	      <if test="acs_endtime != null">
+	        acs_endtime,
+	      </if>
+	      <if test="acs_pid != null">
+	        acs_pid,
+	      </if>
+	      <if test="acs_code != null">
+	        acs_code,
+	      </if>
+	      <if test="acs_state != null">
+	        acs_state,
+	      </if>
+	      <if test="acs_statetime != null">
+	        acs_statetime,
+	      </if>
+	      <if test="acs_state_comment != null">
+	        acs_state_comment,
+	      </if>
+	      <if test="acs_corp != null">
+	        acs_corp,
+	      </if>
+	      <if test="acs_tab != null">
+	        acs_tab,
+	      </if>
+	      <if test="acs_receiver != null">
+	        acs_receiver,
+	      </if>
+	      <if test="acs_done != null">
+       		acs_done,
+    	  </if>
+    	  <if test="acs_assessor != null">
+       			acs_assessor,
+     	  </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="acs_id != null">
+	        #{acs_id,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_title != null">
+	        #{acs_title,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_workload != null">
+	        #{acs_workload,jdbcType=INT},
+	      </if>
+	      <if test="acs_actual_workload != null">
+	        #{acs_actual_workload,jdbcType=INT},
+	      </if>
+	      <if test="acs_content != null">
+	        #{acs_content,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_type != null">
+	        #{acs_type,jdbcType=INT},
+	      </if>
+	      <if test="acs_starttime != null">
+	        #{acs_starttime,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_endtime != null">
+	        #{acs_endtime,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_pid != null">
+	        #{acs_pid,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_code != null">
+	        #{acs_code,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_state != null">
+	        #{acs_state,jdbcType=INT},
+	      </if>
+	      <if test="acs_statetime != null">
+	        #{acs_statetime,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_state_comment != null">
+	        #{acs_state_comment,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_corp != null">
+	        #{acs_corp,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_tab != null">
+	        #{acs_tab,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_receiver != null">
+	        #{acs_receiver,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_done != null">
+	      	#{acs_done,jdbcType=INT},
+    	  </if>
+    	  <if test="acs_assessor != null">
+       			#{acs_assessor},
+      		</if>
+	    </trim>
+		
+	</insert>
+	
+	<!-- 根据id删除业绩 -->
+	<delete id="DelAchievements" parameterType="java.lang.String">
+		delete from achievements where acs_id = #{id}
+	</delete>
+	
+	
+	<!-- 修改绩效 -->
+	<update id="UpdateAchievements" parameterType="com.OuSoft.system.entity.Achievements">
+		 insert into achievements 
+	    <trim prefix="set (" suffix=")" suffixOverrides=",">
+	      <if test="acs_id != null">
+   			acs_id = #{acs_id,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_title != null">
+	        acs_title = #{acs_title,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_workload != null">
+	        acs_workload = #{acs_workload,jdbcType=INT},
+	      </if>
+	      <if test="acs_actual_workload != null">
+	        acs_actual_workload = #{acs_actual_workload,jdbcType=INT},
+	      </if>
+	      <if test="acs_content != null">
+	        acs_content = #{acs_content,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_type != null">
+	        acs_type = #{acs_type,jdbcType=INT},
+	      </if>
+	      <if test="acs_starttime != null">
+	        acs_starttime = #{acs_starttime,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_endtime != null">
+	        acs_endtime = #{acs_endtime,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_pid != null">
+	        acs_pid = #{acs_pid,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_code != null">
+	        acs_code = #{acs_code,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_state != null">
+	        acs_state = #{acs_state,jdbcType=INT},
+	      </if>
+	      <if test="acs_statetime != null">
+	        acs_statetime = #{acs_statetime,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_state_comment != null">
+	        acs_state_comment = #{acs_state_comment,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_corp != null">
+	        acs_corp = #{acs_corp,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_tab != null">
+	        acs_tab = #{acs_tab,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acs_receiver != null">
+	        acs_receiver = #{acs_receiver,jdbcType=CHAR},
+	      </if>
+	      <if test="acs_done != null">
+	        acs_done = #{acs_done,jdbcType=INT},
+	      </if>
+	      <if test="acs_assessor != null">
+       		acs_assessor = #{acs_assessor,jdbcType=CHAR},
+       		</if>
+	    </trim>
+	</update>
+<!-- 	<resultMap type="com.OuSoft.system.entity.Clock"  id="clock_user" autoMapping="true"> -->
+<!--         <id column="id" property="id"/> -->
+<!--         <result column="userid" jdbcType="VARCHAR" property="userid" /> -->
+<!--         <result column="cltime" jdbcType="VARCHAR" property="cltime" /> -->
+<!--         <result column="clplace" jdbcType="VARCHAR" property="clplace" /> -->
+<!--         <result column="clform" jdbcType="VARCHAR" property="clform" /> -->
+<!--         <result column="clpcip" jdbcType="VARCHAR" property="clpcip" /> -->
+<!--         <result column="cltype" jdbcType="VARCHAR" property="cltype" /> -->
+<!--         <collection property="tsuser" javaType="list"  ofType="com.OuSoft.system.entity.Tsuser"> -->
+<!--         	 <id property="id" column="id"/> -->
+<!--              <result property="username" column="username"/> -->
+<!--         </collection>    -->
+<!--    </resultMap> -->
+	
+	
+</mapper>

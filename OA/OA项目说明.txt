@@ -1,0 +1,37 @@
+
+一、本项目为后台管理系统 
+
+1、后台框架使用ssm
+
+
+二、项目配置
+
+1、web.xml  启动项目
+
+2、struts-business.xml配置后台系统接口路径
+
+3、struts-system.xml后台系统管理接口路径
+
+4、struts.xml中主要配置项目的一些全局的属性
+
+三、数据源配置
+
+1、SystemConfigResources.properties配置数据源，本项目采用mysql数据库
+
+四、代码模块
+
+1、所有后台代码放到 src.com.OuSoft.system 下面
+
+
+com.OuSoft.stystem.controler 写接口名
+
+com.OuSoft.stystem.dao 数据访问测
+
+con.OuSoft.stystem.service 逻辑层
+
+com.OuSoft.stystem.entity 实体类
+
+com.OuSoft.stystem.utils 工具类
+2、后台ui代码放到 webapp 下面
+
+3.页面之间的跳转 com.OuSoft.stystem.controler.page.PortalPageController

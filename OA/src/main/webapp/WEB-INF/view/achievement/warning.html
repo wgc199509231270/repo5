@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:59 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - Flot图表</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <link href="/static/17com/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/highcharts.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/jquery.AshAlom.gaugeMeter-2.0.0.min.js"></script>
+    <script src="/static/js/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src ="/static/js/justgage-1.2.2/justgage.js"> </script >  <!--仪表盘-->
+    <script src ="/static/js/justgage-1.2.2/raphael-2.1.4.min.js"></script >  <!--仪表盘-->
+    <style>
+        @import url(/static/17com/scss/icons/font-awesome/css/font-awesome.min.css);
+        @import url(/static/17com/scss/icons/simple-line-icons/css/simple-line-icons.css);
+        @import url(/static/17com/scss/icons/weather-icons/css/weather-icons.min.css);
+        @import url(/static/17com/scss/icons/linea-icons/linea.css);
+        @import url(/static/17com/scss/icons/themify-icons/themify-icons.css);
+        @import url(/static/17com/scss/icons/flag-icon-css/flag-icon.min.css);
+        @import url(/static/17com/scss/icons/material-design-iconic-font/css/materialdesignicons.min.css);
+        @import url(/static/17com/css/spinners.css);
+        @import url(/static/17com/css/animate.css);
+        /*仪表盘css*/
+        #gzyj {
+            width:260px; height:180px;
+            display: inline-block;
+            margin: 1em;
+            margin-top:1px;
+            margin-left:-5px;
+        }
+        #gzxl {
+            width:260px; height:180px;
+            display: inline-block;
+            margin: 1em;
+            margin-top:1px;
+            margin-left:-5px;
+        }
+        #gzys {
+            width:260px; height:180px;
+            display: inline-block;
+            margin: 1em;
+            margin-top:1px;
+            margin-left:-5px;
+        }
+    </style>
+</head>
+<script>
+
+    var myChart;
+    var myChart1
+    window.onresize = function () {
+        myChart.resize();
+        myChart1.resize();
+    }
+
+    $(function () {
+        tab()
+        d();
+        a();
+        c();
+        b();
+        remind();
+        var states = "03";
+        yibiaopan(states);  //仪表盘
+        yibiaopan2(states);  //仪表盘
+        yibiaopan3(states);  //仪表盘
+
+        ybp();
+    })
+    //年月日切换
+    var gzyjstate = "01";
+    var gzxlstate = "01";
+    var gzysstate = "01";
+    var pmstate = "01";
+    var jhyjstate = "01";
+    var jhysstate = "01";
+    //选项卡设置
+    function page(url, title) {
+        var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+        $(window.top.document).find('.J_mainContent').find("iframe").hide();
+        var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+            + '" seamless="" style="display: inline;"></iframe>';
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+            ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+        $(window.top.document).find('.J_mainContent').append(iframe);
+    }
+
+
+
+    function tab() {
+        $("#jhyjcontainer").find("li").click(function () {
+            jhyjstate=$(this).attr("state");
+            $(this).siblings().css("color","#BBBBBB");
+            $(this).css("color","#000000");
+            c();
+        });
+        $("#jhyscontainer").find("li").click(function () {
+            jhysstate=$(this).attr("state");
+            $(this).siblings().css("color","#BBBBBB");
+            $(this).css("color","#000000");
+            b();
+        });
+        $("#gzyjcontainer").find("li").click(function () {
+            gzyjstate=$(this).attr("state");
+            $(this).siblings().css("color","#BBBBBB");
+            $(this).css("color","#000000");
+        });
+        $("#gzxlcontainer").find("li").click(function () {
+            gzxlstate=$(this).attr("state");
+            $(this).siblings().css("color","#BBBBBB");
+            $(this).css("color","#000000");
+        });
+        $("#gzyscontainer").find("li").click(function () {
+            gzysstate=$(this).attr("state");
+            $(this).siblings().css("color","#BBBBBB");
+            $(this).css("color","#000000");
+        });
+        $("#pmstate").find("li").click(function () {
+            pmstate=$(this).attr("state");
+            $(this).siblings().css("color","#BBBBBB");
+            $(this).css("color","#000000");
+            d();
+            a();
+        });
+
+        var sj;
+        var sj2;
+        var sj3;
+        var state1;
+        var state2;
+        var state3;
+        $(".yjsj").click(function () {
+            sj = $(this).html();
+            if(sj == '周' ){
+                state1 =  "01";
+                yibiaopan(state1);
+                //ybp();
+            }else if(sj == '月'){
+                state1 =  "02";
+                yibiaopan(state1);
+                //ybp();
+            }else if(sj == '季'){
+                state1 =  "03";
+                yibiaopan(state1);
+                //ybp();
+            }else if(sj == '年'){
+                state1 =  "04";
+                yibiaopan(state1);
+                //ybp();
+            };
+
+        });
+
+        $(".xlsj").click(function () {
+            sj2 = $(this).html();
+            if(sj2 == '周' ){
+                state2 =  "01";
+                yibiaopan2(state2);
+                //ybp();
+            }else if(sj2 == '月'){
+                state2 =  "02";
+                yibiaopan2(state2);
+                //ybp();
+            }else if(sj2 == '季'){
+                state2 =  "03";
+                yibiaopan2(state2);
+                //ybp();
+            }else if(sj2 == '年'){
+                state2 =  "04";
+                yibiaopan2(state2);
+                //ybp();
+            };
+        });
+
+        $(".yssj").click(function () {
+            sj3 = $(this).html();
+            if(sj3 == '周' ){
+                state3 =  "01";
+                yibiaopan3(state3);
+                //ybp();
+            }else if(sj3 == '月'){
+                state3 =  "02";
+                yibiaopan3(state3);
+                //ybp();
+            }else if(sj3 == '季'){
+                state3 =  "03";
+                yibiaopan3(state3);
+                //ybp();
+            }else if(sj3 == '年'){
+                state3 =  "04";
+                yibiaopan3(state3);
+                //ybp();
+            };
+        });
+
+    }
+
+    //业绩排名
+    function d() {
+        var data1
+        $.ajax({
+            url:"/performance/analysis/queryMonitorPMTperformance",
+            data:{"state":pmstate,"grouptime":gzyjstate},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                data1=data;
+            },
+            error:function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+        if(data1.length==0){
+            var num = 0;
+            var count = 0;
+        }else{
+            var num =parseInt(data1[0].num);
+            var count = parseInt(data1[0].rownum-data1[0].num);
+        }
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['','']
+            },
+            graphic:{
+                type:'text',
+                left:'center',
+                top:'center',
+                style:{
+                    text:num,
+                    font: '1.5em "STHeiti", sans-serif',
+                    textAlign:'center',
+                    fill:'#000',
+                    width:200,
+                    height:200,
+                }
+            },
+            color:['#1BD092', '#ECECEC'],
+            series: [
+                {
+
+                    name:'业绩排名',
+                    type:'pie',
+                    radius: ['65%', '70%'],
+                    avoidLabelOverlap: false,
+
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        /*            emphasis: {
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: '30',
+                                            fontWeight: 'bold'
+                                        }
+                                    }*/
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:count},
+                        {value:num,name:'名次'}
+
+
+                    ]
+                }
+            ]
+        };
+        myChart1 = echarts.init(document.getElementById('yjpm'));
+        myChart1.setOption(option,true);
+    }
+    //效率排名
+    function a() {
+        var data1;
+        $.ajax({
+            url:"/performance/analysis/queryMonitorXLTperformance",
+            data:{"state":pmstate,"grouptime":gzyjstate},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                data1=data;
+            },
+            error:function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+        if(data1.length==0){
+            var num = 0;
+            var count = 0;
+        }else{
+            var num =parseInt(data1[0].num);
+            var count = parseInt(data1[0].rownum-data1[0].num);
+        }
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['','']
+            },
+            graphic:{
+                type:'text',
+                left:'center',
+                top:'center',
+                style:{
+                    text:num,
+                    font: '1.5em "STHeiti", sans-serif',
+                    textAlign:'center',
+                    fill:'#000',
+                    width:200,
+                    height:200,
+                }
+            },
+            color:['#1BD092', '#ECECEC'],
+            series: [
+                {
+
+                    name:'效率排名',
+                    type:'pie',
+                    radius: ['65%', '70%'],
+                    avoidLabelOverlap: false,
+
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        /*            emphasis: {
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: '30',
+                                            fontWeight: 'bold'
+                                        }
+                                    }*/
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:count},
+                        {value:num,name:'名次'}
+
+                    ]
+                }
+            ]
+        };
+        myChart = echarts.init(document.getElementById('xlpm'));
+        myChart.setOption(option,true);
+    }
+    //计划业绩图形#
+    function c() {
+        var datatable1
+        $.ajax({
+            url:"/performance/analysis/queryMonitorJHTperformance",
+            data:{"state":jhyjstate},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable1=data;
+            },
+            error:function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+        var data1 = [];
+        var data2 = [];
+        var month;
+        var day;
+        for (var i = datatable1.length - 1; i >= 0; i--) {
+            data1.push(datatable1[i].username)
+            data2.push(parseFloat(datatable1[i].pfmnumber));
+        }
+        chart2 = new Highcharts.Chart({
+            chart: {
+                animation: true,
+                type:'column',
+                //曲线图
+                // type: 'line',//折现图
+                //type:'pie',//饼状图
+                renderTo: 'jhyj',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                width: $("#jhyj").width() - 20,
+                height: $(document).height()/3,
+                marginTop: 50,
+                /*options3d: {
+                    enabled: true,//是否使用3D渲染图表功能
+                    alpha: 10,
+                    beta: 0,
+                    depth: 45,
+                    viewDistance: 25
+                },*/
+                plotBackgroundColor: null,    //绘图区的背景颜色
+                plotBorderWidth: null,        //绘图区边框宽度
+                plotShadow: false        //绘图区是否显示阴影
+            },
+
+            title: {
+                text: '业绩量(h)',
+                align: 'left',
+                style: {
+                    color: '#000',
+                    fontWeight: '100',
+                    fontSize: '12'
+                }
+            },
+            xAxis: {
+                categories: []
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ''
+                },
+            },
+            legend: {
+                enabled: false,
+            },
+            credits: {
+                enabled: false//去掉官网的超链接
+            },
+            exporting: {
+                enabled: false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+            },
+            lang: {
+                printChart: "打印图片",
+                downloadJPEG: "导出JPEG 图片",
+                downloadPDF: "导出PDF 文档",
+                downloadPNG: "导出PNG 图片",
+                downloadSVG: "导出SVG 矢量图",
+                contextButtonTitle: "导出"
+            },
+            tooltip: {
+                pointFormatter: function () {
+                    return '<span style="color:{' + this.series.data + '}">计划业绩：' + this.y + '</span>'
+                }
+            },
+
+            series: [{
+                data: []
+            }]
+        });
+        // Activate the sliders
+        $('#R0').on('change', function () {
+            $("#paiming").highcharts().options.chart.options3d.alpha = this.value;
+            showValues();
+            $("#paiming").highcharts().redraw(true);
+            console.log($("#paiming").highcharts());
+        });
+        $('#R1').on('change', function () {
+            $("#paiming").highcharts().options.chart.options3d.beta = this.value;
+            showValues();
+            $("#paiming").highcharts().redraw(false);
+        });
+        chart2.xAxis[0].setCategories(data1);
+        chart2.series[0].setData(data2);
+    }
+    //计划用时
+    //计划用时
+    function b() {
+        var datatable1
+        $.ajax({
+            url:"/performance/analysis/queryMonitorJHTperformance",
+            data:{"state":jhysstate},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable1=data;
+            },
+            error:function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+        var data1 = [];
+        var data2 = [];
+        var month;
+        var day;
+        for (var i = datatable1.length - 1; i >= 0; i--) {
+            data1.push(datatable1[i].username)
+            data2.push(parseFloat(datatable1[i].pfmworkhours));
+        }
+        var chart2 = Highcharts.chart('jhys', {
+            chart: {
+                animation: false,
+                zoomType: 'x',
+                width: $("#jhyj").width() - 20,
+                height: $(document).height()/3,
+                marginTop: 50,
+            },
+            title: {
+                text: '业绩量(h)',
+                align: 'left',
+                style: {
+                    color: '#000',
+                    fontWeight: '100',
+                    fontSize: '12'
+                }
+            },
+            xAxis: {
+                categories: []
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ''
+                },
+            },
+            legend: {
+                enabled: false,
+            },
+            credits: {
+                enabled: false//去掉官网的超链接
+            },
+            exporting: {
+                enabled: false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+            },
+            lang: {
+                printChart: "打印图片",
+                downloadJPEG: "导出JPEG 图片",
+                downloadPDF: "导出PDF 文档",
+                downloadPNG: "导出PNG 图片",
+                downloadSVG: "导出SVG 矢量图",
+                contextButtonTitle: "导出"
+            },
+            tooltip: {
+                pointFormatter: function () {
+                    return '<span style="color:{' + this.series.data + '}">签到时间：' + this.y + '</span>'
+                }
+            },
+
+            series: [{
+                type: 'area',
+                data: []
+            }]
+        });
+        // Activate the sliders
+        $('#R0').on('change', function () {
+            $("#paiming").highcharts().options.chart.options3d.alpha = this.value;
+            showValues();
+            $("#paiming").highcharts().redraw(true);
+            console.log($("#paiming").highcharts());
+        });
+        $('#R1').on('change', function () {
+            $("#paiming").highcharts().options.chart.options3d.beta = this.value;
+            showValues();
+            $("#paiming").highcharts().redraw(false);
+        });
+        chart2.xAxis[0].setCategories(data1);
+        chart2.series[0].setData(data2);
+    }
+    //业绩提醒
+    function remind() {
+        var datatable1;
+        $.ajax({
+            url:"/tnews/queryTnews",
+            data:{},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                datatable1=data;
+            },
+            error:function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+        var temp = '';
+        for(var i=0;i<datatable1.length ||i==4;i++){
+            var times = datatable1[i].times.substr(11,5);
+            var t = parseInt(times.substr(0,2));
+            if(t<=6){
+                times= "凌晨 "+times;
+            }
+            if(t>6&&t<=12){
+                times= "上午 "+times;
+            }
+            if(t>12&&t<=18){
+                times= "下午 "+times;
+            }
+            if(t>18&&t<=24){
+                times= "傍晚 "+times;
+            }
+
+            var src = datatable1[i].ip+datatable1[i].txfilename;
+            var span = datatable1[i].username+datatable1[i].ntext;
+            temp += '<div style="padding-bottom: 20px;"><img src='+src+' style="margin-left: 2%;width: 30px;border-radius: 50%;float: left;"> <span style="line-height: 30px;margin-left: 5%;">'+span+'</span><span style="float: right;line-height: 30px;margin-right: 6%">'+times+'</span></div>'
+        }
+        $("#yjtx").html(temp);
+    }
+
+    //仪表盘
+
+    var gzyjint;
+    var gzxl;
+    var gzxlint;
+    var gzyj;
+    var gzysint;
+    var gzys;
+    var ybpnum1;
+    var ybpnum2;
+    var ybpnum3;
+    function yibiaopan(state) {
+
+        var data = {"state":state};
+        $.ajax({
+            url:"/performance/analysis/queryMonitorGZTperformance",
+            data:data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                // datatableybp=data;
+                for(var i=0;i<data.length;i++){
+                    gzyj =data[i].pfmnumber;
+                }
+                //gzyjint = parseInt(gzyj);
+               // alert("------"+gzyj);
+                ybpnum1 =  parseInt(gzyj);
+            },
+            error:function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+
+    }
+
+    function yibiaopan2(state) {
+        var data = {"state":state};
+
+        $.ajax({
+            url:"/performance/analysis/queryMonitorGZTperformance",
+            data:data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+
+                for(var i=0;i<data.length;i++){
+                    gzxl = data[i].rate;
+                }
+                //alert("------"+gzxl);
+                ybpnum2 =  parseInt(gzxl);
+            },
+            error:function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+
+    }
+
+    function yibiaopan3(state) {
+        var data = {"state":state};
+
+        $.ajax({
+            url:"/performance/analysis/queryMonitorGZTperformance",
+            data:data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                for(var i=0;i<data.length;i++){
+                    gzys = data[i].pfmworkhours;
+                }
+               // alert("------"+gzys);
+                ybpnum3 = parseInt(gzys);
+            },
+            error:function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+
+    }
+
+    /*$(function () {
+        ybp();  //仪表盘
+    });*/
+    var g1, g2, g3, g4;
+
+    function ybp(){
+        var g1 = new JustGage({
+            id: "gzyj",
+            value: getRandomInt(0, ybpnum1),
+            min: 0,
+            max:ybpnum1,
+            title: "王者，统御三军",
+            label: "单位：h"
+        });
+
+        var g2 = new JustGage({
+            id: "gzxl",
+            value: getRandomInt(0, ybpnum2),
+            min: 0,
+            max:ybpnum2,
+            title: "传说，浴日补天",
+            label: "单位：w/h"
+        });
+
+        var g3 = new JustGage({
+            id: "gzys",
+            value: getRandomInt(0, ybpnum3),
+            min: 0,
+            max:ybpnum3,
+            title: "劳逸结合，方能百战百胜",
+            label: "单位：h"
+        });
+
+
+        setInterval(function() {
+            g1.refresh( getRandomInt(0, ybpnum1));
+            g2.refresh( getRandomInt(0, ybpnum2));
+            g3.refresh( getRandomInt(0, ybpnum3));
+        }, 2500);
+    };
+
+    //选项卡设置
+    function page(url, title) {
+        var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+        $(window.top.document).find('.J_mainContent').find("iframe").hide();
+        var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+            + '" seamless="" style="display: inline;"></iframe>';
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+            ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+        $(window.top.document).find('.J_mainContent').append(iframe);
+    }
+
+</script>
+<body class="gray-bg" style="overflow-y:scroll;min-height: 555px">
+<div class="wrapper wrapper-content animated fadeInRight" style="padding-top: 15px;height:100%">
+    <div class="row" style="padding-bottom: 10px;height:48%">
+        <div class="col-sm-3" style="border:1px solid #e7eaec;height:100%;margin-left: 1%;">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" style="padding: 8px 0;">
+                    <h3 id="gzyjcontainer" style="font-weight:400;font-family:MicrosoftYaHei;color: #0D0D0D;">工作业绩
+                        <a href="/parse" style="color: #0D0D0D;"><i class="iconfont icon-icon" style="float: right;list-height:18px;" ></i></a>
+                        <ul style="font-weight:400;width:55%;padding: 0;list-style: none;float: right;line-height: 18px;font-family: MicrosoftYaHei;font-size: 15px;">
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="01" class="yjsj">周</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="02" class="yjsj">月</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#000000" state="03" class="yjsj">季</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="04" class="yjsj">年</li>
+                        </ul>
+                    </h3>
+                </div>
+                <div class="ibox-content">
+                    <div clasibox-titles="flot-chart">
+                        <div class="row text-center">
+                            <div  class="col-lg-4 col-md-4 m-t-20">
+                                <div id="gzyj" style="margin-left: -3px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3" style="border:1px solid #e7eaec;height:100%;margin-left: 1%;">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" style="padding: 8px 0;">
+                    <h3 id="gzxlcontainer"  style="font-weight:400;font-family:MicrosoftYaHei;color: #0D0D0D;">工作效率
+                        <a href="/parse?paimingtype=08" style="color: #0D0D0D;"><i class="iconfont icon-icon" style="float: right;list-height:18px;" ></i></a>
+                        <ul style="font-weight:400;width:55%;padding: 0;list-style: none;float: right;line-height: 18px;font-family: MicrosoftYaHei;font-size: 15px;">
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="01" class="xlsj">周</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="02" class="xlsj">月</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#000000" state="03" class="xlsj">季</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="04" class="xlsj">年</li>
+                        </ul>
+                    </h3>
+                </div>
+                <div class="ibox-content">
+                    <div clasibox-titles="flot-chart">
+                        <div class="row text-center">
+                            <div  class="col-lg-4 col-md-4 m-t-20">
+                                <div id="gzxl" style="margin-left: -3px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3" style="border:1px solid #e7eaec;height:100%;margin-left: 1%;">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" style="padding: 8px 0;">
+                    <h3 id="gzyscontainer" style="font-weight:400;font-family:MicrosoftYaHei;color: #0D0D0D;">工作用时
+                        <a href="/parse?paimingtype=05" style="color: #0D0D0D;"><i class="iconfont icon-icon" style="float: right;list-height:18px;" ></i></a>
+                        <ul style="font-weight:400;width:55%;padding: 0;list-style: none;float: right;line-height: 18px;font-family: MicrosoftYaHei;font-size: 15px;">
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="01" class="yssj">周</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="02" class="yssj">月</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#000000" state="03" class="yssj">季</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="04" class="yssj">年</li>
+                        </ul>
+                    </h3>
+                </div>
+                <div class="ibox-content">
+                    <div clasibox-titles="flot-chart">
+                        <div class="row text-center">
+                            <div  class="col-lg-4 col-md-4 m-t-20">
+                                <div id="gzys" style="margin-left: -3px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  style="border:1px solid #e7eaec;height:100%;margin-left: 1%;width: 19.6%;padding: 0 15px;">
+            <h4 style="padding-top: 10px;">
+                <ul id="pmstate" style="list-style: none;padding:0;overflow:  hidden;font-family:  MicrosoftYaHei;font-weight: 400;">
+                    <li state="01" style="float:left;width: 33%;text-align:center;color:#000000;cursor: pointer">小组</li>
+                    <li state="02" style="float:left;width: 33%;text-align:center;color:#BBBBBB;cursor: pointer">部门</li>
+                    <li state="03" style="float:left;width: 33%;text-align:center;color:#BBBBBB;cursor: pointer">公司</li>
+                </ul>
+            </h4>
+            <div class="col-sm-12" style="padding:0;height:40%">
+                <div style="overflow: hidden"><h3 class="m-b-0 font-light" style="font-family: MicrosoftYaHei;font-weight: 400;text-align: center;color: #0D0D0D;width:33%;float: left;margin-left: 33%;">业绩排名</h3><div style="width:33%;float: left;text-align: center;margin: 0 auto;"><a href="javascript:void(0);" onclick="page('/remark','助手详情')" style="color: #0D0D0D;/* width: 16px; *//* height: 26px; *//* overflow:  hidden; *//* margin-right: 10%; */line-height: 30px;"><i class="iconfont icon-icon" style="/* float: right; */list-height:18px;"></i></a></div></div>
+                <div id="yjpm" style="margin:0 auto;width: 50%;height:75%;"></div>
+                <div style="overflow: hidden"><h3 class="m-b-0 font-light" style="font-family: MicrosoftYaHei;font-weight: 400;text-align: center;color: #0D0D0D;width:33%;float: left;margin-left: 33%;">效率排名</h3><div style="width:33%;float: left;text-align: center;margin: 0 auto;"><a href="javascript:void(0);" onclick="page('/remark','助手详情')" style="color: #0D0D0D;/* width: 16px; *//* height: 26px; *//* overflow:  hidden; *//* margin-right: 10%; */line-height: 30px;"><i class="iconfont icon-icon" style="/* float: right; */list-height:18px;"></i></a></div></div>
+                <div id="xlpm" style="margin:0 auto;width: 50%;height:75%"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="height:50%">
+        <div id="jhyjcontainer" class="col-sm-4" style="border:1px solid #e7eaec;height:100%;margin-left: 1%;">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" style="padding: 8px 0;">
+                    <h3 style="font-weight:400;font-family:MicrosoftYaHei;color: #0D0D0D;">计划业绩
+                        <i class="iconfont icon-icon" style="float: right;list-height:18px;"></i>
+                        <ul style="font-weight:400;width:55%;padding: 0;list-style: none;float: right;line-height: 18px;font-family: MicrosoftYaHei;font-size: 15px;">
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#000000" state="01">周</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="02">月</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="03">季</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="04">年</li>
+                        </ul>
+                    </h3>
+                </div>
+                <div class="ibox-content">
+                    <div clasibox-titles="flot-chart">
+                        <div class="row text-center">
+                            <div  class="col-lg-12 col-md-12 m-t-20">
+                                <div id="jhyj" ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="jhyscontainer"class="col-sm-4" style="border:1px solid #e7eaec;height:100%;margin-left: 1%;">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" style="padding: 8px 0;">
+                    <h3 style="font-weight:400;font-family:MicrosoftYaHei;color: #0D0D0D;">计划用时
+                        <i class="iconfont icon-icon" style="float: right;list-height:18px;"></i>
+                        <ul style="font-weight:400;width:55%;padding: 0;list-style: none;float: right;line-height: 18px;font-family: MicrosoftYaHei;font-size: 15px;">
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#000000" state="01">周</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="02">月</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="03">季</li>
+                            <li style="float: left;cursor:pointer;margin-right: 10%;color:#BBBBBB" state="04">年</li>
+                        </ul>
+                    </h3>
+                </div>
+                <div class="ibox-content">
+                    <div clasibox-titles="flot-chart">
+                        <div class="row text-center">
+                            <div  class="col-lg-4 col-md-4 m-t-20">
+                                <div id="jhys" style="margin-left: 20px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="remark" style="padding: 0 15px;border:1px solid #e7eaec;height:100%;margin-left: 1%;width: 29%;">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" style="padding: 8px 0;">
+                    <h3 style="font-weight:400;font-family:MicrosoftYaHei;color: #0D0D0D;">业绩提醒
+                        <a href="javascript:void(0);" onclick="page('/remark','助手详情')" style="color: #0D0D0D;"><i class="iconfont icon-icon" style="float: right;list-height:18px;" ></i></a>
+                    </h3>
+                </div>
+                <div class="ibox-content">
+                    <div clasibox-titles="flot-chart">
+                        <div class="row text-center">
+                            <div style="padding-left: 10px;width: 100%;padding-top: 15px;">
+                                <div id="yjtx">
+
+                                    <!--<div style="padding-bottom: 20px;"><img src="/static/fileupload/a1.jpg" style="margin-left: 2%;width: 30px;border-radius: 50%;float: left;"> <span style="line-height: 30px;margin-left: 5%;">杨倩倩为你的OA办公点赞</span><span style="margin-left: 7%;">上午 12:00</span></div>
+                                    <div style="padding-bottom: 20px;"><img src="/static/fileupload/a1.jpg" style="margin-left: 2%;width: 30px;border-radius: 50%;float: left;"> <span style="line-height: 30px;margin-left: 5%;">杨倩倩为你的OA办公点赞</span><span style="margin-left: 7%;">上午 12:00</span></div>
+                                    <div style="padding-bottom: 20px;"><img src="/static/fileupload/a1.jpg" style="margin-left: 2%;width: 30px;border-radius: 50%;float: left;"> <span style="line-height: 30px;margin-left: 5%;">杨倩倩为你的OA办公点赞</span><span style="margin-left: 7%;">上午 12:00</span></div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:02 GMT -->
+</html>

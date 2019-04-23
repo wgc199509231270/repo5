@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>manage.html</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+          rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="/static/js/plugins/webuploader/webuploader.css">
+    <link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <link rel="stylesheet" href="/static/achievement/webuploader/webuploader.css">
+    <script src="/static/achievement/webuploader/webuploader.js"></script>
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelectparse.css">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/achievement/manage.css" rel="stylesheet">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <script src="/static/js/news.js"></script>
+    <script src="/static/js/attendance/tableExport.js"></script>
+    <style>
+        input[type=range] {
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none; /*清除系统默认样式*/
+            width: 80% !important;
+            background: #e7eaec;
+            height: 3px; /*横条的高度*/
+        }
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background: #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+        /* .my-container {
+             float: left;
+             display: inline-block;
+         }*/
+
+        .myLabel-content, .myText-content, .myBtn-content {
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+        }
+        .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+        {
+            height: 30px;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+
+        #fbyjbox  tr{
+            margin-top:10px;
+        }
+        .com {
+            cursor: pointer;
+            width: 316px;
+            background-repeat: no-repeat;
+            background-position: 99% center;
+            background-size: 18px;
+        }
+        /* 进度条 */
+        .progress{position: relative; width:300px;margin:100px auto;}
+        .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+        .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+        .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+            left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+        .progress_btn:hover{border-color:#F7B824;}
+        ::-ms-browse, [type='file'] {
+            padding: .4em;
+            line-height: 10px;
+            border: 1px solid #D9D9D9;
+            background: #f0f3f9;
+            color: rgba(88,88,88,1);
+        }
+        ::-webkit-file-upload-button {
+            padding: .4em;
+            line-height: 10px;
+            border: 1px solid #D9D9D9;
+            background: #f0f3f9;
+            color: rgba(88,88,88,1);
+        }
+        /* 分页 */
+        .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+            margin-left: 2%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="big" class="col-sm-12" style="display: none">
+    <div class="example-wrap" style="margin-top: 25px;">
+        <!-- 顶部筛选框 -->
+        <div id="toolbar1"
+             style="width: 100%; overflow: hidden; margin-bottom: 14px; float: left;">
+            <div class="myText-content" style="float: left;width: 12%;">
+                <label class="myLabel-content">对象:&nbsp;&nbsp;&nbsp;</label>
+                <input type="hidden" value="" id="dxid">
+                <select name="select" id="sxry" class="chosen-select" data-placeholder="选择用户..." style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+                    <option part='01' value='全部' id="qb">全部</option>
+                </select>
+            </div>
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content" style="">日期：</label>
+                <div class="myText-content" style="">
+                    <input id="Begtime0"
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="开始日期" style="width: 119px;margin-right: 10px;">
+                </div>
+            </div>
+            <div class="my-container"
+                 style="display: block;float: left;">
+                <label class="myLabel-content">至</label>
+            </div>
+            <div class="my-container"
+                 style="display: block;">
+                <label class="myLabel-content"></label>
+                <div class="myText-content" style="margin-left: 10px;">
+                    <input id="Endtime0"
+                           class="com laydate-icon form-control layer-date"
+                           placeholder="结束日期" style="width: 119px;">
+                </div>
+                <div class="myBtn-content"
+                     style="margin-left: 2%;">
+                    <button id="search1" type="button" class="btn btn-primary"
+                            style="background-color: #0099CC;border-color: #0099CC;color: #FFF;" onclick="chaxunn()">查询</button>
+                    <button id="reset1" type="button" class="btn btn-default"
+                            style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;" onclick="chongzhii()">重置</button>
+                    <button type="button" class="btn btn-primary"
+                            style="background-color: #0099CC;border-color: #0099CC;color: #FFF;" onclick="exportExcelWithJS()">导出</button>
+                </div>
+            </div>
+            <!-- 考勤统计列表 -->
+            <div class="example" id="paimingtable">
+                <table id="table1"></table>
+            </div>
+        </div>
+    </div>
+    <!-- 名字选择模态框部分-->
+    <div id="personselect" class="modal fade" aria-hidden="true" style="overflow-y: hidden" >
+        <div class="modal-dialog">
+            <div class="modal-content" style="margin-left: -113px;width:800px;background-color: #FFFFFF;">
+                <div class="modal-body">
+                    <div class="row" >
+                        <div id="tree" class="col-sm-4" style="overflow-y: scroll;overflow-x: hidden;width: 30%"></div>
+                        <div class="col-sm-8" style="width: 70%">
+                            <div class="myText-content" style="margin-left: 0;width:100%;margin-bottom: 10px">
+                                <input id="key" type="text" style="outline: none;float: left;height:33px;width: 78%;" class="form-control" placeholder="请输入要搜索的姓名或员工编号">
+                                <button id="search" type="button" class="btn btn-primary" style="line-height: 19px;border-radius: 0;width: 20%;background-color:#0099CC">搜索</button>
+                            </div>
+                            <div id="table2"></div>
+                        </div>
+                        <div style="overflow: hidden;width: 200px;position: absolute;top: 85%;left: 70%;">
+                            <button id="closed" style="color:#73777A;background-color: #F5F5F6;margin-right: 15px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="closePage();" value="取消">取消</button>
+                            <button id="commit" style="margin-right:3px;margin-top: 15px;width: 70px;float: right;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="chose();" value="发布">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- js初始化 -->
+<script>
+    //如需刷新iframe，则只需把window替换为响应的iframe的 属性值或ID属性值
+    $(function () {
+        var Request = new Object();
+        var opstatus;
+        $("#kntype").val("01");
+        $("a").tooltip();
+        $(":button").tooltip();
+        $("#top").click(function () {
+            var speed=200;//滑动的速度
+            $('body,html').animate({ scrollTop: 0 }, speed);
+            return false;
+        });
+
+        // $(".modal-dialog").hide();
+
+        $("#big").show();
+        $("#example").hide();
+        now();
+        before();
+        table();
+        $("#paimingtable").show();
+        $("#sxry").searchableSelect({width:85});
+        $(".searchable-select").click(function () {
+            $("#personselect").modal('show');
+            // $(".modal-dialog").modal('show');
+        });
+        $("#personselect").find(".row").height($(document).height()-100);
+        $('#table2').height($("#personselect").find(".row").height()-100);
+        tree();
+        $("#tree").height($(document).height()-110);
+        chose();
+        chaxunn();
+    });
+    /* 业绩管理列表接口 */
+    var datatable=[];
+    var alluser;
+    var shouletime;
+    getDate($("#Begtime0").val(),$("#Endtime0").val())
+    //ajax获取个人签到数据 传给datatable
+    //格式化现在日期
+    function now() {
+        // 给input  date设置默认值
+        var now = new Date();
+        //格式化日，如果小于9，前面补0
+        var day = "01";
+        //格式化月，如果小于9，前面补0
+        var month = ("0" + (now.getMonth() + 2)).slice(-2);
+        var year =now.getFullYear();
+        if(month >12){ month ="01"; year = now.getFullYear()+1};
+        //拼装完整日期格式
+        var today = year+"/"+(month)+"/"+(day) ;
+        //完成赋值
+        $('#Endtime0').val(today);
+    }
+    //格式化15天前的日期
+    function before() {
+        //十五天毫秒值：1209600000
+        var date = new Date();
+        var times = date.getTime();
+        var now = new Date(times);
+        //格式化日，如果小于9，前面补0
+        var day = "01";
+        //格式化月，如果小于9，前面补0
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        //拼装完整日期格式
+        var today = now.getFullYear()+"/"+(month)+"/"+(day) ;
+        //完成赋值
+        $('#Begtime0').val(today);
+    }
+    var deparepid ="";
+    //表格代码
+    function table(){
+        $('#table1').bootstrapTable({
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: true, // 在表格底部显示分页组件，默认false
+            pageList: [5,10, 15], // 设置页面可以显示的数据条数
+            pageSize: 5, // 页面数据条数
+            pageNumber: 1, // 首页页码
+            columns: [
+                {
+                    field: 'number',
+                    title: '序号',
+                    width:'4%' ,
+                    align:'center',
+                    formatter: function (value,row,index){
+                        return index+1;
+                    }
+                },
+                {
+                    field: 'username',
+                    width:'7%' ,
+                    title: '姓名',
+                    align:'center',
+                    formatter:function (value,row,index){
+                        return row.username;
+                    }
+                }, {
+                    field: 'deparname',
+                    width:'10%',
+                    title: '部门',
+                    align:'center',
+                },{
+                    field: 'should',
+                    width:'4%' ,
+                    title: '应出勤',
+                    align:'center',
+                    formatter:function(value,row,index){
+                        return shouletime*2-getleave(row.userid)*2
+                    }
+                },
+                {
+                    field: 'number',
+                    width:'4%' ,
+                    title: '签到',
+                    align: 'center',
+                },
+                {
+                    field: 'late',
+                    width:'4%' ,
+                    title: '迟到',
+                    align: 'center',
+                }
+                , {
+                    field: 'early',
+                    title: '早退',
+                    width:'4%' ,
+                    align: 'center',
+                },{
+                    field: 'absenteeism',
+                    title: '旷工',
+                    width:'4%' ,
+                    align: 'center',
+                    formatter: function (value,row,index){
+                        return parseInt((shouletime*2-getleave(row.userid)*2-row.number-row.late-row.early-row.lack)/2)+"天"
+                    }
+                },{
+                    field: 'lack',
+                    title: '缺卡',
+                    width:'4%' ,
+                    align: 'center',
+                },{
+                    field: 'leave',
+                    title: '请假天数',
+                    width:'4%' ,
+                    align: 'center',
+                    formatter: function (value,row,index){
+                        return getleave(row.userid)
+                    }
+                },{
+                    field: 'reward',
+                    title: '打卡奖励',
+                    width:'4%' ,
+                    align: 'center',
+                    formatter: function (value,row,index){
+                        return row.number*5
+                    }
+                }
+            ] ,
+            data:datatable
+        });
+    };
+    $(".fht-cell").remove();
+    //获取请假天数
+    function getleave(userid){
+        var begtime=$("#Begtime0").val();
+        var endtime=$("#Endtime0").val();
+        var leave=0;
+        $.ajax({
+            url:"/attendance/queryUserAttendance",
+            data:{"userid":userid,"astarttime":begtime,"aendtime":endtime},
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                leave=data.length;
+            }
+        })
+        return leave;
+    }
+    function getFoemat(date){
+        var year=date.getFullYear();
+        var mon=date.getMonth()+1;
+        var day=date.getDate();
+        if(mon<=9){
+            mon="0"+mon;
+        }
+        if(day<=9){
+            day="0"+day;
+        }
+        return year+"/"+mon+"/"+day
+    }
+    //获取工作日天数
+    function getDate(first,last){
+        var count=0;
+        var f = new Date(first);
+        var l=new Date(last);
+        var date=new Date();
+        while(first<=last && getFoemat(date)>=getFoemat(f)){
+
+            if(f.getDay() > 0 && f.getDay() < 6) {
+                count += 1;
+            }
+            f = new Date(f.getTime() + 24*60*60*1000);
+
+        }
+        shouletime=count;
+    }
+    //查询签到列表
+    function queryClock() {
+        var userid = $("#sxry").siblings().find(".searchable-select-holderappend").html();
+        var begtime=$("#Begtime0").val();
+        var endtime=$("#Endtime0").val();
+        datatable=[];
+        if(userid[0]==","){
+            userid=userid.substr(1,userid.length-2).split(",");
+            for(var i=0;i<userid.length;i++){
+                var data = {"userid":userid[i],"begtime":begtime,"endtime":endtime};
+                $.ajax({
+                    url:"/clock/queryAllList",
+                    data:data,
+                    async:false,
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        datatable.push(data[0])
+                    }
+                })
+            }
+        }else{
+            var data = {"userid":userid,"begtime":begtime,"endtime":endtime};
+            $.ajax({
+                url:"/clock/queryAllList",
+                data:data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    datatable=data
+                }
+            })
+        }
+        $('#table1').bootstrapTable('load',datatable);
+    }
+    /* 查询 */
+    function chaxunn(){
+        getDate($("#Begtime0").val(),$("#Endtime0").val())
+        queryClock();
+    }
+    /* 重置 */
+    function chongzhii(){
+        now();
+        before();
+        $("#sxry").siblings().find(".searchable-select-holder").html("全部");
+        //$("#sxry").siblings().find(".searchable-select-holderappend").html("01");
+        tree()
+        chose()
+        chaxunn();
+    }
+    //解析url参数
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    <!-- jeDate 插件 -->
+    jeDate("#Begtime0",{
+        format:"YYYY/MM/DD",
+        isTime:false,
+        minDate:"2014/09/19 00:00:00"
+    });
+
+    jeDate("#Endtime0",{
+        format:"YYYY/MM/DD",
+        isTime:false,
+        minDate:"2014/09/19 00:00:00"
+    });
+    //进度条
+    layui.use('slider', function(){
+        var $ = layui.$
+            ,slider = layui.slider;
+        //默认滑块
+        slider.render({
+            elem: '#slideTest1',
+
+        });
+        //开启输入框
+        slider.render({
+            elem: '#slideTest8'
+            ,input: true //输入框
+            , change: function(value){
+                // alert(value);
+                console.log(value); //动态获取滑块数值
+                $("#wcjd").val(value);
+                //do something
+            }
+        });
+    });
+    //选项卡设置
+    function page(url, title) {
+        var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+        $(window.top.document).find('.J_mainContent').find("iframe").hide();
+        var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+            + '" seamless="" style="display: inline;"></iframe>';
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+            ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+        $(window.top.document).find('.J_mainContent').append(iframe);
+    }
+    /* 模态弹出框 */
+    //关闭模态框
+    function closePage(){
+        $("#personselect").modal('hide');
+    };
+    //初始化树形结构
+    function tree() {
+        $.ajax({
+            url: "/Tdepartmentinfo/querySXJGTdepartmentinfo",
+            data: {},
+            async: false,
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                data.splice(0, 0, {'text': '全部', 'nodeid': '01'});
+                $('#tree').treeview({
+                    data: data,         // 数据源
+                    collapseIcon: "iconfont icon-xiangshangjiantou",
+                    expandIcon: "iconfont icon-iconset0417",
+                    checkedIcon:"glyphicon glyphicon-check",
+                    color: "#000000",
+                    backColor: "#FFFFFF",
+                    href: "#node-1",
+                    selectable: true,
+                    //showCheckbox:true,
+                    //multiSelect: false,    //多选
+                    singleSelect : true, // 单选checkbox
+                    state: {
+                        checked: true,
+                        disabled: true,
+                        expanded: true,
+                        selected: true
+                    },
+                    tags: ['available'],
+                    /*onNodeChecked: function (event, data) {
+                        alert("onNodeChecked----"+data.nodeid);
+
+                        //alert("deparepid"+data.deparepid);
+                    },*/
+                    onNodeSelected: function (event, data) {
+                        $("#dxid").val(data.deparepid);
+                        num2 = data.nodeid;
+                        name2 = data.text;
+                        $.ajax({
+                            url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                            data: {"id": data.nodeid},
+                            async: false,
+                            dataType: "json",
+                            type: "post",
+                            success: function (data) {
+                                alluser=data;
+                                table2();
+                                //alert("deparepid"+deparepid);
+                                $('#table2').bootstrapTable('load', data);
+                                $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                            },
+                            error: function (error) {
+                                alert("数据丢失了，刷新下试试吧" + error.status);
+                            }
+                        });
+                        $("#search").click(function () {
+                            $.ajax({
+                                url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                                data: {"id": data.nodeid, "username": $("#key").val()},
+                                async: false,
+                                dataType: "json",
+                                type: "post",
+                                success: function (data) {
+                                    table2();
+                                    $('#table2').bootstrapTable('load', data);
+                                    $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                    $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                    /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                },
+                                error: function (error) {
+                                    alert("数据丢失了，刷新下试试吧" + error.status);
+                                }
+                            });
+                        })
+                    }
+                });
+                $('#tree').treeview('collapseAll', {silent: true});
+                $('#tree').find("ul li:first").click();
+            },
+            error: function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+
+    };
+    //初始化人员表格
+    function table2() {
+        $('#table2').bootstrapTable('destroy').bootstrapTable({
+            iconSize: "outline",
+            toolbar: "#exampleTableEventsToolbar",
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            checkboxHeader:0,
+            singleSelect : true, // 单选checkbox
+            columns: [
+                {
+                    field: "state",
+                    checkbox: true,
+                    align: 'center',
+                }, {
+                    field: 'usernumber',
+                    title: '编号',
+                    align: 'center',
+                    width: '25%',
+                },{
+                    field: 'username',
+                    title: '姓名',
+                    align: 'center',
+                    width: '25%',
+                }, {
+                    field: 'sex',
+                    title: '性别',
+                    align: 'center',
+                    width: '10%',
+                }, {
+                    field: 'age',
+                    title: '年龄',
+                    align: 'center',
+                    width: '28%',
+                }, {
+                    field: 'phone1',
+                    title: '联系电话',
+                    align: 'center',
+                    width: '30%',
+                }],
+            data: []
+        });
+    };
+    //人员选择确认
+    function chose() {
+        var selectContent = $('#table2').bootstrapTable('getSelections');
+        if(selectContent.length ==1){
+            alluser = selectContent[0].id;
+            var name1 = selectContent[0].username;
+            $("#sxry").siblings().find('.searchable-select-holder').html(name1);
+            $("#sxry").siblings().find('.searchable-select-holderappend').html(alluser);
+        }else{
+            var users=",";
+            for(var i=0;i<alluser.length;i++){
+                users+=alluser[i].id+","
+            }
+            $("#sxry").siblings().find('.searchable-select-holder').html(name2);
+            $("#sxry").siblings().find('.searchable-select-holderappend').html(users);
+        }
+        $("#personselect").modal('hide');
+    };
+    //导出表格
+    function exportExcelWithJS(){
+        //获取要导出Excel的表格对象并设置tableExport方法，设置导出类型type为excel
+        $('#table1').tableExport({
+            type:'excel',//导出为excel
+            fileName:$('#Begtime0').val()+"-"+$('#Endtime0').val()+'考勤统计',//文件名
+            worksheetName:$('#Begtime0').val()+"-"+$('#Endtime0').val()+'考勤统计',//sheet表的名字
+            ignoreColumn:[],//忽略的列，从0开始算
+            ignoreRow:[],//忽略的行，从0开始算
+            excelstyles:['text-align']//使用样式，不用填值只写属性，值读取的是html中的
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>岗位管理</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+          rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="/static/js/plugins/webuploader/webuploader.css">
+    <link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <link rel="stylesheet" href="/static/achievement/webuploader/webuploader.css">
+    <script src="/static/achievement/webuploader/webuploader.js"></script>
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelectparse.css">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="/static/js/highcharts-3d.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/achievement/manage.css" rel="stylesheet">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <style>
+        input[type=range] {
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none; /*清除系统默认样式*/
+            width: 80% !important;
+            background: #e7eaec;
+            height: 3px; /*横条的高度*/
+        }
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background: #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+
+        #text {
+            white-space: normal;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+        .czbtn{
+            cursor:default;
+        }
+        .czbtn2{
+            cursor:pointer;
+        }
+        .my-container {
+            float: left;
+            display: inline-block;
+        }
+
+        .myLabel-content, .myText-content, .myBtn-content {
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+            margin-left: 10px;
+
+        }
+        .myText-content1 {
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+
+        }
+        .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+        {
+            height: 30px;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+
+        /* 模态框 */
+
+        .hourdiv {
+            width: 138px;
+        }
+        #fbyjbox  tr{
+            margin-top:10px;
+        }
+        .yjbox{
+            width: 181px;
+            height: 32px;
+            line-height:32px;
+            border: 1px solid #D9D9D9;
+            float:left;
+            padding-left: 12px;
+        }
+        .yeji {
+            font-family: FangSong;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(88,88,88,1);
+            height: 32px;
+            line-height: 32px;
+            width: 67px;
+            float: left;
+            margin-left: 15px;
+            /* margin-left: -21px; */
+        }
+        .yeji2 {
+            font-family: FangSong;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(88,88,88,1);
+            height: 32px;
+            line-height: 32px;
+            width: 67px;
+            float: left;
+            margin-left: 32px;
+            /* margin-left: -21px; */
+        }
+
+        .yejibigtext {
+            width: 461px;
+            height: 99px;
+            float: left;
+            border: 1px solid #D9D9D9;
+            padding-left: 15px;
+            padding-top: 3px;
+        }
+        .yejibigtextyjnr {
+            padding-top: 3px;
+            padding-left: 5px;
+            width: 461px;
+            height: 99px;
+            margin-left: -16px;
+            margin-top: -4px;
+            border: 1px solid #D9D9D9;
+        }
+        .yjtext {
+            width: 136px;
+            height: 23px;
+            margin-left: 8px;
+            margin-top: 4px;
+            font-size: 14px;
+            font-family: FangSong;
+            font-weight: 400;
+            color: rgba(124,124,124,1);
+            line-height: 19px;
+        }
+
+        .gzsc {
+            margin-left: 4%;
+        }
+
+        .yejimidtext {
+            width: 461px;
+            height: 32px;
+            border: 1px solid #D9D9D9;
+        }
+        .fbsmbox{
+            width: 461px;
+            height: 44px;
+            border: 1px solid #D9D9D9;
+            float: left;
+            padding-left: 12px;
+        }
+        /* 按钮 */
+        .btnn {
+            width: 59px;
+            height: 31px;
+            /* border-radius: 10px; */
+            background-color: #F5F5F6;
+            float: left;
+            margin-left:10px;
+            color:#73777A;
+            outline:none;
+            text-align:center;
+            font-family: cursive;
+            line-height:31px;
+        }
+        /* 按钮点击事件 */
+        .btnn:link{
+            background-color: #0099CC;
+            color:white;
+        }
+        .btnn:hover{
+            background-color: #0099CC;
+            color:white;
+        }
+        .btnn:active{
+            background-color: #0099CC;
+            color:white;
+        }
+        .btnn:visited{
+            background-color: #0099CC;
+            color:white;
+        }
+
+        .btndiv {
+            position: absolute;
+            left: 67%;
+            top: 85%;
+            float: left;
+        }
+        .btndiv2 {
+            position: relative;
+            left: 63%;
+            top: 2%;
+            float: left;
+        }
+        .btndiv3 {
+            position: relative;
+            left: 63%;
+            top: 2%;
+            float: left;
+        }
+        .btndiv4 {
+            position: relative;
+            left: 63%;
+            top: 2%;
+            float: left;
+        }
+        .hour1 {
+            font-size: 15px;
+            width: 7%;
+            color: #D9D9D9;
+            float:right;
+        }
+        .hoursh {
+            font-size: 15px;
+            position: absolute;
+            left: 40.5%;
+            top: 12%;
+            width: 7%;
+            color: #D9D9D9;
+        }
+        .hoursh2 {
+            font-size: 15px;
+            position: absolute;
+            left: 86.5%;
+            top: 12%;
+            width: 9%;
+            color: #D9D9D9;
+        }
+        .hour {
+            width: 18px;
+            float: left;
+            margin-left: -21px;
+            margin-top: 8px;
+        }
+        .tjfj11{
+
+        }
+        .fb {
+            font-family: FangSong;
+            margin-left: -6px;
+            /* margin-top: 10px; */
+            margin-bottom: 8px;
+            color: rgba(51,51,51,1);
+            font-weight: 400;
+            border-bottom: 1px solid #E5E5E5;
+            width: 581px;
+            height: 26px;
+        }
+        .qr {
+            margin-left: -2.77%;
+            /* margin-bottom: 11px; */
+            border-bottom: 1px solid #E5E5E5;
+            width: 105.4%;
+            height: 10px;
+            font-size: 8px;
+            font-family: FangSong;
+            font-weight: 400;
+            color: rgba(51,51,51,1);
+        }
+
+
+        .hour2 {
+            font-size: 15px;
+            float:right;
+            width: 9%;
+            color: #D9D9D9;
+        }
+
+        .everydiv{
+            margin-top:10px;
+        }
+        .com {
+            cursor: pointer;
+            width: 316px;
+            background-repeat: no-repeat;
+            background-position: 99% center;
+            background-size: 18px;
+        }
+        .com2 {
+            cursor: pointer;
+            width: 316px;
+            background-repeat: no-repeat;
+            background-position: 93% center;
+            background-size: 18px;
+        }
+
+        /* 确认业绩 */
+        .qrdiv {
+            margin-left: -2.77%;
+            /* margin-bottom: 11px; */
+            border-bottom: 1px solid #E5E5E5;
+            width: 105.4%;
+            height: 17px;
+            font-size: 17px;
+            font-family: FangSong;
+            font-weight: 400;
+            color: rgba(51,51,51,1);
+        }
+        .modal-contentqryj {
+            /*  margin-left: 420px;
+             margin-top: -10px; */
+            width: 591px;
+            background-clip: padding-box;
+            background-color: #FFF;
+            border: 1px solid rgba(0,0,0,0);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.3);
+            outline: 0 none;
+        }
+        .qryj{
+            float:left;
+        }
+        .qryjbigbox {
+            width: 557px;
+            height: 233px;
+            background: rgba(244,251,255,1);
+            box-shadow: 0px 1px 15px 0px rgba(231,231,231,0.88);
+            /*margin-left: -14px;*/
+            margin-top: 15px;
+        }
+
+        .qryjbigbox2{
+            /* border: 1px red solid;  */
+            width: 613px;
+            height:172px;
+            margin-left: -15px;
+        }
+        .qryjbox {
+            /*  border: 1px red solid;  */
+            width: 77%;
+            /* margin-top: 6%; */
+            margin-top: 4px;
+            height: 45px;
+            margin-left: 10px;
+        }
+        .qryjbox2{
+
+        }
+        .yqryjword {
+            margin-left: 23px;
+            height: 12px;
+            line-height: 26px;
+        }
+        .qryjword {
+            font-family: FangSong;
+            font-size: 14.5px;
+            font-weight: 400;
+            color: rgba(159,159,159,1);
+            width: 79px;
+            float: left;
+            height: 12px;
+            line-height: 26px;
+            margin-left: 2px;
+        }
+        .qryjword1{
+            font-family: FangSong;
+            font-size: 14.5px;
+            font-weight: 400;
+            color:rgba(159,159,159,1);
+            line-height:31px;
+            width: 79px;
+            float:left;
+            margin-left: 2px;
+        }
+        .shortdiv {
+            width: 174px;
+            height: 29px;
+            height: 30px;
+            line-height: 30px;
+            float: left;
+            border: 1px solid rgba(217,217,217,1);
+            border-radius: 1px;
+            font-family: FangSong;
+            padding-left: 12px;
+        }
+        .longdiv {
+            width: 300px;
+            height: 35px;
+            border:1px solid rgba(217,217,217,1);
+            border-radius:1px;
+            float: right;
+            margin-right: -123px;
+        }
+        .llongdiv {
+            width: 454px;
+            height: 30px;
+            line-height: 35px;
+            border: 1px solid #D9D9D9;
+            float: right;
+            margin-right: -107px;
+            font-family: FangSong;
+            padding-left: 12px;
+        }
+        .timecom{
+            cursor: pointer;
+            width: 171px;
+            height: 35px;
+            background-repeat: no-repeat;
+            background-position: 99% center;
+            background-size: 18px;
+            border: 1px solid #ccc;
+            /*  background-image: url(icon.png); */
+        }
+        /* 完成业绩css */
+        .wcqryjword {
+            font-family: FangSong;
+            font-size: 14.5px;
+            font-weight: 400;
+            font-weight: 400;
+            color: rgba(0,0,0,1);
+            width: 79px;
+            float: left;
+            height: 12px;
+            line-height: 26px;
+        }
+        .wcyjbox {
+            /*  border: 1px red solid;  */
+            width: 77%;
+            /* margin-top: 6%; */
+            margin-top: 4px;
+            height: 38px;
+            margin-left: 10px;
+        }
+        .shyjbox{
+            /* border: 1px red solid; */
+            width: 77%;
+            /* margin-top: 6%; */
+            margin-top: 4px;
+            height: 41px;
+            margin-left: 10px;
+        }
+        .divleft{
+            float: left;
+        }
+        .divright{
+            margin-left: 9%;
+            float: left;
+        }
+        /* 进度条 */
+        .progress{position: relative; width:300px;margin:100px auto;}
+        .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+        .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+        .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+            left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+        .progress_btn:hover{border-color:#F7B824;}
+        /* 审核业绩 */
+        .divrightsh{
+            margin-left: 10%;
+            float: left;
+        }
+        ::-ms-browse, [type='file'] {
+            padding: .4em;
+            line-height: 10px;
+            border: 1px solid #D9D9D9;
+            background: #f0f3f9;
+            color: rgba(88,88,88,1);
+        }
+        ::-webkit-file-upload-button {
+            padding: .4em;
+            line-height: 10px;
+            border: 1px solid #D9D9D9;
+            background: #f0f3f9;
+            color: rgba(88,88,88,1);
+        }
+
+        /* 发布业绩 */
+        .everybox{
+            width:100%;
+            /* border:1px red solid; */
+            height:36px;
+            margin-top: 20px;
+        }
+
+        .everybox2{
+            width:100%;
+            /* border:1px red solid; */
+            height:40px;
+            margin-top: 35px;
+        }
+        .everybox3{
+            width:100%;
+            /* border:1px red solid; */
+            height:100px;
+            /*margin-top: 10px;*/
+        }
+        .everybox4{
+            width:100%;
+            height:100px;
+            padding-bottom:30px;
+        }
+        .everybox5{
+            width:100%;
+            height:100px;
+            margin-top:30px ;
+        }
+        .everybox6{
+            width:100%;
+            height:50px;
+        }
+        /* 业绩完成 */
+        .layui-input{
+            padding-left: 4px;
+        }
+
+        /* 所属部门 */
+        .filter-option-inner-inner{
+            font-family: fangsong;
+        }
+        /* 分页 */
+        .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+            margin-left: 2%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .layui-slider {
+            height: 4px;
+            background: #e2e2e2;
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+            margin-right: 90px !important;
+        }
+        .ser_cont{
+            height: 23px;
+            padding: 2px;
+            box-sizing: border-box;
+        }
+        .l-text{
+            position: relative;
+            border: 1px solid #AECAF0;
+            height: 20px;
+            line-height: 20px;
+            background: white;
+        }
+        .l-text-field{
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 0;
+            margin: 0;
+            outline:none;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<div id="big" class="col-sm-12" style="display: none">
+    <div class="example-wrap" style="margin-top: 25px;">
+
+        <!--分配设置账号-->
+        <div class="myBtn-content" style="float: left;margin-left: 2%;">
+            <button id="xz" type="button" class="btn btn-primary" style="background-color: #0099CC;border-color: #0099CC;color: #FFF;" onclick="xinzeng()">增加</button>
+            <button id="xg" type="button" class="btn btn-default" style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;" onclick="xiougai()">修改</button>
+            <button id="sc" type="button" class="btn btn-default" style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;" onclick="Delete()">删除</button>
+        </div>
+
+    </div>
+    <!-- 业绩管理列表 -->
+    <div class="example" id="paimingtable">
+        <table id="table1"></table>
+    </div>
+</div>
+</div>
+</div>
+<!-- 新增角色-->
+<div id="modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="height: 300px;width:583px;">
+            <div class="modal-body" style="height: 300px;width: 627px;margin-left: -9px;margin-top: -5px;">
+
+                <div class="fb">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">添加岗位信息</p>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+
+                <div class="everybox">
+                    <div class="yeji ">岗位名称</div>
+                    <div id="rank" class="yjbox" contenteditable="true" style="
+									    width: 460px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;"></div>
+
+                </div>
+                <div style="width:100%;height:1px;"></div>
+                <div style="width:100%;height:5px;"></div>
+
+                <div class="everybox3">
+                    <div class="yeji ">岗位描述:</div>
+                    <div  style="" class="yejibigtext" >
+                        <div id="describe" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                             onfocus="if(this.innerText=='岗位描述')this.innerText=''"
+                             onblur="if(this.innerText=='')this.innerText='岗位描述'">岗位描述</div>
+
+                    </div>
+                </div>
+                <div class="btndiv">
+                    <div class="btnn" style="background-color:#0099CC;color:white;" onclick="sq()">确认</div>
+                    <div class="btnn" style="border: 1px solid #EEEEEF;" onclick="qx()"> 取消</div>
+                    <div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 修改薪资规则-->
+<div id="modal-form1" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style=" margin-left: -2%;">
+        <div class="modal-content"  style="height: 300px;width:583px;">
+            <div class="modal-body" style="height: 300px;width: 627px;margin-left: -9px;margin-top: -5px;">
+
+                <div class="fb">
+                    <p style="margin-left: 3%;margin-top: -2px;font-size: 18px;">修改岗位信息</p>
+                </div>
+                <div style="width:100%;height:3px;"></div>
+
+                <div class="everybox4">
+                    <div class="yeji ">岗位名称</div>
+                    <input id="rank1" class="yjbox" contenteditable="true" style="
+									    width: 460px;
+									    border: 1px solid #D9D9D9;
+									    height: 32px;
+									    font-family: FangSong;
+										line-height:32px;    margin-bottom: 20px;">
+
+
+                    <div class="everybox3">
+                        <div class="yeji ">岗位描述:</div>
+                        <div  style="" class="yejibigtext" >
+                            <div id="describe1" class="yejibigtextyjnr" style="font-family: FangSong;"contenteditable="true"
+                                 onfocus="if(this.innerText=='岗位描述')this.innerText=''"
+                                 onblur="if(this.innerText=='')this.innerText='岗位描述'">岗位描述</div>
+
+                        </div>
+                    </div>
+                    <div class="btndiv">
+                        <div class="btnn" style="background-color:#0099CC;color:white;" onclick="xg()">确认</div>
+                        <div class="btnn" style="border: 1px solid #EEEEEF;" onclick="qx1()"> 取消</div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- js初始化 -->
+<script>
+    var userid="";
+    userid1();
+    var jobname;
+    var job = "1";
+    function userid1() {
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            success: function (data) {
+                userid = data.id;
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+
+    }
+
+    /* 部门接口 */
+    var data ={"state":"01"};
+    $(function(){
+        $.ajax({
+            url:"/performance/manage/queryTsdepart",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                var a = "";
+                var b = "";
+                a=a+"<option part='01' value='全部'>全部</option>";
+                for(var i=0;i<data.length;i++){
+
+                    a = a+"<option part="+data[i].id+">"+data[i].deparname+"</option>";
+                    b = b+"<option part="+data[i].id+">"+data[i].deparname+"</option>";
+                }
+                $("#sxbm").append(a);
+                $("#ssbm").append(b);
+                $("#ssbm").selectpicker({width : 181,noneSelectedText : '请选择'});
+                $("#qrssbm").append(b);
+                $("#qrssbm").selectpicker({width : 181,noneSelectedText : '请选择'});
+                $("#sxbm").searchableSelect();
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            },
+        })
+    });
+
+
+    //确认
+    function sq() {
+        var rank=$("#rank").html();
+        var minimum=$("#minimum").html();
+        var thehighest =$("#thehighest").html();
+        var meritpay=$("#meritpay").html();
+        var describe=$("#qjnr").html();
+        if(rank == ""|| minimum==""|| thehighest==""|| meritpay==null){
+            alert("温馨提示：请把其他选项填写完整~")
+        }else{
+            var data={"rank":rank,"minimum":minimum,"thehighest":thehighest,"meritpay":meritpay,"userId":userid,"describe":describe};
+
+            $.ajax({
+                url:"/compensationRules/insertCr",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+
+                    if(data.code!=404){
+                        alert("发布成功");
+                        $("#modal-form").modal('hide');
+                        table();
+                        $('#table1').bootstrapTable('load',datatable);
+                        $("#rank").html(" ");
+                        $("#minimum").html(" ");
+                        $("#thehighest").html(" ");
+                        $("#meritpay").html(" ");
+                        $("#qjnr").html(" ");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+    }
+    //取消
+    function qx() {
+        $("#modal-form").modal('hide');
+        table();
+        $('#table1').bootstrapTable('load',datatable);
+        $("#rank").html(" ");
+        $("#minimum").html(" ");
+        $("#thehighest").html(" ");
+        $("#meritpay").html(" ");
+        $("#qjnr").html(" ");
+    }
+    //修改取消
+    function qx1() {
+        $("#modal-form1").modal('hide');
+        table();
+        $('#table1').bootstrapTable('load',datatable);
+        $("#rank").html(" ");
+        $("#minimum").html(" ");
+        $("#thehighest").html(" ");
+        $("#meritpay").html(" ");
+        $("#qjnr").html(" ");
+    }
+    //删除
+    function Delete() {
+        var ids = "";//得到用户选择的数据的ID
+        var rows = $table.bootstrapTable('getSelections');
+        if (rows == 'checked') {
+            alert(1);
+        }
+        for (var i = 0; i < rows.length; i++) {
+            ids += rows[i].ID + ',';
+        }
+        ids = ids.substring(0, ids.length - 1);
+
+        DeleteByIds(ids);
+    }
+    //新增账号
+    function sq() {
+        var rank=$("#rank").html();
+        var minimum=$("#minimum").html();
+        var thehighest =$("#thehighest").html();
+        var meritpay=$("#meritpay").html();
+        var describe=$("#qjnr").html();
+        if(rank == ""|| minimum==""|| thehighest==""|| meritpay==null){
+            alert("温馨提示：请把其他选项填写完整~")
+        }else{
+            var data={"rank":rank,"minimum":minimum,"thehighest":thehighest,"meritpay":meritpay,"userId":userid,"describe":describe};
+
+            $.ajax({
+                url:"/compensationRules/insertCr",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+
+                    if(data.code!=404){
+                        alert("发布成功");
+                        $("#modal-form").modal('hide');
+                        table();
+                        $('#table1').bootstrapTable('load',datatable);
+                        $("#rank").html(" ");
+                        $("#minimum").html(" ");
+                        $("#thehighest").html(" ");
+                        $("#meritpay").html(" ");
+                        $("#qjnr").html(" ");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+    }
+    //修改账号
+    function xg() {
+        var rank=$("#rank1").val();
+        var minimum=$("#minimum1").html();
+        var thehighest =$("#thehighest1").html();
+        var meritpay=$("#meritpay1").html();
+        var describe=$("#qjnr1").html();
+        if(rank == ""|| minimum==""|| thehighest==""|| meritpay==null){
+            alert("温馨提示：请把其他选项填写完整~")
+        }else{
+            var data={"rank":rank,"minimum":minimum,"thehighest":thehighest,"meritpay":meritpay,"userId":userid,"describe":describe};
+
+            $.ajax({
+                url:"/compensationRules/updateCr",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+
+                    if(data.code!=404){
+                        alert("修改成功");
+                        $("#modal-form1").modal('hide');
+                        table();
+                        $('#table1').bootstrapTable('load',datatable);
+                        $("#rank").html(" ");
+                        $("#minimum").html(" ");
+                        $("#thehighest").html(" ");
+                        $("#meritpay").html(" ");
+                        $("#qjnr").html(" ");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+    }
+    //新增账号
+    function xinzeng(){
+        $("#modal-form").modal('show');
+        $(".modal-dialog").show();
+        //  ssyj();
+    };
+    //修改账号
+    function xiougai(){
+        $("#modal-form1").modal('show');
+        $(".modal-dialog").show();
+        //  ssyj();
+    };
+    //如需刷新iframe，则只需把window替换为响应的iframe的 属性值或ID属性值
+    $(function () {
+        var Request = new Object();
+
+        var opstatus;
+        $("#kntype").val("01");
+        $("a").tooltip();
+        $(":button").tooltip();
+        $("#top").click(function () {
+            var speed=200;//滑动的速度
+            $('body,html').animate({ scrollTop: 0 }, speed);
+            return false;
+        });
+        $("#big").show();
+        $("#example").hide();
+
+
+        table();
+        $("#paimingtable").show();
+        $(".searchable-select").click(function () {
+            $("#personselect").modal('show');
+            // $(".modal-dialog").modal('show');
+        });
+        $("#personselect").find(".row").height($(document).height()-100);
+
+        tree();
+        $("#tree").height($(document).height()-110);
+        //名字选择框 copy结束
+    });
+    $("#name1").searchableSelect({width:85});
+    $(".searchable-select").click(function () {
+        $("#personselect").modal('show');
+    });
+
+    function closePage(){
+        $("#personselect").modal('hide');
+    }
+
+    //名字选择框 copy开始
+    $("#sxry").searchableSelect({width:85});
+    $("#sxry").searchableSelect({width:85});
+    $(".searchable-select").click(function () {
+        $("#personselect").modal('show');
+        // $(".modal-dialog").modal('show');
+    });
+    $("#personselect").find(".row").height($(document).height()-100);
+    $('#table2').height($("#personselect").find(".row").height()-100);
+    tree();
+    $("#tree").height($(document).height()-110);
+    //名字选择框 copy结束
+    //初始化树形结构
+    function tree() {
+        $.ajax({
+            url: "/Tdepartmentinfo/querySXJGTdepartmentinfo",
+            data: {},
+            async: false,
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                data.splice(0, 0, {'text': '全部', 'nodeid': '01'});
+                $('#tree').treeview({
+                    data: data,         // 数据源
+                    collapseIcon: "iconfont icon-xiangshangjiantou",
+                    expandIcon: "iconfont icon-iconset0417",
+                    checkedIcon:"glyphicon glyphicon-check",
+                    color: "#000000",
+                    backColor: "#FFFFFF",
+                    href: "#node-1",
+                    selectable: true,
+                    //showCheckbox:true,
+                    //multiSelect: false,    //多选
+                    singleSelect : true, // 单选checkbox
+                    state: {
+                        checked: true,
+                        disabled: true,
+                        expanded: true,
+                        selected: true
+                    },
+                    tags: ['available'],
+                    /*onNodeChecked: function (event, data) {
+                        alert("onNodeChecked----"+data.nodeid);
+
+                        //alert("deparepid"+data.deparepid);
+                    },*/
+                    onNodeSelected: function (event, data) {
+                        num2 = data.nodeid;
+                        name2 = data.text;
+                        $.ajax({
+                            url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                            data: {"id": data.nodeid},
+                            async: false,
+                            dataType: "json",
+                            type: "post",
+                            success: function (data) {
+
+                                //alert("deparepid"+deparepid);
+                                table2();
+                                $('#table2').bootstrapTable('load',data);
+                                $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                            },
+                            error: function (error) {
+                                alert("数据丢失了，刷新下试试吧" + error.status);
+                            }
+                        });
+                        $("#search").click(function () {
+                            $.ajax({
+                                url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                                data: {"id": data.nodeid, "username": $("#key").val()},
+                                async: false,
+                                dataType: "json",
+                                type: "post",
+                                success: function (data) {
+                                    table2();
+                                    $('#table2').bootstrapTable('load',data);
+
+                                    $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                    $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                    /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                },
+                                error: function (error) {
+                                    alert("数据丢失了，刷新下试试吧" + error.status);
+                                }
+                            });
+                        })
+                    }
+                });
+                $('#tree').treeview('collapseAll', {silent: true});
+                $('#tree').find("ul li:first").click();
+            },
+            error: function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+
+    };
+    //初始化树形结构
+    function tree() {
+        $.ajax({
+            url: "/Tdepartmentinfo/querySXJGTdepartmentinfo",
+            data: {},
+            async: false,
+            dataType: "json",
+            type: "post",
+            success: function (data) {
+                data.splice(0, 0, {'text': '全部', 'nodeid': '01'});
+                $('#tree').treeview({
+                    data: data,         // 数据源
+                    collapseIcon: "iconfont icon-xiangshangjiantou",
+                    expandIcon: "iconfont icon-iconset0417",
+                    checkedIcon:"glyphicon glyphicon-check",
+                    color: "#000000",
+                    backColor: "#FFFFFF",
+                    href: "#node-1",
+                    selectable: true,
+                    //showCheckbox:true,
+                    //multiSelect: false,    //多选
+                    singleSelect : true, // 单选checkbox
+                    state: {
+                        checked: true,
+                        disabled: true,
+                        expanded: true,
+                        selected: true
+                    },
+                    tags: ['available'],
+                    /*onNodeChecked: function (event, data) {
+                        alert("onNodeChecked----"+data.nodeid);
+
+                        //alert("deparepid"+data.deparepid);
+                    },*/
+                    onNodeSelected: function (event, data) {
+                        num2 = data.nodeid;
+                        name2 = data.text;
+                        $.ajax({
+                            url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                            data: {"id": data.nodeid},
+                            async: false,
+                            dataType: "json",
+                            type: "post",
+                            success: function (data) {
+
+                                //alert("deparepid"+deparepid);
+                                table2();
+                                $('#table2').bootstrapTable('load',data);
+                                $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                            },
+                            error: function (error) {
+                                alert("数据丢失了，刷新下试试吧" + error.status);
+                            }
+                        });
+                        $("#search").click(function () {
+                            $.ajax({
+                                url: "/Tdepartmentinfo/queryTdepartmentTuser",
+                                data: {"id": data.nodeid, "username": $("#key").val()},
+                                async: false,
+                                dataType: "json",
+                                type: "post",
+                                success: function (data) {
+                                    table2();
+                                    $('#table2').bootstrapTable('load',data);
+
+                                    $("#tree").siblings().find(".pull-left.pagination-detail").css("left", "19%");
+                                    $('#tree').siblings().find('.fixed-table-toolbar').remove();
+                                    /*$('#table2').parent().siblings(".fixed-table-container").height($(document).height()-50);*/
+                                },
+                                error: function (error) {
+                                    alert("数据丢失了，刷新下试试吧" + error.status);
+                                }
+                            });
+                        })
+                    }
+                });
+                $('#tree').treeview('collapseAll', {silent: true});
+                $('#tree').find("ul li:first").click();
+            },
+            error: function (error) {
+                alert("数据丢失了，刷新下试试吧" + error.status);
+            }
+        });
+
+    };
+    //初始化人员表格
+    function table2() {
+        $('#table2').bootstrapTable('destroy').bootstrapTable({
+            /*showToggle:!0,
+        showColumns:!0,*/
+            iconSize: "outline",
+            toolbar: "#exampleTableEventsToolbar",
+            /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+            //url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            /*showRefresh:true,*/
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            checkboxHeader:0,
+            singleSelect : true, // 单选checkbox
+            columns: [
+                {
+                    checkbox: true,
+                    visible: true,
+                    width:'2%',
+                    align:'center'
+                }, {
+                    field: 'usernumber',
+                    title: '工号',
+                    align: 'center',
+                    width: '25%',
+                },{
+                    field: 'username',
+                    title: '姓名',
+                    align: 'center',
+                    width: '25%',
+                }, {
+                    field: 'sex',
+                    title: '性别',
+                    align: 'center',
+                    width: '10%',
+                }, {
+                    field: 'age',
+                    title: '年龄',
+                    align: 'center',
+                    width: '28%',
+                }, {
+                    field: 'phone1',
+                    title: '联系电话',
+                    align: 'center',
+                    width: '30%',
+                }],
+            data: []
+        });
+    }
+    //表格接口
+    function table(){
+        //  alert("当前状态=="+$("#sxlx").find("option:selected").val());
+        $('#table1').bootstrapTable({
+            /*showToggle:!0,
+            showColumns:!0,*/
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            /*showRefresh:true,*/
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: true, // 在表格底部显示分页组件，默认false
+            pageList: [5,10, 15], // 设置页面可以显示的数据条数
+            pageSize: 5, // 页面数据条数
+            clickToSelect: true,//单击选中行
+            pageNumber: 1, // 首页页码
+            onClickCell:function(field, value, row, $element,event){
+                // alert(row.rank);
+                // alert(row.minimum);
+                // // page('/manageMess?id='+row.id,'业绩详情');
+                $("#rank1").val(row.rank);
+                $("#minimum1").html(row.minimum);
+                $("#thehighest1").html(row.thehighest);
+                $("#meritpay1").html(row.meritpay);
+                $("#qjnr1").html(row.qjnr);
+
+                //alert(field +"，"+value+"，"+row.id);//value当前点击列所在行的内容，可以直接理解为单元格的内容，row为当前点击列所在行的所有数据
+            },
+            columns: [
+                {
+                    checkbox: true,
+                    visible: true,
+                    width:'2%',
+                    align:'center'
+                },{
+                    field: 'rolename',
+                    width:'5%' ,
+                    title: '岗位名称',
+                    align:'center',
+
+                }, {
+                    field: 'rolepid',
+                    width:'7%' ,
+                    title: '所属单位',
+                    align:'center',
+                }  ,{
+                    field: 'roletime',
+                    width:'5%' ,
+                    title: '岗位描述',
+                    align:'center',
+                }] ,
+            data:datatable1
+        });
+    };
+    //表格代码
+    $(".fht-cell").remove();
+    /* 查询 */
+    var epid ;
+    var id;
+    function chaxunn(){
+
+        getNews();
+    };
+
+    //获取复选框
+    $("#table1").bootstrapTable({
+
+
+
+// 1.点击每行进行函数的触发
+
+        onClickRow : function(row, tr,flied){
+
+
+
+        },
+
+
+
+//2. 点击前面的复选框进行对应的操作
+
+//点击全选框时触发的操作
+
+        onCheckAll:function(rows){
+
+
+        },
+
+//点击每一个单选框时触发的操作
+
+        onCheck:function(row){
+            console.log(row);
+
+
+        },
+
+//取消每一个单选框时对应的操作；
+
+        // onUncheck:function(row){
+        //     console.log(row);
+        // }
+    });
+
+    /* 重置 */
+    function chongzhii(){
+        $("#sxry").siblings().find(".searchable-select-holder").html("全部");
+        $("#sxry").siblings().find(".searchable-select-holderappend").html("01");
+
+        getNews();
+    };
+    //解析url参数
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    var data ={"state":"01"};
+    <!-- jeDate 插件 -->
+
+    //进度条
+    layui.use('slider', function(){
+        var $ = layui.$
+            ,slider = layui.slider;
+        //默认滑块
+        slider.render({
+            elem: '#slideTest1',
+
+        });
+        //开启输入框
+        slider.render({
+            elem: '#slideTest8'
+            ,input: true //输入框
+            , change: function(value){
+                // alert(value);
+                console.log(value); //动态获取滑块数值
+                $("#wcjd").val(value);
+                //do something
+            }
+        });
+    });
+
+    //选项卡设置
+    function page(url, title) {
+        var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+        $(window.top.document).find('.J_mainContent').find("iframe").hide();
+        var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+            + '" seamless="" style="display: inline;"></iframe>';
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+            ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+        $(window.top.document).find('.J_mainContent').append(iframe);
+    }
+
+
+
+    var  datatable1 ;
+    var columns=[];
+    //查询消息
+    function getNews() {
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            async:false,
+            success: function (data) {
+                userid = data.id;
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+
+        $.ajax({
+            url: "/Tjobinfo/queryTuserByIdTjobinfo",
+            type: "post",
+            dataType: 'json',
+            async:false,
+            data:{"userid":userid},
+            success: function (data) {
+
+                jobname = data[0].jobname;
+
+                if(jobname == "董事长"){
+                    job ="2";
+
+                }
+                if(jobname == "总经理"){
+                    job ="2";
+                }
+
+            }
+        })
+
+        if(job == "1"){
+            var data={"id":userid};
+        }else{
+            var aa =  $("#sxry").siblings().find(".searchable-select-holderappend").html();
+            if(aa == "01"){
+                var data={"id":""};
+            }else{
+                var data={"id":aa};
+            }
+        }
+        $.ajax({
+            url: "/troleinfo/queryPidTroleinfo",
+            data: data,
+            type: "post",
+            dataType: 'json',
+            async:false,
+            success: function (data) {
+                // console.log(data);
+                datatable1 = data ;
+                columns = [];
+                columns.push(
+                    {
+                        checkbox: true,
+                        visible: true,
+                        width:'2%',
+                        align:'center'
+                    }, {
+                    field: 'rolename',
+                    width:'5%' ,
+                    title: '岗位名称',
+                    align:'center',
+
+                }, {
+                    field: 'rolepid',
+                    width:'7%' ,
+                    title: '所属单位',
+                    align:'center',
+                }  ,{
+                    field: 'roletime',
+                    width:'5%' ,
+                    title: '岗位描述',
+                    align:'center',
+                });
+
+
+                //重新初始化表格
+                $('#table1').bootstrapTable(
+                    "refreshOptions",
+                    {
+                        columns : columns,
+                    }
+                );
+                $('#table1').bootstrapTable('load',datatable1);
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+
+    }
+    //获取头像
+    function getMyinfo(otherid){
+        $.ajax({
+            url:"/tuser/queryIdTuser",
+            type:"post",
+            dataType:'json',
+            data:{"userid":otherid},
+            success:function(data){
+                console.log(data)
+                if(data.txfilename==null){
+                    return data.ip+"a1.jpg";
+                }else{
+                    return  data.ip+data.txfilename;
+                }
+            }
+        });
+    }
+    chongzhii();
+
+    //人员选择确认
+    function chose() {
+        var selectContent = $('#table2').bootstrapTable('getSelections');
+        if(selectContent.length ==1){
+            var num1 = selectContent[0].id;
+            var name1 = selectContent[0].username;
+            $('.searchable-select-holder').html(name1);
+            $('.searchable-select-holderappend').html(num1);
+        }else{
+            $("#sxry").siblings().find('.searchable-select-holder').html(name2);
+            $("#sxry").siblings().find('.searchable-select-holderappend').html(num2);
+        }
+        $("#personselect").modal('hide');
+    }
+
+    <!-- 业绩确认接口 -->
+    function queren(id){
+
+        $("#modal-form1").modal('show');
+        $(".modal-dialog").show();
+        var data = {"id":id}
+        $.ajax({
+            url:"/performance/manage/queryJGLXQPfmmList",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                for(var i=0;i<data.length;i++){
+                    //alert("业绩详情=="+data[i].username);
+                    $("#qrjhyj").html(data[i].pfmnumber+"h");
+                    $("#qrjhys").html(data[i].pfmworkhours+"h");
+                    $("#qryjnr").html(data[i].pfmtext);
+                    $("#qrssyj").html(data[i].pfmdowntext);
+                    $("#qryjlx").html(data[i].pfmtype);
+                    $("#qrssbm").html(data[i].userpartname);
+                    $("#qrSearchtime").val(data[i].pfmstarttime);
+                    $("#qrEndtime").val(data[i].pfmendtime);
+                    $("#qrid").val(data[i].id);
+                }
+                // $('#table1').bootstrapTable('load',datatable);
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        })
+
+    }
+</script>
+</html>

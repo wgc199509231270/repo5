@@ -1,0 +1,2777 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html"><!-- Mirrored from www.zi-han.net/theme/hplus/graph_flot.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:59 GMT --><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title></title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min3.css" rel="stylesheet">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="/static/js/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelect.css">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script><link rel="stylesheet" href="http://localhost:8888/static/js/plugins/laydate/theme/default/laydate.css?v=5.0.9" id="layuicss-laydate">
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+        <script src="https://img.hcharts.cn/highcharts/highcharts-3d.js"></script>
+        <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    <style>
+        /*列表分页信息*/
+        .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            position: relative;
+            left: 0%;
+        }
+      #main{
+		width:100%;
+		height:1000px;
+		MARGIN-RIGHT: auto;
+		MARGIN-LEFT: auto;
+    }
+        input[type=range]{
+            margin-top: 8px;
+            outline: none;
+            -webkit-appearance: none;/*清除系统默认样式*/
+            width:80% !important;
+            background: #e7eaec;
+            height: 3px;/*横条的高度*/
+        }
+        /*拖动块的样式*/
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 16px; /*拖动块高度*/
+            width: 16px; /*拖动块宽度*/
+            background:  #0099CC; /*拖动块背景*/
+            border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px #ddd
+        }
+        #text{
+            white-space: normal;word-break: break-all;word-wrap: break-word;
+        }
+        .my-container {
+            float: left;
+            display: inline-block;
+        }
+
+        .myLabel-content ,.myText-content,.myBtn-content{
+            float: left;
+            display: inline-block;
+            line-height: 30px;
+            margin-left: 10px;
+        }
+        .myLabel-content,.myText-content input[type='text'],.myBtn-content .btn {
+            height: 30px;
+            font-size: 16px;
+        }
+        .myBtn-content .btn {
+            margin-bottom: 10px;
+        }
+
+		/* 柱状折线 */
+		.zzzx{
+			position:relative;
+			top:35px;
+			left:92%;
+		}
+		
+		
+		/*复选框*/
+		.lxinput{
+			display:inline-block;
+			width:15px;
+			height:15px;
+			border-radius:3px;
+			border:1px solid #laafcc;
+			margin-left:10px;
+		}
+        .pmtbb{
+            color: #66C5FF !important;
+        }
+		/*圆角边框*/
+		.sjbiankuang{
+			border:1px #8A8E92 solid;
+			width:49px;
+			height:28px;
+			border-radius:2px 11px 0px 11px;
+			text-align:center;
+			line-height:28px;
+		}
+        .sjbiankuang:hover{
+            background-color:#66C5FF;
+            border:0px;
+            color:white;
+            cursor: pointer;
+        }
+        .rbtntext:hover{
+            cursor: pointer;
+        }
+
+		.biankuang{
+			border:1px #8A8E92 solid;
+			width:49px;
+			height:28px;
+			border-radius:2px 11px 0px 11px;
+			text-align:center;
+			line-height:28px;
+			float:left;
+			margin-left: 5px;
+		}
+		
+		 .biankuang:link{
+			border:1px #8A8E92 solid;
+		}
+		.biankuang:visited{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+		}
+		.biankuang:hover{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+            cursor: pointer;
+		}
+		.biankuang:active{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+		} 
+		.jdbiankuang{
+			border:1px #8A8E92 solid;
+			width:79px;
+			height:28px;
+			border-radius:2px 11px 0px 11px;
+			text-align:center;
+			line-height:28px;
+			float:left;
+			margin-left: 10px;
+		}
+		
+		 .jdbiankuang:link{
+			border:1px #8A8E92 solid;
+		}
+		.jdbiankuang:visited{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+		}
+		.jdbiankuang:hover{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+            cursor: pointer;
+		}
+		.jdbiankuang:active{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+		} 
+		.nfbiankuang{
+			border: 1px #8A8E92 solid;
+		    width: 51px;
+		    height: 28px;
+		    border-radius: 2px 11px 0px 11px;
+		    text-align: center;
+		    line-height: 28px;
+		    float: left;
+		    margin-left: 7px;
+		}
+		
+		 .nfbiankuang:link{
+			border:1px #8A8E92 solid;
+		}
+		.nfbiankuang:visited{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+		}
+		.nfbiankuang:hover{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+            cursor: pointer;
+		}
+		.nfbiankuang:active{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+		} 
+		.biankuangstyle{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+		}
+		.zbiankuang {
+		    border: 1px #8A8E92 solid;
+		    width: 37px;
+		    height: 35px;
+		    border-radius: 2px 9px 2px 9px;
+		    text-align: center;
+		    line-height: 35px;
+		    margin-top: 9px;
+		    margin-left: 30px;
+		    /* box-shadow: 1px 2px 0px 0px lightgrey inset; */
+		}
+		.zxbiankuang {
+		    border: 1px #8A8E92 solid;
+		    width: 37px;
+		    height: 35px;
+		    border-radius: 2px 9px 2px 9px;
+		    text-align: center;
+		    line-height: 35px;
+		    margin-top: 9px;
+		    margin-left: 30px;
+		    /* box-shadow: 1px 2px 0px 0px lightgrey inset; */
+		}
+		.zbiankuang:hover{
+			background-color:#66C5FF;
+			border:0px;
+			color:white;
+            cursor: pointer;
+		}
+        .zxbiankuang:hover{
+            background-color:#66C5FF;
+            border:0px;
+            color:white;
+            cursor:pointer;
+        }
+		.pfont{
+			margin-left:20px;
+			font-size:10px;
+		}
+		
+		label {
+		    font-weight:normal;
+		}
+		#pmword{
+			color: #66C5FF;
+		}
+		/* 右面筛选框 */
+		.zztys{
+		    background-color: #bababa;
+		    border-color: #bababa;
+		    color: #FFF;
+		}
+
+        .icon-paiming{
+            color: #66C5FF;
+        }
+    </style>
+    <!--刷新当前页面  -->
+    <script type="text/javascript">
+        laydate.render({
+            elem: '#Begtime'
+        });
+        laydate.render({
+            elem: '#Endtime'
+        });
+
+    //如需刷新iframe，则只需把window替换为响应的iframe的 属性值或ID属性值
+    
+
+        var sign_id; //业务id
+        var uploader;//Webuploader 对象  图片上传
+        var a=1;  //切换个人团队标记
+        
+        //开始结束时间
+        var date = new Date();
+        var year = date.getFullYear();
+        var isRun = year%4 == 0 && year%100 != 0 || year%400 ==0;
+        var month = date .getMonth()+1;
+        var starttime;
+        var endtime;
+        if(month=="1"||month=="3"||month=="5"||month=="7"||month=="8"){
+        	starttime=year+"/"+"0"+month+"/01";
+        	endtime= year+"/"+"0"+month+"/31";
+        }else if(month=="10"||month=="12"){
+        	starttime=year+"/"+month+"/01";
+        	endtime= year+"/"+month+"/31";
+        }else if(month=="4"||month=="6"||month=="9"||month=="11"){
+        	starttime=year+"/"+"0"+month+"/01";
+        	endtime= year+"/"+"0"+month+"/30";
+        }else if(month=="11"){
+        	starttime=year+"/"+month+"/01";
+        	endtime= year+"/"+month+"/30";
+        }else if(isRun && month=="2"){
+        	starttime=year+"/02/01";
+        	endtime=year+"/02/29";
+        }else if(! isRun && month=="2"){
+        	starttime=year+"/02/01";
+        	endtime=year+"/02/28";
+        }
+        var starttimeclick = starttime;
+        var endtimeclick = endtime;
+
+        
+        
+        $(function () {
+            $("#kntype").val("01");
+            $("a").tooltip();
+            $(":button").tooltip();
+            $("#top").click(function () {
+                var speed=200;//滑动的速度
+                $('body,html').animate({ scrollTop: 0 }, speed);
+                return false;
+            });
+            $("#big").show(); //总div
+            $("#donghua").remove();
+            $("#example").hide();
+            $("#paimingtable").hide();  //列表
+            $("#tongjitable").show(); //a角 b角
+            $("#tongjidiv").show();
+            $("#sliders").show();
+            $("#tongji2").hide();
+            $("#tongji3").hide();
+            $("#tongji5").hide();
+            $("#tongji66").hide();
+            $("#tongji").hide();
+            $("#tongji4").show();
+            $("#tongji7").hide();
+            $("#tongji8").hide();
+            $("#tongji9").hide();
+            //$("#picControl").show();
+            $("#xl").hide();
+            $("#work").hide();
+           
+            //筛选框
+            $("#yf12").addClass("biankuangstyle"); 
+            $("#yue").addClass("biankuangstyle");
+            $("#dxgr").addClass("biankuangstyle");
+            $("#fwgs").addClass("biankuangstyle");
+            $("#dianzan1").css("color","#66C5FF");
+            //$("#yj").find(".zzt").addClass("zztys"); //柱状图追加样式
+            
+            
+           
+            yjmess("01","03",starttime,endtime); //业绩接口的方法
+            //图表
+            yejiLinePic(); //业绩折线
+            yejizzPic();
+            yejibzPic();
+            jixiaoLinePic();
+            jixiaozzPic();
+            jixiaobzPic();
+            workhourLinePic();
+            gzsczzPic();
+            workhourbzPic();
+            picturecontrol();
+              table1() ;//表格信息
+            search(); //搜索重置
+         
+            
+            //调用
+            // 初始化Web Uploader
+            uploader = WebUploader.create({
+                // 自动上传。
+                auto: false,
+                // swf文件路径
+                swf: '/static/js/plugins/webuploader/Uploader.swf',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#filePicker',
+
+                duplicate :true,//是否可以重复上传
+
+                fileSizeLimit: 10000*1024*1024, //限制图片大小，不可以超过
+
+                compress: null,
+
+                // 只允许选择文件，可选。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/jpg,image/jpeg,image/png'   //修改这行，加快上传文件框的打开速度
+                }
+            });
+
+        });
+        
+
+
+//选项卡设置
+        function page(url, title) {
+            var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+            $(window.top.document).find('.J_mainContent').find("iframe").hide();
+            var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+                + '" seamless="" style="display: inline;"></iframe>';
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+                ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="fa fa-times" style="font-size: 1px;color:#D8D9DA;float: right;margin-left: 5px;"></i></a>');
+            $(window.top.document).find('.J_mainContent').append(iframe);
+        }
+//搜索、重置按钮
+        function search() {
+            $('#search1').click(function () {
+                pic();
+                pic1();
+                pic5();
+                pic6();
+                dianzanLinePic();
+                pinglunLinePic();
+                fabiaoLinePic();
+                persondianzanLinePic();
+                personpinglunLinePic();
+                personfabiaoLinePic();
+            });
+            $('#reset1').click(function () {
+                now();
+                before();
+                $("#kntype").val("01");
+                $("#type2").val("");
+                $("#key").val("");
+                $(".searchable-select-holder").html("查询全部");
+                pic();
+                pic1();
+                pic5();
+                pic6();
+                dianzanLinePic();
+                pinglunLinePic();
+                fabiaoLinePic();
+                persondianzanLinePic();
+                personpinglunLinePic();
+                personfabiaoLinePic();
+            });
+        }
+
+
+      
+//图表切换列表
+        function liebiaotab() {
+            $("#tongjitable").hide();
+            $("#sliders").hide();
+            $("#example").hide();
+            $("#tongji").hide();
+            $("#tongji2").hide();
+            $("#tongji3").hide();
+            $("#tongji4").hide();
+            $("#tongji5").hide();
+            $("#tongji66").hide();
+            $("#tongji7").hide();
+            $("#tongji8").hide();
+            $("#tongji9").hide();
+            $("#tongjidiv").hide();
+            $("#pmts").hide();
+            $("#new").hide();
+            $("#picControl").hide();
+            $("#paimingtable").show();
+            $("#top").show();
+            yjmess(object,state,starttime,endtime);
+            $("#table1").show();
+            table1();
+            $('#table1').bootstrapTable('load',datatableyj);
+        }
+//列表切换图表
+        function tubiaotab() {
+            $("#tongjitable").show();
+            $("#sliders").show();
+            $("#example").show();
+            $("#tongji").hide();
+            $("#tongjidiv").show();
+            $("#tongji2").hide();
+            $("#tongji3").hide();
+            $("#tongji4").show();
+            $("#tongji5").hide();
+            $("#tongji66").hide();
+            $("#tongji7").hide();
+            $("#tongji8").hide();
+            $("#tongji9").hide();
+            $("#picControl").hide();
+            $("#paimingtable").hide();
+            $("#pmts").show();
+            $("#table1").hide();
+
+        }
+
+/* 点击事件 */
+		var object="01" ;   // 对象
+        var state="03" ;   // 范围
+        var types="01";     //类型
+        var lblx = "月"; //列表类型
+        var lbsj = month+"月"; //列表时间
+        //wzshow();//初始化文字
+        $(function(){
+//初始化样式		
+			 var a="<div class='zxbiankuang' id='fwxz'>小组</div>";
+	         var b="<div class='zxbiankuang' id='fwbm'>部门</div>";
+	         var c="<div class='zxbiankuang' id='fwgs'>公司</div>";
+	         $("#zxbk").html(a+b+c);
+	         $("#fwgs").addClass("biankuangstyle");
+//范围js
+			$('.zxbiankuang').on('click',function(){
+					 $('.zxbiankuang').removeClass("biankuangstyle");
+			         $(this).addClass("biankuangstyle");
+			         if($(this).html()=="小组"){
+			        	 state ="01";
+			        	 yjmess(object,state,starttimeclick,endtimeclick);
+			        	 yejiLinePic(); //业绩折线
+			             yejizzPic();
+			             yejibzPic();
+			             jixiaoLinePic();
+			             jixiaozzPic();
+			             jixiaobzPic();
+			             workhourLinePic();
+			             gzsczzPic();
+			             workhourbzPic();
+                        //wzshow(types,object,state);
+			         }else if($(this).html()=="部门"){
+			        	 state ="02";
+			        	 yjmess(object,state,starttimeclick,endtimeclick);
+			        	 yejiLinePic(); //业绩折线
+			             yejizzPic();
+			             yejibzPic();
+			             jixiaoLinePic();
+			             jixiaozzPic();
+			             jixiaobzPic();
+			             workhourLinePic();
+			             gzsczzPic();
+			             workhourbzPic();
+                       // wzshow(types,object,state);
+			         }else if($(this).html()=="公司"){
+			        	 state ="03";
+			        	 yjmess(object,state,starttimeclick,endtimeclick);
+			        	 yejiLinePic(); //业绩折线
+			             yejizzPic();
+			             yejibzPic();
+			             jixiaoLinePic();
+			             jixiaozzPic();
+			             jixiaobzPic();
+			             workhourLinePic();
+			             gzsczzPic();
+			             workhourbzPic();
+                        //wzshow(types,object,state);
+			         }
+				});
+//对象js
+	         $('.zbiankuang').on('click',function(){
+				 $('.zbiankuang').removeClass("biankuangstyle");
+		         $(this).addClass("biankuangstyle");
+		         if($(this).html()=="个人"){
+		        	 object = "01";
+		        	 $("#zxbk").html(a+b+c);
+		        	 $("#fwgs").addClass("biankuangstyle");
+		        	 yjmess(object,state,starttimeclick,endtimeclick);
+		        	 yejiLinePic(); //业绩折线
+		             yejizzPic();
+		             yejibzPic();
+		             jixiaoLinePic();
+		             jixiaozzPic();
+		             jixiaobzPic();
+		             workhourLinePic();
+		             gzsczzPic();
+		             workhourbzPic();
+                     //wzshow(types,object,state);
+                     table1();
+                     $('#table1').bootstrapTable('load',datatableyj);
+		         }else if($(this).html()=="小组"){
+		        	 object = "02";
+		        	 $("#zxbk").html(b+c);
+		        	 $("#fwgs").addClass("biankuangstyle");
+		        	 yjmess(object,state,starttimeclick,endtimeclick);
+		        	 yejiLinePic(); //业绩折线
+		             yejizzPic();
+		             yejibzPic();
+		             jixiaoLinePic();
+		             jixiaozzPic();
+		             jixiaobzPic();
+		             workhourLinePic();
+		             gzsczzPic();
+		             workhourbzPic();
+                    //wzshow(types,object,state);
+                     table1();
+                     $('#table1').bootstrapTable('load',datatableyj);
+		         }else if($(this).html()=="部门"){
+		        	 object = "03";
+		        	 $("#zxbk").html(c);
+		        	 $("#fwgs").addClass("biankuangstyle");
+		        	 yjmess(object,"03",starttimeclick,endtimeclick);
+		        	 yejiLinePic(); //业绩折线
+		             yejizzPic();
+		             yejibzPic();
+		             jixiaoLinePic();
+		             jixiaozzPic();
+		             jixiaobzPic();
+		             workhourLinePic();
+		             gzsczzPic();
+		             workhourbzPic();
+                    //wzshow(types,object,state);
+                     table1();
+                     $('#table1').bootstrapTable('load',datatableyj);
+		         };
+//对象点击后给范围追加的点击事件
+				$('.zxbiankuang').on('click',function(){
+					 $('.zxbiankuang').removeClass("biankuangstyle");
+			         $(this).addClass("biankuangstyle");
+			         if($(this).html()=="小组"){
+			        	 state ="01";
+			        	 yjmess(object,state,starttimeclick,endtimeclick);
+			        	 yejiLinePic(); //业绩折线
+			             yejizzPic();
+			             yejibzPic();
+			             jixiaoLinePic();
+			             jixiaozzPic();
+			             jixiaobzPic();
+			             workhourLinePic();
+			             gzsczzPic();
+			             workhourbzPic();
+                        //wzshow(types,object,state);
+			         }else if($(this).html()=="部门"){
+			        	 state ="02";
+			        	 yjmess(object,state,starttimeclick,endtimeclick);
+			        	 yejiLinePic(); //业绩折线
+			             yejizzPic();
+			             yejibzPic();
+			             jixiaoLinePic();
+			             jixiaozzPic();
+			             jixiaobzPic();
+			             workhourLinePic();
+			             gzsczzPic();
+			             workhourbzPic();
+                        //wzshow(types,object,state);
+			         }else if($(this).html()=="公司"){
+			        	 state ="03";
+			        	 yjmess(object,state,starttimeclick,endtimeclick);
+			        	 yejiLinePic(); //业绩折线
+			             yejizzPic();
+			             yejibzPic();
+			             jixiaoLinePic();
+			             jixiaozzPic();
+			             jixiaobzPic();
+			             workhourLinePic();
+			             gzsczzPic();
+			             workhourbzPic();
+                       // wzshow(types,object,state);
+			         }
+				});
+	         });
+		//范围点击事件
+		
+		/* 时间点击事件 */ 
+		yfjs();//月份接口
+		$('.sjbiankuang').on('click',function(){
+			 $('.sjbiankuang').removeClass("biankuangstyle");
+	        $(this).addClass("biankuangstyle");
+	        if( $(this).html()== "月"){
+	        	yfjs();
+	        	lblx = $(this).html();
+                lbsj = month+"月";
+                yjmess(object,state,starttime,endtime);
+                table1();
+                $('#table1').bootstrapTable('load',datatableyj);
+	        }else if($(this).html()== "季"){
+	        	$(".biankuang").hide();
+	        	jdjs();
+                lblx = $(this).html();
+                yjmess(object,state,starttime,endtime);
+                table1();
+                $('#table1').bootstrapTable('load',datatableyj);
+	        }else if($(this).html()== "年"){
+	        	$(".biankuang").hide();
+	        	$(".jdbiankuang").hide();
+	        	nfjs();
+                lblx = $(this).html();
+                starttimeclick = year+"/"+"01/01";
+                endtimeclick = year+"/"+"12/31";
+                yjmess(object,state,starttimeclick,endtimeclick);
+                yejiLinePic();
+                yejizzPic();
+                yejibzPic();
+                jixiaoLinePic();
+                jixiaozzPic();
+                jixiaobzPic();
+                workhourLinePic();
+                gzsczzPic();
+                workhourbzPic();
+                yjmess(object,state,starttime,endtime);
+                table1();
+                $('#table1').bootstrapTable('load',datatableyj);
+	        } 
+	        
+		});
+/* 月份js */
+		function yfjs(){
+			var now = new Date(); //当前日期 
+			var nowMonth = now.getMonth(); //当前月 
+			nowMonth = nowMonth+1;
+			//var wlyf = 12-nowMonth;
+			var nowhtml = "";
+			var lasthtml = "";
+			var html = "";
+			var list = [{id:"1"},{id:"2"},{id:"3"},{id:"4"},{id:"5"},{id:"6"},{id:"7"},{id:"8"}
+			,{id:"9"},{id:"10"},{id:"11"},{id:"12"}];
+			$(list).each(function(i,val){
+				if(nowMonth==list[i].id){
+					html = '<label><div class="biankuang" id="yf1" >'+list[i].id+'月</div> </label>';
+					
+				}else if(nowMonth<=list[i].id){
+					lasthtml += '<label><div class="biankuang" id="shiyi" style="margin-left:;">'+list[i].id+'月</div> </label>';
+				}else if(list[i].id<nowMonth){
+					nowhtml += '<label><div class="biankuang" id="shiy" style="margin-left:;">'+list[i].id+'月</div> </label>';
+				} 
+				
+			})
+			$("#nowmonth1").html(nowhtml);
+			$("#lastmonth").html(lasthtml);
+			$("#month2").html(html);
+			$("#yf1").addClass("biankuangstyle");
+			$('.biankuang').on('click',function(){
+                lbsj = $(this).html();
+				$("#yf1").removeClass("biankuangstyle");
+				 $('.biankuang').removeClass("biankuangstyle");
+		        $(this).addClass("biankuangstyle");
+		  		var clickyf = $(this).html().replace(/[^0-9]/ig,"");
+		     //判断点击的是几月份
+		       if(clickyf>nowMonth){
+		    	   if(clickyf=="1"||clickyf=="3"||clickyf=="5"||clickyf=="7"||clickyf=="8"){
+		            	starttimeclick=(year-1)+"/"+"0"+clickyf+"/01";
+		            	endtimeclick= (year-1)+"/"+"0"+clickyf+"/31";
+		            }else if(clickyf=="10"||clickyf=="12"){
+		            	starttimeclick =(year-1)+"/"+clickyf+"/01";
+		            	endtimeclick = (year-1)+"/"+clickyf+"/31";
+		            }else if(clickyf=="4"||clickyf=="6"||clickyf=="9"||clickyf=="11"){
+		            	starttimeclick =(year-1)+"/"+"0"+clickyf+"/01";
+		            	endtimeclick =(year-1)+"/"+"0"+clickyf+"/30";
+		            }else if(clickyf=="11"){
+		            	starttimeclick=(year-1)+"/"+clickyf+"/01";
+		            	endtimeclick= (year-1)+"/"+clickyf+"/30";
+		            }else if(isRun && clickyf=="2"){
+		            	starttimeclick=(year-1)+"/02/01";
+		            	endtimeclick=(year-1)+"/02/29";
+		            }else if(! isRun && clickyf=="2"){
+		            	starttimeclick=(year-1)+"/02/01";
+		            	endtimeclick=(year-1)+"/02/28";
+		            } 
+		    	   yjmess(object,state,starttimeclick,endtimeclick);
+		    	     yejiLinePic(); //业绩折线
+		             yejizzPic();
+		             yejibzPic();
+		             jixiaoLinePic();
+		             jixiaozzPic();
+		             jixiaobzPic();
+		             workhourLinePic();
+		             gzsczzPic();
+		             workhourbzPic();
+
+                   //yjmess(object,state,starttime,endtime);
+                   table1();
+                   $('#table1').bootstrapTable('load',datatableyj);
+		       }else if(clickyf<=nowMonth){
+		    	   if(clickyf=="1"||clickyf=="3"||clickyf=="5"||clickyf=="7"||clickyf=="8"){
+		            	starttimeclick=year+"/"+"0"+clickyf+"/01";
+		            	endtimeclick= year+"/"+"0"+clickyf+"/31";
+		            }else if(clickyf=="10"||clickyf=="12"){
+		            	starttimeclick =year+"/"+clickyf+"/01";
+		            	endtimeclick = year+"/"+clickyf+"/31";
+		            }else if(clickyf=="4"||clickyf=="6"||clickyf=="9"||clickyf=="11"){
+		            	starttimeclick =year+"/"+"0"+clickyf+"/01";
+		            	endtimeclick =year+"/"+"0"+clickyf+"/30";
+		            }else if(clickyf=="11"){
+		            	starttimeclick= year+"/"+clickyf+"/01";
+		            	endtimeclick= year+"/"+clickyf+"/30";
+		            }else if(isRun && clickyf=="2"){
+		            	starttimeclick=year+"/02/01";
+		            	endtimeclick=year+"/02/29";
+		            }else if(! isRun && clickyf=="2"){
+		            	starttimeclick=year+"/02/01";
+		            	endtimeclick=year+"/02/28";
+		            } 
+                   yjmess(object,state,starttimeclick,endtimeclick);
+		    	     yejiLinePic(); //业绩折线
+		             yejizzPic();
+		             yejibzPic();
+		             jixiaoLinePic();
+		             jixiaozzPic();
+		             jixiaobzPic();
+		             workhourLinePic();
+		             gzsczzPic();
+		             workhourbzPic();
+
+
+                   //yjmess(object,state,starttime,endtime);
+                   table1();
+                   $('#table1').bootstrapTable('load',datatableyj);
+		       }
+
+			})
+		};
+/* 季度js */
+		function jdjs(){
+			var now = new Date(); //当前日期 
+			var nowMonth = now.getMonth(); //当前月 
+			nowMonth = nowMonth+1;
+			//var wlyf = 12-nowMonth;
+			var nowhtml = "";
+			var html = "";
+			var djjd ;
+			if(1<=nowMonth<=3 ){
+				djjd="第一季度";
+			}else if(4<=nowMonth<=6){
+				djjd="第二季度";
+			}else if(7<=nowMonth<=9){
+				djjd="第三季度";
+			}else if(10<=nowMonth<=12){
+				djjd="第四季度";
+			}
+			
+			 var list = [{id:"第一季度"},{id:"第二季度"},{id:"第三季度"},{id:"第四季度"}];
+			$(list).each(function(i,val){
+				if(djjd == list[i].id ){
+					nowhtml = '<label><div class="jdbiankuang" id="jd1" >'+list[i].id+'</div></label>';
+                    lbsj =list[i].id;
+				}else {
+					html += '<label><div class="jdbiankuang"  style="margin-left:;">'+list[i].id+'</div> </label>';
+				}
+			}) 
+			$("#month2").html(nowhtml);
+			$("#lastmonth").html(html);
+			$("#jd1").addClass("biankuangstyle");
+			
+			$('.jdbiankuang').on('click',function(){
+				$("#jd1").removeClass("biankuangstyle");
+				 $('.jdbiankuang').removeClass("biankuangstyle");
+		        $(this).addClass("biankuangstyle");
+
+                var lastyear = date.getFullYear()-1;
+                var nowmonth = date.getMonth()+1;
+                var jdqsrq ; //季度起始日期
+                lbsj = $(this).html();
+                if($(this).html() == "第一季度"){
+                    jdqsrq = 3;
+                }else if($(this).html() == "第二季度"){
+                    jdqsrq = 6;
+                }else if($(this).html() == "第三季度"){
+                    jdqsrq = 9;
+                }else if($(this).html() == "第四季度"){
+                    jdqsrq = 12;
+                }
+                var html = $(this).html();
+                lbsj =$(this).html();
+		        if(nowmonth>0 && nowmonth<4 && html == "第一季度"){
+                    starttimeclick = year+"/"+"01/01";
+                    endtimeclick = year+"/"+"03/31";
+                    yjmess(object,state,starttimeclick,endtimeclick);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+                    table1();
+                    $('#table1').bootstrapTable('load',datatableyj);
+                } else if(nowmonth>3 && nowmonth <7 && html == "第二季度")
+                {
+                    starttimeclick = year + "/" + "01/01";
+                    endtimeclick = year + "/" + "03/31";
+                    yjmess(object, state, starttimeclick, endtimeclick);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+                    table1();
+                    $('#table1').bootstrapTable('load', datatableyj);
+                }else if(html == "第三季度" && nowmonth > 6 && nowmonth<10 ){
+                    starttimeclick = year+"/"+"07/31";
+                    endtimeclick = year+"/"+"09/30";
+                    yjmess(object,state,starttimeclick,endtimeclick);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+                    table1();
+                    $('#table1').bootstrapTable('load',datatableyj);
+                }else  if(html == "第四季度"&& nowmonth>9 && nowmonth< 13 )
+                {
+                    starttimeclick = year+"/"+"10/01";
+                    endtimeclick = year+"/"+"12/30";
+                    yjmess(object,state,starttimeclick,endtimeclick);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+                    table1();
+                    $('#table1').bootstrapTable('load',datatableyj);
+                }
+               if (html == "第二季度"  && nowmonth<= jdqsrq ) {
+                  starttimeclick = lastyear+"/"+"04/30";
+                  endtimeclick = lastyear+"/"+"06/30";
+                  yjmess(object,state,starttimeclick,endtimeclick);
+                  yejiLinePic();
+                  yejizzPic();
+                  yejibzPic();
+                  jixiaoLinePic();
+                  jixiaozzPic();
+                  jixiaobzPic();
+                  workhourLinePic();
+                  gzsczzPic();
+                  workhourbzPic();
+                   table1();
+                   $('#table1').bootstrapTable('load',datatableyj);
+              }
+              else if ( html == "第三季度" && nowmonth<= jdqsrq ) {
+                    starttimeclick = lastyear+"/"+"07/31";
+                    endtimeclick = lastyear+"/"+"09/30";
+                    yjmess(object,state,starttimeclick,endtimeclick);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+                   table1();
+                   $('#table1').bootstrapTable('load',datatableyj);
+                }else if  (html == "第四季度" && nowmonth<= jdqsrq  ){
+                    starttimeclick = lastyear+"/"+"10/01";
+                    endtimeclick = lastyear+"/"+"12/30";
+                    yjmess(object,state,starttimeclick,endtimeclick);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+                   table1();
+                   $('#table1').bootstrapTable('load',datatableyj);
+                };
+
+              /*  yjmess(object,state,starttime,endtime);
+                table1();
+                $('#table1').bootstrapTable('load',datatableyj);*/
+				//$(this).css({"background-color":"#66C5FF","color":"white","border":"0px;"})
+			})
+		};
+/* 年份js */
+		function nfjs(){
+			var now = new Date(); //当前日期 
+			var nowYear = now.getFullYear(); //当前月 
+			//var wlyf = 12-nowMonth;
+			var lasthtml = "";
+			var html = "";
+			var list = [{id:"2017"},{id:"2018"},{id:"2019"}];
+			$(list).each(function(i,val){
+				if(nowYear==list[i].id){
+					html = '<label><div class="nfbiankuang" id="nf1" >'+list[i].id+'</div> </label>';
+					lbsj = list[i].id;
+				}else if(nowYear>=list[i].id){
+					lasthtml += '<label><div class="nfbiankuang"  style="margin-left:;">'+list[i].id+'</div> </label>';
+				}
+				
+			})
+			$("#lastmonth").html(lasthtml);
+			$("#month2").html(html);
+			$("#nf1").addClass("biankuangstyle");
+			
+			$('.nfbiankuang').on('click',function(){
+                var quyear = date.getFullYear()-1;
+                var qianyear = date.getFullYear()-2;
+				$("#nf1").removeClass("biankuangstyle");
+				 $('.nfbiankuang').removeClass("biankuangstyle");
+		        $(this).addClass("biankuangstyle");
+		        var html = $(this).html();
+                lbsj = html;
+		        if(html == qianyear){
+                    starttimeclick = qianyear+"/"+"01/01";
+                    endtimeclick = qianyear+"/"+"12/31";
+                    yjmess(object,state,starttimeclick,endtimeclick);
+                    table1();
+                    $('#table1').bootstrapTable('load',datatableyj);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+
+                }else if(html  == quyear){
+                    starttimeclick = quyear+"/"+"01/01";
+                    endtimeclick = quyear+"/"+"12/31";
+                    yjmess(object,state,starttimeclick,endtimeclick);
+                    table1();
+                    $('#table1').bootstrapTable('load',datatableyj);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+                }else if(html == year){
+                    starttimeclick = year+"/"+"01/01";
+                    endtimeclick = year+"/"+"12/31";
+
+                    yjmess(object,state,starttimeclick,endtimeclick);
+                    table1();
+                    $('#table1').bootstrapTable('load',datatableyj);
+                    yejiLinePic();
+                    yejizzPic();
+                    yejibzPic();
+                    jixiaoLinePic();
+                    jixiaozzPic();
+                    jixiaobzPic();
+                    workhourLinePic();
+                    gzsczzPic();
+                    workhourbzPic();
+
+
+                }
+                /*yjmess(object,state,starttime,endtime);
+                table1();
+                $('#table1').bootstrapTable('load',datatableyj);*/
+				//$(this).css({"background-color":"#66C5FF","color":"white","border":"0px;"})
+			})
+		};
+		});	
+		
+		/* 排名接口*/
+        var datatableyj;
+        //ajax 获取排序数据 传给datatable1
+        function yjmess(object,state,starttime,endtime){
+            var data = {"starttime":starttime,"endtime":endtime,"object":object,"type":types,"state":state};
+            $.ajax({
+                url:"/performance/rank/queryPerformanceRank",
+                data: data,
+                async:false,
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    datatableyj=data;
+                    yejiLinePic();
+                },
+                error:function (error) {
+                    alert("网络状况不佳，用户登录失败！" + error.status);
+                }
+            });
+        }
+
+
+        //右面筛选
+        function picturecontrol() {
+            $("#tongjitable").show();
+            $("#sliders").show();
+
+            $("#dianzan1").click(function () {
+                $("#tongji").show();
+                $("#tongji2").hide();
+                $("#tongji3").hide();
+                $("#tongji4").hide();
+                $("#tongji5").hide();
+                $("#tongji66").hide();
+                $("#tongji7").hide();
+                $("#tongji8").hide();
+                $("#tongji9").hide();
+                $("#xl").hide();
+                $("#work").hide();
+                $("#yj").show();
+                $(this).css("color", "#66C5FF");
+                $(this).siblings().css("color", "");
+                types="01";
+               // wzshow(types,object,state);
+                yjmess(object,state,starttimeclick,endtimeclick);
+                table1();
+                $('#table1').bootstrapTable('load',datatableyj);
+            });
+
+            $("#pinglun1").click(function () {
+                $("#tongji2").show();
+                $("#tongji").hide();
+                $("#tongji3").hide();
+                $("#tongji4").hide();
+                $("#tongji5").hide();
+                $("#tongji66").hide();
+                $("#tongji7").hide();
+                $("#tongji8").hide();
+                $("#tongji9").hide();
+                $("#yj").hide();
+                $("#work").hide();
+                $("#xl").show();
+                $(this).css("color", "#66C5FF");
+                $(this).siblings().css("color", "");
+                types="02";
+               //wzshow(types,object,state);
+                yjmess(object,state,starttimeclick,endtimeclick);
+                table1();
+                $('#table1').bootstrapTable('load',datatableyj);
+            });
+            $("#fabushu1").click(function () {
+                $("#tongji").hide();
+                $("#tongji2").hide();
+                $("#tongji3").show();
+                $("#tongji4").hide();
+                $("#tongji5").hide();
+                $("#tongji66").hide();
+                $("#tongji7").hide();
+                $("#tongji8").hide();
+                $("#tongji9").hide();
+                $("#yj").hide();
+                $("#xl").hide();
+                $("#work").show();
+                $(this).css("color", "#66C5FF");
+                $(this).siblings().css("color", "");
+                types="03";
+                //wzshow(types,object,state);
+                yjmess(object,state,starttimeclick,endtimeclick);
+                table1();
+                $('#table1').bootstrapTable('load',datatableyj);
+            });
+
+        };
+//顶部文字展示
+       /* function wzshow(types,object,state){
+        if(types==01&&object==01&&state==01){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的业绩已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==01&&object==01&&state==02){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的业绩已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,部门排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==01&&object== 01&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的业绩已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,公司排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==01&&object== 02&&state==02){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>JAVA的业绩已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        }else if(types==01&&object== 02&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>JAVA的业绩已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,公司排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        }else if(types==01&&object== 03&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>设计部的业绩已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        };
+        if(types==02&&object== 01&&state==01){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的效率已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==02&&object== 01&&state==02){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的效率已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,部门排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==02&&object== 01&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的效率已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,公司排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==02&&object== 02&&state==02){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>JAVA的效率已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        }else if(types==02&&object== 02&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>JAVA的效率已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,公司排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        }else if(types==02&&object== 03&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>设计部的效率已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        };
+        if(types==03&&object== 01&&state==01){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的工作时长已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==03&&object== 01&&state==02){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的工作时长已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,部门排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==03&&object== 01&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>你的工作时长已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,公司排名第x，还差xh,就是第</font><font color='#FC682F' style='font-size:19px;'>x！</font>"
+            )
+        }else if(types==03&&object== 02&&state==02){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>JAVA的工作时长已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        }else if(types==03&&object== 02&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>JAVA的工作时长已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,公司排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        }else if(types==03&&object== 03&&state==03){
+            $("#pmts").html(
+                "<font color='#FC682F' style='font-size:15px;'>设计部的工作时长已达到：</font><font color='#66C5FF' style='font-size:19px;'>770h</font><font color='#FC682F' style='font-size:15px;'>,小组排名第3，还差10h,就是第</font><font color='#FC682F' style='font-size:19px;'>2！</font>"
+            )
+        };
+        }*/
+//业绩折线图
+        function yejiLinePic() {
+        	var data1=[];
+            var data2=[];
+            var month;
+            var day;
+ 			
+            for(var i=0;i<datatableyj.length;i++){
+                data1.push(datatableyj[i].name);
+                data2.push(parseFloat(datatableyj[i].realynum));
+            }	
+
+            $("#R0").val(10);
+            $("#R1").val(0);
+            var chart = new Highcharts.Chart({
+                chart: {
+//     		type:'column',
+                    //type:'spline',//曲线图
+                    type:'line',//折现图
+                    //type:'pie',//饼状图
+                    renderTo: 'tongji',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                    width : $("#tongjidiv").width(),
+                    height:$(document).height()*3/4,
+                    marginTop : 50,
+                    marginLeft:100,
+                    options3d: {
+                        enabled: true,//是否使用3D渲染图表功能
+                        alpha: 0,
+                        beta: 0,
+                        depth: 50,
+                        viewDistance: 25
+                    },
+                    plotBackgroundColor: null,    //绘图区的背景颜色
+                    plotBorderWidth: null,        //绘图区边框宽度
+                    plotShadow: false        //绘图区是否显示阴影
+                },
+
+                title: {
+                    text: '业绩量(h)',
+                    align:'left',
+                    y:20,
+                    x:110,
+                    style:{
+                    	fontSize:'13'
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: ''
+                    },
+                    categories: []
+                },
+                yAxis: {
+                    min: -3,
+                    title: {
+                        text: ''
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false//去掉官网的超链接
+                },
+                exporting:{
+                    enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                lang:{
+                    printChart: "打印图片",
+                    downloadJPEG: "导出JPEG 图片",
+                    downloadPDF: "导出PDF 文档",
+                    downloadPNG: "导出PNG 图片",
+                    downloadSVG: "导出SVG 矢量图",
+                    contextButtonTitle: "导出"
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        return '<span style="color:{'+this.series.data+'}">实际业绩量：'+this.y+'</span><br/>.'
+                    }
+                },
+
+                series:[{
+                    name: '',
+                    data:[]
+                }]
+            });
+
+            // Activate the sliders
+            $('#R0').on('change', function(){
+                $("#tongji").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji").highcharts().redraw(false);
+            });
+            $('#R1').on('change', function(){
+                $("#tongji").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html($("#tongji").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html($("#tongji").highcharts().options.chart.options3d.beta);
+            }
+            showValues();
+            $("#tongji").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji").highcharts().series[0].setData(data2);
+            
+
+        }
+//效率折线图
+        function jixiaoLinePic() {
+            var data1=[];
+            var data2=[];
+            var month;
+            var day;
+ 			
+            for(var i=0;i<datatableyj.length;i++){
+                data1.push(datatableyj[i].name);
+                data2.push(parseFloat(datatableyj[i].realycient));
+            }	
+
+            $("#R0").val(10);
+            $("#R1").val(0);
+            var chart = new Highcharts.Chart({
+                chart: {
+//     		type:'column',
+                    //type:'spline',//曲线图
+                    type:'line',//折现图
+                    //type:'pie',//饼状图
+                    renderTo: 'tongji2',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                    width : $("#tongjidiv").width(),
+                    height:$(document).height()*3/4,
+                    marginTop : 50,
+                    marginLeft:100,
+                    options3d: {
+                        enabled: true,//是否使用3D渲染图表功能
+                        alpha: 0,
+                        beta: 0,
+                        depth: 50,
+                        viewDistance: 25
+                    },
+                    plotBackgroundColor: null,    //绘图区的背景颜色
+                    plotBorderWidth: null,        //绘图区边框宽度
+                    plotShadow: false        //绘图区是否显示阴影
+                },
+
+                title: {
+                    text: '效率(%)',
+                    align:'left',
+                    y:20,
+                    x:110,
+                    style:{
+                    	fontSize:'13'
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: ''
+                    },
+                    categories: []
+                },
+                yAxis: {
+                    min: -3,
+                    title: {
+                        text: ''
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false//去掉官网的超链接
+                },
+                exporting:{
+                    enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                lang:{
+                    printChart: "打印图片",
+                    downloadJPEG: "导出JPEG 图片",
+                    downloadPDF: "导出PDF 文档",
+                    downloadPNG: "导出PNG 图片",
+                    downloadSVG: "导出SVG 矢量图",
+                    contextButtonTitle: "导出"
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        return '<span style="color:{'+this.series.data+'}">实际效率：'+this.y+'</span><br/>.'
+                    }
+                },
+
+                series:[{
+                    name: '',
+                    data:[]
+                }]
+            });
+
+            // Activate the sliders
+            $('#R0').on('change', function(){
+                $("#tongji2").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji2").highcharts().redraw(false);
+            });
+            $('#R1').on('change', function(){
+                $("#tongji2").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji2").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html($("#tongji2").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html($("#tongji2").highcharts().options.chart.options3d.beta);
+            }
+            showValues();
+            $("#tongji2").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji2").highcharts().series[0].setData(data2);
+
+        }
+//工作时长折线图
+        function workhourLinePic() {
+            var data1=[];
+            var data2=[];
+            var month;
+            var day;
+            for(var i=0;i<datatableyj.length;i++){
+                data1.push(datatableyj[i].name);
+                data2.push(parseFloat(datatableyj[i].realyhours));
+            }
+            $("#R0").val(10);
+            $("#R1").val(0);
+            var chart = new Highcharts.Chart({
+                chart: {
+//     		type:'column',
+                    //type:'spline',//曲线图
+                    type:'line',//折现图
+                    //type:'pie',//饼状图
+                    renderTo: 'tongji3',        //在哪个区域呈现，对应HTML中的DIV元素ID
+                    width : $("#tongjidiv").width(),
+                    height:$(document).height()*3/4,
+                    marginTop : 50,
+                    marginLeft : 100,
+                    options3d: {
+                        enabled: true,//是否使用3D渲染图表功能
+                        alpha: 0,
+                        beta: 0,
+                        depth: 50,
+                        viewDistance: 25
+                    },
+                    plotBackgroundColor: null,    //绘图区的背景颜色
+                    plotBorderWidth: null,        //绘图区边框宽度
+                    plotShadow: false        //绘图区是否显示阴影
+                },
+
+                title: {
+                    text: '工作时长(h)',
+                    align:'left',
+                    y:20,
+                    x:110,
+                    style:{
+                    	fontSize:'13'
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: ''
+                    },
+                    categories: []
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    }
+                },
+                legend: {
+                	 enabled: false
+                },
+                credits: {
+                    enabled: false//去掉官网的超链接
+                },
+                exporting:{
+                    enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                lang:{
+                    printChart: "打印图片",
+                    downloadJPEG: "导出JPEG 图片",
+                    downloadPDF: "导出PDF 文档",
+                    downloadPNG: "导出PNG 图片",
+                    downloadSVG: "导出SVG 矢量图",
+                    contextButtonTitle: "导出"
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        return '<span style="color:{'+this.series.data+'}">实际工作时长：'+this.y+'</span><br/>.'
+                    }
+                },
+
+                series:[{
+                    name: '',
+                    data:[]
+                }]
+            });
+
+            // Activate the sliders
+            $('#R0').on('change', function(){
+                $("#tongji3").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji3").highcharts().redraw(false);
+            });
+            $('#R1').on('change', function(){
+                $("#tongji3").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji3").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html($("#tongji3").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html($("#tongji3").highcharts().options.chart.options3d.beta);
+            }
+            showValues();
+            $("#tongji3").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji3").highcharts().series[0].setData(data2);
+
+        }
+        
+//业绩柱状图
+        function yejizzPic() {
+			var data1=[];
+			var data2=[];
+        	for(var i=0;i<datatableyj.length;i++){
+                data1.push(datatableyj[i].name);
+                data2.push(parseFloat(datatableyj[i].realynum));
+               }
+            $("#R0").val(10);
+            $("#R1").val(0);
+            $("#tongji4").highcharts(
+                {
+                    chart : {
+                        type : 'column',// 柱状图
+                        // type:'spline',//曲线图
+                        // type : 'line',// 折现图
+                        // type:'pie',//饼状图
+                         renderTo : 'tongji4', // 在哪个区域呈现，对应HTML中的DIV元素ID
+                         width : $("#tongjidiv").width(),
+                         height:$(document).height()*3/4,
+                        marginTop : 50,
+                        marginLeft : 100,
+                        options3d : {
+                            enabled : true,// 是否使用3D渲染图表功能
+                            alpha : 0,
+                            beta : 0,
+                            depth : 50,
+                            viewDistance : 25,
+                        },
+                        plotBackgroundColor : null, // 绘图区的背景颜色
+                        plotBorderWidth : null, // 绘图区边框宽度
+                        plotShadow : false,
+                        // 绘图区是否显示阴影
+
+                    },
+
+                    title: {
+                        text: '业绩量(h)',
+                        align:'left',
+                        y:20,
+                        x:110,
+                        style:{
+                        	fontSize:'13'
+                        }
+                    },
+                    xAxis : {
+                        title : {
+                            text : ''
+                        },
+                        categories : []
+                    },
+                    yAxis : {
+                      //  tickPositions: [0,500,1000,1500,2000,2500,3000,3500,4000,4500,5000],
+                        min : 0,
+                        title : {
+                            text : ''
+                        },
+                    },
+                    legend : {
+                        enabled : false
+                    },
+                    credits : {
+                        enabled : false
+                        // 去掉官网的超链接
+                    },
+                    exporting : {
+                        enabled : false
+                        // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                    },
+                    lang : {
+                        printChart : "打印图片",
+                        downloadJPEG : "导出JPEG 图片",
+                        downloadPDF : "导出PDF 文档",
+                        downloadPNG : "导出PNG 图片",
+                        downloadSVG : "导出SVG 矢量图",
+                        contextButtonTitle : "导出"
+                    },
+                    tooltip : {
+                        pointFormatter : function() {
+                            return '<span style="color:{' + this.series.data
+                                + '}">实际业绩量：'+this.y+'</span><br/>.'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0,
+                            pointWidth: 50
+                        }
+                    },
+                    series : [ {
+                        name : '业绩量',
+                        data : []
+                    } ]
+                });
+            console.log($("#tongji4").highcharts());
+            $('#R0').on('change', function() {
+                $("#tongji4").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji4").highcharts().redraw(false);
+            });
+
+            $('#R1').on('change', function() {
+                $("#tongji4").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji4").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html(
+                    $("#tongji4").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html(
+                    $("#tongji4").highcharts().options.chart.options3d.beta);
+            }
+
+            showValues();
+            $("#tongji4").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji4").highcharts().series[0].setData(data2);
+            //$("#tongji4").highcharts().xAxis[0].setCategories(data1);
+            //$("#tongji4").highcharts().series[0].setData(data2);
+
+        }
+//效率柱状图
+        function jixiaozzPic() {
+			var data1=[];
+			var data2=[];
+            $("#R0").val(10);
+            $("#R1").val(0);
+            for(var i=0;i<datatableyj.length;i++){
+                data1.push(datatableyj[i].name);
+                data2.push(parseFloat(datatableyj[i].realycient));
+            }	
+            $("#tongji5").highcharts(
+                {
+                    chart : {
+                        type : 'column',// 柱状图
+                        // type:'spline',//曲线图
+                        // type : 'line',// 折现图
+                        // type:'pie',//饼状图
+                         renderTo : 'tongji5', // 在哪个区域呈现，对应HTML中的DIV元素ID
+                         width : $("#tongjidiv").width(),
+                         height:$(document).height()*3/4,
+                        marginTop : 50,
+                        marginLeft : 100,
+                        options3d : {
+                            enabled : true,// 是否使用3D渲染图表功能
+                            alpha : 0,
+                            beta : 0,
+                            depth : 50,
+                            viewDistance : 25,
+                        },
+                        plotBackgroundColor : null, // 绘图区的背景颜色
+                        plotBorderWidth : null, // 绘图区边框宽度
+                        plotShadow : false
+                        // 绘图区是否显示阴影
+                    },
+
+                    title: {
+                        text: '效率(%)',
+                        align:'left',
+                        y:20,
+                        x:110,
+                        style:{
+                        	fontSize:'13'
+                        }
+                    },
+                    xAxis : {
+                        title : {
+                            text : ''
+                        },
+                        categories :[]
+                    },
+                    yAxis : {
+                        min :0,
+                        title : {
+                            text : ''
+                        },
+                    },
+                    legend : {
+                        enabled : false
+                    },
+                    credits : {
+                        enabled : false
+                        // 去掉官网的超链接
+                    },
+                    exporting : {
+                        enabled : false
+                        // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                    },
+                    lang : {
+                        printChart : "打印图片",
+                        downloadJPEG : "导出JPEG 图片",
+                        downloadPDF : "导出PDF 文档",
+                        downloadPNG : "导出PNG 图片",
+                        downloadSVG : "导出SVG 矢量图",
+                        contextButtonTitle : "导出"
+                    },
+                    tooltip : {
+                        pointFormatter : function() {
+                            return '<span style="color:{' + this.series.data
+                                + '}">实际效率：'+this.y+'</span><br/>.'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0,
+                            pointWidth: 50
+                        }
+                    },
+                    series : [ {
+                        name : '',
+                        data : []
+                    } ]
+                });
+            console.log($("#tongji5").highcharts());
+            $('#R0').on('change', function() {
+                $("#tongji5").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji5").highcharts().redraw(false);
+            });
+
+            $('#R1').on('change', function() {
+                $("#tongji5").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji5").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html(
+                    $("#tongji5").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html(
+                    $("#tongji5").highcharts().options.chart.options3d.beta);
+            }
+
+            showValues();
+            $("#tongji5").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji5").highcharts().series[0].setData(data2);
+
+        }
+//工作时长柱状图
+        function gzsczzPic() {
+        	var data1=[];
+			var data2=[];
+            $("#R0").val(10);
+            $("#R1").val(0);
+            for(var i=0;i<datatableyj.length;i++){
+                data1.push(datatableyj[i].name);
+                data2.push(parseFloat(datatableyj[i].realyhours));
+            }	
+            $("#tongji66").highcharts(
+                {
+                    chart : {
+                        type : 'column',// 柱状图
+                        // type:'spline',//曲线图
+                        // type : 'line',// 折现图
+                        // type:'pie',//饼状图
+                         renderTo : 'tongji66', // 在哪个区域呈现，对应HTML中的DIV元素ID
+                         width : $("#tongjidiv").width(),
+                         height:$(document).height()*3/4,
+                        marginTop : 50,
+                        marginLeft : 100,
+                        options3d : {
+                            enabled : true,// 是否使用3D渲染图表功能
+                            alpha : 0,
+                            beta : 0,
+                            depth : 50,
+                            viewDistance : 25,
+                        },
+                        plotBackgroundColor : null, // 绘图区的背景颜色
+                        plotBorderWidth : null, // 绘图区边框宽度
+                        plotShadow : false
+                        // 绘图区是否显示阴影
+                    },
+
+                    title: {
+                        text: '工作时长(h)',
+                        align:'left',
+                        y:20,
+                        x:110,
+                        style:{
+                        	fontSize:'13'
+                        }
+                    },
+                    xAxis : {
+                        title : {
+                            text : ''
+                        },
+                        categories :[]
+                    },
+                    yAxis : {
+                        min : 0,
+                        title : {
+                            text : ''
+                        },
+                    },
+                    legend : {
+                        enabled : false
+                    },
+                    credits : {
+                        enabled : false
+                        // 去掉官网的超链接
+                    },
+                    exporting : {
+                        enabled : false
+                        // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                    },
+                    lang : {
+                        printChart : "打印图片",
+                        downloadJPEG : "导出JPEG 图片",
+                        downloadPDF : "导出PDF 文档",
+                        downloadPNG : "导出PNG 图片",
+                        downloadSVG : "导出SVG 矢量图",
+                        contextButtonTitle : "导出"
+                    },
+                    tooltip : {
+                        pointFormatter : function() {
+                            return '<span style="color:{' + this.series.data
+                                + '}">实际工作时长：'+this.y+'</span><br/>.'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0,
+                            pointWidth: 50
+                        }
+                    },
+                    series : [ {
+                        name : '',
+                        data : []
+                    } ]
+                });
+            console.log($("#tongji66").highcharts());
+            $('#R0').on('change', function() {
+                $("#tongji66").highcharts().options.chart.options3d.alpha = this.value;
+                showValues();
+                $("#tongji66").highcharts().redraw(false);
+            });
+
+            $('#R1').on('change', function() {
+                $("#tongji66").highcharts().options.chart.options3d.beta = this.value;
+                showValues();
+                $("#tongji66").highcharts().redraw(false);
+            });
+
+            function showValues() {
+                $('#R0-value').html(
+                    $("#tongji66").highcharts().options.chart.options3d.alpha);
+                $('#R1-value').html(
+                    $("#tongji66").highcharts().options.chart.options3d.beta);
+            }
+
+            showValues();
+            $("#tongji66").highcharts().xAxis[0].setCategories(data1);
+            $("#tongji66").highcharts().series[0].setData(data2);
+
+        }
+
+//业绩饼状图
+        function yejibzPic() {
+        	  $("#R0").val(10);
+              $("#R1").val(0);
+              var data1=[];
+              for(var i=0;i<datatableyj.length;i++){
+            	  var num= parseFloat(datatableyj[i].realynum);
+                  data1.push(
+                		  {
+  							name: datatableyj[i].name,
+  							y:num,
+  						  }
+                		  );
+              }
+              $("#tongji7").highcharts(
+                  {
+                      chart : {
+                         // type : 'column',// 柱状图
+                          // type:'spline',//曲线图
+                          // type : 'line',// 折现图
+                           type:'pie',//饼状图
+                           renderTo : 'tongji7', // 在哪个区域呈现，对应HTML中的DIV元素ID
+
+                           width : $("#tongjidiv").width(),
+                           height:$(document).height()*3/4,
+
+                          marginTop : 50,
+                          options3d : {
+                              enabled : true,// 是否使用3D渲染图表功能
+
+
+                              alpha : 45,
+                              beta : 0,
+                              depth : 50,
+                              viewDistance : 25,
+                          },
+                          plotBackgroundColor : null, // 绘图区的背景颜色
+                          plotBorderWidth : null, // 绘图区边框宽度
+                          plotShadow : false
+                          // 绘图区是否显示阴影
+                      },
+
+                      title : {
+                          text : '',
+                          align: 'center',
+                          y:20,
+                          x:40
+                      },
+                      xAxis : {
+                          title : {
+                              text : '姓名'
+                          },
+                          categories : []
+                      },
+                      yAxis : {
+                          min : 0,
+                          title : {
+                              text : '业绩量(h)'
+                          },
+                      },
+                      legend : {
+                          enabled : true
+                      },
+                      credits : {
+                          enabled : false
+                          // 去掉官网的超链接
+                      },
+                      exporting : {
+                          enabled : false
+                          // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                      },
+                      lang : {
+                          printChart : "打印图片",
+                          downloadJPEG : "导出JPEG 图片",
+                          downloadPDF : "导出PDF 文档",
+                          downloadPNG : "导出PNG 图片",
+                          downloadSVG : "导出SVG 矢量图",
+                          contextButtonTitle : "导出"
+                      },
+                      tooltip : {
+                          pointFormatter : function() {
+                              return '<span style="color:{' + this.series.data
+                                  + '}">实际业绩量：'+this.y+'</span><br/>.'
+                          }
+                      },
+                      plotOptions: {
+  						pie: {
+  			            depth: 45,
+  					allowPointSelect: true,
+  					cursor: 'pointer',
+  					
+  						dataLabels: {
+  						enabled: true
+  					},
+  					showInLegend: true
+  					}
+  					},
+
+                      series : 
+                    	  [ {
+                          name : '业绩量(h)',
+                          colorByPoint: true,
+                          data : data1
+                        	
+                      } ]
+                  });
+              console.log($("#tongji7").highcharts());
+              $('#R0').on('change', function() {
+                  $("#tongji7").highcharts().options.chart.options3d.alpha = this.value;
+                  showValues();
+                  $("#tongji7").highcharts().redraw(false);
+              });
+
+              $('#R1').on('change', function() {
+                  $("#tongji7").highcharts().options.chart.options3d.beta = this.value;
+                  showValues();
+                  $("#tongji7").highcharts().redraw(false);
+              });
+
+              function showValues() {
+                  $('#R0-value').html(
+                      $("#tongji7").highcharts().options.chart.options3d.alpha);
+                  $('#R1-value').html(
+                      $("#tongji7").highcharts().options.chart.options3d.beta);
+              }
+
+              showValues();
+              //$("#tongji5").highcharts().xAxis[0].setCategories(data1);
+              //$("#tongji5").highcharts().series[0].setData(data2);
+
+          }
+//效率饼状图
+        function jixiaobzPic() {
+        	 $("#R0").val(10);
+             $("#R1").val(0);
+             var data1=[];
+             for(var i=0;i<datatableyj.length;i++){
+           	  var num= parseFloat(datatableyj[i].realycient);
+                 data1.push(
+               		  {
+ 							name: datatableyj[i].name,
+ 							y:num,
+ 						  }
+               		  );
+             }
+             $("#tongji8").highcharts(
+                 {
+                     chart : {
+                        // type : 'column',// 柱状图
+                         // type:'spline',//曲线图
+                         // type : 'line',// 折现图
+                          type:'pie',//饼状图
+                          renderTo : 'tongji8', // 在哪个区域呈现，对应HTML中的DIV元素ID
+
+                          width : $("#tongjidiv").width(),
+                          height:$(document).height()*3/4,
+
+                         marginTop : 50,
+                         options3d : {
+                             enabled : true,// 是否使用3D渲染图表功能
+
+
+                             alpha : 45,
+                             beta : 0,
+                             depth : 50,
+                             viewDistance : 25,
+                         },
+                         plotBackgroundColor : null, // 绘图区的背景颜色
+                         plotBorderWidth : null, // 绘图区边框宽度
+                         plotShadow : false
+                         // 绘图区是否显示阴影
+                     },
+
+                     title : {
+                         text : '',
+                         align: 'center',
+                         y:20,
+                         x:40
+                     },
+                     xAxis : {
+                         title : {
+                             text : '姓名'
+                         },
+                         categories : []
+                     },
+                     yAxis : {
+                         min : 0,
+                         title : {
+                             text : '效率(%)'
+                         },
+                     },
+                     legend : {
+                         enabled : true
+                     },
+                     credits : {
+                         enabled : false
+                         // 去掉官网的超链接
+                     },
+                     exporting : {
+                         enabled : false
+                         // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                     },
+                     lang : {
+                         printChart : "打印图片",
+                         downloadJPEG : "导出JPEG 图片",
+                         downloadPDF : "导出PDF 文档",
+                         downloadPNG : "导出PNG 图片",
+                         downloadSVG : "导出SVG 矢量图",
+                         contextButtonTitle : "导出"
+                     },
+                     tooltip : {
+                         pointFormatter : function() {
+                             return '<span style="color:{' + this.series.data
+                                 + '}">实际效率：'+this.y+'</span><br/>.'
+                         }
+                     },
+                     plotOptions: {
+ 						pie: {
+ 			            depth: 45,
+ 					allowPointSelect: true,
+ 					cursor: 'pointer',
+ 					
+ 						dataLabels: {
+ 						enabled: true
+ 					},
+ 					showInLegend: true
+ 					}
+ 					},
+
+                     series : 
+                   	  [ {
+                         name : '效率(%)',
+                         colorByPoint: true,
+                         data : data1
+                       	
+                     } ]
+                 });
+             console.log($("#tongji8").highcharts());
+             $('#R0').on('change', function() {
+                 $("#tongji8").highcharts().options.chart.options3d.alpha = this.value;
+                 showValues();
+                 $("#tongji8").highcharts().redraw(false);
+             });
+
+             $('#R1').on('change', function() {
+                 $("#tongji8").highcharts().options.chart.options3d.beta = this.value;
+                 showValues();
+                 $("#tongji8").highcharts().redraw(false);
+             });
+
+             function showValues() {
+                 $('#R0-value').html(
+                     $("#tongji8").highcharts().options.chart.options3d.alpha);
+                 $('#R1-value').html(
+                     $("#tongji8").highcharts().options.chart.options3d.beta);
+             }
+
+             showValues();
+             //$("#tongji5").highcharts().xAxis[0].setCategories(data1);
+             //$("#tongji5").highcharts().series[0].setData(data2);
+
+         }
+
+ //工作时长饼状图
+        function workhourbzPic() {
+
+        	 $("#R0").val(10);
+             $("#R1").val(0);
+             var data1=[];
+             for(var i=0;i<datatableyj.length;i++){
+           	  var num= parseFloat(datatableyj[i].realyhours);
+                 data1.push(
+               		  {
+ 							name: datatableyj[i].name,
+ 							y:num,
+ 						  }
+               		  );
+             }
+             $("#tongji9").highcharts(
+                 {
+                     chart : {
+                        // type : 'column',// 柱状图
+                         // type:'spline',//曲线图
+                         // type : 'line',// 折现图
+                          type:'pie',//饼状图
+                          renderTo : 'tongji9', // 在哪个区域呈现，对应HTML中的DIV元素ID
+
+                          width : $("#tongjidiv").width(),
+                          height:$(document).height()*3/4,
+
+                         marginTop : 50,
+                         options3d : {
+                             enabled : true,// 是否使用3D渲染图表功能
+
+
+                             alpha : 45,
+                             beta : 0,
+                             depth : 50,
+                             viewDistance : 25,
+                         },
+                         plotBackgroundColor : null, // 绘图区的背景颜色
+                         plotBorderWidth : null, // 绘图区边框宽度
+                         plotShadow : false
+                         // 绘图区是否显示阴影
+                     },
+
+                     title : {
+                         text : '',
+                         align: 'center',
+                         y:20,
+                         x:40
+                     },
+                     xAxis : {
+                         title : {
+                             text : '姓名'
+                         },
+                         categories : []
+                     },
+                     yAxis : {
+                         min : 0,
+                         title : {
+                             text : '工作时长(h)'
+                         },
+                     },
+                     legend : {
+                         enabled : true
+                     },
+                     credits : {
+                         enabled : false
+                         // 去掉官网的超链接
+                     },
+                     exporting : {
+                         enabled : false
+                         // 用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                     },
+                     lang : {
+                         printChart : "打印图片",
+                         downloadJPEG : "导出JPEG 图片",
+                         downloadPDF : "导出PDF 文档",
+                         downloadPNG : "导出PNG 图片",
+                         downloadSVG : "导出SVG 矢量图",
+                         contextButtonTitle : "导出"
+                     },
+                     tooltip : {
+                         pointFormatter : function() {
+                             return '<span style="color:{' + this.series.data
+                                 + '}">实际工作时长：'+this.y+'</span><br/>.'
+                         }
+                     },
+                     plotOptions: {
+ 						pie: {
+ 			            depth: 45,
+ 					allowPointSelect: true,
+ 					cursor: 'pointer',
+ 					
+ 						dataLabels: {
+ 						enabled: true
+ 					},
+ 					showInLegend: true
+ 					}
+ 					},
+
+                     series : 
+                   	  [ {
+                         name : '工作时长(h)',
+                         colorByPoint: true,
+                         data : data1
+                       	
+                     } ]
+                 });
+             console.log($("#tongji9").highcharts());
+             $('#R0').on('change', function() {
+                 $("#tongji9").highcharts().options.chart.options3d.alpha = this.value;
+                 showValues();
+                 $("#tongji9").highcharts().redraw(false);
+             });
+
+             $('#R1').on('change', function() {
+                 $("#tongji9").highcharts().options.chart.options3d.beta = this.value;
+                 showValues();
+                 $("#tongji9").highcharts().redraw(false);
+             });
+
+             function showValues() {
+                 $('#R0-value').html(
+                     $("#tongji9").highcharts().options.chart.options3d.alpha);
+                 $('#R1-value').html(
+                     $("#tongji9").highcharts().options.chart.options3d.beta);
+             }
+
+             showValues();
+             //$("#tongji5").highcharts().xAxis[0].setCategories(data1);
+             //$("#tongji5").highcharts().series[0].setData(data2);
+
+         }
+//排名表格
+
+
+        function table1() {
+            function leixing(value,row,index){
+                //序号正序排序从1开始
+                if (lblx == "月"){
+                    return "月";
+                }else if(lblx == "季"){
+                    return "季";
+                }else if(lblx == "年"){
+                    return "年";
+                }
+
+            };
+            function shijian(value,row,index){
+                //序号正序排序从1开始
+                return lbsj;
+            };
+
+            var columns = [
+                {
+                    field: 'number',
+                    title: '排名',
+                    //width:'5px' ,
+                    align:'center',
+                    formatter: function (value,row,index){
+                        ++index;
+                        if(index ==1){
+                            return '<img src="/static/img/icon-test.jpg" style="width:26px;height:23px;">';
+                        }else if(index ==2){
+                            return  '<img src="/static/img/icon-test-(1).jpg" style="width:26px;height:23px;">';
+
+                        }else if(index ==3){
+                            return  '<img src="/static/img/icon-test-(2).jpg" style="width:26px;height:23px;">';
+                        }else{
+                            return index;
+                        }
+                        //序号正序排序从1开始
+                    }
+                },
+                {
+                    field: 'type',
+                    title: '类型',
+                    align:'center',
+                    formatter:leixing
+                }, {
+                    field: 'time',
+                    title: '时间',
+                    align:'center',
+                    formatter:shijian
+                },{
+                    field: 'praisenum',
+                    title: '点赞',
+                    align:'center',
+                    formatter: function (value,row,index){
+                        return '<i class="iconfont icon-buoumaotubiao15" style="font-size: 15px;">&nbsp;'+row.praisenum+'</i>';
+                        //序号正序排序从1开始
+                    }
+                }, {
+                    field: 'commentnum',
+                    title: '评论',
+                    align: 'center',
+                    width: '140px',
+                    formatter: function (value,row,index){
+                        return '<i class="iconfont icon-pinglun4" style="font-size: 15px;">&nbsp;'+row.commentnum+'</i>';
+                        //序号正序排序从1开始
+                    }
+
+                }]
+            var partcolumnsxm ={field: 'name',title: '姓名',align:'center', };
+            var partcolumnsxz ={field: 'name',title: '小组',align:'center', };
+            var partcolumnsbm ={field: 'name',title: '部门',align:'center', };
+            var partcolumnsyj ={field: 'realynum',title: '业绩',align:'center', };
+            var partcolumnsxl ={field: 'realycient',title: '效率',align:'center', };
+            var partcolumnsgzsc ={field: 'realyhours',title: '工作时长',align:'center', };
+
+            if(object =="01"  && types =="01"){
+                columns.splice(3,0,partcolumnsxm );
+                columns.splice(4,0,partcolumnsyj );
+            }else if(object =="01" && types =="02"){
+                columns.splice(3,0,partcolumnsxm);
+                columns.splice(4,0,partcolumnsxl );
+            }else if(object =="01" && types =="03"){
+                columns.splice(3,0,partcolumnsxm );
+                columns.splice(4,0,partcolumnsgzsc );
+            }else if(object =="02" && types =="01"){
+                columns.splice(3,0,partcolumnsxz);
+                columns.splice(4,0,partcolumnsyj);
+            }else if(object =="02" && types =="02"){
+                columns.splice(3,0,partcolumnsbm );
+                columns.splice(4,0,partcolumnsxl );
+            }else if(object =="02" && types =="03"){
+                columns.splice(3,0,partcolumnsxz);
+                columns.splice(4,0,partcolumnsgzsc );
+            }else if(object =="03" && types =="01"){
+                columns.splice(3,0,partcolumnsbm );
+                columns.splice(4,0,partcolumnsyj );
+            }else if(object =="03" && types =="02"){
+                columns.splice(3,0,partcolumnsbm);
+                columns.splice(4,0,partcolumnsxl );
+            }else if(object =="03" && types =="03"){
+                columns.splice(3,0,partcolumnsbm );
+                columns.splice(4,0,partcolumnsgzsc );
+            };
+
+
+            $('#table1').bootstrapTable({
+                /*showToggle:!0,
+                showColumns:!0,*/
+                iconSize:"outline",
+                toolbar:"#exampleTableEventsToolbar",
+                /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+                url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+                /*showRefresh:true,*/
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                pagination: true, // 在表格底部显示分页组件，默认false
+                pageList: [5,10, 15], // 设置页面可以显示的数据条数
+                pageSize: 5, // 页面数据条数
+                pageNumber: 1, // 首页页码
+                onClickRow: function (row, $element,field) {
+                    if(object == "01"){
+                        page("/manage?userid="+row.userid+"&name="+row.name+"&starttime="+starttimeclick+"&endtime="+endtimeclick,"业绩管理");
+                    }else if(object == "02"){
+                        page("/manage?zdeparid="+row.zdeparid+"&name="+row.name+"&starttime="+starttimeclick+"&endtime="+endtimeclick,"业绩管理");
+                    }else if(object == "03"){
+                        page("/manage?bdeparid="+row.bdeparid+"&name="+row.name+"&starttime="+starttimeclick+"&endtime="+endtimeclick,"业绩管理");
+                    }
+
+                },
+                columns:columns,
+                data:datatableyj
+            })
+            $('#table1').bootstrapTable(
+                "refreshOptions",
+                {
+                    columns : columns,
+                }
+            );
+}
+        
+        
+    </script>
+</head>
+
+<body>
+ <div id="donghua" class="col-sm-12" style="height:100%;">
+        <div class="ibox ">
+            <div class="ibox-content">
+                <div class="spiner-example" style="padding-top: 210px;">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+    <div id="big" class="col-sm-12" style="">
+        <!-- Example Events -->
+        <div class="example-wrap" style="margin-top: 25px;">
+          
+<!-- 顶部筛选框 -->
+           <div id="toolbar1" style="width: 90%;overflow: hidden;margin-bottom: 14px;float:left;">
+            <div class="myText-content" style="width:40%;margin-left:2%;float:left">
+                 <i class="iconfont icon-icon_leixing" style="margin-left:-65px;font-size: 18px;"></i>
+                 <label class="myLabel-content">类型:&nbsp;</label>
+                 <label><div id="yue" class="sjbiankuang" style="margin-left:50px;">月</div> </label>
+                 <label><div class="sjbiankuang" style="margin-left:3px;">季</div> </label>
+                 <label><div class="sjbiankuang" style="margin-left:3px;">年</div> </label>   
+                </div>
+                &nbsp;&nbsp;&nbsp;
+             <div class="month" style="float:left;width:;border:1px solid white;margin-left: -14%;">
+                  <i class="iconfont icon-shijian1" style="font-size: 18px;float: left;"></i>
+                  <label class="myLabel-content"><div style="margin-right: 10px;">时间:</div></label>
+                  <!-- </div>
+                  <div id="mod"></div> -->
+                  <div id="lastmonth" style="float:left;"></div>
+                  <div id="nowmonth1" style="float:left;"></div>
+                  <div id="month2" style="width:;border:1px white solid;float:left;">
+
+                  </div>
+            </div>
+          </div>
+            <script>
+           
+            </script>
+            
+<!-- 顶部切换页面功能按钮-->
+            <div class="btn-group hidden-xs" style="float:left;margin-left:30px;">
+                <button style="width:38px;height:30px;" type="button" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default" onclick="liebiaotab();" data-original-title="列表信息">
+                    <i class="iconfont icon-liebiao" aria-hidden="true" style="position: relative;top: -2px;left: -2px;"></i>
+                </button>
+                
+                <button type="button" style="width:40px;height:30px;" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default" onclick="tubiaotab();" data-original-title="图表信息">
+                    <i class="iconfont icon-tubiao " aria-hidden="true" style="position: relative;top: -2px;left: -2px;"></i>
+                </button>
+            </div>
+<!-- 中间部分 -->            
+ <div  style="
+   width: 100%;
+   float: left;
+">
+    <!-- 左面筛选框 -->          
+  <div id="leftbutton" style="float:left;margin-left: -5px;margin-top: 4%;width: 6%;">
+  		<i class="iconfont icon-duixiang " aria-hidden="true" style="margin-left:10px;font-size: 20px;"></i>
+        <label style=" font-size:16px;font">对象</label>
+        <div class="zbiankuang"  id="dxgr">个人</div> 
+        <div class="zbiankuang" id="dxxz">小组</div> 
+        <div class="zbiankuang" id="dxbm">部门</div> 
+        
+        <i class="iconfont icon-fanwei " aria-hidden="true" style="margin-left:10px;font-size: 20px;margin-top:30px;"></i>
+        <label style="font-size:16px;margin-top:30px;">范围</label>
+        <div id="zxbk" style="border:1px solid white;width:100px;height:200px;">
+        </div>
+  </div>
+  
+  
+  <!-- 个人统计图-->
+ 			<div class="col-sm-10" style="" id="tongjidiv">
+            	<div id="tongji"  style="margin-top: 9px;"></div>
+            	<div id="tongji2"  style="margin-top: 9px;"></div>
+           		<div id="tongji3"  style="margin-top: 9px;"></div>
+            	<div id="tongji4"  style="margin-top:9px;"></div>
+            	<div id="tongji5"  style="margin-top: 9px;"></div>
+            	<div id="tongji66"  style="margin-top: 9px;"></div>
+           		<div id="tongji7"  style="margin-top: 9px;"></div>
+            	<div id="tongji8"  style="margin-top: 9px;"></div>
+            	<div id="tongji9"  style="margin-top: 9px;"></div>
+<!-- 柱状折线切换按钮-->
+                <div id="yj" class="btn-group hidden-xs" style="float:right;position: relative;top:2px;left: -56px;">
+                <button  style="width:39px;height:30px;" type="button" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default zzt" onclick="yejizhuzhuangtu();" data-original-title="柱状图">
+                    <i class="iconfont icon-paiming1" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                
+                <button type="button" style="width:36px;height:30px;" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default" onclick="yejizhexiantu();" data-original-title="折线图">
+                    <i class="iconfont icon-zhexian" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                <button type="button" style="width:37px;height:30px;" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default" onclick="yejibingzhuangtu();" data-original-title="饼状图">
+                    <i class="iconfont icon-bingzhuangtu" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                </div>
+                <div id="xl" class="btn-group hidden-xs" style="float:right;position: relative;top: 2px;left: -56px;display: none;">
+                <button  style="width:39px;height:30px;" type="button" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default zzt" onclick="xlzhuzhuangtu();" data-original-title="柱状图">
+                    <i class="iconfont icon-paiming1" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                
+                <button type="button" style="width:36px;height:30px;" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default" onclick="xlzhexiantu();" data-original-title="折线图">
+                    <i class="iconfont icon-zhexian" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                <button type="button" style="width:37px;height:30px;" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default" onclick="xlbingzhuangtu();" data-original-title="饼状图">
+                    <i class="iconfont icon-bingzhuangtu" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                </div>
+                <div id="work" class="btn-group hidden-xs" style="float:right;position: relative;top: 2px;left: -56px; display: none;">
+                <button  style="width:39px;height:30px;" type="button" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default zzt" onclick="workzhuzhuangtu();" data-original-title="柱状图">
+                    <i class="iconfont icon-paiming1" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                
+                <button  type="button" style="width:36px;height:30px;" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default" onclick="workzhexiantu();" data-original-title="折线图">
+                    <i class="iconfont icon-zhexian" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                <button type="button" style="width:37px;height:30px;" data-trigger="hover" data-placement="bottom" title="" class="btn btn-outline btn-default" onclick="workbingzhuangtu();" data-original-title="饼状图">
+                    <i class="iconfont icon-bingzhuangtu" aria-hidden="true" style="margin-left:-2px;color: #0099CC;"></i>
+                </button>
+                </div>
+<!--  柱状折线图标点击事件 -->
+            	<script>
+            	function yejizhuzhuangtu(){
+            	        $("#tongjitable").show();
+   		                $("#sliders").hide();
+   		                $("#tongji").hide();
+   		                $("#tongji2").hide();
+   		             	$("#tongji3").hide();
+   		             	$("#tongji4").show();
+   		          		$("#tongji5").hide();
+   		      			$("#tongji66").hide();
+   		                $("#tongji7").hide();
+   		                $("#tongji8").hide();
+		                $("#tongji9").hide();
+   		                $("#picControl").show();
+   		             	$("#aaatab2").show();
+            	}
+            	function yejizhexiantu(){
+            	        $("#tongjitable").show();
+		                $("#sliders").hide();
+		                $("#tongji").show();
+		                $("#tongji4").hide();
+		                $("#tongji7").hide();
+		                $("#picControl").show();
+            	}
+            	function yejibingzhuangtu(){
+            	        $("#tongjitable").show();
+		                $("#sliders").hide();
+		                $("#tongji7").show();
+		                $("#tongji4").hide();
+		                $("#tongji").hide();
+		                $("#picControl").show();
+            	}
+            	function xlzhuzhuangtu(){
+            	        $("#tongjitable").show();
+		                $("#sliders").hide();
+		                $("#tongji").hide();
+   		                $("#tongji2").hide();
+   		             	$("#tongji3").hide();
+   		             	$("#tongji4").hide();
+   		          		$("#tongji5").show();
+   		      			$("#tongji66").hide();
+   		                $("#tongji7").hide();
+   		                $("#tongji8").hide();
+		                $("#tongji9").hide();
+		                $("#picControl").show();
+            	}
+            	function xlzhexiantu(){
+            	        $("#tongjitable").show();
+		                $("#sliders").hide();
+		                $("#tongji2").show();
+		                $("#tongji5").hide();
+		                $("#tongji8").hide();
+		                $("#picControl").show();
+            	}
+            	function xlbingzhuangtu(){
+            	        $("#tongjitable").show();
+		                $("#sliders").hide();
+		                $("#tongji8").show();
+		                $("#tongji5").hide();
+		                $("#tongji2").hide();
+		                $("#picControl").show();
+            	}
+            	function workzhuzhuangtu(){
+            	       $("#tongjitable").show();
+		                $("#sliders").hide();
+		                $("#tongji").hide();
+   		                $("#tongji2").hide();
+   		             	$("#tongji3").hide();
+   		             	$("#tongji4").hide();
+   		          		$("#tongji5").hide();
+   		      			$("#tongji66").show();
+   		                $("#tongji7").hide();
+   		                $("#tongji8").hide();
+		                $("#tongji9").hide();;
+		                $("#picControl").show();
+            	}
+            	function  workzhexiantu(){
+            	        $("#tongjitable").show();
+		                $("#sliders").hide();
+		                $("#tongji3").show();
+		                $("#tongji66").hide();
+		                $("#tongji9").hide();
+		                $("#picControl").show();
+            	}
+            	function workbingzhuangtu(){
+            	        $("#tongjitable").show();
+		                $("#sliders").hide();
+		                $("#tongji9").show();
+		                $("#tongji66").hide();
+		                $("#tongji3").hide();
+		                $("#picControl").show();
+            	}
+            	  
+        			
+            	 </script>
+            </div> 
+     <!-- 右面筛选框 -->          
+		  <div id="rightbutton" style="
+			  border-radius:10px;
+			  margin-top:8%;
+			  border:1px solid #d9d9d9;
+			  height: 313px;
+			  width: 4%;
+			  float:right;
+			 
+		  ">
+  		<i  id="pmtbb" class="iconfont icon-paiming" aria-hidden="true" style="position: relative;top: 7px;left: 31%;line-height: 40px;font-size: 18px;"></i>
+        <div id="pmword" class="rbtntext" style="margin-left: 4%;margin-top: 3px;">&nbsp;&nbsp;&nbsp;&nbsp;排<br>&nbsp;&nbsp;&nbsp;&nbsp;名</div>
+        <div id="dianzan1" class="rbtntext" style="margin-top: 19px;margin-left:17px;">业<br>绩</div>
+        <div id="pinglun1" class="rbtntext" style="margin-top:20px;margin-left:17px;">效<br>率</div>
+        <div id="fabushu1" class="rbtntext" style="margin-top:15px;margin-left:17px;">工<br>作<br>时<br>长</div>
+  </div>             
+            
+ </div>
+ 
+<!-- 排名提示-->       
+           <span id="pmts" style="position:absolute;top: 15%;left:35%;z-index: 2;"></span>
+
+<!--α角  β角-->
+           <table id="tongjitable" style="width: 350px;position: relative;margin-left:15%;top: -19px;">
+               <tbody><tr>
+                    <td>α角</td>
+                    <td><input id="R0" type="range" min="0" max="45" value=""> <span id="R0-value" class="value">45</span></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>β角</td>
+                    <td><input id="R1" type="range" min="0" max="45" value=""> <span id="R1-value" class="value">0</span></td>
+                </tr>
+                </tbody>
+            </table>
+            
+           
+            
+ <!-- 列表信息-->
+            <div class="example" id="paimingtable" style="width: 81%;display: block;position: absolute;top: 155px;left: 10%;">
+            	 <table id="table1" ></table>
+            </div>
+            
+<!--返回顶部 -->
+            <i id="top" class="fa fa-angle-up" style="font-size: 30px;position: fixed;right: 5px;top: 350px;cursor: pointer"></i>
+        
+        </div>
+    </div>
+   
+    <!-- 发布签到弹出框 -->
+    <div id="modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <h3 class="m-t-none m-b" style="text-align:center">发布问答</h3>
+                            <h4 class="m-t-none m-b">问答</h4>
+                            <div class="plan" style="position:relative;border: 1px solid #e7eaec;overflow: hidden;padding: 0 0 12px;">
+                                <div id="questitle" contenteditable="true" style="padding: 5px 8px 0;height: 33px;font-size: 17px;line-height: 26px;border-bottom: 1px solid #eaece7;padding: 4px" onfocus="if(this.innerText=='一句话描述你的问题（必填）')this.innerText=''" onblur="if(this.innerText=='')this.innerText='一句话描述你的问题（必填）'">一句话描述你的问题（必填）</div>
+                                <div id="quesmess" contenteditable="true" style="padding: 5px 8px 0;min-height: 220px;font-size: 14px;padding:4px;" onfocus="if(this.innerText=='问题描述（选填）')this.innerText=''" onblur="if(this.innerText=='')this.innerText='问题描述（选填）'">问题描述（选填）</div>
+                                <div style="position:absolute;bottom: 0px;border-top: 1px solid #e7eaec;width: 100%">
+                                    <div class="picture" style="float: right;font-size: 20px;width: 100%;">
+                                        <select id="kntype" style="float: left;height:24px;font-size: 15px;border: 0; background: transparent;">
+                                            <option value="01">产品</option>
+                                            <option value="02">技术</option>
+                                            <option value="03">客户</option>
+                                            <option value="04">组织</option>
+                                            <option value="05">业务</option>
+                                            <option value="06">其他</option>
+                                        </select>
+                                        <div id="filePicker" style="font-size:14px;margin-top:5px;float: right;margin-right: 10px;" class="webuploader-container"><div class="fa fa-file-picture-o">上传图片</div><div id="rt_rt_1cst6ln831h7n1l42aolog68br1" style="position: absolute; top: 0px; left: 0px; width: 50px; height: 30px; overflow: hidden;"><input type="file" name="file" class="webuploader-element-invisible" multiple="multiple" accept="image/jpg,image/jpeg,image/png"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label></div></div>
+                                    </div>
+                                </div>
+                                <div class="uploader-list">
+                                    <ul id="fileList" style="padding-left: 17px;list-style:none;overflow: hidden;margin-bottom: 15px;"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button id="commit" style="margin-left: 130px;margin-top: 15px;width: 150px;" class="RoleOfdelete btn btn-primary  btn-sm" type="button" onclick="sign();" value="发布" data-original-title="" title="">发布</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	
+
+
+</div>
+
+</body></html>

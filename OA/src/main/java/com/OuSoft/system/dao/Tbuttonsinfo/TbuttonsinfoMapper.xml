@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tbuttonsinfo.TbuttonsinfoDao">
+
+
+		<!-- 按钮列表  -->
+		<select id="queryTbuttoninfoDao" parameterType="com.OuSoft.system.entity.Tbuttonsinfo" resultType="com.OuSoft.system.entity.Tbuttonsinfo">
+				SELECT * FROM tbuttonsinfo
+			<where>
+					 1=1 
+				 <if test="buttonpid !=null and buttonpid != '' ">
+						and buttonpid = #{buttonpid}
+				 </if>
+				 <if test="buttonitemid != null and buttonitemid != '' ">
+					and buttonitemid = #{buttonitemid}
+				 </if>
+				 ORDER BY buttonsort 
+			</where>
+		</select>
+		
+		
+		<!-- 按钮删除  -->
+		<delete id="deleteTbuttoninfoDao" parameterType="com.OuSoft.system.entity.Tbuttonsinfo" >
+			DELETE from tbuttonsinfo where 1=1 and id = #{id}
+		</delete>
+
+
+		<!--  按钮新增 -->
+		<insert id="saveTbuttoninfoDao" parameterType="com.OuSoft.system.entity.Tbuttonsinfo" >
+			 insert into tbuttonsinfo
+		    <trim prefix="(" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        id,
+		      </if>
+		      <if test="buttonname != null">
+		        buttonname,
+		      </if>
+		      <if test="buttonmark != null">
+		        buttonmark,
+		      </if>
+		      <if test="buttontime != null">
+		        buttontime,
+		      </if>
+		      <if test="buttonimage != null">
+		        buttonimage,
+		      </if>
+		      <if test="buttonsort != null">
+		        buttonsort,
+		      </if>
+		      <if test="buttontext != null">
+		        buttontext,
+		      </if>
+		      <if test="buttonpid != null">
+		        buttonpid,
+		      </if>
+		      <if test="buttonitemid != null">
+		        buttonitemid,
+		      </if>
+		    </trim>
+		    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		      <if test="id != null">
+		        #{id,jdbcType=VARCHAR},
+		      </if>
+		      <if test="buttonname != null">
+		        #{buttonname,jdbcType=VARCHAR},
+		      </if>
+		      <if test="buttonmark != null">
+		        #{buttonmark,jdbcType=VARCHAR},
+		      </if>
+		      <if test="buttontime != null">
+		        #{buttontime,jdbcType=VARCHAR},
+		      </if>
+		      <if test="buttonimage != null">
+		        #{buttonimage,jdbcType=VARCHAR},
+		      </if>
+		      <if test="buttonsort != null">
+		        #{buttonsort,jdbcType=DOUBLE},
+		      </if>
+		      <if test="buttontext != null">
+		        #{buttontext,jdbcType=VARCHAR},
+		      </if>
+		      <if test="buttonpid != null">
+		        #{buttonpid,jdbcType=VARCHAR},
+		      </if>
+		      <if test="buttonitemid != null">
+		        #{buttonitemid,jdbcType=VARCHAR},
+		      </if>
+		    </trim>
+		</insert>
+		
+		<!-- 修改按钮信息 -->
+		<update id="updateTbuttoninfoDao"  parameterType="com.OuSoft.system.entity.Tbuttonsinfo" >
+			UPDATE tbuttonsinfo
+			<set>
+		      <if test="buttonname != null">
+		        buttonname = #{buttonname},
+		      </if>
+		      <if test="buttonmark != null">
+		        buttonmark = #{buttonmark},
+		      </if>
+		      <if test="buttontime != null">
+		        buttontime = #{buttontime},
+		      </if>
+		      <if test="buttonimage != null">
+		        buttonimage = #{buttonimage},
+		      </if>
+		      <if test="buttonsort != null">
+		        buttonsort = #{buttonsort},
+		      </if>
+		      <if test="buttontext != null">
+		        buttontext = #{buttontext},
+		      </if>
+		      <if test="buttonpid != null">
+		        buttonpid = #{buttonpid},
+		      </if>
+		      <if test="buttonitemid != null">
+		        buttonitemid = #{buttonitemid},
+		      </if>
+			</set>
+			where 1 = 1 and id = #{id}
+		</update>
+	 
+
+</mapper>

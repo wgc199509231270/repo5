@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+          rel="stylesheet">
+    <link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+          rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/parseIcon/iconfont.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/jquery.searchableSelectparse.css">
+    <link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet"  href="/static/css/bootstrap-select.min.css">
+    <link href="/static/css/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script
+            src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/17com/js/echarts.js"></script>
+    <script src="/static/js/plugins/laydate/laydate.js"></script>
+    <script src="/static/js/jquery.searchableSelectparse.js"></script>
+    <script src="/static/js/jedate.js"></script>
+    <link href="/static/css/skin/jedate.css" rel="stylesheet">
+    <link href="/static/css/achievement/manage.css" rel="stylesheet">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/js/bootstrap-select.min.js"></script>
+    <script src="/static/17com/plugins/bootstrap-treeview-master/public/js/bootstrap-treeview.js"></script>
+    <script src="/static/js/news.js"></script>
+</head>
+<style>
+    input[type=range] {
+        margin-top: 8px;
+        outline: none;
+        -webkit-appearance: none; /*清除系统默认样式*/
+        width: 80% !important;
+        background: #e7eaec;
+        height: 3px; /*横条的高度*/
+    }
+    /*拖动块的样式*/
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none; /*清除系统默认样式*/
+        height: 16px; /*拖动块高度*/
+        width: 16px; /*拖动块宽度*/
+        background: #0099CC; /*拖动块背景*/
+        border-radius: 50%; /*外观设置为圆形*/
+        border: solid 1px #ddd
+    }
+
+    #text {
+        white-space: normal;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .czbtn{
+        cursor: default;
+    }
+    .my-container {
+        float: left;
+        display: inline-block;
+    }
+
+    .myLabel-content, .myText-content, .myBtn-content {
+        float: left;
+        display: inline-block;
+        line-height: 30px;
+
+    }
+
+    .fixed-table-container{
+        padding-top: 14px;
+    }
+    .myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+    {
+        height: 30px;
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .myBtn-content .btn {
+        margin-bottom: 10px;
+    }
+
+    .cross{
+        overflow: hidden;
+        width: 181px;
+        height: 32px;
+        line-height:32px;
+        border: 1px solid #D9D9D9;
+        float:left;
+        padding-left: 12px;
+    }
+    .activ {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 15px;
+        /* margin-left: -21px; */
+    }
+    .activ2 {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 32px;
+        /* margin-left: -21px; */
+    }
+    .shen2 {
+        font-family: FangSong;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(88,88,88,1);
+        height: 32px;
+        line-height: 32px;
+        width: 67px;
+        float: left;
+        margin-left: 15px;
+    }
+    .czbtn2{
+        cursor:pointer;
+    }
+    .activbigtext {
+        width: 461px;
+        height: 99px;
+        float: left;
+        border: 1px solid #D9D9D9;
+        padding-left: 15px;
+        padding-top: 3px;
+    }
+    .activbigtextyjnr {
+        overflow: hidden;
+        padding-top: 3px;
+        padding-left: 5px;
+        width: 461px;
+        height: 99px;
+        margin-left: -16px;
+        margin-top: -4px;
+        border: 1px solid #D9D9D9;
+    }
+    .activmidtext {
+        width: 461px;
+        height: 32px;
+        border: 1px solid #D9D9D9;
+    }
+    .fbsmbox{
+        width: 461px;
+        height: 44px;
+        border: 1px solid #D9D9D9;
+        float: left;
+        padding-left: 12px;
+    }
+    /* 按钮 */
+    .btnn {
+        width: 59px;
+        height: 31px;
+        /* border-radius: 10px; */
+        background-color: #F5F5F6;
+        float: left;
+        margin-left:10px;
+        color:#73777A;
+        outline:none;
+        text-align:center;
+        font-family: cursive;
+        line-height:31px;
+    }
+    /* 按钮点击事件 */
+    .btnn:link{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:hover{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:active{
+        background-color: #0099CC;
+        color:white;
+    }
+    .btnn:visited{
+        background-color: #0099CC;
+        color:white;
+    }
+
+    .btndiv {
+        position: relative;
+        left: 68%;
+        float: left;
+    }
+    .fb {
+        font-family: FangSong;
+        margin-left: -6px;
+        /* margin-top: 10px; */
+        margin-bottom: 8px;
+        color: rgba(51,51,51,1);
+        font-weight: 400;
+        border-bottom: 1px solid #E5E5E5;
+        width: 581px;
+        height: 26px;
+    }
+    .com {
+        cursor: pointer;
+        width: 316px;
+        background-repeat: no-repeat;
+        background-position: 99% center;
+        background-size: 18px;
+    }
+
+
+    /* 进度条 */
+    .progress{position: relative; width:300px;margin:100px auto;}
+    .progress_bg{height: 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;background-color:#f2f2f2;}
+    .progress_bar{background: #00C1DE; width: 0; height: 10px; border-radius: 5px;}
+    .progress_btn{width: 20px; height: 20px; border-radius: 5px; position: absolute;background:#fff;
+        left: 0px; margin-left: -10px; top:-5px; cursor: pointer;border:1px #ddd solid;box-sizing:border-box;}
+    .progress_btn:hover{border-color:#F7B824;}
+    ::-ms-browse, [type='file'] {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+    ::-webkit-file-upload-button {
+        padding: .4em;
+        line-height: 10px;
+        border: 1px solid #D9D9D9;
+        background: #f0f3f9;
+        color: rgba(88,88,88,1);
+    }
+
+    /* 发布业绩 */
+    .everybox{
+        width:100%;
+        /* border:1px red solid; */
+        height:36px;
+        margin-top: 11px;
+    }
+
+    .everybox2{
+        width:100%;
+        /* border:1px red solid; */
+        height:100px;
+        margin-top: 6px;
+    }
+
+    /* 分页 */
+    .fixed-table-pagination .pagination-detail, .fixed-table-pagination div.pagination {
+        margin-left: 2%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .columns{
+        display: none;
+    }
+</style>
+
+<script>
+    $(function() {
+        queryUser();
+        $("#big").show();
+        $("#example").hide();
+        $("#paimingtable").show();
+        tabledata();
+    });
+    var userid;
+    var id;
+    var Request = new Object();
+    Request = GetRequest();
+    id= Request["id"];
+    commentid=id;
+    activid=id;
+    messid= Request["messid"];
+    var data;
+    data ={"id":activid}
+    var datatable;
+    var yhid ; //获取当前用户id
+    //表格接口
+    function tabledata(){
+        var  data = {"id":activid};
+        $.ajax({
+            url:"/tactivity/queryListRegActivity",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                    datatable=data;
+            }
+        });
+    }
+    //表格代码
+    function table(){
+        $('#table1').bootstrapTable({
+            showToggle:!0,
+            showColumns:!0,
+            iconSize:"outline",
+            toolbar:"#exampleTableEventsToolbar",
+            icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},
+            url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+            showRefresh:true,
+            cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+            striped: true,  //表格显示条纹，默认为false
+            pagination: true, // 在表格底部显示分页组件，默认false
+            pageList: [5,10, 15], // 设置页面可以显示的数据条数
+            pageSize: 5, // 页面数据条数
+            pageNumber: 1, // 首页页码
+            onClickRow: function (row, $element) {
+            },
+            onClickCell:function(field, value, row, $element,event){
+
+            },
+            columns: [
+                {
+                    field: 'image',
+                    title: '头像',
+                    width:'7%' ,
+                    align:'center',
+                    formatter: function (value,row,index){
+                        return '<img src="'+row.ip+row.filename+'" style="width: 30px;height:30px;margin-top: 11px;border-radius: 50%;">';
+                    }
+                },{
+                    field: 'username',
+                    title: '名称',
+                    width:'7%' ,
+                    align:'center',
+                }, {
+                    field: 'status',
+                    width:'10%' ,
+                    title: '活动状态',
+                    align:'center',
+                    formatter: function (value,row,index){
+                        if(row.status =="01"){
+                                return "审核中";
+                        }else if(row.status =="02"){
+                            return "已通过";
+                        }else if(row.status =="03"){
+                            return "未通过";
+                        }else{
+                            return "-";
+                        }
+                    }
+
+                }, {
+                    field: 'operate',
+                    title: '操作',
+                    width:'10%' ,
+                    align: 'center',
+                    formatter: operate
+                }
+            ] ,
+            data:datatable
+        });
+    }
+    //表格操作权限
+    function operate(value,row,index){
+        var ret="";
+            ret+="<a href='javascript:void(0);' id='"+row.id+"' class='czbtn' onclick='examine(this.id)' style='color:#595959;'>审核</a> " +
+                "<a href='javascript:void(0);' id='"+row.id+"' class='czbtn' onclick='canreg(this.id)' style='color:#595959;'>取消报名</a>";
+        return ret;
+    }
+
+    //选项卡设置
+    function page(url, title) {
+        var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+        $(window.top.document).find('.J_mainContent').find("iframe").hide();
+        var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+            + '" seamless="" style="display: inline;"></iframe>';
+        $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+            ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + ' <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+        $(window.top.document).find('.J_mainContent').append(iframe);
+    }
+    function queryUser() {
+        $.ajax({
+            url: "/tuser/queryIdTuser",
+            type: "post",
+            dataType: 'json',
+            success: function (data) {
+                userid = data.id;
+                table();//表格
+            }
+        })
+    }
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    
+    function examine(id) {
+        var msg = "是否通过审核";
+        var  data = {"id":id};
+        if (confirm(msg)==true){
+            data = {"id":id,"status":"02"};
+        }else {
+            data = {"id": id, "status": "03"};
+        }
+        $.ajax({
+            url:"/tactivity/updateUserTactivity",
+            data: data,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                alert("修改成功")
+                tabledata();
+                $('#table1').bootstrapTable('load',datatable);
+            }
+        });
+    }
+    function canreg(id) {
+        var  data = {"id":id};
+        var msg = "是否取消报名？";
+        if (confirm(msg)==true) {
+            $.ajax({
+                url: "/tactivity/delUserTactivity",
+                data: data,
+                async: false,
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    alert("取消成功")
+                    tabledata();
+                    $('#table1').bootstrapTable('load', datatable);
+                }
+            });
+        }
+    }
+</script>
+<body>
+<div class="example" id="paimingtable">
+    <table id="table1"></table>
+</div>
+</body>
+</html>

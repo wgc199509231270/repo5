@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.OuSoft.system.dao.Tmenuinfo.TmenuinfoDao">
+ 
+ 		
+ 		
+ 		<!-- 公司管理员查询菜单列表
+ 		 菜单列表查询：二选一：
+ 		一：查询主菜单：menuidepid = 传id: 
+ 		二：查询子菜单：menuidepid  = 主菜单id
+ 		 -->
+ 		<select id="queryTmenuinfoDao" parameterType="com.OuSoft.system.entity.Tmenuinfo" resultType="com.OuSoft.system.entity.Tmenuinfo">
+ 			SELECT * from tmenuinfo t 
+ 			<where>
+ 					1=1 
+				<if test="menuepid !=null and menuepid != '' ">
+					and t.menuepid = #{menuepid}
+				</if>
+				<if test="menupid !=null and menupid != '' ">
+					AND t.menupid = #{menupid}
+				</if>
+					ORDER BY t.menusort 
+ 			</where> 
+ 		</select>
+ 		
+ 		
+ 		<!-- 平台管理员查看查询菜单列表
+ 		 菜单列表查询：二选一：
+ 		一：查询主菜单：menuidepid = 传公司id: 
+ 		二：查询子菜单：menuidepid  = 主菜单id
+ 		 -->
+ 		<select id="queryPtTmenuinfoDao" parameterType="com.OuSoft.system.entity.Tmenuinfo" resultType="com.OuSoft.system.entity.Tmenuinfo">
+				SELECT  * FROM tmenuinfo
+				where 1=1 and LENGTH(menuepid) &lt;= '3'
+ 		</select>
+ 		
+ 		
+ 		<!-- 新增菜单
+ 			menuname:菜单名称
+			menuepid：菜单关系id
+			menuurl：菜单url
+			menusort：菜单排序
+			menuinfo：菜单描述
+			menuimage：菜单图表
+			menupid：顶级公司id		
+ 		 -->
+ 		 <insert id="saveTmenuinfoDao" parameterType="com.OuSoft.system.entity.Tmenuinfo">
+ 		 		insert into tmenuinfo
+			 <trim prefix="(" suffix=")" suffixOverrides=",">
+			      <if test="id != null">
+			        id,
+			      </if>
+			      <if test="menuname != null">
+			        menuname,
+			      </if>
+			      <if test="menuepid != null">  
+			        menuepid,
+			      </if>
+			      <if test= "menuurl != null ">
+			        menuurl,
+			      </if>
+			      <if test="menusort != null">
+			        menusort,
+			      </if>
+			      <if test="menutime != null">
+			        menutime,
+			      </if>
+			      <if test="menuinfo != null">
+			        menuinfo,
+			      </if>
+			      <if test="menuimage != null">
+			        menuimage,
+			      </if>
+			      <if test="menutype != null">
+			        menutype,
+			      </if>
+			      <if test="remark != null">
+			        remark,
+			      </if>
+			      <if test="menupid != null">
+			        menupid,
+			      </if>
+			    </trim>
+			    <trim prefix="values (" suffix=")" suffixOverrides=",">
+			      <if test="id != null">
+			        #{id,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menuname != null">
+			        #{menuname,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menuepid != null ">
+			        #{menuepid,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menuurl != null">
+			        #{menuurl,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menusort != null">
+			        #{menusort,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menutime != null">
+			        #{menutime,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menuinfo != null">
+			        #{menuinfo,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menuimage != null">
+			        #{menuimage,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menutype != null">
+			        #{menutype,jdbcType=VARCHAR},
+			      </if>
+			      <if test="remark != null">
+			        #{remark,jdbcType=VARCHAR},
+			      </if>
+			      <if test="menupid != null">
+			        #{menupid,jdbcType=VARCHAR},
+			      </if>
+			    </trim>
+ 		 </insert>
+ 		
+ 		
+ 		<!-- 删除一个菜单：id -->
+		<delete id="deleteTmenuinfoDao" parameterType="com.OuSoft.system.entity.Tmenuinfo">
+			delete from tmenuinfo where 1=1 and id = #{id}
+		</delete>
+
+
+</mapper>

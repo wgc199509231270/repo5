@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OuSoft Office Automation</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+	<link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+	<script src="/static/js/jquery.cookie.js"></script>
+	<script src="/static/js/qrcode.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	<style type="text/css">
+		html{
+			height:100%;
+		}
+		.background{
+			margin:0 auto;
+			width:100%;
+			height:100%;
+		}
+		#word1{
+			/* position:relative;
+			left:200px;
+			top:-350px; */
+			width:299px;
+			height:36px;
+		}
+		#word2{
+			color:#FFFFFF;
+			font-size:16px;
+			height:100px;
+		}
+		.word{
+			float: left;
+			margin-top: 18%;
+			margin-left: 3%;
+			font-family:monospace;
+		}
+		p{
+			margin-top:10px;
+		}
+		.logo{
+			float: left;
+			margin-top: 40px;
+			margin-left: 50px
+		}
+		#logo{
+		   width:100px;
+			height:46px;
+		}
+		.loginwindow{
+			width:350px;
+			height:270px;
+			background-color:white;
+			position:absolute;
+			margin-top: 14%;
+			margin-left: 60%;
+		}
+		input{
+			width:300px;
+			height:38px;
+			font-size:12px;
+			margin-top:15px;
+			border:1px solid #c8cccf;
+			background-color: white !important;
+			outline:0;
+			text-align:left;
+			display:block;
+			padding: 0 8px;
+		}
+		input:-webkit-autofill {
+			-webkit-box-shadow: 0 0 0px 1000px white inset !important;
+		}
+		.loginwindow_word{
+			margin-top:83px;
+			margin-left:31px;
+		}
+		.arrow_box {
+			position: relative;
+			background: #e6f9fc;
+			border: 1px solid #00C1DE;
+		}
+		.arrow_box:after, .arrow_box:before {
+			left: 100%;
+			top: 50%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+		}
+
+		.arrow_box:after {
+			border-color: rgba(230, 249, 252, 0);
+			border-left-color: #e6f9fc;
+			border-width: 4px;
+			margin-top: -5px;
+		}
+		.arrow_box:before {
+			border-color: rgba(0, 193, 222, 0);
+			border-left-color: #00C1DE;
+			border-width: 5px;
+			margin-top: -6px;
+		}
+
+	</style>
+  </head>
+
+  <body style="overflow-x: hidden;overflow-y: hidden;background-size: 100% 100%" background="/static/img/pic_beijing.png">
+
+    		<div class="logo">
+    			<img alt="" src="/static/img/pic_logo.png" id="logo" >
+    		</div>
+			<div class="word">
+				<img alt="" src="/static/img/pic_ziti.png" id="word1" ></br></br>
+				<div id="word2">
+					<p>大数据智能分析与预警</p>
+					<p>一站式智能移动工作体验</p>
+					<p>现已广泛应用于金融、医疗、教育等多个行业</p>
+				</div>
+			</div>
+    		<div class="loginwindow" style="display:none;">
+    			<div class="loginwindow_word">
+    				<p style="font-size:19px;margin-top:-60px;color:black;font-family:initial;">密码登录</p>
+					<div class="arrow_box" style="width: 67px;font-size: 13px;height:26px;text-align: center;line-height: 24px;left: 61%;margin-top: -16%;float:left;">扫码登录</div>
+					<div class="erwei" style="margin-left:268px;margin-top:-58px;margin-bottom: 20px;">
+    				<img src="/static/img/erwei.png" style="width:50px;height:50px;" onclick="mima()"></div>
+    					<input type="text" placeholder="请输入用户名" name="username" id="username" >
+    					<input type="password" placeholder="请输入登录密码" name="password" id="password">
+    					<button class="btn btn-primary" id="loginBtn" type="submit" style="border:0px;width:300px;height:35px;border-radius:0px;background-color: #0099CC; color: white;margin-top:15px; ">登 录</button>
+    					&nbsp;&nbsp;<!-- <img src="/static/img/dl.png" > -->
+    					<input id="savecookie" type="checkbox" style="margin-top:11px;margin-left:5px;width:13px;height:13px;">
+    					<p style="font-size:12px;margin-left:25px;margin-top:-14px;font-family:SimHei;">下次自动登录</p>
+    					<p style="font-size:12px;margin-left:245px;margin-top:-28px;font-family:SimHei;">忘记密码</p>
+    			</div>
+    		</div>
+    		<div class="loginwindow" style="">
+    			<div class="loginwindow_word">
+    				<p style="font-size:19px;margin-top:-60px;color:black;font-family:initial;">扫码登录</p>
+					<div class="arrow_box" style="width: 67px;font-size: 13px;height:26px;text-align: center;line-height: 24px;left: 61%;margin-top: -16%;float:left;">密码登录</div>
+    				<div class="erwei" style="margin-left:273px;margin-top:-56px;margin-bottom: 20px;">
+    					<img src="/static/img/diannao.png" style="width:40px;height:40px;" onclick="erwei()">
+    				</div>
+					<div id="qrcode" style="width:155px;height:145px;margin-left:65px;" ></div>
+    			    <p style="margin-left:108px;margin-top:24px;">扫一扫登录</p>
+    			</div>
+    		</div>
+    		
+				<!-- 登录验证 -->
+<script>
+
+    window.onload = function(){
+        $("#loginBtn").click(function(){
+            if(doLogin()){
+                Save();
+                userlogin();
+            }
+        });
+        $("#password").keyup(function(event){
+            if(event.keyCode == 13){
+                if(doLogin()){
+                    Save();
+                    userlogin();
+                }
+            }
+        });
+
+    };
+
+
+</script>
+
+    <script language="javascript">
+        $(document).ready(function () {
+            if ($.cookie("rmbUser") == "true") {
+                $("#rmbUser").attr("checked", true);
+                $("#username").val($.cookie("username"));
+                $("#password").val($.cookie("password"));
+                userlogin();
+            }
+        });
+        $(function () {
+            //判断一下当前是不是做顶层，如果不是，则做一下顶层页面重定向
+            if (window != top) {
+                top.location.href = location.href;
+            }
+        });
+
+        function Save() {
+            if ($("input[type='checkbox']").is(':checked')) {
+                var str_username = $("#username").val();
+                var str_password = $("#password").val();
+                $.cookie("rmbUser", "true", { expires: 7 }); //存储一个带7天期限的cookie
+                $.cookie("username", str_username, { expires: 7 });
+                $.cookie("password", str_password, { expires: 7 });
+            }
+            else {
+                $.cookie("rmbUser", "false", { expire: -1 });
+                $.cookie("username", "", { expires: -1 });
+                $.cookie("password", "", { expires: -1 });
+            }
+        };
+
+        /*用户登录*/
+    function userlogin(){
+        var username = encodeURI($("#username").val());//用户名称
+        var userpass = $("#password").val();//用户密码
+        var userdata = {"loginname":username,"userpass":userpass};
+        $.ajax({
+            url:"/login/QueryUser",
+            data: userdata,
+            async:false,
+            dataType:"json",
+            type:"post",
+            success:function (data) {
+                console.log(data);
+                if(data.result == "success"){
+                    window.location.href = "/index";
+                }else{
+                    alert("用户名密码错误！请重新输入。");
+                }
+            },
+            error:function (error) {
+                alert("网络状况不佳，用户登录失败！" + error.status);
+            }
+        });
+    }
+    function doLogin(){
+        var username = $("#username").val();//用户名称
+        var password = $("#password").val();//用户密码
+        if(username == null || username == ""){
+            alert("请输入用户名!");
+            return false;
+        }else if(password == null || password == ""){
+            alert("请输入密码!");
+            return false;
+        }
+        return true;
+    }
+        $(document).ready(function(e) {
+            $(".erwei").click(function(e) {
+                $(".loginwindow").toggle();
+            });
+        });
+
+
+        //获取维一标识token生成二维码
+        $.post('/logins/generationQRCode', function (uid) {
+            new QRCode(document.getElementById('qrcode'), {text:uid,height:150,width:150});
+            $('#qrcode').removeAttr('title');
+            $('#qrcode').attr('token',uid);
+        });
+        setTimeout(timeout,30000);
+        function timeout(){
+            new QRCode(document.getElementById('qrcode'), {text:"",height:150,width:150});
+            $('#qrcode').removeAttr('title');
+            $('#qrcode').attr('token',"");
+		}
+        //ajax定时查看是否有用户扫码后未登入
+        var time = window.setInterval(function () {
+            var token = $('#qrcode').attr('token');
+            if(token){
+                $.post('/logins/scanLogin',{'token':token},function (data) {
+                    if(data == 'success'){
+                        clearInterval(time);
+                        window.location.href = '/index';
+                    }
+                })
+            }
+        },1000);
+	</script>
+  </body>
+</html>

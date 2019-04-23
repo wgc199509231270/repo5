@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>manage.html</title>
+<meta charset="utf-8">
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
+<link rel="shortcut icon" href="favicon.ico">
+<link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+<link href="/static/css/font-awesome.min93e3.css?v=4.4.0"
+	rel="stylesheet">
+<link href="/static/css/plugins/bootstrap-table/bootstrap-table.min2.css"
+	rel="stylesheet">
+<link href="/static/css/animate.min.css" rel="stylesheet">
+<link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+<link rel="stylesheet"
+	href="/static/js/plugins/webuploader/webuploader.css">
+<link rel="stylesheet" href="/static/css/jquery.searchableSelect.css">
+<link href="/static/css/iconfont/iconfont.css" rel="stylesheet">
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/static/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script
+	src="/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script
+	src="/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/static/17com/js/echarts.js"></script>
+<script src="/static/js/plugins/webuploader/webuploader.min.js"></script>
+<script src="/static/js/plugins/laydate/laydate.js"></script>
+<script src="/static/js/jquery.searchableSelect.js"></script>
+<script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+<script src="/static/js/highcharts-3d.js"></script>
+<script src="/static/js/jedate.js"></script>
+<link href="/static/css/skin/jedate.css" rel="stylesheet">
+<style>
+input[type=range] {
+	margin-top: 8px;
+	outline: none;
+	-webkit-appearance: none; /*清除系统默认样式*/
+	width: 80% !important;
+	background: #e7eaec;
+	height: 3px; /*横条的高度*/
+}
+/*拖动块的样式*/
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none; /*清除系统默认样式*/
+	height: 16px; /*拖动块高度*/
+	width: 16px; /*拖动块宽度*/
+	background: #0099CC; /*拖动块背景*/
+	border-radius: 50%; /*外观设置为圆形*/
+	border: solid 1px #ddd
+}
+
+#text {
+	white-space: normal;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+.my-container {
+	 float: left; 
+	display: inline-block;
+}
+
+.myLabel-content, .myText-content, .myBtn-content {
+	 float: left; 
+	display: inline-block;
+	line-height: 30px;
+	
+}
+
+.myLabel-content, .myText-content input[type='text'], .myBtn-content .btn
+	{
+	height: 30px;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.myBtn-content .btn {
+	margin-bottom: 10px;
+}
+
+/* 模态框 */
+
+.hourdiv {
+	width: 138px;
+}
+#fbyjbox  tr{
+	margin-top:10px;
+}
+.yjbox{
+	margin-left: 20px;
+}
+.yeji {
+    font-family: FangSong;
+    font-size: 14.5px;
+    font-weight: 400;
+    color: rgba(88,88,88,1);
+    line-height: 15px;
+    width: 78px;
+    margin-left: -21px;
+    margin-top: 16px;
+}
+.yeji2 {
+    font-family: FangSong;
+    font-size: 14.5px;
+    font-weight: 400;
+    color: rgba(88,88,88,1);
+    line-height: 15px;
+}
+.yejitext {
+    width: 25%;
+    height: 30px;
+    border: 1px solid #D9D9D9;
+}
+
+.yejibigtext {
+	width: 316px;
+	height: 93px;
+	border: 1px solid #D9D9D9;
+}
+.yejibigtext2 {
+	width: 300px;
+	height: 55px;
+	border: 1px solid #D9D9D9;
+}
+.yejibigtext3 {
+	width: 300px;
+	height: 74px;
+	border: 1px solid #D9D9D9;
+}
+.yejibigtext4 {
+	width: 300px;
+	height: 74px;
+	border: 1px solid #D9D9D9;
+}
+.yjtext {
+    margin-top: 2%;
+    margin-left: 3%;
+    font-family: FangSong;
+    font-size: 12.5px;
+    font-weight: 400;
+    color: rgba(88,88,88,1);
+    line-height: 15px;
+}
+.gzsc {
+    margin-left: 4%;
+}
+
+.yejimidtext {
+	width: 300px;
+	height: 30px;
+	border: 1px solid #D9D9D9;
+}
+
+/* 按钮 */
+.btnn {
+	width: 59px;
+	height: 31px;
+	/* border-radius: 10px; */
+	background-color: #F5F5F6;
+	float: left;
+	margin-left:10px;
+	color:#73777A;
+	outline：none;
+	text-align:center;
+	font-family: cursive;
+	line-height:31px;
+}
+/* 按钮点击事件 */
+.btnn:link{
+background-color: #0099CC;
+	color:white;
+}
+.btnn:hover{
+background-color: #0099CC;
+	color:white;
+}
+.btnn:active{
+	background-color: #0099CC;
+	color:white;
+}
+.btnn:visited{
+background-color: #0099CC;
+	color:white;
+}
+
+.btndiv {
+    position: relative;
+    left: 50%;
+    top: 1%;
+    float: left;
+}
+.btndiv2 {
+    position: relative;
+    left: 63%;
+    top: 2%;
+    float: left;
+}
+.btndiv3 {
+    position: relative;
+    left: 63%;
+    top: 2%;
+    float: left;
+}
+.btndiv4 {
+    position: relative;
+    left: 63%;
+    top: 2%;
+    float: left;
+}
+.hour1 {
+    font-size: 15px;
+    position: absolute;
+    left: 29.1%;
+    top: 15%;
+    width: 7%;
+    color: #D9D9D9;
+}
+.hoursh {
+    font-size: 15px;
+    position: absolute;
+    left: 40.5%;
+    top: 12%;
+    width: 7%;
+    color: #D9D9D9;
+}
+.hoursh2 {
+    font-size: 15px;
+    position: absolute;
+    left: 86.5%;
+    top: 12%;
+    width: 9%;
+    color: #D9D9D9;
+}
+.hour11 {
+    font-size: 15px;
+    position: absolute;
+    left: 40.5%;
+    top: 12%;
+    width: 7%;
+    color: #D9D9D9;
+}
+.hour22 {
+    font-size: 15px;
+    position: absolute;
+    left: 86.5%;
+    top: 12%;
+    width: 9%;
+    color: #D9D9D9;
+}
+.tjfj11{
+
+}
+.fb {
+   font-family: cursive;
+    margin-left: -5.77%;
+    /* margin-top: 10px; */
+    margin-bottom: 8px;
+    border-bottom: 1px solid #E5E5E5;
+    width: 87.6%;
+}
+.hour2 {
+    font-size: 15px;
+    position: absolute;
+    left: 76.1%;
+    top: 12%;
+    width: 9%;
+    color: #D9D9D9;
+}
+.xing {
+    position: relative;
+    left: -5%;
+    top: 37px;
+    color: red;
+    width:10px;
+}
+
+.everydiv{
+	margin-top:10px;
+}
+.com {
+    cursor: pointer;
+    width: 316px;
+    background-repeat: no-repeat;
+    background-position: 99% center;
+    background-size: 18px;
+}
+.com2 {
+    cursor: pointer;
+    width: 316px;
+    background-repeat: no-repeat;
+    background-position: 93% center;
+    background-size: 18px;
+}
+</style>
+
+
+</head>
+
+<body>
+	<div id="big" class="col-sm-12" style="display: none">
+		<div class="example-wrap" style="margin-top: 25px;">
+
+			<!-- 顶部筛选框 -->
+			<div id="toolbar1"
+				style="width: 100%; overflow: hidden; margin-bottom: 14px; float: left;">
+				<div class="myText-content" style="float: left;width: 11%;">
+					<label class="myLabel-content">类型:&nbsp;&nbsp;&nbsp;</label> <select
+						name="select" id="type2"
+						style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;;">
+						<option value="01">业绩</option>
+						<option value="02">审核</option>
+					</select>
+				</div>
+
+				<div class="myText-content" style="float: left;width: 12%;">
+					<label class="myLabel-content">人员:&nbsp;&nbsp;&nbsp;</label> <select
+						name="select" id="type2"
+						style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+						<option value="">所有</option>
+						<option value="01">小组</option>
+						<option value="02">部门</option>
+						<option value="03">公司</option>
+					</select>
+				</div>
+
+				<div class="myText-content" style="float: left;width: 13%;">
+					<label class="myLabel-content">状态:&nbsp;&nbsp;&nbsp;</label> <select
+						name="select" id="type2"
+						style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+						<option value="01">全部</option>
+						<option value="02">未通过</option>
+						<option value="03">未确认</option>
+						<option value="04">已通过</option>
+						<option value="05">已完成</option>
+						<option value="06">已审核</option>
+					</select>
+				</div>
+
+				<div class="myText-content" style="float: left;width: 13%;">
+					<label class="myLabel-content">部门:&nbsp;&nbsp;&nbsp;</label> <select
+						name="select" id="type2"
+						style="float: left; width: 70px; height: 33px; line-height: 35px; border: solid 1px #D9D9D9;">
+						<option value="">全部</option>
+						<option value="01">技术部</option>
+						<option value="02">产品部</option>
+						<option value="03">运营部</option>
+					</select>
+				</div>
+
+
+				<div class="my-container"
+					style="display: block;float: left;">
+					<label class="myLabel-content" style="">日期：</label>
+					<div class="myText-content" style="">
+						<input id="Begtime0"
+							class="com2 laydate-icon form-control layer-date"
+							placeholder="开始日期" style="width: 119px;margin-right: 10px;">
+					</div>
+
+				</div>
+				<div class="my-container"
+					style="display: block;float: left;">
+					<label class="myLabel-content">至</label>
+				</div>
+				<div class="my-container"
+					style="display: block;  float: left;">
+					<label class="myLabel-content"></label>
+					<div class="myText-content" style="margin-left: 10px;">
+						<input id="Endtime0"
+							class="com2 laydate-icon form-control layer-date"
+							placeholder="结束日期" style="width: 119px;">
+					</div>
+				</div>
+				<div class="myBtn-content"
+					style="float: left;margin-left: 2%;">
+					<button id="search1" type="button" class="btn btn-primary"
+						style="background-color: #0099CC;border-color: #0099CC;color: #FFF;">查询</button>
+					<button id="reset1" type="button" class="btn btn-default"
+						style="background-color: #c2c2c2; margin-left: 3px;border-color: #c2c2c2;color: #FFF;">清空</button>
+				</div>
+				
+				<div id="fabu" 
+				style="float: left;width:76px;height:30px;background-color:#0099CC;margin-left: 133px;" 
+				onclick="fabu()">
+					<i class="iconfont icon-fabu"style="position: relative;top: 5px;left: 14px;color: white;" ><font style="font-size:10px;position: relative;top: -2px;left: 2px;">发布</font></i>
+				</div>
+				<!-- <img id="fabu" src="/static/img/fabu.png"
+					> -->
+			</div>
+
+
+			<script type="text/javascript">
+             
+			</script>
+
+
+
+			<!-- 业绩管理列表 -->
+			<div class="example" id="paimingtable">
+				<table id="table1"></table>
+			</div>
+
+
+
+
+			<!-- 发布业绩-->
+			<!-- <div id="modal-form" class="modal fade" aria-hidden="true"
+				style="height: 800px;">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body" style="height: 600px;">
+							<div class="fb">
+								<h3 style="margin-left:4%;">业绩发布</h3>
+							</div>
+							<div style="margin-top: -19px;">
+								<p class="xing">*</p>
+								<div class="yeji">
+									<h3>业绩量:</h3>
+								</div>
+								<div class="yeji yejitext " contenteditable="true" style=""></div>
+								<div class="hour1">(h)</div>
+								<div class="yeji " style="margin-left: 5%">
+									<h3>工作时长:</h3>
+								</div>
+								<div class="yeji yejitext gzsc" contenteditable="true" style=""></div>
+								<div class="hour2">(h)</div>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>业绩内容:</h3>
+								</div>
+								<div class="yeji yejibigtext" contenteditable="true"
+									onfocus="if(this.innerText=='添加您的业绩内容...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='添加您的业绩内容...'">
+									<p class="yjtext">添加您的业绩内容...</p>
+								</div>
+
+								<div class="tjfj" style="width: 20%;">
+									<i class="iconfont icon-fujian"
+										style="font-size: 12px;position: absolute;left: 73%;top: 30%;">
+										&nbsp;上传附件</i>
+								</div>
+							</div>
+							</br> </br> </br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>业绩类型:</h3>
+								</div>
+								<div class="yeji yejimidtext"  contenteditable="true"></div>
+								<select class="form-control yeji yejimidtext"
+									style="margin-left: 3%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>所属部门:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext"
+									style="margin-left: 3%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>开始时间:</h3>
+								</div>
+								<div class="my-container ">
+									<div class="myText-content" style="width: 50%; margin-left: 3%;">
+										<input id="Searchtime"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+							</div>
+							</br> </br>
+							<div class="everydiv" style="float: left;">
+								<div class="yeji ">
+									<h3>结束时间:</h3>
+								</div>
+								<div class="my-container  ">
+									<div class="myText-content" style="width: 50%;margin-left: 3%;">
+										<input id="Endtime"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+							</div>
+							</br> </br>
+							<div style="margin-top: 20px;">
+								<div class="yeji">
+									<h3>所属业绩:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext" style="margin-left: 2%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+
+							<div class="btndiv">
+								<div class="btnn" style="background-color:#0099CC;color:white;">发布</div>
+								<div class="btnn" style="
+								    border: 1px solid #EEEEEF;
+								">取消</div>
+								<div></div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<!-- 发布业绩-->
+			<div id="modal-form" class="modal fade" aria-hidden="true"
+				style="height: 800px;">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body" style="height: 539px;width: 570px;">
+						
+						<div class="fb">
+								<h3 style="margin-left:4%;">业绩发布</h3>
+						</div>
+							
+							<table id="fbyjbox" style="
+								    margin-left: -4px;
+								    margin-top: 3px;
+								    border-collapse:separate; border-spacing:0px 16px;
+								">
+							<tr>
+								<td class="yeji">
+									业绩量:
+								</td>
+								<td class="yjbox">
+									<div class="  " contenteditable="true" style="width: 27%;height: 30px;border: 1px solid #D9D9D9;"></div>
+									<div class="hour1">(h)</div>
+								</td>
+								<td class="yeji2 " style="
+								  position: absolute;left: 43%;top: 15.4%;
+								">
+									工作时长:
+									</div>	
+								</td>
+								<td class="yjbox" style="width: 78px;position: absolute;left: 55.8%;">
+									<div class=" " contenteditable="true" style="
+									    width: 104.5%;
+									    border: 1px solid #D9D9D9;
+									    height: 30px;
+									
+									"></div>
+									<div class="hour2">(h)</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td class="yeji ">业绩内容:</td>
+								<td class="yjbox">
+									<div class=" yejibigtext" contenteditable="true"
+									onfocus="if(this.innerText=='添加您的业绩内容...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='添加您的业绩内容...'">
+									<p class="yjtext">添加您的业绩内容...</p>
+									</div>
+	
+									<div class="tjfj" style="width: 20%;">
+										<i class="iconfont icon-fujian"
+											style="font-size: 12px;position: absolute;left: 59%;top: 34.5%;">
+											&nbsp;上传附件</i>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td class="yeji">业绩类型:</td>
+								<td class="yjbox">
+									<select class="form-control  yejimidtext"
+									style="width:100%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="yeji ">所属部门:</td>
+								<td class="yjbox">
+									<select class="form-control  yejimidtext"
+									style="width:100%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="yeji ">开始时间:</td>
+								<td class="yjbox">
+									<div class="my-container ">
+									<div class="myText-content" style="width: 50%; ">
+										<input id="Searchtime"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="yeji ">结束时间:</td>
+								<td class="yjbox">
+									<div class="my-container  ">
+									<div class="myText-content" style="width: 50%;">
+										<input id="Endtime"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="yeji ">所属业绩:</td>
+								<td class="yjbox">
+									<select class="form-control yeji yejimidtext" style="margin-top: 0%;width: 100%;margin-left: -0.5px;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+								</td>
+							</tr>
+							</table>
+						<div class="btndiv">
+								<div class="btnn" style="background-color:#0099CC;color:white;">发布</div>
+								<div class="btnn" style="
+								    border: 1px solid #EEEEEF;
+								">取消</div>
+								<div></div>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			
+			<!-- 完成业绩-->
+			<div id="modal-form2" class="modal fade" aria-hidden="true"
+				style="height: 820px;">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body" style="height: 613px;">
+							<div class="fb">
+								<h3 style="margin-left:4%;">业绩完成</h3>
+							</div>
+							<div style="margin-top: -19px;">
+								<p class="xing">*</p>
+								<div class="yeji">
+									<h3>业绩量:</h3>
+								</div>
+								<div class="yeji yejitext " contenteditable="true" style=""></div>
+								<div class="hour1">(h)</div>
+								<div class="yeji " style="margin-left: 5%">
+									<h3>工作时长:</h3>
+								</div>
+								<div class="yeji yejitext gzsc" contenteditable="true" style=""></div>
+								<div class="hour2">(h)</div>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>业绩内容:</h3>
+								</div>
+								<div class="yeji yejibigtext" contenteditable="true"
+									onfocus="if(this.innerText=='添加您的业绩内容...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='添加您的业绩内容...'">
+									<p class="yjtext">添加您的业绩内容...</p>
+								</div>
+
+								<div class="tjfj" style="width: 20%;">
+									<i class="iconfont icon-fujian"
+										style="font-size: 12px;position: absolute;left: 60%;top: 184px;">
+										&nbsp;上传附件</i>
+								</div>
+							</div>
+							</br> </br> </br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>业绩类型:</h3>
+								</div>
+								<!-- <div class="yeji yejimidtext"  contenteditable="true"></div> -->
+								<select class="form-control yeji yejimidtext"
+									style="margin-left: 3%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>所属部门:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext"
+									style="margin-left: 3%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>开始时间:</h3>
+								</div>
+								<div class="my-container ">
+									<div class="myText-content" style="width: 50%; margin-left: 3%;">
+										<input id="Searchtime2"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+							</div>
+							</br> </br>
+							<div class="everydiv" style="float: left;">
+								<div class="yeji ">
+									<h3>结束时间:</h3>
+								</div>
+								<div class="my-container  ">
+									<div class="myText-content" style="width: 50%;margin-left: 3%;">
+										<input id="Endtime2"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+							</div>
+							</br> </br>
+							<div style="margin-top: 20px;">
+								<div class="yeji">
+									<h3>上级业绩:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext" style="margin-left: 2%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>完成说明:</h3>
+								</div>
+								<div class="yeji yejibigtext3" style=" margin-top: 3%; margin-left: 2%;"contenteditable="true">
+								</div>
+
+							</div>
+							<div class="btndiv2" >
+								<div class="btnn" style="background-color:#0099CC;color:white;">完成</div>
+								<div class="btnn" style="
+								    border: 1px solid #EEEEEF;
+								">取消</div>
+								<div></div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!-- 审核业绩-->
+			<div id="modal-form3" class="modal fade" aria-hidden="true"
+				style="height: 800px;">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body" style="height: 657px;">
+							<div class="fb">
+								<h3 style="margin-left:4%;">业绩审核</h3>
+							</div>
+							<div style="margin-top: -19px;">
+								<p class="xing">*</p>
+								<div class="yeji">
+									<h3>业绩量:</h3>
+								</div>
+								<div class="yeji yejitext " contenteditable="true" style=""></div>
+								<div class="hoursh">(h)</div>
+								<div class="yeji " style="margin-left: 5%">
+									<h3>工作时长:</h3>
+								</div>
+								<div class="yeji yejitext gzsc" contenteditable="true" style=""></div>
+								<div class="hoursh2">(h)</div>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>业绩内容:</h3>
+								</div>
+								<div class="yeji yejibigtext" contenteditable="true"
+									onfocus="if(this.innerText=='添加您的业绩内容...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='添加您的业绩内容...'">
+									<p class="yjtext">添加您的业绩内容...</p>
+								</div>
+
+								<div class="tjfjsh" style="width: 20%;">
+									<i class="iconfont icon-fujian"
+										style="font-size: 12px;position: absolute;left: 68%;top: 30%;">
+										&nbsp;上传附件</i>
+								</div>
+							</div>
+							</br> </br> </br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>业绩类型:</h3>
+								</div>
+								<!-- <div class="yeji yejimidtext"  contenteditable="true"></div> -->
+								<select class="form-control yeji yejimidtext"
+									style="margin-left: 3%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>所属部门:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext"
+									style="margin-left: 3%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>开始时间:</h3>
+								</div>
+								<div class="my-container ">
+									<div class="myText-content" style="width: 50%; margin-left: 3%;">
+										<input id="Searchtime3"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+							</div>
+							</br> </br>
+							<div class="everydiv" style="float: left;">
+								<div class="yeji ">
+									<h3>结束时间:</h3>
+								</div>
+								<div class="my-container  ">
+									<div class="myText-content" style="width: 50%;margin-left: 3%;">
+										<input id="Endtime3"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+							</div>
+							</br> </br>
+							<div style="margin-top: 20px;">
+								<div class="yeji">
+									<h3>上级业绩:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext" style="margin-left: 2%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>完成说明:</h3>
+								</div>
+								<div class="yeji yejibigtext2" style=" margin-top: 3%; margin-left: 2%;"contenteditable="true">
+								</div>
+							</div>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>审核说明:</h3>
+								</div>
+								<div class="yeji yejibigtext2" style=" margin-top: 3%; margin-left: 2%;"contenteditable="true">
+								</div>
+							</div>
+							<div class="btndiv3" >
+								<div class="btnn" style="background-color:#0099CC;color:white;">审核</div>
+								<div class="btnn" style="
+								    border: 1px solid #EEEEEF;
+								">取消</div>
+								<div></div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!-- 确认业绩-->
+			<div id="modal-form4" class="modal fade" aria-hidden="true"
+				style="height: 800px;">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body" style="height: 649px;">
+							<div class="fb">
+								<h3 style="margin-left:4%;">业绩确认</h3>
+							</div>
+							<div style="margin-top: -19px;">
+								<p class="xing">*</p>
+								<div class="yeji">
+									<h3>业绩量:</h3>
+								</div>
+								<div class="yeji yejitext " contenteditable="true" style=""></div>
+								<div class="hour11">(h)</div>
+								<div class="yeji " style="margin-left: 5%">
+									<h3>工作时长:</h3>
+								</div>
+								<div class="yeji yejitext gzsc" contenteditable="true" style=""></div>
+								<div class="hour22">(h)</div>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>业绩内容:</h3>
+								</div>
+								<div class="yeji yejibigtext" contenteditable="true"
+									onfocus="if(this.innerText=='添加您的业绩内容...')this.innerText=''"
+									onblur="if(this.innerText=='')this.innerText='添加您的业绩内容...'">
+									<p class="yjtext">添加您的业绩内容...</p>
+								</div>
+
+								<div class="tjfj11" style="width: 20%;">
+									<i class="iconfont icon-fujian"
+										style="font-size: 12px;position: absolute;left: 68%;top: 29%;">
+										&nbsp;上传附件</i>
+								</div>
+							</div>
+							</br> </br> </br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>业绩类型:</h3>
+								</div>
+								<!-- <div class="yeji yejimidtext"  contenteditable="true"></div> -->
+								<select class="form-control yeji yejimidtext"
+									style="margin-left: 3%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>所属部门:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext"
+									style="margin-left: 3%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							</br> </br>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>开始时间:</h3>
+								</div>
+								<div class="my-container ">
+									<div class="myText-content" style="width: 50%; margin-left: 3%;">
+										<input id="Searchtime4"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+							</div>
+							</br> </br>
+							<div class="everydiv" style="float: left;">
+								<div class="yeji ">
+									<h3>结束时间:</h3>
+								</div>
+								<div class="my-container  ">
+									<div class="myText-content" style="width: 50%;margin-left: 3%;">
+										<input id="Endtime4"
+											class="com laydate-icon form-control layer-date"
+											placeholder="">
+									</div>
+								</div>
+							</div>
+							</br> </br>
+							<div style="margin-top: 20px;">
+								<div class="yeji">
+									<h3>所属业绩:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext" style="margin-left: 2%;margin-top: 2%;width:77%;">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							
+							<div style="margin-top: 20px;">
+								<div class="yeji">
+									<h3>确认结果:</h3>
+								</div>
+								<select class="form-control yeji yejimidtext" style="margin-left: 2%;margin-top: 2%;width:77%;">
+									<option>通过</option>
+									<option>未通过</option>
+								</select>
+							</div>
+							<div class="everydiv">
+								<div class="yeji">
+									<h3>确认说明:</h3>
+								</div>
+								<div class="yeji yejibigtext4" style=" margin-top: 3%; margin-left: 2%;"contenteditable="true">
+								</div>
+							</div>
+							<div class="btndiv4" >
+								<div class="btnn" style="background-color:#0099CC;color:white;">确认</div>
+								<div class="btnn" style="
+								    border: 1px solid #EEEEEF;
+								">取消</div>
+								<div></div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	
+</body>
+
+
+<script>
+	
+  
+    //如需刷新iframe，则只需把window替换为响应的iframe的 属性值或ID属性值
+   
+    
+   
+        
+//                
+        $(function () {
+            $("#kntype").val("01");
+            $("a").tooltip();
+            $(":button").tooltip();
+            $("#top").click(function () {
+                var speed=200;//滑动的速度
+                $('body,html').animate({ scrollTop: 0 }, speed);
+                return false;
+            });
+            
+            $(".modal-dialog").hide();
+            $("#paimingtable").show();
+            $("#big").show();
+            $("#example").hide();
+              //table1();
+            
+            
+            // 初始化Web Uploader
+            uploader = WebUploader.create({
+                // 自动上传。
+                auto: false,
+                // swf文件路径
+                swf: '/static/js/plugins/webuploader/Uploader.swf',
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#filePicker',
+                duplicate :true,//是否可以重复上传
+                fileSizeLimit: 10000*1024*1024, //限制图片大小，不可以超过
+                compress: null,
+                // 只允许选择文件，可选。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/jpg,image/jpeg,image/png'   //修改这行，加快上传文件框的打开速度
+                }
+            });
+
+        });
+       
+    //选项卡设置
+        function page(url, title) {
+            var nav = $(window.top.document).find('.J_menuTabs .page-tabs-content ');
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').find(".J_menuTab.active").removeClass("active");
+            $(window.top.document).find('.J_mainContent').find("iframe").hide();
+            var iframe = '<iframe class="J_iframe" name="iframe10000" width="100%" height="100%" src="' + url + '" frameborder="0" data-id="' + url
+                + '" seamless="" style="display: inline;"></iframe>';
+            $(window.top.document).find('.J_menuTabs .page-tabs-content ').append(
+                ' <a href="javascript:;" class="J_menuTab active" data-id="'+url+'">' + title + '(计划) <i class="iconfont icon-guanbi-copy" style="font-size: 28px;color:#D8D9DA;float: right;margin-left: -10px;width: 20px;margin-top: -5px"></i></a>');
+            $(window.top.document).find('.J_mainContent').append(iframe);
+        }
+        
+        <!-- 发布业绩 --> 
+        function fabu(){
+        	$("#modal-form").modal('show');
+        	$(".modal-dialog").show();
+        	 
+        }
+        <!-- 完成业绩 --> 
+        function finish(){
+        	
+        	$("#modal-form2").modal('show');
+        	$(".modal-dialog").show();
+        	 
+        }
+        <!-- 审核业绩 --> 
+        function shenhe(){
+        	
+        	$("#modal-form3").modal('show');
+        	$(".modal-dialog").show();
+        	 
+        }
+        <!-- 确认业绩 --> 
+        function queren(){
+        	
+        	$("#modal-form4").modal('show');
+        	$(".modal-dialog").show();
+        	 
+        }
+/* 业绩管理表格 */
+		 $(function() {     
+			 function aFormatter(value, row, index) {
+		        return [
+		            "<a   onclick=\"page('/manageMess','业绩详情')\">"+row.username+"</a>"  //这里的\为转义
+		        ].join("")
+		    }
+		
+
+       $('#table1').bootstrapTable({
+           /*showToggle:!0,
+           showColumns:!0,*/
+           iconSize:"outline",
+           toolbar:"#exampleTableEventsToolbar",
+           /* icons:{refresh:"glyphicon-repeat",toggle:"glyphicon-list-alt",columns:"glyphicon-list"},*/
+           url: "<%=request.getContextPath()%>/api/getDataList.do", // 获取表格数据的url
+           /*showRefresh:true,*/
+           cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+           striped: true,  //表格显示条纹，默认为false
+           pagination: true, // 在表格底部显示分页组件，默认false
+           pageList: [5,10, 15], // 设置页面可以显示的数据条数
+           pageSize: 5, // 页面数据条数
+           pageNumber: 1, // 首页页码
+           columns: [
+               {
+                   field: 'number',
+                   title: '序号',
+                   width:'6%' ,
+                   align:'center',
+                   formatter: function (value,row,index){
+                       return index+1; //序号正序排序从1开始
+                   }
+               },
+               {
+                   field: 'username',
+                   width:'10%' ,
+                   title: '姓名',
+                   align:'center',
+                   formatter: aFormatter //添加超链接的方法
+               },{
+            	   width:'15%' ,
+                   field: 'achtext',  
+                   title: '业绩内容',
+                   align:'center',
+               },
+               {
+                   field: 'achhour',
+                   width:'6%' ,
+                   title: '业绩量',
+                   align:'center',
+               },{
+                   field: 'workhour',
+                   width:'8%' ,
+                   title: '工作时长',
+                   align:'center',
+               },{
+                   field: 'starttime',
+                   width:'12%' ,
+                   title: '开始时间',
+                   align:'center',
+               },
+               {
+                   field: 'endtime',
+                   width:'12%' ,
+                   title: '结束时间',
+                   align:'center',
+               },
+               {
+                   field: 'achstatus',
+                   width:'8%' ,
+                   title: '业绩状态',
+                   align:'center',
+               }, {
+                   field: 'prisenum',
+                   width:'7%' ,
+                   title: '点赞数',
+                   align: 'center',
+                   formatter: function (value,row,index){
+                       return '<i class="iconfont icon-buoumaotubiao15" style="font-size: 15px;">&nbsp;'+row.prisenum+'</i>';
+                           //序号正序排序从1开始
+                      }
+               }
+               , {
+                   field: 'commentnum',
+                   title: '评论数',
+                   width:'9%' ,
+                   align: 'center',
+                   formatter: function (value,row,index){
+                       return '<i class="iconfont icon-pinglun4" style="font-size: 15px;">&nbsp;'+row.commentnum+'</i>';
+                           //序号正序排序从1开始
+                      }
+
+               }, {
+                   field: 'operate',
+                   title: '操作',
+                   width:'10%' ,
+                   align: 'center',
+                   formatter: function (value,row,index){
+                	   if(row.operate=="完成"){
+                		return "<a href='javascript:void(0);' onclick='finish()'>"+row.operate+"</a>"   
+                	   }else if(row.operate=="确认"){
+                		   return "<a href='javascript:void(0);' onclick='queren()'>"+value+"</a>"   
+                	   }else if(row.operate=="审核"){
+                		   return "<a href='javascript:void(0);' onclick='shenhe()'>"+row.operate+"</a>" 
+                	   }
+                       //return '<button id="finish" onclick="finish()">完成</button>&nbsp;<button onclick="shenhe()">审核</button>&nbsp;<button onclick="queren()">确认</button>'; //序号正序排序从1开始
+                   }
+               }],
+           data:[{"number":"1","username":"花花","achtext":"完成OA","achhour":"5h",
+	        	   "workhour":"50%","starttime":"2018-10-02","endtime":"2018-10-31",
+	        	   "achstatus":"未确认","prisenum":"25","commentnum":"10","operate":"完成"},
+	        	   {"number":"1","username":"王丽丽1","achtext":"完成OA的需求设计","achhour":"5h",
+		        	   "workhour":"50%","starttime":"2018-10-02","endtime":"2018-10-31",
+		        	   "achstatus":"未确认","prisenum":"25","commentnum":"10","operate":"完成"},
+		        	   {"number":"1","username":"王丽丽2","achtext":"完成OA的需求设计","achhour":"5h",
+			        	   "workhour":"50%","starttime":"2018-10-02","endtime":"2018-10-31",
+			        	   "achstatus":"未确认","prisenum":"25","commentnum":"10","operate":"确认"},
+			        	   {"number":"1","username":"王丽丽3","achtext":"完成OA的需求设计","achhour":"5h",
+				        	   "workhour":"50%","starttime":"2018-10-02","endtime":"2018-10-31",
+				        	   "achstatus":"未确认","prisenum":"25","commentnum":"10","operate":"审核"},
+				        	   {"number":"1","username":"王丽丽4","achtext":"完成OA的需求设计","achhour":"5h",
+					        	   "workhour":"50%","starttime":"2018-10-02","endtime":"2018-10-31",
+					        	   "achstatus":"未确认","prisenum":"25","commentnum":"10","operate":"确认"},
+					        	   {"number":"1","username":"王丽丽5","achtext":"完成OA的需求设计","achhour":"5h",
+						        	   "workhour":"50%","starttime":"2018-10-02","endtime":"2018-10-31",
+						        	   "achstatus":"未确认","prisenum":"25","commentnum":"10","operate":"审核"},
+						        	   {"number":"1","username":"王丽丽6","achtext":"完成OA的需求设计","achhour":"5h",
+							        	   "workhour":"50%","starttime":"2018-10-02","endtime":"2018-10-31",
+							        	   "achstatus":"未确认","prisenum":"25","commentnum":"10","operate":"完成"},
+							        	   {"number":"1","username":"王丽丽7","achtext":"完成OA的需求设计","achhour":"5h",
+								        	   "workhour":"50%","starttime":"2018-10-02","endtime":"2018-10-31",
+								        	   "achstatus":"未确认","prisenum":"25","commentnum":"10","operate":"完成"}
+	        	   ]
+	       })
+	})
+ 	$(".fht-cell").remove();
+	</script>
+
+<!-- jeDate -->
+<script>
+		jeDate("#Searchtime",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		
+		jeDate("#Endtime",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		jeDate("#Searchtime2",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		
+		jeDate("#Endtime2",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		jeDate("#Searchtime3",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		
+		jeDate("#Endtime3",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		jeDate("#Searchtime4",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		
+		jeDate("#Endtime4",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		jeDate("#Begtime0",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+		
+		jeDate("#Endtime0",{
+		    format:"YYYY-MM-DD",
+		    isTime:false,
+		    minDate:"2014-09-19 00:00:00"
+		});
+</script>
+</html>
